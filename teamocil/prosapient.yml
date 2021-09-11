@@ -1,0 +1,22 @@
+windows:
+  - name: backend
+    root: ~/Desktop/prosapient/backend/prosapient-platform/
+    layout: tiled
+    panes:
+      - docker-compose up postgres minio
+      - OBAN_DISABLED=0 iex -S mix phx.server
+      - echo "backend pane"
+  - name: styleguide
+    root: ~/Desktop/prosapient/prosapient-styleguide/
+    layout: tiled
+  - name: frontend
+    root: ~/Desktop/prosapient/platform-frontend/
+    layout: tiled
+    panes:
+      - git checkout && yarn start
+      - echo "platform-frontend"
+  - name: frontend-vim
+    root: ~/Desktop/prosapient/platform-frontend/
+    layout: tiled
+    panes:
+      - nvim
