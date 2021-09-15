@@ -344,3 +344,14 @@ let g:far#file_mask_favorites = ['/src/components/@client/**/*.*', '/src/compone
 let g:far#default_file_mask ="" 
 let g:far#source = 'ag'
 let g:far#auto_preview=1
+
+function! PushToCurrentBranch()
+  exe ":Gwrite"
+  let branch = fugitive#statusline()
+  let branch = substitute(branch, '\c\v\[?GIT\(([a-z0-9\-_\./:]+)\)\]?', $BRANCH.' \1', 'g')
+  exe ":Git push origin" . branch
+endfunction
+
+" Map gwp keys to call the function
+nnoremap <Leader>gbp :call PushToCurrentBranch()<CR>
+
