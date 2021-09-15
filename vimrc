@@ -158,8 +158,9 @@ command! -bang -nargs=? -complete=dir Files
     " \ call fzf#vim#files(<q-args>, {'options': ['--layout=reverse', '--info=inline', '--preview', 'cat {}']}, <bang>0)
 
 " command! -bang -nargs=* Rg call fzf#vim#grep("rg --column --line-number --no-heading --color=always --smart-case ".shellescape(<q-args>), 1, fzf#vim#with_preview("right:50%"), <bang>0) 
-command! -bang -nargs=* Rg call fzf#vim#grep("rg -g '!yarn.lock' --no-heading --line-number --color=always --smart-case ".shellescape(<q-args>), 1, fzf#vim#with_preview({'options': '--delimiter : --nth 4..'}, 'right:0%'), <bang>0) 
+" command! -bang -nargs=* Rg call fzf#vim#grep("rg -g '!yarn.lock' --no-heading --line-number --color=always --smart-case ".shellescape(<q-args>), 1, fzf#vim#with_preview({'options': '--delimiter : --nth 4..'}, 'right:0%'), <bang>0) 
 
+command! -bang -nargs=* Rg call fzf#vim#grep("rg -g '!yarn.lock' --no-heading --line-number --color=always --smart-case ".shellescape(<q-args>), 1, fzf#vim#with_preview({'options': '--delimiter : --nth 2..'}, 'right:0%'), <bang>0) 
 " command! -bang -nargs=* Rg
 "   \ call fzf#vim#grep(
 "   \   'rg --column --line-number --no-heading --color=always --smart-case '.shellescape(<q-args>), 1,
@@ -170,7 +171,7 @@ command! -bang -nargs=* Rg call fzf#vim#grep("rg -g '!yarn.lock' --no-heading --
 
 " FZF
 nnoremap <silent> <C-b> :Buffers<cr>
-nnoremap <silent> <C-p> :Rg <cr>
+" nnoremap <silent> <C-p> :Rg <cr>
 nnoremap <silent> <C-f> :Files <cr>
 nnoremap <silent> <Leader>` :Marks<cr>
 nnoremap <silent> <C-g> :GFiles?<cr>
@@ -314,5 +315,32 @@ au User FugitiveIndex nmap <buffer> dt :Gtabedit <Plug><cfile><Bar>Gvdiffsplit<C
 hi DiffAdd gui=NONE guibg=#2c406e
 hi DiffDelete gui=NONE guibg=#693649
 
-map <ScrollWheelLeft> z<Left>
-map <ScrollWheelRight> z<Right>
+nnoremap <M-Up> :m-2<CR>
+nnoremap <M-Down> :m+<CR>
+inoremap <M-Up> <Esc>:m-2<CR>
+inoremap <M-Down> <Esc>:m+<CR>
+
+autocmd BufEnter *.{js,jsx,ts,tsx} :syntax sync fromstart
+autocmd BufLeave *.{js,jsx,ts,tsx} :syntax sync clear
+
+let g:far#window_layout = 'left'
+let g:far#window_width = 80
+let g:far#preview_window_height = 20
+let g:far#highlight_match = 1
+
+set lazyredraw            " improve scrolling performance when navigating through large results
+set regexpengine=1        " use old regexp engine
+set ignorecase smartcase  " ignore case only when the pattern contains no capital letters
+
+" shortcut for far.vim find
+nnoremap <silent> <Leader>ff :Farf<cr>
+vnoremap <silent> <Leader>ff  :Farf<cr>
+
+" shortcut for far.vim replace
+nnoremap <silent> <Leader>fr :Farr<cr>
+vnoremap <silent> <Leader>fr :Farr<cr>
+
+let g:far#file_mask_favorites = ['/src/components/@client/**/*.*', '/src/components/@admin/**/*.*', '/src/conponents/@public/**/*.*', '/src/grapql-tools/**/*.*', '/src/graphql-tools/__generated__/schema.tsx', '/src/**/*.*']
+let g:far#default_file_mask ="" 
+let g:far#source = 'ag'
+let g:far#auto_preview=1
