@@ -31,6 +31,9 @@ Plug 'peitalin/vim-jsx-typescript'
 Plug 'jparise/vim-graphql'
 Plug 'pangloss/vim-javascript'
 Plug 'alvan/vim-closetag'
+Plug 'ap/vim-css-color'
+Plug 'cakebaker/scss-syntax.vim', { 'for': ['sass', 'scss'] }
+Plug 'mattn/emmet-vim'
 
 " Fzf
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() }}
@@ -39,8 +42,11 @@ Plug 'junegunn/fzf.vim'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 
-Plug 'dkprice/vim-easygrep'
+" Plug 'dkprice/vim-easygrep'
 Plug 'simeji/winresizer'
+
+Plug 'matze/vim-move'
+Plug 'brooth/far.vim'
 
 " Icons
 Plug 'ryanoasis/vim-devicons'
