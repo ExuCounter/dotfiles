@@ -11,7 +11,6 @@ set showcmd " show the (partial) command as it’s being typed
 set showmatch  " highlight matching [{()}] "
 set showmode " show the current mode
 
-set clipboard=unnamed " share copy buffer with system OS
 set hidden " allow unsaved background buffers and remember marks/undo for them
 set list
 set nojs " insert only one space after . ? ! with a join command
@@ -19,6 +18,9 @@ set nosol " keep the cursor in the same column when jump in file
 set nu " enable line numbers
 set pastetoggle=<F9>
 set scrolloff=7 " minimal lines around the cursor
+
+" hi clear CursorLine
+" hi CursorLine gui=underline cterm=underline
 
 """ Customize colors
 func! s:my_colors_setup() abort
@@ -35,7 +37,7 @@ augroup colorscheme_coc_setup | au!
 augroup END
 
 syntax on
-set t_Co=256
+" set t_Co=256
 set number
 set termguicolors
 " set background=dark
@@ -46,6 +48,8 @@ set termguicolors
 
 au ColorScheme * hi Normal ctermbg=none guibg=none
 
+" colorscheme onedark
+
 let mapleader = " "
 
 " hi TabLineFill ctermfg=LightGreen ctermbg=DarkGreen
@@ -55,9 +59,43 @@ let mapleader = " "
 " Theme
 
 " colorscheme solarized8 
+"
+" ONE HALF DARK
 
-colorscheme onehalfdark 
-let g:airline_theme='onehalfdark' 
+" colorscheme onehalfdark 
+" let g:airline_theme='onehalfdark' 
+"
+" NVCODE
+" let g:nvcode_termcolors=256
+
+" colorscheme nvcode " Or whatever colorscheme you make
+
+" " checks if your terminal has 24-bit color support
+" if (has("termguicolors"))
+"     set termguicolors
+"     hi LineNr ctermbg=NONE guibg=NONE
+" endif
+
+" AYU
+
+" let ayucolor="light"   " for dark version of theme
+" colorscheme ayu
+"
+
+" If you have vim >=8.0 or Neovim >= 0.1.5
+if (has("termguicolors"))
+ set termguicolors
+endif
+
+" For Neovim 0.1.3 and 0.1.4
+let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+let g:onedark_terminal_italics = 1
+let g:onedark_termcolors = 256
+let g:onedark_hide_endofbuffer = 1 
+
+" Theme
+colorscheme nvcode 
+" let g:airline_theme='onedark'
 
 " Commentary
 
@@ -74,7 +112,7 @@ nmap gcc <Plug>CommentaryLine
 nnoremap <leader>n :NERDTreeFocus<CR>
 nnoremap <C-n> :NERDTree<CR>
 nnoremap <C-t> :NERDTreeToggle<CR>
-nnoremap <leader>f :NERDTreeFind<CR>
+nmap <leader>t :NERDTreeFind<CR>
 
 " Show hidden files in Nerd Tree
 
@@ -96,7 +134,7 @@ nnoremap <silent> <leader>- :new<cr
 " Folds
 
 setlocal foldmethod=syntax
-setlocal foldlevelstart=99
+setlocal foldlevelstart=200
 
 " Vim figutive
 
@@ -123,7 +161,7 @@ noremap <leader>l gT
 noremap <leader>u :tabe untitled.txt
 
 " set filetypes as typescriptreact
-autocmd BufNewFile,BufRead *.tsx,*.jsx set filetype=typescriptreact
+" autocmd BufNewFile,BufRead *.tsx,*.jsx set filetype=typescriptreact
 
 " Coc settings
 source ~/.vim/coc/settings.vim
@@ -309,16 +347,23 @@ let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.7 } }
 
 " let g:EasyGrepRoot = "repository"
 " let g:EasyGrepCommand = 1
-
+"
 au User FugitiveIndex nmap <buffer> dt :Gtabedit <Plug><cfile><Bar>Gvdiffsplit<CR>
 
-hi DiffAdd gui=NONE guibg=#2c406e
-hi DiffDelete gui=NONE guibg=#693649
+" hi DiffAdd gui=NONE guibg=#2c406e
+" hi DiffDelete gui=NONE guibg=#693649
 
-nnoremap <M-Up> :m-2<CR>
-nnoremap <M-Down> :m+<CR>
-inoremap <M-Up> <Esc>:m-2<CR>
-inoremap <M-Down> <Esc>:m+<CR>
+" nnoremap <M-Up> :m-2<CR>
+" nnoremap <M-Down> :m+<CR>
+" inoremap <M-Up> <Esc>:m-2<CR>
+" inoremap <M-Down> <Esc>:m+<CR>
+
+nnoremap <M-Down> :m .+1<CR>==
+nnoremap <M-Up> :m .-2<CR>==
+inoremap <M-Down> <Esc>:m .+1<CR>==gi
+inoremap <M-Up> <Esc>:m .-2<CR>==gi
+vnoremap <M-Down> :m '>+1<CR>gv=gv
+vnoremap <M-Up> :m '<-2<CR>gv=gv
 
 autocmd BufEnter *.{js,jsx,ts,tsx} :syntax sync fromstart
 autocmd BufLeave *.{js,jsx,ts,tsx} :syntax sync clear
@@ -333,17 +378,20 @@ set regexpengine=1        " use old regexp engine
 set ignorecase smartcase  " ignore case only when the pattern contains no capital letters
 
 " shortcut for far.vim find
-nnoremap <silent> <Leader>ff :Farf<cr>
-vnoremap <silent> <Leader>ff  :Farf<cr>
+" nnoremap <silent> <Leader>ff :Farf<cr>
+" vnoremap <silent> <Leader>ff  :Farf<cr>
 
-" shortcut for far.vim replace
-nnoremap <silent> <Leader>fr :Farr<cr>
-vnoremap <silent> <Leader>fr :Farr<cr>
+" " shortcut for far.vim replace
+" nnoremap <silent> <Leader>fr :Farr<cr>
+" vnoremap <silent> <Leader>fr :Farr<cr>
 
-let g:far#file_mask_favorites = ['/src/components/@client/**/*.*', '/src/components/@admin/**/*.*', '/src/conponents/@public/**/*.*', '/src/grapql-tools/**/*.*', '/src/graphql-tools/__generated__/schema.tsx', '/src/**/*.*']
-let g:far#default_file_mask ="" 
-let g:far#source = 'ag'
-let g:far#auto_preview=1
+" let g:far#file_mask_favorites = ['/src/components/@client/**/*.*', '/src/components/@admin/**/*.*', '/src/conponents/@public/**/*.*', '/src/graphql-tools/**/*.*', '/src/graphql-tools/__generated__/schema.tsx', '/src/**/*.*']
+" let g:far#default_file_mask ="" 
+" let g:far#source = 'ag'
+" let g:far#auto_preview=1
+" let g:far#open_in_parent_window=1
+" let g:far#auto_preview=1
+" let g:far#auto_preview_on_start=1
 
 function! PushToCurrentBranch()
   exe ":Gwrite"
@@ -355,3 +403,48 @@ endfunction
 " Map gwp keys to call the function
 nnoremap <Leader>gbp :call PushToCurrentBranch()<CR>
 
+xnoremap p "_dP
+nnoremap <leader>d "_d
+vnoremap <leader>d "_d
+
+" let g:move_key_modifier = 'A'
+
+set noswapfile
+
+let g:esearch = {}
+let g:esearch.adapter = 'ag'
+" let g:esearch.root_markers = ['.git', 'Makefile', 'node_modules']
+" let g:esearch.filetypes ='src/**/*.*'
+noremap <leader>fc :call esearch#init({'paths': 'src/components/@client/'})<cr>
+noremap <leader>fg :call esearch#init({'paths': 'src/graphql-tools/'})<cr>
+noremap <leader>fp :call esearch#init({'paths': 'src/components/@public/'})<cr>
+noremap <leader>fa :call esearch#init({'paths': 'src/components/@admin'})<cr>
+noremap <leader>fa :call esearch#init({'paths': ''})
+
+
+lua <<EOF
+require'nvim-treesitter.configs'.setup {
+  ensure_installed = "maintained", -- one of "all", "maintained" (parsers with maintainers), or a list of languages
+  highlight = {
+    enable = true,              -- false will disable the whole extensio
+		custom_captures={
+      ["variable"] = "TSNone",
+    },    -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
+    -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
+    -- Using this option may slow down your editor, and you may see some duplicate highlights.
+    -- Instead of true it can also be a list of languages
+    additional_vim_regex_highlighting = false,
+  },
+}
+EOF
+
+    " custom_captures={
+    "  ["property"] = "TSVariable",
+		 " ["variable"] = "TSType"
+    " },
+
+	  	" ["variable"] = "TSFunction",
+			" ["constructor"] = "TSType",
+
+map <Leader>f <Nop>
+let g:lognroll#enable_brackets = 0

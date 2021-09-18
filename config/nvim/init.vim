@@ -5,6 +5,10 @@ Plug 'ayu-theme/ayu-vim'
 Plug 'challenger-deep-theme/vim', { 'as': 'challenger-deep' }
 Plug 'sonph/onehalf', { 'rtp': 'vim' }
 Plug 'lifepillar/vim-solarized8'
+Plug 'arcticicestudio/nord-vim'
+Plug 'christianchiarulli/nvcode-color-schemes.vim'
+Plug 'jacoborus/tender.vim'
+Plug 'joshdick/onedark.vim'
 
 " Nerdtree
 Plug 'preservim/nerdtree'
@@ -27,13 +31,17 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 " Syntax highlight
 Plug 'leafgarland/typescript-vim'
-Plug 'peitalin/vim-jsx-typescript'
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'nvim-treesitter/playground'
+" Plug 'peitalin/vim-jsx-typescript'
 Plug 'jparise/vim-graphql'
 Plug 'pangloss/vim-javascript'
 Plug 'alvan/vim-closetag'
 Plug 'ap/vim-css-color'
 Plug 'cakebaker/scss-syntax.vim', { 'for': ['sass', 'scss'] }
 Plug 'mattn/emmet-vim'
+Plug 'eugen0329/vim-esearch'
+Plug 'glippi/lognroll-vim'
 
 " Fzf
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() }}
