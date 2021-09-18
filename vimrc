@@ -37,24 +37,15 @@ augroup colorscheme_coc_setup | au!
 augroup END
 
 syntax on
-" set t_Co=256
+set t_Co=256
 set number
 set termguicolors
-" set background=dark
-" hi Normal ctermbg=16 guibg=#0
-" hi LineNr ctermbg=16 guibg=#0
-" highlight NonText guibg=black
-" highlight NonText guifg=black
 
 au ColorScheme * hi Normal ctermbg=none guibg=none
 
 " colorscheme onedark
 
 let mapleader = " "
-
-" hi TabLineFill ctermfg=LightGreen ctermbg=DarkGreen
-" hi TabLine ctermfg=Blue ctermbg=Yellow
-" hi TabLineSel ctermfg=Red ctermbg=Yellow
 
 " Theme
 
@@ -133,8 +124,16 @@ nnoremap <silent> <leader>- :new<cr
 
 " Folds
 
-setlocal foldmethod=syntax
+" setlocal foldmethod=syntax
 setlocal foldlevelstart=200
+
+" set foldmethod=expr
+" set foldexpr=nvim_treesitter#foldexpr()
+
+set foldenable
+set foldlevelstart=10  " default folding level when buffer is opened
+set foldnestmax=10     " maximum nested fold
+set foldmethod=manual
 
 " Vim figutive
 
@@ -159,9 +158,6 @@ noremap <leader>l gT
 " Untitled txt file
 
 noremap <leader>u :tabe untitled.txt
-
-" set filetypes as typescriptreact
-" autocmd BufNewFile,BufRead *.tsx,*.jsx set filetype=typescriptreact
 
 " Coc settings
 source ~/.vim/coc/settings.vim
@@ -192,20 +188,7 @@ let g:fzf_action = {
 command! -bang -nargs=? -complete=dir Files
   \ call fzf#vim#files(<q-args>, fzf#vim#with_preview("right:50%"), <bang>0)
 
-" command! -bang -nargs=? -complete=dir Files
-    " \ call fzf#vim#files(<q-args>, {'options': ['--layout=reverse', '--info=inline', '--preview', 'cat {}']}, <bang>0)
-
-" command! -bang -nargs=* Rg call fzf#vim#grep("rg --column --line-number --no-heading --color=always --smart-case ".shellescape(<q-args>), 1, fzf#vim#with_preview("right:50%"), <bang>0) 
-" command! -bang -nargs=* Rg call fzf#vim#grep("rg -g '!yarn.lock' --no-heading --line-number --color=always --smart-case ".shellescape(<q-args>), 1, fzf#vim#with_preview({'options': '--delimiter : --nth 4..'}, 'right:0%'), <bang>0) 
-
-command! -bang -nargs=* Rg call fzf#vim#grep("rg -g '!yarn.lock' --no-heading --line-number --color=always --smart-case ".shellescape(<q-args>), 1, fzf#vim#with_preview({'options': '--delimiter : --nth 2..'}, 'right:0%'), <bang>0) 
-" command! -bang -nargs=* Rg
-"   \ call fzf#vim#grep(
-"   \   'rg --column --line-number --no-heading --color=always --smart-case '.shellescape(<q-args>), 1,
-"   \   <bang>0 ? fzf#vim#with_preview('up:60%')
-"
-"   \           : fzf#vim#with_preview('right:50%:hidden', '?'),
-"   \   <bang>0)
+command! -bang -nargs=* Rg call fzf#vim#grep("rg -g '!yarn.lock' --no-heading --line-number --color=always --smart-case ".
 
 " FZF
 nnoremap <silent> <C-b> :Buffers<cr>
@@ -345,18 +328,11 @@ endif
 
 let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.7 } }
 
-" let g:EasyGrepRoot = "repository"
-" let g:EasyGrepCommand = 1
-"
 au User FugitiveIndex nmap <buffer> dt :Gtabedit <Plug><cfile><Bar>Gvdiffsplit<CR>
 
 " hi DiffAdd gui=NONE guibg=#2c406e
 " hi DiffDelete gui=NONE guibg=#693649
 
-" nnoremap <M-Up> :m-2<CR>
-" nnoremap <M-Down> :m+<CR>
-" inoremap <M-Up> <Esc>:m-2<CR>
-" inoremap <M-Down> <Esc>:m+<CR>
 
 nnoremap <M-Down> :m .+1<CR>==
 nnoremap <M-Up> :m .-2<CR>==
@@ -421,30 +397,21 @@ noremap <leader>fp :call esearch#init({'paths': 'src/components/@public/'})<cr>
 noremap <leader>fa :call esearch#init({'paths': 'src/components/@admin'})<cr>
 noremap <leader>fa :call esearch#init({'paths': ''})
 
+" Tree sitter ( Syntax highlight )
 
 lua <<EOF
 require'nvim-treesitter.configs'.setup {
   ensure_installed = "maintained", -- one of "all", "maintained" (parsers with maintainers), or a list of languages
   highlight = {
     enable = true,              -- false will disable the whole extensio
-		custom_captures={
-      ["variable"] = "TSNone",
-    },    -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
-    -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
-    -- Using this option may slow down your editor, and you may see some duplicate highlights.
-    -- Instead of true it can also be a list of languages
     additional_vim_regex_highlighting = false,
   },
+  indent = {
+    enable = true
+  }
 }
+
 EOF
-
-    " custom_captures={
-    "  ["property"] = "TSVariable",
-		 " ["variable"] = "TSType"
-    " },
-
-	  	" ["variable"] = "TSFunction",
-			" ["constructor"] = "TSType",
 
 map <Leader>f <Nop>
 let g:lognroll#enable_brackets = 0
