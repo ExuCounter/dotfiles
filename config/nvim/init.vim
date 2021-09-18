@@ -42,6 +42,7 @@ Plug 'cakebaker/scss-syntax.vim', { 'for': ['sass', 'scss'] }
 Plug 'mattn/emmet-vim'
 Plug 'eugen0329/vim-esearch'
 Plug 'glippi/lognroll-vim'
+Plug 'wincent/terminus'
 
 " Fzf
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() }}
