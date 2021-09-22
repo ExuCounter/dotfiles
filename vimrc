@@ -152,8 +152,8 @@ noremap <leader>6 6gt
 noremap <leader>7 7gt
 noremap <leader>8 8gt
 noremap <leader>9 9gt
-noremap <leader>h gt
-noremap <leader>l gT
+noremap <leader>l gt
+noremap <leader>h gT
 
 " Untitled txt file
 
@@ -220,7 +220,7 @@ command! -nargs=0 Prettier :CocCommand prettier.formatFile
 
 inoremap <C-s> <Esc>   """ <C-s> key is <Esc> setting
 
-let g:airline_section_c = '%F'
+let g:airline_section_c = '%<%F%m %#__accent_red#%{airline#util#wrap(airline#parts#readonly(),0)}%#__restore__#' 
 let g:airline#extensions#tabline#fnamemod = ':t'
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#show_buffers = 0
@@ -315,8 +315,8 @@ let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.7 } }
 
 au User FugitiveIndex nmap <buffer> dt :Gtabedit <Plug><cfile><Bar>Gvdiffsplit<CR>
 
-" hi DiffAdd gui=NONE guibg=#2c406e
-" hi DiffDelete gui=NONE guibg=#693649
+hi DiffAdd gui=NONE guibg=#2c406e guifg=white
+hi DiffDelete gui=NONE guibg=#693649 guifg=white
 
 
 nnoremap <M-Down> :m .+1<CR>==
@@ -405,4 +405,14 @@ else
     let &t_SI = "\e[5 q"
     let &t_EI = "\e[2 q"
 endif
+
+let g:lognroll#enable_brackets = 0
+
+vmap <C-c> <ESC>"+yi
+vmap <C-x> <ESC>"+c
+vmap <C-v> c<ESC>"+p
+imap <C-v> <ESC>"+pa
+
+noremap <leader>cp :CopyPath<CR>
+let g:copypath_copy_to_unnamed_register = 1
 
