@@ -27,3 +27,7 @@ alias gb='git branch'
 alias gc='git commit -m'
 alias gd='git diff'
 alias gplo='git pull origin'
+
+alias vi="nvim"
+alias vim="nvim"
+alias code="nvim"

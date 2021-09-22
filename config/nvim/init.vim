@@ -43,6 +43,8 @@ Plug 'mattn/emmet-vim'
 Plug 'eugen0329/vim-esearch'
 Plug 'glippi/lognroll-vim'
 Plug 'wincent/terminus'
+Plug 'airblade/vim-gitgutter'
+Plug 'taku-o/vim-copypath'
 
 " Fzf
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() }}

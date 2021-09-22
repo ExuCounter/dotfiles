@@ -1,2 +1,15 @@
-{"tsserver.log": "verbose", "coc.preferences.formatOnSaveFiletypes": ["css", "markdown", "javascript", "typescript", "javascriptreact", "json", "graphql", "typescriptreact"]}
-
+{
+  "tsserver.log": "verbose",
+  "coc.preferences.formatOnSaveFiletypes": [
+    "css",
+    "markdown",
+    "javascript",
+    "typescript",
+    "javascriptreact",
+    "json",
+    "graphql",
+    "typescriptreact"
+  ],
+  "javascript.suggest.autoImports": true,
+  "typescript.suggest.autoImports": true
+}
