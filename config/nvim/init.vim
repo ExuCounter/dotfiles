@@ -36,7 +36,6 @@ Plug 'nvim-treesitter/playground'
 " Plug 'peitalin/vim-jsx-typescript'
 Plug 'jparise/vim-graphql'
 Plug 'pangloss/vim-javascript'
-Plug 'alvan/vim-closetag'
 Plug 'ap/vim-css-color'
 Plug 'cakebaker/scss-syntax.vim', { 'for': ['sass', 'scss'] }
 Plug 'mattn/emmet-vim'
