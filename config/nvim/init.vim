@@ -47,6 +47,7 @@ Plug 'taku-o/vim-copypath'
 Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
 Plug 'jiangmiao/auto-pairs'
 Plug 'psliwka/vim-smoothie'
+Plug 'tpope/vim-surround'
 
 " Fzf
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() }}
