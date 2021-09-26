@@ -372,11 +372,7 @@ imap <C-v> <ESC>"+pa
 
 noremap <leader>cp :CopyPath<CR>
 
-inoremap " ""<left>
-inoremap ' ''<left>
-inoremap ( ()<left>
-inoremap [ []<left>
-inoremap { {}<left>
-inoremap {<CR> {<CR>}<ESC>O
-inoremap {;<CR> {<CR>};<ESC>O
+autocmd BufEnter *.{js,jsx,ts,tsx} :syntax sync fromstart
+autocmd BufLeave *.{js,jsx,ts,tsx} :syntax sync clear
 
+vnoremap // y/\V<C-R>=escape(@",'/\')<CR><CR>
