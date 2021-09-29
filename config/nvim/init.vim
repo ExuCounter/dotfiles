@@ -48,6 +48,7 @@ Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
 Plug 'jiangmiao/auto-pairs'
 Plug 'psliwka/vim-smoothie'
 Plug 'tpope/vim-surround'
+Plug 'rhysd/conflict-marker.vim'
 
 " Fzf
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() }}
