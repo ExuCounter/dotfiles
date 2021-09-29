@@ -208,7 +208,8 @@ nnoremap <leader>s :w<cr>
 nnoremap <Leader>fq :q!<cr>
 nnoremap <Leader>q :q<cr>
 
-nnoremap <leader>\ :vsplit<cr>
+nnoremap <leader>] :vsplit<cr>
+nnoremap <leader>[ :split<cr>
 
 " Clear highlighting on escape in normal mode
 nnoremap <esc> :noh<return><esc>
@@ -269,10 +270,6 @@ let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.7 } }
 
 au User FugitiveIndex nmap <buffer> dt :Gtabedit <Plug><cfile><Bar>Gvdiffsplit<CR>
 
-hi DiffAdd gui=NONE guibg=#2c406e guifg=white
-hi DiffDelete gui=NONE guibg=#693649 guifg=white
-
-
 nnoremap <M-Down> :m .+1<CR>==
 nnoremap <M-Up> :m .-2<CR>==
 inoremap <M-Down> <Esc>:m .+1<CR>==gi
@@ -291,22 +288,6 @@ let g:far#highlight_match = 1
 set lazyredraw            " improve scrolling performance when navigating through large results
 set regexpengine=1        " use old regexp engine
 set ignorecase smartcase  " ignore case only when the pattern contains no capital letters
-
-" shortcut for far.vim find
-" nnoremap <silent> <Leader>ff :Farf<cr>
-" vnoremap <silent> <Leader>ff  :Farf<cr>
-
-" " shortcut for far.vim replace
-" nnoremap <silent> <Leader>fr :Farr<cr>
-" vnoremap <silent> <Leader>fr :Farr<cr>
-
-" let g:far#file_mask_favorites = ['/src/components/@client/**/*.*', '/src/components/@admin/**/*.*', '/src/conponents/@public/**/*.*', '/src/graphql-tools/**/*.*', '/src/graphql-tools/__generated__/schema.tsx', '/src/**/*.*']
-" let g:far#default_file_mask ="" 
-" let g:far#source = 'ag'
-" let g:far#auto_preview=1
-" let g:far#open_in_parent_window=1
-" let g:far#auto_preview=1
-" let g:far#auto_preview_on_start=1
 
 function! PushToCurrentBranch()
   exe ":Gwrite"
@@ -355,14 +336,6 @@ require'nvim-treesitter.configs'.setup {
 
 EOF
 
-if exists('$TMUX')
-    let &t_SI = "\<Esc>Ptmux;\<Esc>\e[5 q\<Esc>\\"
-    let &t_EI = "\<Esc>Ptmux;\<Esc>\e[2 q\<Esc>\\"
-else
-    let &t_SI = "\e[5 q"
-    let &t_EI = "\e[2 q"
-endif
-
 let g:lognroll#enable_brackets = 0
 
 vmap <C-c> <ESC>"+yi
@@ -370,9 +343,53 @@ vmap <C-x> <ESC>"+c
 vmap <C-v> c<ESC>"+p
 imap <C-v> <ESC>"+pa
 
+" Copy file path
 noremap <leader>cp :CopyPath<CR>
+
+" Styled components clear buffers to prevent vim lagging
 
 autocmd BufEnter *.{js,jsx,ts,tsx} :syntax sync fromstart
 autocmd BufLeave *.{js,jsx,ts,tsx} :syntax sync clear
 
+" Search in file by selecting
 vnoremap // y/\V<C-R>=escape(@",'/\')<CR><CR>
+
+" hi DiffAdd guifg=NONE ctermfg=NONE guibg=#464632 ctermbg=238 gui=NONE cterm=NONE
+" hi DiffChange guifg=NONE ctermfg=NONE guibg=#335261 ctermbg=239 gui=NONE cterm=NONE
+" hi DiffDelete guifg=#f43753 ctermfg=203 guibg=#79313c ctermbg=237 gui=NONE cterm=NONE
+" hi DiffText guifg=NONE ctermfg=NONE guibg=NONE ctermbg=NONE gui=reverse cterm=reverse
+
+" Disable default vim figutive colors
+
+hi DiffAdd guifg=NONE ctermfg=NONE guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
+hi DiffChange guifg=NONE ctermfg=NONE guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
+hi DiffDelete guifg=NONE ctermfg=NONE guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
+hi DiffText guifg=NONE ctermfg=NONE guibg=NONE ctermbg=NONE gui=reverse cterm=reverse
+
+" disable the default highlight group
+let g:conflict_marker_highlight_group = ''
+
+" Include text after begin and end markers
+let g:conflict_marker_begin = '^<<<<<<< .*$'
+let g:conflict_marker_end   = '^>>>>>>> .*$'
+
+" Merge conflicts markers highlighting
+
+highlight ConflictMarkerBegin guibg=#2f7366
+highlight ConflictMarkerOurs guibg=#2e5049
+highlight ConflictMarkerTheirs guibg=#344f69
+highlight ConflictMarkerEnd guibg=#2f628e
+highlight ConflictMarkerCommonAncestorsHunk guibg=#754a81
+
+" Git rebase shortcuts
+
+nnoremap <Leader>grc :Git rebase --continue<CR>
+nnoremap <Leader>gra :Git rebase --abort
+nnoremap <Leader>gri :Git rebase --interactive HEAD~
+
+" Git Blamer vim
+
+highlight Blamer guifg=grey
+let g:blamer_relative_time = 1
+let g:blamer_date_format = '%d/%m/%y'
+let g:blamer_delay = 0
