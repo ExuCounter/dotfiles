@@ -47,32 +47,6 @@ au ColorScheme * hi Normal ctermbg=none guibg=none
 
 let mapleader = " "
 
-" Theme
-
-" colorscheme solarized8 
-"
-" ONE HALF DARK
-
-" colorscheme onehalfdark 
-" let g:airline_theme='onehalfdark' 
-"
-" NVCODE
-" let g:nvcode_termcolors=256
-
-" colorscheme nvcode " Or whatever colorscheme you make
-
-" " checks if your terminal has 24-bit color support
-" if (has("termguicolors"))
-"     set termguicolors
-"     hi LineNr ctermbg=NONE guibg=NONE
-" endif
-
-" AYU
-
-" let ayucolor="light"   " for dark version of theme
-" colorscheme ayu
-"
-
 " If you have vim >=8.0 or Neovim >= 0.1.5
 if (has("termguicolors"))
  set termguicolors
@@ -170,8 +144,10 @@ source ~/.fzf/plugin/fzf.vim
 
 " Custom mapping
 
-let g:coc_global_extensions = ['coc-tsserver']
+let g:coc_global_extensions = ['coc-tsserver', 'coc-css']
 command! -nargs=0 Prettier :CocCommand prettier.formatFile
+
+autocmd FileType scss setl iskeyword+=@-@
 
 vmap <leader>g  <Plug>(coc-format-selected)
 nmap <leader>g  <Plug>(coc-format-selected)
@@ -246,6 +222,7 @@ nnoremap <leader>gpl :Git pull<CR>
 nnoremap <leader>gcm :Git commit -v -q<CR>
 nnoremap <leader>gam :Git commit --amend<CR>
 nnoremap <leader>gcl :Gclog<CR>
+nnoremap <leader>gbm :Git blame<CR>
 
 nnoremap <leader>cld :CocList diagnostics<CR>
 
@@ -268,8 +245,10 @@ endif
 
 let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.7 } }
 
-au User FugitiveIndex nmap <buffer> dt :Gtabedit <Plug><cfile><Bar>Gvdiffsplit<CR>
+" au User FugitiveIndex nmap <buffer> dt :Gtabedit <Plug><cfile><Bar>Gvdiffsplit<CR>
+au User FugitiveIndex nmap <buffer> dt :Gtabedit <Plug><cfile><CR>
 
+" Move lines by alt + arrows
 nnoremap <M-Down> :m .+1<CR>==
 nnoremap <M-Up> :m .-2<CR>==
 inoremap <M-Down> <Esc>:m .+1<CR>==gi
@@ -279,11 +258,6 @@ vnoremap <M-Up> :m '<-2<CR>gv=gv
 
 autocmd BufEnter *.{js,jsx,ts,tsx} :syntax sync fromstart
 autocmd BufLeave *.{js,jsx,ts,tsx} :syntax sync clear
-
-let g:far#window_layout = 'left'
-let g:far#window_width = 80
-let g:far#preview_window_height = 20
-let g:far#highlight_match = 1
 
 set lazyredraw            " improve scrolling performance when navigating through large results
 set regexpengine=1        " use old regexp engine
@@ -354,6 +328,9 @@ autocmd BufLeave *.{js,jsx,ts,tsx} :syntax sync clear
 " Search in file by selecting
 vnoremap // y/\V<C-R>=escape(@",'/\')<CR><CR>
 
+hi DiffAdd gui=NONE guibg=#2c406e guifg=white
+hi DiffDelete gui=NONE guibg=#693649 guifg=white
+
 " hi DiffAdd guifg=NONE ctermfg=NONE guibg=#464632 ctermbg=238 gui=NONE cterm=NONE
 " hi DiffChange guifg=NONE ctermfg=NONE guibg=#335261 ctermbg=239 gui=NONE cterm=NONE
 " hi DiffDelete guifg=#f43753 ctermfg=203 guibg=#79313c ctermbg=237 gui=NONE cterm=NONE
@@ -361,10 +338,10 @@ vnoremap // y/\V<C-R>=escape(@",'/\')<CR><CR>
 
 " Disable default vim figutive colors
 
-hi DiffAdd guifg=NONE ctermfg=NONE guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
-hi DiffChange guifg=NONE ctermfg=NONE guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
-hi DiffDelete guifg=NONE ctermfg=NONE guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
-hi DiffText guifg=NONE ctermfg=NONE guibg=NONE ctermbg=NONE gui=reverse cterm=reverse
+" hi DiffAdd guifg=NONE ctermfg=NONE guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
+" hi DiffChange guifg=NONE ctermfg=NONE guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
+" hi DiffDelete guifg=NONE ctermfg=NONE guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
+" hi DiffText guifg=NONE ctermfg=NONE guibg=NONE ctermbg=NONE gui=reverse cterm=reverse
 
 " disable the default highlight group
 let g:conflict_marker_highlight_group = ''
@@ -393,3 +370,14 @@ highlight Blamer guifg=grey
 let g:blamer_relative_time = 1
 let g:blamer_date_format = '%d/%m/%y'
 let g:blamer_delay = 0
+
+augroup VimCSS3Syntax
+  autocmd!
+
+  autocmd FileType css setlocal iskeyword+=-
+augroup END
+
+" Open the search window in a vertical split and reuse it for all further searches.
+let g:esearch.name = '[esearch]'
+let g:esearch.win_new = {esearch -> esearch#buf#goto_or_open(esearch.name, 'tabnew')}
+

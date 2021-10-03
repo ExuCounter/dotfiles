@@ -49,6 +49,8 @@ Plug 'jiangmiao/auto-pairs'
 Plug 'psliwka/vim-smoothie'
 Plug 'tpope/vim-surround'
 Plug 'rhysd/conflict-marker.vim'
+Plug 'hail2u/vim-css3-syntax'
+Plug 'cakebaker/scss-syntax.vim'
 
 " Fzf
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() }}
