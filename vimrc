@@ -158,17 +158,17 @@ inoremap <silent> <C-S>         <C-O>:update<CR>
 
 let g:fzf_action = {
   \ 'ctrl-w': 'tab split',
-  \ 'ctrl-e': 'split',
-  \ 'ctrl-r': 'vsplit' }
+  \ 'ctrl-r': 'split',
+  \ 'ctrl-e': 'vsplit' }
 
 command! -bang -nargs=? -complete=dir Files
   \ call fzf#vim#files(<q-args>, fzf#vim#with_preview("right:50%"), <bang>0)
 
-command! -bang -nargs=* Rg call fzf#vim#grep("rg -g '!yarn.lock' --no-heading --line-number --color=always --smart-case ".
+command! -bang -nargs=* Rg call fzf#vim#grep("rg -g '!yarn.lock' --no-heading --line-number --color=always --smart-case ".shellescape(<q-args>), 1, fzf#vim#with_preview({'options': '--delimiter : --nth 2..'}, 'right:50%'), <bang>0)
 
 " FZF
 nnoremap <silent> <C-b> :Buffers<cr>
-" nnoremap <silent> <C-p> :Rg <cr>
+nnoremap <silent> <C-p> :Rg <cr>
 nnoremap <silent> <C-f> :Files <cr>
 nnoremap <silent> <Leader>` :Marks<cr>
 nnoremap <silent> <C-g> :GFiles?<cr>
@@ -184,8 +184,8 @@ nnoremap <leader>s :w<cr>
 nnoremap <Leader>fq :q!<cr>
 nnoremap <Leader>q :q<cr>
 
-nnoremap <leader>] :vsplit<cr>
-nnoremap <leader>[ :split<cr>
+nnoremap <leader>[ :vsplit<cr>
+nnoremap <leader>] :split<cr>
 
 " Clear highlighting on escape in normal mode
 nnoremap <esc> :noh<return><esc>
@@ -311,6 +311,7 @@ require'nvim-treesitter.configs'.setup {
 EOF
 
 let g:lognroll#enable_brackets = 0
+let g:lognroll#enable_insert_mode = 0
 
 vmap <C-c> <ESC>"+yi
 vmap <C-x> <ESC>"+c
@@ -381,3 +382,72 @@ augroup END
 let g:esearch.name = '[esearch]'
 let g:esearch.win_new = {esearch -> esearch#buf#goto_or_open(esearch.name, 'tabnew')}
 
+
+function MoveToPrevTab()
+  "there is only one window
+  if tabpagenr('$') == 1 && winnr('$') == 1
+    return
+  endif
+  "preparing new window
+  let l:tab_nr = tabpagenr('$')
+  let l:cur_buf = bufnr('%')
+  if tabpagenr() != 1
+    close!
+    if l:tab_nr == tabpagenr('$')
+      tabprev
+    endif
+    sp
+  else
+    close!
+    exe "0tabnew"
+  endif
+  "opening current buffer in new window
+  exe "b".l:cur_buf
+endfunc
+
+function MoveToNextTab()
+  "there is only one window
+  if tabpagenr('$') == 1 && winnr('$') == 1
+    return
+  endif
+  "preparing new window
+  let l:tab_nr = tabpagenr('$')
+  let l:cur_buf = bufnr('%')
+  if tabpagenr() < tab_nr
+    close!
+    if l:tab_nr == tabpagenr('$')
+      tabnext
+    endif
+    sp
+  else
+    close!
+    tabnew
+  endif
+  "opening current buffer in new window
+  exe "b".l:cur_buf
+endfunc
+
+nnoremap <leader><Right> :call MoveToNextTab()<CR>
+nnoremap <leader><Left> :call MoveToPrevTab()<CR>
+
+fu! PasteWindow(direction) "{{{
+    if exists("g:yanked_buffer")
+        if a:direction == 'edit'
+            let temp_buffer = bufnr('%')
+        endif
+
+        exec a:direction . " +buffer" . g:yanked_buffer
+
+        if a:direction == 'edit'
+            let g:yanked_buffer = temp_buffer
+        endif
+    endif
+endf "}}}
+
+"yank/paste buffers
+:nmap <silent> <leader>wy  :let g:yanked_buffer=bufnr('%')<cr>
+:nmap <silent> <leader>wd  :let g:yanked_buffer=bufnr('%')<cr>:q<cr>
+:nmap <silent> <leader>wp :call PasteWindow('edit')<cr>
+:nmap <silent> <leader>ws :call PasteWindow('split')<cr>
+:nmap <silent> <leader>wv :call PasteWindow('vsplit')<cr>
+:nmap <silent> <leader>wt :call PasteWindow('tabnew')<cr>
