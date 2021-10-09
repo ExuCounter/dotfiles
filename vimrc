@@ -24,16 +24,16 @@ set scrolloff=7 " minimal lines around the cursor
 
 """ Customize colors
 func! s:my_colors_setup() abort
-    " this is an example
-    hi CocFloating ctermbg=black
-    " hi Pmenu guibg=transparent gui=NONE
-    " hi PmenuSel guibg=white gui=NONE
-    " hi PmenuSbar guibg=white
-    " hi PmenuThumb guibg=white
+	" this is an example
+	hi CocFloating ctermbg=black
+	" hi Pmenu guibg=transparent gui=NONE
+	" hi PmenuSel guibg=white gui=NONE
+	" hi PmenuSbar guibg=white
+	" hi PmenuThumb guibg=white
 endfunc
 
 augroup colorscheme_coc_setup | au!
-    au ColorScheme * call s:my_colors_setup()
+	au ColorScheme * call s:my_colors_setup()
 augroup END
 
 syntax on
@@ -49,7 +49,7 @@ let mapleader = " "
 
 " If you have vim >=8.0 or Neovim >= 0.1.5
 if (has("termguicolors"))
- set termguicolors
+set termguicolors
 endif
 
 " For Neovim 0.1.3 and 0.1.4
@@ -127,7 +127,7 @@ noremap <leader>7 7gt
 noremap <leader>8 8gt
 noremap <leader>9 9gt
 noremap <leader>l gt
-noremap <leader>h gT
+map <leader>h gT
 
 " Untitled txt file
 
@@ -245,8 +245,22 @@ endif
 
 let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.7 } }
 
-" au User FugitiveIndex nmap <buffer> dt :Gtabedit <Plug><cfile><Bar>Gvdiffsplit<CR>
-au User FugitiveIndex nmap <buffer> dt :Gtabedit <Plug><cfile><CR>
+au User FugitiveIndex nmap <buffer> dt :Gtabedit <Plug><cfile><Bar>Gvdiffsplit<CR>
+" au User FugitiveIndex nmap <buffer> dt :Gtabedit <Plug><cfile><CR>
+
+function GStatusTabDiff()
+  if has('multi_byte_encoding')
+    let colon = '\%(:\|\%uff1a\)'
+  else
+    let colon = ':'
+  endif
+  let filename = matchstr(matchstr(getline(line('.')),'^#\t\zs.\{-\}\ze\%( ([^()[:digit:]]\+)\)\=$'), colon.' *\zs.*')
+  tabedit %
+  execute ':Gedit ' . filename
+  Gvdiff
+endfunction
+command GStatusTabDiff call GStatusTabDiff()
+autocmd FileType gitcommit noremap <buffer> dt :GStatusTabDiff<CR>
 
 " Move lines by alt + arrows
 nnoremap <M-Down> :m .+1<CR>==
@@ -427,6 +441,8 @@ function MoveToNextTab()
   exe "b".l:cur_buf
 endfunc
 
+nmap dt :tabedit %<CR>:Gdiff<CR>
+
 nnoremap <leader><Right> :call MoveToNextTab()<CR>
 nnoremap <leader><Left> :call MoveToPrevTab()<CR>
 
@@ -451,3 +467,10 @@ endf "}}}
 :nmap <silent> <leader>ws :call PasteWindow('split')<cr>
 :nmap <silent> <leader>wv :call PasteWindow('vsplit')<cr>
 :nmap <silent> <leader>wt :call PasteWindow('tabnew')<cr>
+
+:nmap <leader>dm :delmarks A-Za-z0-9<cr>
+:nmap <leader>ms :DoShowMarks!<cr>
+
+nmap <leader>ggph <Plug>(GitGutterPreviewHunk)
+nmap <leader>ggsh <Plug>(GitGutterStageHunk)
+nmap <leader>gguh <Plug>(GitGutterUndoHunk)

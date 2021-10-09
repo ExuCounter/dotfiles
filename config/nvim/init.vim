@@ -51,6 +51,7 @@ Plug 'tpope/vim-surround'
 Plug 'rhysd/conflict-marker.vim'
 Plug 'hail2u/vim-css3-syntax'
 Plug 'cakebaker/scss-syntax.vim'
+Plug 'jacquesbh/vim-showmarks'
 
 " Fzf
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() }}
