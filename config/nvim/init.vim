@@ -52,6 +52,7 @@ Plug 'rhysd/conflict-marker.vim'
 Plug 'hail2u/vim-css3-syntax'
 Plug 'cakebaker/scss-syntax.vim'
 Plug 'jacquesbh/vim-showmarks'
+Plug 'mg979/vim-visual-multi', {'branch': 'master'}
 
 " Fzf
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() }}

@@ -167,14 +167,14 @@ command! -bang -nargs=? -complete=dir Files
 command! -bang -nargs=* Rg call fzf#vim#grep("rg -g '!yarn.lock' --no-heading --line-number --color=always --smart-case ".shellescape(<q-args>), 1, fzf#vim#with_preview({'options': '--delimiter : --nth 2..'}, 'right:50%'), <bang>0)
 
 " FZF
-nnoremap <silent> <C-b> :Buffers<cr>
+nnoremap <silent> <Leader>b :Buffers<cr>
 nnoremap <silent> <C-p> :Rg <cr>
 nnoremap <silent> <C-f> :Files <cr>
-nnoremap <silent> <Leader>` :Marks<cr>
+nnoremap <silent> <Leader>' :Marks<cr>
 nnoremap <silent> <C-g> :GFiles?<cr>
 nnoremap <silent> <C-_> :BLines<cr>
 nnoremap <silent> <Leader>/ :Lines<cr>
-nnoremap <silent> h: :History:<cr>
+nnoremap <silent> <C-h> :History:<cr>
 nnoremap <silent> <Leader>gb :GBranches<cr>
 nnoremap <silent> <Leader>g :Git<cr>
 
@@ -347,7 +347,7 @@ hi DiffAdd gui=NONE guibg=#2c406e guifg=white
 hi DiffDelete gui=NONE guibg=#693649 guifg=white
 
 " hi DiffAdd guifg=NONE ctermfg=NONE guibg=#464632 ctermbg=238 gui=NONE cterm=NONE
-" hi DiffChange guifg=NONE ctermfg=NONE guibg=#335261 ctermbg=239 gui=NONE cterm=NONE
+hi DiffChange guifg=NONE ctermfg=NONE guibg=#335261 ctermbg=239 gui=NONE cterm=NONE
 " hi DiffDelete guifg=#f43753 ctermfg=203 guibg=#79313c ctermbg=237 gui=NONE cterm=NONE
 " hi DiffText guifg=NONE ctermfg=NONE guibg=NONE ctermbg=NONE gui=reverse cterm=reverse
 
@@ -358,20 +358,25 @@ hi DiffDelete gui=NONE guibg=#693649 guifg=white
 " hi DiffDelete guifg=NONE ctermfg=NONE guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
 " hi DiffText guifg=NONE ctermfg=NONE guibg=NONE ctermbg=NONE gui=reverse cterm=reverse
 
+
 " disable the default highlight group
 let g:conflict_marker_highlight_group = ''
 
 " Include text after begin and end markers
-let g:conflict_marker_begin = '^<<<<<<< .*$'
+let g:conflict_marker_begin = '^<<<<<<< \@='
+let g:conflict_marker_common_ancestors = '^||||||| .*$'
+let g:conflict_marker_separator = '^=======$'
 let g:conflict_marker_end   = '^>>>>>>> .*$'
 
 " Merge conflicts markers highlighting
 
-highlight ConflictMarkerBegin guibg=#2f7366
-highlight ConflictMarkerOurs guibg=#2e5049
-highlight ConflictMarkerTheirs guibg=#344f69
-highlight ConflictMarkerEnd guibg=#2f628e
-highlight ConflictMarkerCommonAncestorsHunk guibg=#754a81
+highlight ConflictMarkerBegin guibg=#072925
+highlight ConflictMarkerOurs guibg=#072925
+highlight ConflictMarkerTheirs guibg=#06192C
+highlight ConflictMarkerEnd guibg=#06192C
+highlight ConflictMarkerSeparator guibg=#23262A
+" highlight ConflictMarkerCommonAncestorsHunk guibg=#302f10
+highlight ConflictMarkerCommonAncestors guibg=#302f10
 
 " Git rebase shortcuts
 
@@ -474,3 +479,10 @@ endf "}}}
 nmap <leader>ggph <Plug>(GitGutterPreviewHunk)
 nmap <leader>ggsh <Plug>(GitGutterStageHunk)
 nmap <leader>gguh <Plug>(GitGutterUndoHunk)
+
+noremap <leader>y "*y
+noremap <leader>yy "*yy
+noremap <leader>Y "*y$
+noremap <leader>x "*x
+noremap <leader>dd "*dd
+noremap <leader>D "*D
