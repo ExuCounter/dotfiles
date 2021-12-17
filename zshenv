@@ -21,12 +21,13 @@ fbr() {
 }
 
 alias gco='git checkout'
-alias gst='git status'
+alias gs='git status'
+alias gst="git stash"
 alias ga='git add'
 alias gb='git branch'
 alias gc='git commit -m'
 alias gd='git diff'
-alias gplo='git pull origin'
+alias gpo='git pull origin'
 
 alias vi="nvim"
 alias vim="nvim"
