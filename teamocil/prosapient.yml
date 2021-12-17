@@ -1,4 +1,9 @@
 windows:
+  - name: build  
+    root: ~/Desktop/prosapient/build/
+    layout: tiled
+    panes:
+      - nvim
   - name: backend
     root: ~/Desktop/prosapient/backend/prosapient-platform/
     layout: tiled

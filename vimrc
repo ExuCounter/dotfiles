@@ -37,6 +37,7 @@ augroup colorscheme_coc_setup | au!
 augroup END
 
 syntax on
+" syntax enable
 set t_Co=256
 set number
 set termguicolors
@@ -99,15 +100,22 @@ nnoremap <silent> <leader>- :new<cr
 " Folds
 
 " setlocal foldmethod=syntax
-setlocal foldlevelstart=200
+" setlocal foldlevelstart=200
 
 " set foldmethod=expr
 " set foldexpr=nvim_treesitter#foldexpr()
 
-set foldenable
-set foldlevelstart=10  " default folding level when buffer is opened
-set foldnestmax=10     " maximum nested fold
-set foldmethod=manual
+" set foldenable
+" set foldlevelstart=10  " default folding level when buffer is opened
+" set foldnestmax=10     " maximum nested fold
+" set foldmethod=manual
+" set foldmethod=syntax
+" set foldcolumn=1
+
+set foldmethod=syntax "syntax highlighting items specify folds  
+set foldcolumn=1 "defines 1 col at window left, to indicate folding  
+let javaScript_fold=1 "activate folding by JS syntax  
+set foldlevelstart=99 "start file with all folds opened
 
 " Vim figutive
 
@@ -363,21 +371,20 @@ hi DiffChange guifg=NONE ctermfg=NONE guibg=#335261 ctermbg=239 gui=NONE cterm=N
 let g:conflict_marker_highlight_group = ''
 
 " Include text after begin and end markers
-let g:conflict_marker_begin = '^<<<<<<< \@='
+let g:conflict_marker_begin = '^<<<<<<< .*$' 
 let g:conflict_marker_common_ancestors = '^||||||| .*$'
 let g:conflict_marker_separator = '^=======$'
 let g:conflict_marker_end   = '^>>>>>>> .*$'
 
 " Merge conflicts markers highlighting
 
-highlight ConflictMarkerBegin guibg=#072925
-highlight ConflictMarkerOurs guibg=#072925
-highlight ConflictMarkerTheirs guibg=#06192C
-highlight ConflictMarkerEnd guibg=#06192C
-highlight ConflictMarkerSeparator guibg=#23262A
-" highlight ConflictMarkerCommonAncestorsHunk guibg=#302f10
-highlight ConflictMarkerCommonAncestors guibg=#302f10
-
+highlight ConflictMarkerBegin guibg=#007566 guifg=NONE
+highlight ConflictMarkerOurs guibg=#1b413b 
+highlight ConflictMarkerTheirs guibg=#1f3a4d
+highlight ConflictMarkerEnd guibg=#156393 guifg=NONE 
+highlight ConflictMarkerSeparator guibg=#302f10 guifg=NONE 
+highlight ConflictMarkerCommonAncestorsHunk guibg=#2b2a0f
+highlight ConflictMarkerCommonAncestors guibg=#362f00
 " Git rebase shortcuts
 
 nnoremap <Leader>grc :Git rebase --continue<CR>
