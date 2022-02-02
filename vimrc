@@ -6,18 +6,18 @@ set encoding=UTF-8
 set cursorline " highlight current line
 set nostartofline " don't reset cursor to start of line when moving around.
 set ruler " show the cursor position
-set shortmess=atI " don't show the intro message when starting Vim
 set showcmd " show the (partial) command as it’s being typed
+set list
+set shortmess=atI " don't show the intro message when starting Vim
 set showmatch  " highlight matching [{()}] "
 set showmode " show the current mode
 
 set hidden " allow unsaved background buffers and remember marks/undo for them
-set list
 set nojs " insert only one space after . ? ! with a join command
 set nosol " keep the cursor in the same column when jump in file
 set nu " enable line numbers
 set pastetoggle=<F9>
-set scrolloff=7 " minimal lines around the cursor
+set scrolloff=10 " minimal lines around the cursor
 
 " hi clear CursorLine
 " hi CursorLine gui=underline cterm=underline
@@ -94,34 +94,23 @@ nnoremap <C-H> <C-W><C-H>
 
 " Fast split
 
-nnoremap <silent> <leader>\ :vnew<cr>
-nnoremap <silent> <leader>- :new<cr
+nnoremap <leader>v :vnew %<cr>
+nnoremap <leader>s :new %<cr>
 
-" Folds
+nnoremap <leader>ev :vnew<cr>
+nnoremap <leader>es :new<cr>
 
-" setlocal foldmethod=syntax
-" setlocal foldlevelstart=200
-
-" set foldmethod=expr
-" set foldexpr=nvim_treesitter#foldexpr()
-
-" set foldenable
-" set foldlevelstart=10  " default folding level when buffer is opened
-" set foldnestmax=10     " maximum nested fold
-" set foldmethod=manual
-" set foldmethod=syntax
-" set foldcolumn=1
-
-set foldmethod=syntax "syntax highlighting items specify folds  
-set foldcolumn=1 "defines 1 col at window left, to indicate folding  
-let javaScript_fold=1 "activate folding by JS syntax  
-set foldlevelstart=99 "start file with all folds opened
+" FOLDING
+set foldenable          " dont fold by default
+set foldmethod=indent   " fold based on spaces
+set foldlevelstart=10   " open most folds by default
+set foldnestmax=10      " 10 nested fold max
 
 " Vim figutive
 
-nmap <leader>go :G<CR>
-nmap <leader>gr :diffget //3<CR>
-nmap <leader>gl :diffget //2<CR>
+" nmap <leader>gr :diffget //3<CR>
+" nmap <leader>gl :diffget //2<CR>
+
 
 " Go to tab by number
 
@@ -134,8 +123,8 @@ noremap <leader>6 6gt
 noremap <leader>7 7gt
 noremap <leader>8 8gt
 noremap <leader>9 9gt
-noremap <leader>l gt
-map <leader>h gT
+noremap <leader><Right> gt
+map <leader><Left> gT
 
 " Untitled txt file
 
@@ -157,8 +146,8 @@ command! -nargs=0 Prettier :CocCommand prettier.formatFile
 
 autocmd FileType scss setl iskeyword+=@-@
 
-vmap <leader>g  <Plug>(coc-format-selected)
-nmap <leader>g  <Plug>(coc-format-selected)
+" vmap <leader>g  <Plug>(coc-format-selected)
+" nmap <leader>g  <Plug>(coc-format-selected)
 
 noremap <silent> <C-S>          :update<CR>
 vnoremap <silent> <C-S>         <C-C>:update<CR>
@@ -182,18 +171,14 @@ nnoremap <silent> <Leader>' :Marks<cr>
 nnoremap <silent> <C-g> :GFiles?<cr>
 nnoremap <silent> <C-_> :BLines<cr>
 nnoremap <silent> <Leader>/ :Lines<cr>
-nnoremap <silent> <C-h> :History:<cr>
+" nnoremap <silent> <C-h> :History:<cr>
 nnoremap <silent> <Leader>gb :GBranches<cr>
 nnoremap <silent> <Leader>g :Git<cr>
+nnoremap <silent> <Leader>G :Git<cr>
 
 let g:fzf_checkout_git_options = '--sort=-committerdate'
 
-nnoremap <leader>s :w<cr>
-nnoremap <Leader>fq :q!<cr>
-nnoremap <Leader>q :q<cr>
-
-nnoremap <leader>[ :vsplit<cr>
-nnoremap <leader>] :split<cr>
+nmap <Leader>q :q!<cr>
 
 " Clear highlighting on escape in normal mode
 nnoremap <esc> :noh<return><esc>
@@ -225,13 +210,10 @@ set tabstop=2
 let g:airline_section_x = '%{strftime("%H:%M:%S")}'
 let g:airline_theme = 'onedark'
 
-nnoremap <leader>gpu :Git push<CR>
-nnoremap <leader>gpl :Git pull<CR>
 nnoremap <leader>gcm :Git commit -v -q<CR>
-nnoremap <leader>gam :Git commit --amend<CR>
-nnoremap <leader>gcl :Gclog<CR>
-nnoremap <leader>gbm :Git blame<CR>
-
+nnoremap <leader>gd :Git diff 
+nnoremap <leader>gcl :Gclog -50<CR>
+nnoremap <leader>gl :Git log<CR>
 nnoremap <leader>cld :CocList diagnostics<CR>
 
 nnoremap <leader>gco :!fbr<CR>
@@ -271,12 +253,12 @@ command GStatusTabDiff call GStatusTabDiff()
 autocmd FileType gitcommit noremap <buffer> dt :GStatusTabDiff<CR>
 
 " Move lines by alt + arrows
-nnoremap <M-Down> :m .+1<CR>==
-nnoremap <M-Up> :m .-2<CR>==
-inoremap <M-Down> <Esc>:m .+1<CR>==gi
-inoremap <M-Up> <Esc>:m .-2<CR>==gi
-vnoremap <M-Down> :m '>+1<CR>gv=gv
-vnoremap <M-Up> :m '<-2<CR>gv=gv
+nnoremap ∆ :m .+1<CR>==
+nnoremap ˚ :m .-2<CR>==
+inoremap ∆ <Esc>:m .+1<CR>==gi
+inoremap ˚ <Esc>:m .-2<CR>==gi
+vnoremap ∆ :m '>+1<CR>gv=gv
+vnoremap ˚ :m '<-2<CR>gv=gv
 
 autocmd BufEnter *.{js,jsx,ts,tsx} :syntax sync fromstart
 autocmd BufLeave *.{js,jsx,ts,tsx} :syntax sync clear
@@ -292,8 +274,30 @@ function! PushToCurrentBranch()
   exe ":Git push origin" . branch
 endfunction
 
+function! PushToCurrentBranchForce()
+	exe ":Gwrite"
+	let branch = fugitive#statusline()
+	let branch = substitute(branch, '\c\v\[?GIT\(([a-z0-9\-_\./:]+)\)\]?', $BRANCH.' \1', 'g')
+	exe ":Git push origin --force" . branch
+endfunction
+
+function! PullCurrentBranch()
+  exe ":Gwrite"
+  let branch = fugitive#statusline()
+  let branch = substitute(branch, '\c\v\[?GIT\(([a-z0-9\-_\./:]+)\)\]?', $BRANCH.' \1', 'g')
+  exe ":Git pull origin" . branch
+endfunction
+
+function! FetchAllBranches()
+  exe ":Gwrite"
+  exe ":Git fetch --all --tags"
+endfunction
+
 " Map gwp keys to call the function
 nnoremap <Leader>gbp :call PushToCurrentBranch()<CR>
+nnoremap <Leader>gbpf :call PushToCurrentBranchForce()<CR>
+nnoremap <Leader>gpl :call PullCurrentBranch()<CR>
+nnoremap <Leader>gfa :call FetchAllBranches()<CR>
 
 xnoremap p "_dP
 nnoremap <leader>d "_d
@@ -302,16 +306,6 @@ vnoremap <leader>d "_d
 " let g:move_key_modifier = 'A'
 
 set noswapfile
-
-let g:esearch = {}
-let g:esearch.adapter = 'ag'
-" let g:esearch.root_markers = ['.git', 'Makefile', 'node_modules']
-" let g:esearch.filetypes ='src/**/*.*'
-noremap <leader>fc :call esearch#init({'paths': 'src/components/@client/'})<cr>
-noremap <leader>fg :call esearch#init({'paths': 'src/graphql-tools/'})<cr>
-noremap <leader>fp :call esearch#init({'paths': 'src/components/@public/'})<cr>
-noremap <leader>fa :call esearch#init({'paths': 'src/components/@admin'})<cr>
-noremap <leader>fa :call esearch#init({'paths': ''})
 
 " Tree sitter ( Syntax highlight )
 
@@ -389,6 +383,7 @@ highlight ConflictMarkerCommonAncestors guibg=#362f00
 
 nnoremap <Leader>grc :Git rebase --continue<CR>
 nnoremap <Leader>gra :Git rebase --abort
+nnoremap <Leader>grsh :Git reset --hard
 nnoremap <Leader>gri :Git rebase --interactive HEAD~
 
 " Git Blamer vim
@@ -403,11 +398,6 @@ augroup VimCSS3Syntax
 
   autocmd FileType css setlocal iskeyword+=-
 augroup END
-
-" Open the search window in a vertical split and reuse it for all further searches.
-let g:esearch.name = '[esearch]'
-let g:esearch.win_new = {esearch -> esearch#buf#goto_or_open(esearch.name, 'tabnew')}
-
 
 function MoveToPrevTab()
   "there is only one window
@@ -455,8 +445,8 @@ endfunc
 
 nmap dt :tabedit %<CR>:Gdiff<CR>
 
-nnoremap <leader><Right> :call MoveToNextTab()<CR>
-nnoremap <leader><Left> :call MoveToPrevTab()<CR>
+nnoremap <leader>l :call MoveToNextTab()<CR>
+nnoremap <leader>h :call MoveToPrevTab()<CR>
 
 fu! PasteWindow(direction) "{{{
     if exists("g:yanked_buffer")
@@ -488,8 +478,47 @@ nmap <leader>ggsh <Plug>(GitGutterStageHunk)
 nmap <leader>gguh <Plug>(GitGutterUndoHunk)
 
 noremap <leader>y "*y
-noremap <leader>yy "*yy
+" noremap <leader>yy "*yy
 noremap <leader>Y "*y$
 noremap <leader>x "*x
 noremap <leader>dd "*dd
 noremap <leader>D "*D
+
+" EasyMotion
+map  / <Plug>(easymotion-sn)
+omap / <Plug>(easymotion-tn)
+
+let g:accelerated_jk_acceleration_limit = 500 
+
+nmap j <Plug>(accelerated_jk_gj)
+nmap k <Plug>(accelerated_jk_gk)
+
+let g:accelerated_jk_acceleration_table = [30,60]
+
+" Disable Arrow keys in Normal mode
+map <up> <nop>
+map <down> <nop>
+map <left> <nop>
+map <right> <nop>
+
+" Disable Arrow keys in Insert mode
+imap <up> <nop>
+imap <down> <nop>
+imap <left> <nop>
+imap <right> <nop>
+
+inoremap jk <Esc>
+
+let g:comfortable_motion_no_default_key_mappings = 1
+
+nnoremap <silent> <C-d> :call comfortable_motion#flick(100)<CR>
+nnoremap <silent> <C-u> :call comfortable_motion#flick(-100)<CR>
+
+let g:comfortable_motion_impulse_multiplier = 1  " Feel free to increase/decrease this value.
+nnoremap <silent> <C-d> :call comfortable_motion#flick(g:comfortable_motion_impulse_multiplier * winheight(0) * 2)<CR>
+nnoremap <silent> <C-u> :call comfortable_motion#flick(g:comfortable_motion_impulse_multiplier * winheight(0) * -2)<CR>
+
+let g:comfortable_motion_friction = 80.0
+let g:comfortable_motion_air_drag = 10.0
+
+autocmd FileType fugitiveblame nmap <buffer> q gq

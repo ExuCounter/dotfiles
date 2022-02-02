@@ -1,27 +1,31 @@
 windows:
-  - name: build  
-    root: ~/Desktop/prosapient/build/
+  - name: build
+    root: ~/Desktop/projects/prosapient/build/
     layout: tiled
     panes:
-      - nvim
-  - name: backend
-    root: ~/Desktop/prosapient/backend/prosapient-platform/
+     - vi
+  - name: dotfiles
+    root: ~/Desktop/projects/own/dotfiles
+    layout: tiled
+    panes:
+      - vi
+  - name: styleguide
+    root: ~/Desktop/projects/prosapient/styleguide/
+    layout: tiled
+    panes:
+      - vi
+  - name: platform
+    root: ~/Desktop/projects/prosapient/platform/
     layout: tiled
     panes:
       - docker-compose up postgres minio
       - OBAN_DISABLED=0 iex -S mix phx.server
-      - echo "backend pane"
-  - name: styleguide
-    root: ~/Desktop/prosapient/prosapient-styleguide/
-    layout: tiled
-  - name: frontend
-    root: ~/Desktop/prosapient/platform-frontend/
+      - cd frontend && yarn start
+      - echo "yohooo"
+  - name: magic
+    root: ~/Desktop/projects/prosapient/platform/frontend/
     layout: tiled
     panes:
-      - git checkout && yarn start
-      - echo "platform-frontend"
-  - name: frontend-vim
-    root: ~/Desktop/prosapient/platform-frontend/
-    layout: tiled
-    panes:
-      - nvim
+      - commands:
+         - echo "yahoooo" && nvim
+        focus: true

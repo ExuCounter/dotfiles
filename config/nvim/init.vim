@@ -25,6 +25,7 @@ Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive' ", { 'tag': 'v3.1' }
 " Plug 'stsewd/fzf-checkout.vim'
 Plug 'APZelos/blamer.nvim'
+Plug 'brooth/far.vim'
 
 " Coc
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
@@ -53,6 +54,12 @@ Plug 'hail2u/vim-css3-syntax'
 Plug 'cakebaker/scss-syntax.vim'
 Plug 'jacquesbh/vim-showmarks'
 Plug 'mg979/vim-visual-multi', {'branch': 'master'}
+Plug 'easymotion/vim-easymotion' 
+Plug 'Yggdroot/indentLine'
+Plug 'rhysd/accelerated-jk'
+Plug 'yuttie/comfortable-motion.vim'
+Plug 'christoomey/vim-tmux-navigator'
+Plug 'vim-scripts/YankRing.vim'
 
 " Fzf
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() }}
@@ -70,6 +77,8 @@ Plug 'brooth/far.vim'
 " Icons
 Plug 'ryanoasis/vim-devicons'
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+
+Plug'djoshea/vim-autoread'
 
 call plug#end()
 

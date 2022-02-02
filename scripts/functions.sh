@@ -15,9 +15,11 @@ REACT_APP_TYPE=$app_type
 REACT_APP_METRICS_FEATURE=
 UPLOADCARE_PUBLIC_KEY=
 SURVEY_RESULTS_GUIDE_URL=
-REACT_APP_IP_API_URL=http://ip-api.com/json"
+REACT_APP_IP_API_URL=http://ip-api.com/json
+WDS_SOCKET_PORT=3000
+"
 
   # sed -i -e 's/REACT_APP_ACCESS_TOKEN=/REACT_APP_ACCESS_TOKEN=$1/g' $HOME/Desktop/prosapient/platform-frontend/.env
 
-echo $env > $HOME/Desktop/prosapient/platform-frontend/.env
+echo $env > $HOME/Desktop/projects/prosapient/platform/frontend/.env
 }
