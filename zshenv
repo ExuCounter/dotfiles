@@ -21,13 +21,17 @@ fbr() {
 }
 
 alias gco='git checkout'
-alias gs='git status'
-alias gst="git stash"
-alias ga='git add'
-alias gb='git branch'
-alias gc='git commit -m'
-alias gd='git diff'
-alias gpo='git pull origin'
+alias gstatus='git status'
+alias gstash="git stash"
+alias gadd='git add'
+alias gbranch='git branch'
+alias gcommit='git commit -m'
+alias gdiff='git diff'
+alias gpull='git pull origin $(git rev-parse --abbrev-ref HEAD)'
+alias gpush='git push origin'
+alias gpushf='git push origin -f'
+alias gresets='git reset --soft'
+alias greseth='git reset --hard'
 
 alias vi="nvim"
 alias vim="nvim"
