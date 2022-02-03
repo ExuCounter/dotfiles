@@ -59,7 +59,8 @@ Plug 'Yggdroot/indentLine'
 Plug 'rhysd/accelerated-jk'
 Plug 'yuttie/comfortable-motion.vim'
 Plug 'christoomey/vim-tmux-navigator'
-Plug 'vim-scripts/YankRing.vim'
+Plug 'tpope/vim-dadbod'
+Plug 'kristijanhusak/vim-dadbod-ui'
 
 " Fzf
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() }}
