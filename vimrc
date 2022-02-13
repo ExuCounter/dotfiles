@@ -186,7 +186,7 @@ nnoremap <esc>^[ <esc>^[
 
 nnoremap <leader>tn :tabnew %<cr>
 
-command! -nargs=0 Prettier :CocCommand prettier.formatFile
+" command! -nargs=0 Prettier :CocCommand prettier.formatFile
 
 inoremap <C-s> <Esc>   """ <C-s> key is <Esc> setting
 
@@ -522,3 +522,11 @@ let g:comfortable_motion_friction = 80.0
 let g:comfortable_motion_air_drag = 10.0
 
 autocmd FileType fugitiveblame nmap <buffer> q gq
+
+" Ultisnips
+
+" Use <C-j> for jump to next placeholder, it's default of coc.nvim
+let g:coc_snippet_next = '<c-l>'
+
+" Use <C-k> for jump to previous placeholder, it's default of coc.nvim
+let g:coc_snippet_prev = '<c-h>'
