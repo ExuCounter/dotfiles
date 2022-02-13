@@ -15,5 +15,9 @@
   "javascript.suggest.autoImports": true,
   "typescript.suggest.autoImports": true,
   "javascript.suggestionActions.enabled": false,
-	"snippets.ultisnips.directories": ["UltiSnips"]
+  "snippets.ultisnips.directories": ["UltiSnips"],
+  "snippets.priority": 99,
+	"snippets.shortcut": "Snippets",
+  "tabnine.priority": 90,
+  "tabnine.shortcut": "Tabnine",
 }
