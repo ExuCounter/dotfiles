@@ -7,17 +7,18 @@
 
 - link:
     ~/.vimrc:
-    ~/.config/nvim/init.vim: config/nvim/init.vim
-    ~/.config/nvim/coc-settings.json: config/nvim/coc-settings.json
-    ~/.tmux.conf:
     ~/.zshrc:
+    ~/.tmux.conf:
     ~/.zshenv:
-    ~/.teamocil/prosapient.yml: teamocil/prosapient.yml
     ~/.fzf.zsh: fzf.zsh
     ~/.fzf.bash: fzf.bash
+    ~/.teamocil/prosapient.yml: teamocil/prosapient.yml
     ~/scripts/functions.sh: scripts/functions.sh
     ~/.vim/coc/settings.vim: vim/coc/settings.vim
     ~/.vim/jsx-tsx-highlight/highlight.vim: vim/jsx-tsx-highlight/highlight.vim
-
+    ~/.config/nvim/init.vim: config/nvim/init.vim
+    ~/.config/nvim/coc-settings.json: config/nvim/coc-settings.json
+    ~/.config/coc/ultisnips/typescriptreact.snippets: config/coc/ultisnips/typescriptreact.snippets
+    ~/.config/coc/extensions/package.json: config/coc/extensions/package.json
 - shell:
   - [git submodule update --init --recursive, Installing submodules]
