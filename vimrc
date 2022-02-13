@@ -321,6 +321,10 @@ require'nvim-treesitter.configs'.setup {
   },
   autotag = {
     enable = true,
+  },
+  context_commentstring = {
+    enable = true,
+    enable_autocmd = false
   }
 }
 
@@ -530,3 +534,22 @@ let g:coc_snippet_next = '<c-l>'
 
 " Use <C-k> for jump to previous placeholder, it's default of coc.nvim
 let g:coc_snippet_prev = '<c-h>'
+
+autocmd User EasyMotionPromptBegin silent! CocDisable
+autocmd User EasyMotionPromptEnd silent! CocEnable
+
+
+" Close tag
+
+let g:closetag_filenames = '*.html,*.tsx,*.jsx'
+let g:closetag_xhtml_filenames = '*.xhtml'
+let g:closetag_filetypes = 'html,xhtml,phtml,jsx,tsx'
+let g:closetag_xhtml_filetypes = 'xhtml,jsx,tsx'
+let g:closetag_emptyTags_caseSensitive = 1
+let g:closetag_shortcut = '>'
+let g:closetag_regions =  {
+\ 'typescript.tsx': 'jsxRegion,tsxRegion',
+\ 'javascript.jsx': 'jsxRegion',
+\ }
+
+
