@@ -309,6 +309,7 @@ set noswapfile
 " Tree sitter ( Syntax highlight )
 
 lua <<EOF
+
 require'nvim-treesitter.configs'.setup {
   ensure_installed = "maintained", -- one of "all", "maintained" (parsers with maintainers), or a list of languages
   highlight = {
@@ -341,6 +342,8 @@ require'nvim-treesitter.configs'.setup {
     -- termcolors = {} -- table of colour name strings
   }
 }
+
+
 
 EOF
 
@@ -407,7 +410,7 @@ nnoremap <Leader>gcb :Git checkout -b
 
 " Git Blamer vim
 
-highlight Blamer guifg=grey
+highlight Blamer guifg=grey guibg=#2c323c
 let g:blamer_relative_time = 1
 let g:blamer_date_format = '%d/%m/%y'
 let g:blamer_delay = 0
@@ -569,3 +572,10 @@ highlight CocFloating ctermbg=Black guibg=#000000
 " \ }
 
 highlight MatchParen ctermbg=Black guibg=Black ctermfg=LightGray guifg=LightGray
+
+" jk to normal mode
+inoremap jk <Esc>
+
+" Auto pairs
+
+let g:AutoPairsFlyMode = 0

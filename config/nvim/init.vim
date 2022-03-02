@@ -46,7 +46,6 @@ Plug 'wincent/terminus'
 Plug 'airblade/vim-gitgutter'
 Plug 'taku-o/vim-copypath'
 Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
-Plug 'jiangmiao/auto-pairs'
 Plug 'psliwka/vim-smoothie'
 Plug 'tpope/vim-surround'
 Plug 'rhysd/conflict-marker.vim'
@@ -68,8 +67,6 @@ Plug 'junegunn/fzf.vim'
 
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-
-" Plug 'dkprice/vim-easygrep'
 Plug 'simeji/winresizer'
 
 Plug 'matze/vim-move'
@@ -83,6 +80,8 @@ Plug 'djoshea/vim-autoread'
 Plug 'JoosepAlviste/nvim-ts-context-commentstring'
 Plug 'alvan/vim-closetag'
 Plug 'p00f/nvim-ts-rainbow'
+Plug 'windwp/nvim-ts-autotag'
+Plug 'Raimondi/delimitMate'
 
 call plug#end()
 
