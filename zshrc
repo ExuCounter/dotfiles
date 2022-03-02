@@ -125,12 +125,9 @@ export EDITOR=nvim
 export VISUAL="$EDITOR"
 eval "$(direnv hook zsh)"
 source $HOME/.zshenv
-# . /opt/homebrew/opt/asdf/asdf.sh
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 source $HOME/scripts/functions.sh
 
 . $HOME/.asdf/asdf.sh
-
-# . /opt/homebrew/opt/asdf/libexec/asdf.sh

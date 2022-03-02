@@ -1,3 +1,4 @@
+# vim-git checkout
 fco() {
   local tags branches target
   tags=$(
@@ -20,6 +21,7 @@ fbr() {
   git checkout $(echo "$branch" | sed "s/.* //" | sed "s#remotes/[^/]*/##")
 }
 
+# Git aliases
 alias gco='git checkout'
 alias gs='git status'
 alias gst="git stash"
@@ -34,6 +36,7 @@ alias grs='git reset --soft'
 alias grh='git reset --hard'
 alias chrome='open -a "Google Chrome"'
 
+# Vim aliases
 alias vi="nvim"
 alias vim="nvim"
 alias code="nvim"

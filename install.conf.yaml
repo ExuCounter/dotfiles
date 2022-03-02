@@ -11,11 +11,22 @@
     ~/.tmux.conf:
     ~/.zshenv:
     ~/.fzf.zsh: fzf.zsh
-    ~/.fzf.bash: fzf.bash
     ~/.teamocil/prosapient.yml: teamocil/prosapient.yml
     ~/scripts/functions.sh: scripts/functions.sh
-    ~/.vim/coc/settings.vim: vim/coc/settings.vim
-    ~/.vim/jsx-tsx-highlight/highlight.vim: vim/jsx-tsx-highlight/highlight.vim
+    ~/.vim/coc-settings.vim: vim/coc-settings.vim
+    ~/.vim/airline.vim: vim/airline.vim
+    ~/.vim/blamer.vim: vim/blamer.vim
+    ~/.vim/configuration.vim: vim/configuration.vim
+    ~/.vim/custom-mappings.vim: vim/custom-mappings.vim
+    ~/.vim/custom-highlights.vim: vim/custom-highlights.vim
+    ~/.vim/folding.vim: vim/folding.vim
+    ~/.vim/fzf.vim: vim/fzf.vim
+    ~/.vim/git.vim: vim/git.vim
+    ~/.vim/nerdtree.vim: vim/nerdtree.vim
+    ~/.vim/treesitter.lua: vim/treesitter.lua
+    ~/.vim/windows.vim: vim/windows.vim
+    ~/.vim/moves.vim: vim/moves.vim
+
     ~/.config/nvim/init.vim: config/nvim/init.vim
     ~/.config/nvim/coc-settings.json: config/nvim/coc-settings.json
     ~/.config/coc/ultisnips/typescriptreact.snippets: config/coc/ultisnips/typescriptreact.snippets
