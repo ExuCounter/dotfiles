@@ -182,7 +182,6 @@ nmap <Leader>q :q!<cr>
 
 " Clear highlighting on escape in normal mode
 nnoremap <esc> :noh<return><esc>
-nnoremap <esc>^[ <esc>^[
 
 nnoremap <leader>tn :tabnew %<cr>
 
@@ -207,7 +206,7 @@ let g:airline_powerline_fonts = 1
 set shiftwidth=0
 set tabstop=2
 
-let g:airline_section_x = '%{strftime("%H:%M:%S")}'
+" let g:airline_section_x = '%{strftime("%H:%M:%S")}'
 let g:airline_theme = 'onedark'
 
 nnoremap <leader>gcm :Git commit -v -q<CR>
@@ -325,6 +324,21 @@ require'nvim-treesitter.configs'.setup {
   context_commentstring = {
     enable = true,
     enable_autocmd = false
+  },
+  rainbow = {
+    enable = false,
+    -- disable = { "jsx", "cpp" }, list of languages you want to disable the plugin for
+    -- extended_mode = true, -- Also highlight non-bracket delimiters like html tags, boolean or table: lang -> boolean
+    max_file_lines = nil, -- Do not enable for files with more than n lines, int
+		colors = {
+			"#e5c07b",
+			"#dcdfe4",
+			"#7d8dad",
+			"#56b6c2",
+			"#98c379",
+			"#61afef",
+		}, -- table of hex strings
+    -- termcolors = {} -- table of colour name strings
   }
 }
 
@@ -389,6 +403,7 @@ nnoremap <Leader>grc :Git rebase --continue<CR>
 nnoremap <Leader>gra :Git rebase --abort
 nnoremap <Leader>grsh :Git reset --hard
 nnoremap <Leader>gri :Git rebase --interactive HEAD~
+nnoremap <Leader>gcb :Git checkout -b  
 
 " Git Blamer vim
 
@@ -538,18 +553,19 @@ let g:coc_snippet_prev = '<c-h>'
 autocmd User EasyMotionPromptBegin silent! CocDisable
 autocmd User EasyMotionPromptEnd silent! CocEnable
 
+highlight CocFloating ctermbg=Black guibg=#000000
 
 " Close tag
 
-let g:closetag_filenames = '*.html,*.tsx,*.jsx'
-let g:closetag_xhtml_filenames = '*.xhtml'
-let g:closetag_filetypes = 'html,xhtml,phtml,jsx,tsx'
-let g:closetag_xhtml_filetypes = 'xhtml,jsx,tsx'
-let g:closetag_emptyTags_caseSensitive = 1
-let g:closetag_shortcut = '>'
-let g:closetag_regions =  {
-\ 'typescript.tsx': 'jsxRegion,tsxRegion',
-\ 'javascript.jsx': 'jsxRegion',
-\ }
+" let g:closetag_filenames = '*.html,*.tsx,*.jsx'
+" let g:closetag_xhtml_filenames = '*.xhtml'
+" let g:closetag_filetypes = 'html,xhtml,phtml,jsx,tsx'
+" let g:closetag_xhtml_filetypes = 'xhtml,jsx,tsx'
+" let g:closetag_emptyTags_caseSensitive = 1
+" let g:closetag_shortcut = '>'
+" let g:closetag_regions =  {
+" \ 'typescript.tsx': 'jsxRegion',
+" \ 'javascript.jsx': 'jsxRegion',
+" \ }
 
-
+highlight MatchParen ctermbg=Black guibg=Black ctermfg=LightGray guifg=LightGray

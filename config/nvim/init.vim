@@ -82,6 +82,7 @@ Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 Plug 'djoshea/vim-autoread'
 Plug 'JoosepAlviste/nvim-ts-context-commentstring'
 Plug 'alvan/vim-closetag'
+Plug 'p00f/nvim-ts-rainbow'
 
 call plug#end()
 
