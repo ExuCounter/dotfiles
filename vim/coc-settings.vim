@@ -154,5 +154,3 @@ let g:coc_snippet_next = '<c-l>'
 let g:coc_snippet_prev = '<c-h>'
 autocmd User EasyMotionPromptBegin silent! CocDisable
 autocmd User EasyMotionPromptEnd silent! CocEnable
-
-
