@@ -8,7 +8,9 @@
     "javascriptreact",
     "json",
     "graphql",
-    "typescriptreact"
+    "typescriptreact",
+    "scss",
+    "html"
   ],
   "tsserver.formatOnType": true,
   "coc.preferences.formatOnType": true,
@@ -17,7 +19,7 @@
   "javascript.suggestionActions.enabled": false,
   "snippets.ultisnips.directories": ["UltiSnips"],
   "snippets.priority": 99,
-	"snippets.shortcut": "Snippets",
+  "snippets.shortcut": "Snippets",
   "tabnine.priority": 90,
-  "tabnine.shortcut": "Tabnine",
+  "tabnine.shortcut": "Tabnine"
 }
