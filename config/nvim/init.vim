@@ -80,6 +80,7 @@ Plug 'Raimondi/delimitMate'
 
 Plug 'nacro90/numb.nvim'
 Plug 'karb94/neoscroll.nvim'
+Plug 'brooth/far.vim'
 
 call plug#end()
 
