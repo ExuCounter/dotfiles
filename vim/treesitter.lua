@@ -27,3 +27,6 @@ require'nvim-treesitter.configs'.setup {
     -- termcolors = {} -- table of colour name strings
   }
 }
+
+require('numb').setup()
+require('neoscroll').setup()

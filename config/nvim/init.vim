@@ -74,11 +74,12 @@ Plug 'christoomey/vim-tmux-navigator'
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 Plug 'djoshea/vim-autoread'
 Plug 'JoosepAlviste/nvim-ts-context-commentstring'
-Plug 'alvan/vim-closetag'
 Plug 'p00f/nvim-ts-rainbow'
 Plug 'windwp/nvim-ts-autotag'
 Plug 'Raimondi/delimitMate'
 
+Plug 'nacro90/numb.nvim'
+Plug 'karb94/neoscroll.nvim'
 
 call plug#end()
 

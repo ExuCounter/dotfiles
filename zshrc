@@ -119,7 +119,6 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-export OPEN_WEATHER_API_KEY="d2c6ccb0bc17e58710b277bfb90765b9"
 export PATH=/opt/homebrew/bin:$PATH
 export DIRENV_LOG_FORMAT=
 export EDITOR=nvim
