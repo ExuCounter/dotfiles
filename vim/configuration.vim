@@ -47,7 +47,7 @@ endif
 
 set t_Co=256
 set number
-set termguicolors
+" set termguicolors
 set noswapfile
 
 set lazyredraw            " improve scrolling performance when navigating through large results

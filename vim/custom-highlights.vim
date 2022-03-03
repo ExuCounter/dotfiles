@@ -1,9 +1,9 @@
 " Coc
-hi CocErrorHighlight cterm=undercurl guisp=#000000
-hi CocFloating ctermbg=Black guibg=#000000
+hi CocErrorHighlight cterm=undercurl guisp=#080010 
+hi CocFloating ctermbg=Black guibg=#080010  
 
 " Matched brackets
-hi MatchParen ctermbg=Black guibg=Black ctermfg=LightGray guifg=LightGray
+hi MatchParen guibg=#3e4452 ctermfg=LightGray guifg=LightGray
 
 " Blamer
 hi Blamer guifg=grey guibg=#2c323c
