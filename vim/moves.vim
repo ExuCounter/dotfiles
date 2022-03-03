@@ -7,15 +7,15 @@ nmap k <Plug>(accelerated_jk_gk)
 let g:accelerated_jk_acceleration_table = [30,60]
 let g:comfortable_motion_no_default_key_mappings = 1
 
-nnoremap <silent> <C-d> :call comfortable_motion#flick(150)<CR>
-nnoremap <silent> <C-u> :call comfortable_motion#flick(-150)<CR>
+" nnoremap <silent> <C-d> :call comfortable_motion#flick(150)<CR>
+" nnoremap <silent> <C-u> :call comfortable_motion#flick(-150)<CR>
 
-let g:comfortable_motion_impulse_multiplier = 1  " Feel free to increase/decrease this value.
-nnoremap <silent> <C-d> :call comfortable_motion#flick(g:comfortable_motion_impulse_multiplier * winheight(0) * 2)<CR>
-nnoremap <silent> <C-u> :call comfortable_motion#flick(g:comfortable_motion_impulse_multiplier * winheight(0) * -2)<CR>
+" let g:comfortable_motion_impulse_multiplier = 1  " Feel free to increase/decrease this value.
+" nnoremap <silent> <C-d> :call comfortable_motion#flick(g:comfortable_motion_impulse_multiplier * winheight(0) * 2)<CR>
+" nnoremap <silent> <C-u> :call comfortable_motion#flick(g:comfortable_motion_impulse_multiplier * winheight(0) * -2)<CR>
 
-let g:comfortable_motion_friction = 80.0
-let g:comfortable_motion_air_drag = 10.0
+" let g:comfortable_motion_friction = 80.0
+" let g:comfortable_motion_air_drag = 10.0
 
 " Disable Arrow keys in Normal mode
 map <up> <nop>

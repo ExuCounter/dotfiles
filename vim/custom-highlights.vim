@@ -21,5 +21,3 @@ hi ConflictMarkerCommonAncestors guibg=#362f00
 hi DiffAdd gui=NONE guibg=#2c406e guifg=white
 hi DiffDelete gui=NONE guibg=#693649 guifg=white
 hi DiffChange guifg=NONE ctermfg=NONE guibg=#335261 ctermbg=239 gui=NONE cterm=NONE
-
-
