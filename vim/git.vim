@@ -52,6 +52,7 @@ nnoremap <Leader>gcb :Git checkout -b
 
 " Git hunks
 nmap <leader>ggsh <Plug>(GitGutterStageHunk)
+nmap <leader>ggph <Plug>(GitGutterPreviewHunk)
 nmap <leader>gguh <Plug>(GitGutterUndoHunk)
 
 " Check git diff for file
