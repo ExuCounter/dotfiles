@@ -81,6 +81,24 @@ Plug 'Raimondi/delimitMate'
 Plug 'nacro90/numb.nvim'
 Plug 'karb94/neoscroll.nvim'
 Plug 'brooth/far.vim'
+Plug 'jeffkreeftmeijer/vim-numbertoggle'
+Plug 'beauwilliams/focus.nvim'
+
+if has('nvim')
+  function! UpdateRemotePlugins(...)
+    " Needed to refresh runtime files
+    let &rtp=&rtp
+    UpdateRemotePlugins
+  endfunction
+
+  Plug 'gelguy/wilder.nvim', { 'do': function('UpdateRemotePlugins') }
+else
+  Plug 'gelguy/wilder.nvim'
+
+  " To use Python remote plugin features in Vim, can be skipped
+  Plug 'roxma/nvim-yarp'
+  Plug 'roxma/vim-hug-neovim-rpc'
+endif
 
 call plug#end()
 

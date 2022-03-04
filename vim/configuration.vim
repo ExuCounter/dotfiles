@@ -54,7 +54,7 @@ set lazyredraw            " improve scrolling performance when navigating throug
 set regexpengine=1        " use old regexp engine
 set ignorecase smartcase  " ignore case only when the pattern contains no capital letters
 
-let mapleader = " " " leader key
+let mapleader = "\<Space>" " leader key
 
 set cursorline " highlight current line
 set nostartofline " don't reset cursor to start of line when moving around.
@@ -69,7 +69,7 @@ set hidden " allow unsaved background buffers and remember marks/undo for them
 set nojs " insert only one space after . ? ! with a join command
 set nosol " keep the cursor in the same column when jump in file
 set nu " enable line numbers
-set scrolloff=10 " minimal lines around the cursor
+set scrolloff=11 " minimal lines around the cursor
 set shiftwidth=0
 set tabstop=2
 
@@ -78,3 +78,40 @@ let g:lognroll#enable_insert_mode = 0
 
 let g:indentLine_char = '│'
 let g:indentLine_color_gui = '#303034'
+" let g:indentLine_leadingSpaceEnabled = 1
+" let g:indentLine_leadingSpaceChar = ' '
+
+let g:db_ui_use_nerd_fonts = 1
+let g:db_ui_show_database_icon = 1
+let g:WebDevIconsNerdTreeBeforeGlyphPadding = ''
+let g:WebDevIconsUnicodeDecorateFolderNodes = v:true
+let g:NERDTreeDirArrowExpandable = " "
+let g:NERDTreeDirArrowCollapsible = " "
+
+let g:dbs = [
+\ { 'name': 'prosapient_dev', 'url': 'postgres://postgres:postgres@localhost:5432/prosapient_dev' },
+\ { 'name': 'prosapient_dev_byoe', 'url': 'postgres://postgres:postgres@localhost:5432/prosapient_dev_byoe' },
+\ { 'name': 'prosapient_dev_mckinsey', 'url': 'postgres://postgres:postgres@localhost:5432/prosapient_dev_mckinsey' },
+\ ]
+
+call wilder#setup({'modes': [':']})
+
+let g:NERDTreeMapOpenVSplit = 'v'
+let g:NERDTreeMapOpenSplit = 's'
+let g:DevIconsEnableFoldersOpenClose = 1
+
+let g:NERDTreeWinSize=35
+
+let NERDTreeMinimalUI=1
+
+augroup nerdtreehidecwd
+  autocmd!
+  autocmd FileType nerdtree setlocal conceallevel=3
+          \ | syntax match NERDTreeHideCWD #^[</].*$# conceal
+          \ | setlocal concealcursor=n
+augroup end
+
+let g:airline#extensions#whitespace#mixed_indent_algo = 1
+
+" Close the tab if NERDTree is the only window remaining in it.
+autocmd BufEnter * if winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
