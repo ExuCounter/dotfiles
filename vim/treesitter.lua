@@ -30,4 +30,6 @@ require'nvim-treesitter.configs'.setup {
 
 require('numb').setup()
 require('neoscroll').setup()
-require('focus').setup()
+require('focus').setup({
+	width=110,
+})

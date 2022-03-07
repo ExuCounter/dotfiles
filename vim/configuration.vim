@@ -10,7 +10,7 @@ au ColorScheme * hi Normal ctermbg=none guibg=none
 colorscheme nvcode " colorscheme
 
 augroup colorscheme_coc_setup | au!
-	au ColorScheme * call s:my_colors_setup()
+ au ColorScheme * call s:my_colors_setup()
 augroup END
 
 
@@ -37,6 +37,7 @@ augroup VimCSS3Syntax
   autocmd FileType css setlocal iskeyword+=-
 augroup END
 
+autocmd FileType scss setl iskeyword+=@-@
 
 if !has('nvim')
   set autoread
@@ -72,6 +73,7 @@ set nu " enable line numbers
 set scrolloff=11 " minimal lines around the cursor
 set shiftwidth=0
 set tabstop=2
+set numberwidth=5
 
 let g:lognroll#enable_brackets = 0
 let g:lognroll#enable_insert_mode = 0
