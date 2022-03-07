@@ -75,8 +75,8 @@ set shiftwidth=0
 set tabstop=2
 set numberwidth=5
 
-let g:lognroll#enable_brackets = 0
-let g:lognroll#enable_insert_mode = 0
+" let g:lognroll#enable_brackets = 0
+" let g:lognroll#enable_insert_mode = 0
 
 let g:indentLine_char = '│'
 let g:indentLine_color_gui = '#303034'
