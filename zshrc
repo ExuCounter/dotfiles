@@ -126,7 +126,6 @@ export VISUAL="$EDITOR"
 eval "$(direnv hook zsh)"
 source $HOME/.zshenv
 
-
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 source $HOME/scripts/functions.sh
