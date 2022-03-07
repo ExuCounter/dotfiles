@@ -56,7 +56,6 @@ Plug 'cakebaker/scss-syntax.vim'
 " Another 
 Plug 'nvim-treesitter/playground'
 Plug 'eugen0329/vim-esearch'
-Plug 'glippi/lognroll-vim'
 Plug 'wincent/terminus'
 Plug 'airblade/vim-gitgutter'
 Plug 'taku-o/vim-copypath'
