@@ -23,3 +23,8 @@ hi DiffDelete gui=NONE guibg=#693649 guifg=white
 hi DiffChange guifg=NONE ctermfg=NONE guibg=#335261 ctermbg=239 gui=NONE cterm=NONE
 
 hi VertSplit ctermfg=239 guifg=#303034
+hi TSStrong ctermfg=249 guifg=#abb2bf
+hi TSEmphasis ctermfg=249 guifg=#abb2bf
+hi TSUnderline ctermfg=249 guifg=#abb2bf
+hi TSTitle ctermfg=249 guifg=#abb2bf
+hi TSText ctermfg=249 guifg=#abb2bf
