@@ -1,9 +1,9 @@
 " Coc
-hi CocFloating ctermbg=Black guibg=#080010  
+" hi CocFloating ctermbg=Black guibg=#080010  
 " hi CocErrorHighlight cterm=underline
 
 " Matched brackets
-hi MatchParen guibg=#3e4452 ctermfg=LightGray guifg=LightGray
+" hi MatchParen guibg=#3e4452 ctermfg=LightGray guifg=LightGray
 
 " Blamer
 hi Blamer guifg=grey guibg=#2c323c
@@ -21,3 +21,5 @@ hi ConflictMarkerCommonAncestors guibg=#362f00
 hi DiffAdd gui=NONE guibg=#2c406e guifg=white
 hi DiffDelete gui=NONE guibg=#693649 guifg=white
 hi DiffChange guifg=NONE ctermfg=NONE guibg=#335261 ctermbg=239 gui=NONE cterm=NONE
+
+hi VertSplit ctermfg=239 guifg=#303034
