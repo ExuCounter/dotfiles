@@ -31,6 +31,7 @@ hi TSUnderline ctermfg=249 guifg=#abb2bf
 hi TSText ctermfg=249 guifg=#abb2bf
 hi TSTitle ctermfg=249 guifg=#abb2bf
 hi CocHintSign ctermfg=11 guifg=#fab005
+hi SignColumn ctermbg=NONE guibg=NONE
 
 hi CocNONE ctermbg=NONE guibg=NONE ctermfg=NONE cterm=underline gui=underline
 hi! link CocUnusedHighlight CocNONE

@@ -115,3 +115,13 @@ let g:airline#extensions#whitespace#mixed_indent_algo = 1
 
 " Close the tab if NERDTree is the only window remaining in it.
 autocmd BufEnter * if winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
+
+function! FoldSignColumnToggle()
+    if &signcolumn == 'yes'
+        set signcolumn=number
+    else
+        set signcolumn=yes
+    endif
+endfunction
+
+nmap <silent> C :call FoldSignColumnToggle()<CR>
