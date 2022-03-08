@@ -21,5 +21,9 @@
   "snippets.priority": 99,
   "snippets.shortcut": "SN",
   "tabnine.priority": 90,
-  "tabnine.shortcut": "TN"
+  "tabnine.shortcut": "TN",
+  "diagnostic.errorSign": "✘",
+  "diagnostic.warningSign": "",
+  "diagnostic.infoSign": "",
+  "diagnostic.hintSign": ""
 }

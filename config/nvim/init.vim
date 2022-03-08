@@ -40,7 +40,6 @@ Plug 'ryanoasis/vim-devicons'
 Plug 'leafgarland/typescript-vim'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'rhysd/accelerated-jk'
-Plug 'peitalin/vim-jsx-typescript'
 Plug 'jparise/vim-graphql'
 Plug 'pangloss/vim-javascript'
 Plug 'ap/vim-css-color'
