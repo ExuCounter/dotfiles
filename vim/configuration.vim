@@ -57,7 +57,7 @@ set ignorecase smartcase  " ignore case only when the pattern contains no capita
 
 let mapleader = "\<Space>" " leader key
 
-set cursorline " highlight current line
+set cursorline! " highlight current line
 set nostartofline " don't reset cursor to start of line when moving around.
 set ruler " show the cursor position
 set showcmd " show the (partial) command as it’s being typed
@@ -69,7 +69,6 @@ set showmode " show the current mode
 set hidden " allow unsaved background buffers and remember marks/undo for them
 set nojs " insert only one space after . ? ! with a join command
 set nosol " keep the cursor in the same column when jump in file
-set nu " enable line numbers
 set scrolloff=11 " minimal lines around the cursor
 set shiftwidth=0
 set tabstop=2
@@ -114,6 +113,13 @@ augroup nerdtreehidecwd
 augroup end
 
 let g:airline#extensions#whitespace#mixed_indent_algo = 1
+let loaded_matchparen = 1
 
 " Close the tab if NERDTree is the only window remaining in it.
 autocmd BufEnter * if winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
+
+" set ttyfast
+" set synmaxcol=100
+"
+set synmaxcol=128
+syntax sync minlines=256

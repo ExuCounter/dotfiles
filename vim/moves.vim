@@ -4,7 +4,7 @@ let g:accelerated_jk_acceleration_limit = 500
 nmap j <Plug>(accelerated_jk_gj)
 nmap k <Plug>(accelerated_jk_gk)
 
-let g:accelerated_jk_acceleration_table = [30,60]
+let g:accelerated_jk_acceleration_table = [30,60,90]
 let g:comfortable_motion_no_default_key_mappings = 1
 
 " nnoremap <silent> <C-d> :call comfortable_motion#flick(150)<CR>
@@ -37,3 +37,5 @@ inoremap ˚ <Esc>:m .-2<CR>==gi
 vnoremap ∆ :m '>+1<CR>gv=gv
 vnoremap ˚ :m '<-2<CR>gv=gv
 
+nmap <silent> <C-u> :lua require('neoscroll').scroll(-15, true, 150)<CR>
+nmap <silent> <C-d> :lua require('neoscroll').scroll(15, true, 150)<CR>
