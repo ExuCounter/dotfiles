@@ -1,14 +1,7 @@
 call plug#begin('~/.vim/plugged')
 
 " UI
-Plug 'ayu-theme/ayu-vim'
-Plug 'challenger-deep-theme/vim', { 'as': 'challenger-deep' }
-Plug 'sonph/onehalf', { 'rtp': 'vim' }
-Plug 'lifepillar/vim-solarized8'
-Plug 'arcticicestudio/nord-vim'
 Plug 'christianchiarulli/nvcode-color-schemes.vim'
-Plug 'jacoborus/tender.vim'
-Plug 'joshdick/onedark.vim'
 
 " Nerdtree
 Plug 'preservim/nerdtree'
@@ -46,27 +39,23 @@ Plug 'ryanoasis/vim-devicons'
 " Syntax
 Plug 'leafgarland/typescript-vim'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'rhysd/accelerated-jk'
 Plug 'jparise/vim-graphql'
 Plug 'pangloss/vim-javascript'
 Plug 'ap/vim-css-color'
 Plug 'cakebaker/scss-syntax.vim', { 'for': ['sass', 'scss'] }
 Plug 'hail2u/vim-css3-syntax'
-Plug 'cakebaker/scss-syntax.vim'
 
 " Another 
 Plug 'nvim-treesitter/playground'
-Plug 'eugen0329/vim-esearch'
-Plug 'wincent/terminus'
 Plug 'airblade/vim-gitgutter'
 Plug 'taku-o/vim-copypath'
-Plug 'psliwka/vim-smoothie'
 Plug 'tpope/vim-surround'
 Plug 'rhysd/conflict-marker.vim'
 Plug 'jacquesbh/vim-showmarks'
 Plug 'mg979/vim-visual-multi', {'branch': 'master'}
 Plug 'easymotion/vim-easymotion' 
 Plug 'Yggdroot/indentLine'
-Plug 'rhysd/accelerated-jk'
 Plug 'yuttie/comfortable-motion.vim'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
@@ -75,11 +64,9 @@ Plug 'JoosepAlviste/nvim-ts-context-commentstring'
 Plug 'p00f/nvim-ts-rainbow'
 Plug 'windwp/nvim-ts-autotag'
 Plug 'Raimondi/delimitMate'
-
-Plug 'nacro90/numb.nvim'
-Plug 'karb94/neoscroll.nvim'
-Plug 'brooth/far.vim'
 Plug 'jeffkreeftmeijer/vim-numbertoggle'
+Plug 'karb94/neoscroll.nvim'
+Plug 'nacro90/numb.nvim'
 Plug 'beauwilliams/focus.nvim'
 
 if has('nvim')

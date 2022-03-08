@@ -1,5 +1,5 @@
 " Coc
-" hi CocFloating ctermbg=Black guibg=#080010  
+hi CocFloating ctermbg=Black guibg=#080010  
 " hi CocErrorHighlight cterm=underline
 
 " Matched brackets
