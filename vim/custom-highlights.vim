@@ -1,6 +1,6 @@
 " Coc
 hi CocFloating ctermbg=Black guibg=#080010  
-" hi CocErrorHighlight cterm=underline
+hi CocErrorHighlight cterm=underline
 
 " Matched brackets
 " hi MatchParen guibg=#3e4452 ctermfg=LightGray guifg=LightGray
@@ -26,5 +26,6 @@ hi VertSplit ctermfg=239 guifg=#303034
 hi TSStrong ctermfg=249 guifg=#abb2bf
 hi TSEmphasis ctermfg=249 guifg=#abb2bf
 hi TSUnderline ctermfg=249 guifg=#abb2bf
-hi TSTitle ctermfg=249 guifg=#abb2bf
 hi TSText ctermfg=249 guifg=#abb2bf
+hi TSTitle ctermfg=249 guifg=#abb2bf
+hi CocHintSign ctermfg=11 guifg=#fab005
