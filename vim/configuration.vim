@@ -13,7 +13,6 @@ augroup colorscheme_coc_setup | au!
  au ColorScheme * call s:my_colors_setup()
 augroup END
 
-
 " If you have vim >=8.0 or Neovim >= 0.1.5
 if (has("termguicolors"))
 set termguicolors
@@ -57,7 +56,7 @@ set ignorecase smartcase  " ignore case only when the pattern contains no capita
 
 let mapleader = "\<Space>" " leader key
 
-set cursorline! " highlight current line
+set cursorline " highlight current line
 set nostartofline " don't reset cursor to start of line when moving around.
 set ruler " show the cursor position
 set showcmd " show the (partial) command as it’s being typed
@@ -77,10 +76,10 @@ set numberwidth=5
 " let g:lognroll#enable_brackets = 0
 " let g:lognroll#enable_insert_mode = 0
 
+let g:indentLine_enabled = 1
 let g:indentLine_char = '│'
 let g:indentLine_color_gui = '#303034'
-" let g:indentLine_leadingSpaceEnabled = 1
-" let g:indentLine_leadingSpaceChar = ' '
+let g:indentLine_showFirstIndentLevel = 1
 
 let g:db_ui_use_nerd_fonts = 1
 let g:db_ui_show_database_icon = 1
@@ -113,13 +112,6 @@ augroup nerdtreehidecwd
 augroup end
 
 let g:airline#extensions#whitespace#mixed_indent_algo = 1
-let loaded_matchparen = 1
 
 " Close the tab if NERDTree is the only window remaining in it.
 autocmd BufEnter * if winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
-
-" set ttyfast
-" set synmaxcol=100
-"
-set synmaxcol=128
-syntax sync minlines=256

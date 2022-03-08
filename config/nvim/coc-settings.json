@@ -19,7 +19,7 @@
   "javascript.suggestionActions.enabled": false,
   "snippets.ultisnips.directories": ["UltiSnips"],
   "snippets.priority": 99,
-  "snippets.shortcut": "Snippets",
+  "snippets.shortcut": "SN",
   "tabnine.priority": 90,
-  "tabnine.shortcut": "Tabnine"
+  "tabnine.shortcut": "TN"
 }
