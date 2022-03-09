@@ -41,7 +41,7 @@ Plug 'leafgarland/typescript-vim'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'rhysd/accelerated-jk'
 Plug 'jparise/vim-graphql'
-Plug 'pangloss/vim-javascript'
+" Plug 'pangloss/vim-javascript'
 Plug 'ap/vim-css-color'
 Plug 'cakebaker/scss-syntax.vim', { 'for': ['sass', 'scss'] }
 Plug 'hail2u/vim-css3-syntax'
