@@ -92,6 +92,7 @@ let g:dbs = [
 \ { 'name': 'prosapient_dev', 'url': 'postgres://postgres:postgres@localhost:5432/prosapient_dev' },
 \ { 'name': 'prosapient_dev_byoe', 'url': 'postgres://postgres:postgres@localhost:5432/prosapient_dev_byoe' },
 \ { 'name': 'prosapient_dev_mckinsey', 'url': 'postgres://postgres:postgres@localhost:5432/prosapient_dev_mckinsey' },
+\ { 'name': 'prosapient_dev_outreach', 'url': 'postgres://postgres:postgres@localhost:5432/prosapient_dev_outreach' },
 \ ]
 
 call wilder#setup({'modes': [':']})
@@ -125,3 +126,5 @@ function! FoldSignColumnToggle()
 endfunction
 
 nmap <silent> C :call FoldSignColumnToggle()<CR>
+
+let g:db_ui_force_echo_notifications = 1
