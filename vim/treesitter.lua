@@ -36,3 +36,4 @@ require('focus').setup({
 require('neoscroll').setup({
 	perfomance_mode=true
 })
+require'hop'.setup()

@@ -59,7 +59,7 @@ let mapleader = "\<Space>" " leader key
 set cursorline " highlight current line
 set nostartofline " don't reset cursor to start of line when moving around.
 set ruler " show the cursor position
-set showcmd " show the (partial) command as it’s being typed
+" set showcmd " show the (partial) command as it’s being typed
 set list
 set shortmess=atI " don't show the intro message when starting Vim
 set showmatch  " highlight matching [{()}] "
@@ -128,3 +128,6 @@ endfunction
 nmap <silent> C :call FoldSignColumnToggle()<CR>
 
 let g:db_ui_force_echo_notifications = 1
+
+let g:EasyMotion_prompt = 'fast search as fuck:'
+let g:EasyMotion_move_highlight = 0
