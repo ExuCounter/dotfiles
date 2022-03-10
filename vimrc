@@ -1,8 +1,6 @@
 source ~/.vim/configuration.vim
 source ~/.vim/coc-settings.vim
 source ~/.vim/airline.vim
-source ~/.vim/blamer.vim
-source ~/.vim/custom-mappings.vim
 source ~/.vim/folding.vim
 source ~/.vim/git.vim
 source ~/.vim/nerdtree.vim
@@ -12,3 +10,5 @@ source ~/.vim/moves.vim
 source ~/.fzf/plugin/fzf.vim
 source ~/.vim/fzf.vim
 source ~/.vim/custom-highlights.vim
+source ~/.vim/custom-mappings.vim
+source ~/.vim/blamer.vim

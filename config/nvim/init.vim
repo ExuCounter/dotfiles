@@ -55,6 +55,7 @@ Plug 'rhysd/conflict-marker.vim'
 Plug 'jacquesbh/vim-showmarks'
 Plug 'mg979/vim-visual-multi', {'branch': 'master'}
 Plug 'easymotion/vim-easymotion' 
+Plug 'phaazon/hop.nvim'
 Plug 'Yggdroot/indentLine'
 Plug 'yuttie/comfortable-motion.vim'
 Plug 'christoomey/vim-tmux-navigator'

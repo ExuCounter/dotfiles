@@ -1,5 +1,4 @@
 {
-  "tsserver.log": "verbose",
   "coc.preferences.formatOnSaveFiletypes": [
     "css",
     "markdown",

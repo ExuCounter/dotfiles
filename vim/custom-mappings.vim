@@ -2,8 +2,8 @@
 inoremap jk <Esc>
 
 " EasyMotion
-map  / <Plug>(easymotion-sn)
-omap / <Plug>(easymotion-tn)
+map  F <Plug>(easymotion-sn)
+map <silent>  / :HopWord<CR>
 
 " idk
 vmap <C-c> <ESC>"+yi
@@ -18,16 +18,16 @@ noremap <leader>cp :CopyPath<CR>
 noremap <leader>u :tabe untitled.txt
 
 " Save on <Ctrl+s>
-noremap <silent> <C-S>          :update<CR>
-vnoremap <silent> <C-S>         <C-C>:update<CR>
-inoremap <silent> <C-S>         <C-O>:update<CR>
+noremap <silent> <C-S> :update<CR>
+vnoremap <silent> <C-S> <C-C>:update<CR>
+inoremap <silent> <C-S> <C-O>:update<CR>
 
 " Fast exit
 nmap <Leader>q :q!<cr>
 
 " Clear highlighting on escape in normal mode
-nnoremap <esc> :noh<return><esc>
-nnoremap <leader>tn :tabnew %<cr>
+nnoremap <silent> <esc> :noh<return><esc>
+nnoremap <silent> <leader>tn :tabnew %<cr>
 
 " idk
 inoremap <C-s> <Esc>   """ <C-s> key is <Esc> setting
