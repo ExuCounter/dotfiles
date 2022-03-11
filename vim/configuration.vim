@@ -47,7 +47,6 @@ endif
 
 set t_Co=256
 set number
-" set termguicolors
 set noswapfile
 
 set lazyredraw            " improve scrolling performance when navigating through large results
@@ -76,10 +75,10 @@ set numberwidth=5
 " let g:lognroll#enable_brackets = 0
 " let g:lognroll#enable_insert_mode = 0
 
-let g:indentLine_enabled = 1
-let g:indentLine_char = '│'
-let g:indentLine_color_gui = '#303034'
-let g:indentLine_showFirstIndentLevel = 1
+" let g:indentLine_enabled = 1
+" let g:indentLine_char = '│'
+" let g:indentLine_color_gui = '#303034'
+" let g:indentLine_showFirstIndentLevel = 1
 
 let g:db_ui_use_nerd_fonts = 1
 let g:db_ui_show_database_icon = 1
@@ -131,3 +130,8 @@ let g:db_ui_force_echo_notifications = 1
 
 let g:EasyMotion_prompt = 'fast search as fuck:'
 let g:EasyMotion_move_highlight = 0
+
+set whichwrap+=<,h
+let g:indent_blankline_show_first_indent_level = v:false
+let g:matchup_matchparen_offscreen = { }
+

@@ -1,5 +1,5 @@
 " Coc
-" hi CocFloating ctermbg=Black guibg=#080010 guifg=NONE ctermfg=NONE
+hi CocFloating ctermbg=Black guibg=#080010
 hi CocErrorHighlight cterm=underline gui=underline
 hi CocHintHighlight cterm=underline gui=underline
 hi CocWarningHighlight cterm=underline gui=underline
@@ -35,3 +35,12 @@ hi SignColumn ctermbg=NONE guibg=NONE
 
 hi CocNONE ctermbg=NONE guibg=NONE ctermfg=NONE cterm=underline gui=underline
 hi! link CocUnusedHighlight CocNONE
+
+hi Cursor guibg=NONE ctermbg=NONE
+hi Error gui=NONE
+
+highlight IndentBlanklineChar guifg=#303034 gui=nocombine
+highlight MatchParen ctermbg=238 guibg=#3e4452
+highlight MatchWord ctermbg=238 guibg=#3e4452  cterm=NONE gui=NONE
+hi MatchParenCur ctermbg=238 guibg=#3e4452 cterm=NONE gui=NONE
+hi MatchWordCur ctermbg=238 guibg=#3e4452 cterm=NONE gui=NONE

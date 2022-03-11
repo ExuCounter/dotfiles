@@ -54,9 +54,8 @@ Plug 'tpope/vim-surround'
 Plug 'rhysd/conflict-marker.vim'
 Plug 'jacquesbh/vim-showmarks'
 Plug 'mg979/vim-visual-multi', {'branch': 'master'}
-Plug 'easymotion/vim-easymotion' 
 Plug 'phaazon/hop.nvim'
-Plug 'Yggdroot/indentLine'
+Plug 'lukas-reineke/indent-blankline.nvim'
 Plug 'yuttie/comfortable-motion.vim'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
@@ -69,6 +68,8 @@ Plug 'jeffkreeftmeijer/vim-numbertoggle'
 Plug 'karb94/neoscroll.nvim'
 Plug 'nacro90/numb.nvim'
 Plug 'beauwilliams/focus.nvim'
+Plug 'easymotion/vim-easymotion' 
+Plug 'andymass/vim-matchup'
 
 if has('nvim')
   function! UpdateRemotePlugins(...)
@@ -85,6 +86,7 @@ else
   Plug 'roxma/nvim-yarp'
   Plug 'roxma/vim-hug-neovim-rpc'
 endif
+
 
 call plug#end()
 

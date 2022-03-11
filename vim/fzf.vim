@@ -20,5 +20,5 @@ nmap <silent> <C-p> :Rg <cr>
 nmap <silent> <C-f> :Files <cr>
 nmap <silent> <Leader>' :Marks<cr>
 nmap <silent> <C-_> :BLines<cr>
-nmap <silent> <Leader>/ :Lines<cr>
+nmap <silent> <Leader>l :Lines<cr>
 " nnoremap <silent> <C-h> :History:<cr>

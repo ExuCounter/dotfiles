@@ -2,8 +2,8 @@
 inoremap jk <Esc>
 
 " EasyMotion
-map  F <Plug>(easymotion-sn)
-map <silent>  / :HopWord<CR>
+map s <cmd>lua require'hop'.hint_char1()<CR>
+map  <silent>/ <Plug>(easymotion-sn)
 
 " idk
 vmap <C-c> <ESC>"+yi
@@ -26,7 +26,7 @@ inoremap <silent> <C-S> <C-O>:update<CR>
 nmap <Leader>q :q!<cr>
 
 " Clear highlighting on escape in normal mode
-nnoremap <silent> <esc> :noh<return><esc>
+nnoremap <esc> :noh<return><esc>
 nnoremap <silent> <leader>tn :tabnew %<cr>
 
 " idk
@@ -52,3 +52,4 @@ command! -nargs=0 Prettier :CocCommand prettier.formatFile
 :nmap <leader>dm :delmarks A-Za-z0-9<cr>
 :nmap <leader>ms :DoShowMarks!<cr>
 
+let g:coc_default_semantic_highlight_groups = 1
