@@ -38,5 +38,5 @@ alias chrome='open -a "Google Chrome"'
 
 # Vim aliases
 alias vi="nvim"
-alias vim="nvim"
+# alias vim="nvim"
 alias code="nvim"

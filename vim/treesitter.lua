@@ -3,11 +3,15 @@ require'nvim-treesitter.configs'.setup {
   highlight = {
     enable = true,              -- false will disable the whole extensio
     additional_vim_regex_highlighting = false,
+		use_languagetree = true
 		-- disable = { "html" },
   },
   autotag = {
     enable = true,
   },
+	matchup = {
+		enable = true
+	},
   context_commentstring = {
     enable = true,
     enable_autocmd = false
@@ -36,4 +40,20 @@ require('focus').setup({
 require('neoscroll').setup({
 	perfomance_mode=true
 })
-require'hop'.setup()
+require('hop').setup({
+	create_hl_autocmd=false,
+	extend_visual=true
+})
+
+vim.api.nvim_set_keymap('n', 'f', "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.AFTER_CURSOR, current_line_only = true })<cr>", {})
+vim.api.nvim_set_keymap('n', 'F', "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.BEFORE_CURSOR, current_line_only = true })<cr>", {})
+vim.api.nvim_set_keymap('o', 'f', "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.AFTER_CURSOR, current_line_only = true, inclusive_jump = true })<cr>", {})
+vim.api.nvim_set_keymap('o', 'F', "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.BEFORE_CURSOR, current_line_only = true, inclusive_jump = true })<cr>", {})
+vim.api.nvim_set_keymap('', 't', "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.AFTER_CURSOR, current_line_only = true })<cr>", {})
+vim.api.nvim_set_keymap('', 'T', "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.BEFORE_CURSOR, current_line_only = true })<cr>", {})
+
+
+require("indent_blankline").setup {
+	indent_blankline_show_first_indent_level = false
+}
+
