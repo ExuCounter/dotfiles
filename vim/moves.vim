@@ -37,5 +37,5 @@ inoremap ˚ <Esc>:m .-2<CR>==gi
 vnoremap ∆ :m '>+1<CR>gv=gv
 vnoremap ˚ :m '<-2<CR>gv=gv
 
-nmap <silent> <C-u> :lua require('neoscroll').scroll(-20, true, 200)<CR>
-nmap <silent> <C-d> :lua require('neoscroll').scroll(20, true, 200)<CR>
+nmap <silent> <C-u> :lua require('neoscroll').scroll(-16, true, 130)<CR>
+nmap <silent> <C-d> :lua require('neoscroll').scroll(16, true, 130)<CR>
