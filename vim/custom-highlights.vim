@@ -44,3 +44,5 @@ highlight MatchParen ctermbg=238 guibg=#3e4452
 highlight MatchWord ctermbg=238 guibg=#3e4452  cterm=NONE gui=NONE
 hi MatchParenCur ctermbg=238 guibg=#3e4452 cterm=NONE gui=NONE
 hi MatchWordCur ctermbg=238 guibg=#3e4452 cterm=NONE gui=NONE
+
+hi cssTSError ctermfg=153 guifg=#9cdcfe

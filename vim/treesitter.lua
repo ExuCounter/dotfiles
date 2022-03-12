@@ -38,7 +38,7 @@ require('focus').setup({
 	width=110,
 })
 require('neoscroll').setup({
-	perfomance_mode=true
+	hide_cursor=false
 })
 require('hop').setup({
 	create_hl_autocmd=false,

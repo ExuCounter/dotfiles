@@ -12,10 +12,10 @@ let g:fzf_checkout_git_options = '--sort=-committerdate'
 let g:fzf_branch_actions = {
       \ 'track': {'keymap': 'ctrl-t'},
       \}
-let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.7 } }
+let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.85 } }
 
 " FZF
-nmap <silent> <Leader>b :Buffers<cr>
+map <silent> <leader>b :Buffers<cr>
 nmap <silent> <C-p> :Rg <cr>
 nmap <silent> <C-f> :Files <cr>
 nmap <silent> <Leader>' :Marks<cr>
