@@ -1,5 +1,5 @@
 " Coc
-hi CocFloating ctermbg=Black guibg=#080010
+hi CocFloating ctermbg=Black guibg=#151515
 hi CocErrorHighlight cterm=underline gui=underline
 hi CocHintHighlight cterm=underline gui=underline
 hi CocWarningHighlight cterm=underline gui=underline

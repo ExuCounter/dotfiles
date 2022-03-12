@@ -2,7 +2,7 @@
 inoremap jk <Esc>
 
 " EasyMotion
-map s <cmd>lua require'hop'.hint_char1()<CR>
+map s <cmd>lua require'hop'.hint_char2()<CR>
 map  <silent>/ <Plug>(easymotion-sn)
 
 " idk
