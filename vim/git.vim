@@ -49,6 +49,7 @@ nnoremap <Leader>gra :Git rebase --abort
 nnoremap <Leader>grsh :Git reset --hard
 nnoremap <Leader>gri :Git rebase --interactive HEAD~
 nnoremap <Leader>gcb :Git checkout -b  
+nnoremap <Leader>gbl :Git blame -D<CR> 
 
 " Git hunks
 nmap <leader>ggsh <Plug>(GitGutterStageHunk)
