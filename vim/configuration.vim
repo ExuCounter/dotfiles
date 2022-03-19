@@ -75,10 +75,10 @@ set numberwidth=5
 " let g:lognroll#enable_brackets = 0
 " let g:lognroll#enable_insert_mode = 0
 
-" let g:indentLine_enabled = 1
-" let g:indentLine_char = '│'
-" let g:indentLine_color_gui = '#303034'
-" let g:indentLine_showFirstIndentLevel = 1
+let g:indentLine_enabled = 1
+let g:indentLine_char = '│'
+let g:indentLine_color_gui = '#303034'
+let g:indentLine_showFirstIndentLevel = 1
 
 let g:db_ui_use_nerd_fonts = 1
 let g:db_ui_show_database_icon = 1

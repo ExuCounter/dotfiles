@@ -23,8 +23,8 @@ noremap <leader>6 6gt
 noremap <leader>7 7gt
 noremap <leader>8 8gt
 noremap <leader>9 9gt
-noremap <leader><Right> gt
-map <leader><Left> gT
+noremap <leader>l gt
+map <leader>h gT
 
 " yank/paste buffers
 
@@ -96,5 +96,5 @@ function MoveToNextTab()
   exe "b".l:cur_buf
 endfunc
 
-nnoremap <leader>l :call MoveToNextTab()<CR>
-nnoremap <leader>h :call MoveToPrevTab()<CR>
+" nnoremap <leader>l :call MoveToNextTab()<CR>
+" nnoremap <leader>h :call MoveToPrevTab()<CR>

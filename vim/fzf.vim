@@ -18,7 +18,7 @@ let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.85 } }
 map <silent> <leader>b :Buffers<cr>
 nmap <silent> <C-p> :Rg <cr>
 nmap <silent> <C-f> :Files <cr>
-nmap <silent> <Leader>' :Marks<cr>
+nmap <silent> <C-m> :Marks<cr>
 nmap <silent> <C-_> :BLines<cr>
-nmap <silent> <Leader>l :Lines<cr>
-" nnoremap <silent> <C-h> :History:<cr>
+" nmap <silent> <Leader>l :Lines<cr>
+nnoremap <silent> <C-h> :History:<cr>

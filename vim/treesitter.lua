@@ -53,7 +53,7 @@ vim.api.nvim_set_keymap('', 't', "<cmd>lua require'hop'.hint_char1({ direction =
 vim.api.nvim_set_keymap('', 'T', "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.BEFORE_CURSOR, current_line_only = true })<cr>", {})
 
 
-require("indent_blankline").setup {
-	indent_blankline_show_first_indent_level = false
-}
+-- require("indent_blankline").setup {
+-- 	indent_blankline_show_first_indent_level = false
+-- }
 
