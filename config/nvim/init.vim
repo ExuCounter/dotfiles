@@ -55,7 +55,7 @@ Plug 'rhysd/conflict-marker.vim'
 Plug 'jacquesbh/vim-showmarks'
 Plug 'mg979/vim-visual-multi', {'branch': 'master'}
 Plug 'phaazon/hop.nvim'
-Plug 'lukas-reineke/indent-blankline.nvim'
+" Plug 'lukas-reineke/indent-blankline.nvim'
 Plug 'yuttie/comfortable-motion.vim'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
@@ -87,6 +87,7 @@ else
   Plug 'roxma/vim-hug-neovim-rpc'
 endif
 
+Plug 'Yggdroot/indentLine'
 
 call plug#end()
 

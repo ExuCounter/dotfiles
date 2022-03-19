@@ -34,6 +34,7 @@ alias gp='git push origin'
 alias gpf='git push origin -f'
 alias grs='git reset --soft'
 alias grh='git reset --hard'
+alias gl='git log --graph --pretty=format:"%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset" --abbrev-commit'
 alias chrome='open -a "Google Chrome"'
 
 # Vim aliases

@@ -1,5 +1,5 @@
 " Return to normal mode
-inoremap jk <Esc>
+inoremap jj <Esc>
 
 " EasyMotion
 map S <cmd>lua require'hop'.hint_char2()<CR>
