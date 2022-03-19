@@ -13,6 +13,10 @@ augroup colorscheme_coc_setup | au!
  au ColorScheme * call s:my_colors_setup()
 augroup END
 
+set timeout timeoutlen=500 ttimeoutlen=100 " fix slow O inserts
+set ve=block " allow put the cursor anyway in visual block mode
+set complete=.,w,b,u,t,i,kspell
+
 " If you have vim >=8.0 or Neovim >= 0.1.5
 if (has("termguicolors"))
 set termguicolors
@@ -134,4 +138,5 @@ let g:EasyMotion_move_highlight = 0
 set whichwrap+=<,h
 let g:indent_blankline_show_first_indent_level = v:false
 let g:matchup_matchparen_offscreen = { }
+
 

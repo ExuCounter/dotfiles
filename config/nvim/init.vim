@@ -88,6 +88,7 @@ else
 endif
 
 Plug 'Yggdroot/indentLine'
+Plug 'pseewald/vim-anyfold'
 
 call plug#end()
 

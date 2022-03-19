@@ -4,8 +4,10 @@ hi CocErrorHighlight cterm=underline gui=underline
 hi CocHintHighlight cterm=underline gui=underline
 hi CocWarningHighlight cterm=underline gui=underline
 
+
 " Matched brackets
 " hi MatchParen guibg=#3e4452 ctermfg=LightGray guifg=LightGray
+hi! CursorLine cterm=NONE gui=NONE term=NONE
 
 " Blamer
 hi Blamer guifg=grey guibg=#2c323c
@@ -20,9 +22,9 @@ hi ConflictMarkerCommonAncestorsHunk guibg=#2b2a0f
 hi ConflictMarkerCommonAncestors guibg=#362f00
 
 " Git diff
-hi DiffAdd gui=NONE guibg=#2c406e guifg=white
-hi DiffDelete gui=NONE guibg=#693649 guifg=white
-hi DiffChange guifg=NONE ctermfg=NONE guibg=#335261 ctermbg=239 gui=NONE cterm=NONE
+hi DiffAdd gui=NONE guibg=#2c406e guifg=white cterm=NONE
+hi DiffDelete gui=NONE guibg=#693649 guifg=white cterm=NONE
+hi DiffChange guifg=NONE ctermfg=NONE guibg=NONE ctermbg=NONE gui=NONE cterm=NONE 
 
 hi VertSplit ctermfg=239 guifg=#303034
 hi TSStrong ctermfg=249 guifg=#abb2bf
@@ -46,3 +48,4 @@ hi MatchParenCur ctermbg=238 guibg=#3e4452 cterm=NONE gui=NONE
 hi MatchWordCur ctermbg=238 guibg=#3e4452 cterm=NONE gui=NONE
 
 hi cssTSError ctermfg=153 guifg=#9cdcfe
+
