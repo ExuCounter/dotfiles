@@ -1,7 +1,7 @@
 nnoremap <leader>gcm :Git commit -v -q<CR>
 nnoremap <leader>gd :Git diff 
 nnoremap <leader>gcl :Gclog -50<CR>
-nnoremap <leader>gl :Git log<CR>
+nnoremap <leader>gl :Git log -50<CR>
 nnoremap <leader>gco :!fbr<CR>
 nnoremap <silent> <C-g> :GFiles?<cr>
 nnoremap <silent> <Leader>gb :GBranches<cr>
@@ -49,7 +49,7 @@ nnoremap <Leader>gra :Git rebase --abort
 nnoremap <Leader>grsh :Git reset --hard
 nnoremap <Leader>gri :Git rebase --interactive HEAD~
 nnoremap <Leader>gcb :Git checkout -b  
-nnoremap <Leader>gbl :Git blame -D<CR> 
+nnoremap <Leader>gbl :Git blame -et<CR> 
 
 " Git hunks
 nmap <leader>ggsh <Plug>(GitGutterStageHunk)
