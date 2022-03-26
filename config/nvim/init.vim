@@ -70,6 +70,7 @@ Plug 'nacro90/numb.nvim'
 Plug 'beauwilliams/focus.nvim'
 Plug 'easymotion/vim-easymotion' 
 Plug 'andymass/vim-matchup'
+Plug 'yazgoo/yank-history'
 
 if has('nvim')
   function! UpdateRemotePlugins(...)

@@ -138,5 +138,3 @@ let g:EasyMotion_move_highlight = 0
 set whichwrap+=<,h
 let g:indent_blankline_show_first_indent_level = v:false
 let g:matchup_matchparen_offscreen = { }
-
-

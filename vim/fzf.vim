@@ -15,10 +15,10 @@ let g:fzf_branch_actions = {
 let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.85 } }
 
 " FZF
-map <silent> <leader>b :Buffers<cr>
+map <silent> <C-b> :Buffers<cr>
 nmap <silent> <C-p> :Rg <cr>
 nmap <silent> <C-f> :Files <cr>
-nmap <silent> <C-m> :Marks<cr>
+" nmap <silent> <C-m> :Marks<cr>
 nmap <silent> <C-g> :GFiles?<cr>
 nmap <silent> <C-_> :BLines<cr>
 " nmap <silent> <Leader>l :Lines<cr>
