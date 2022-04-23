@@ -22,5 +22,5 @@ nmap <silent> <C-f> :Files <cr>
 nmap <silent> <C-g> :GFiles?<cr>
 nmap <silent> <C-_> :BLines<cr>
 " nmap <silent> <Leader>l :Lines<cr>
-nmap <silent> <leader>h :History:<cr>
+nmap <silent> <C-q> :History:<cr>
 

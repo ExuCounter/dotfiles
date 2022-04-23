@@ -39,3 +39,6 @@ vnoremap ˚ :m '<-2<CR>gv=gv
 
 nmap <silent> <C-u> :lua require('neoscroll').scroll(-25, true, 200)<CR>
 nmap <silent> <C-d> :lua require('neoscroll').scroll(25, true, 200)<CR>
+nmap <silent> <C-d> :lua require('neoscroll').scroll(25, true, 200)<CR>
+nmap <silent> zt :lua require('neoscroll').zb(250)<CR>
+nmap <silent> zb :lua require('neoscroll').zt(250)<CR>
