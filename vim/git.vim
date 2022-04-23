@@ -4,7 +4,6 @@ nnoremap <leader>gcl :Gclog -50<CR>
 nnoremap <leader>gl :Git log -50<CR>
 nnoremap <leader>gco :!fbr<CR>
 nnoremap <silent> <C-g> :GFiles?<cr>
-nnoremap <silent> <Leader>gb :GBranches<cr>
 nnoremap <silent> <Leader>g :Git<cr>
 nnoremap <silent> <Leader>G :Git<cr>
 
@@ -48,7 +47,7 @@ nnoremap <Leader>grc :Git rebase --continue<CR>
 nnoremap <Leader>gra :Git rebase --abort
 nnoremap <Leader>grsh :Git reset --hard
 nnoremap <Leader>gri :Git rebase --interactive HEAD~
-nnoremap <Leader>gcb :Git checkout -b  
+nnoremap <Leader>gcb :Git checkout -b 
 nnoremap <Leader>gbl :Git blame -et<CR> 
 
 " Git hunks

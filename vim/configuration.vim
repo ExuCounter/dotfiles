@@ -139,9 +139,11 @@ set whichwrap+=<,h
 let g:indent_blankline_show_first_indent_level = v:false
 let g:matchup_matchparen_offscreen = { }
 
-" Console log from insert mode; Puts focus inside parentheses
-imap col console.log("debug",)<Esc><S-f>,a 
-" Console log from visual mode on next line, puts visual selection inside parentheses
-vmap col yocol<Esc>p
-" Console log from normal mode, inserted on next line with word your on inside parentheses
-nmap col yiwocol<Esc>p
+" " Console log from insert mode; Puts focus inside parentheses
+" nmap col console.log("debug",)<Esc><S-f>,a 
+" " Console log from visual mode on next line, puts visual selection inside parentheses
+" vmap col yocol<Esc>p
+" " Console log from normal mode, inserted on next line with word your on inside parentheses
+" nmap col yiwocol<Esc>p
+" 
+
