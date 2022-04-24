@@ -64,7 +64,7 @@ Plug 'JoosepAlviste/nvim-ts-context-commentstring'
 Plug 'p00f/nvim-ts-rainbow'
 Plug 'windwp/nvim-ts-autotag'
 Plug 'Raimondi/delimitMate'
-Plug 'jeffkreeftmeijer/vim-numbertoggle'
+" Plug 'jeffkreeftmeijer/vim-numbertoggle'
 Plug 'karb94/neoscroll.nvim'
 Plug 'nacro90/numb.nvim'
 Plug 'beauwilliams/focus.nvim'
@@ -72,6 +72,7 @@ Plug 'easymotion/vim-easymotion'
 Plug 'andymass/vim-matchup'
 Plug 'yazgoo/yank-history'
 Plug 'chentau/marks.nvim'
+Plug 'nvim-lua/plenary.nvim'
 
 if has('nvim')
   function! UpdateRemotePlugins(...)
@@ -91,6 +92,11 @@ endif
 
 Plug 'Yggdroot/indentLine'
 Plug 'pseewald/vim-anyfold'
+
+Plug 'kyazdani42/nvim-web-devicons'
+" Plug 'romgrk/barbar.nvim'
+Plug 'kyazdani42/nvim-tree.lua'
+Plug 'akinsho/bufferline.nvim', { 'tag': '*' }
 
 call plug#end()
 

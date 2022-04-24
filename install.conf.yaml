@@ -24,6 +24,7 @@
     ~/.vim/git.vim: vim/git.vim
     ~/.vim/nerdtree.vim: vim/nerdtree.vim
     ~/.vim/treesitter.lua: vim/treesitter.lua
+    ~/.vim/nvim-tree.lua: vim/nvim-tree.lua
     ~/.vim/windows.vim: vim/windows.vim
     ~/.vim/moves.vim: vim/moves.vim
 

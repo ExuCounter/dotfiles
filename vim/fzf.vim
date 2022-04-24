@@ -6,7 +6,7 @@ let g:fzf_action = {
 command! -bang -nargs=? -complete=dir Files
   \ call fzf#vim#files(<q-args>, fzf#vim#with_preview("right:50%"), <bang>0)
 
-command! -bang -nargs=* Rg call fzf#vim#grep("rg -g '!yarn.lock' --no-heading --line-number --color=always --smart-case ".shellescape(<q-args>), 1, fzf#vim#with_preview({'options': '--delimiter : --nth 2..'}, 'right:50%'), <bang>0)
+command! -bang -nargs=* Rg call fzf#vim#grep("rg -g '!pnpm-lock.yaml' -g '!yarn-error.log' -g '!yarn.lock' --no-heading --line-number --color=always --smart-case ".shellescape(<q-args>), 1, fzf#vim#with_preview({'options': '--delimiter : --nth 2..'}, 'right:50%'), <bang>0)
 
 let g:fzf_checkout_git_options = '--sort=-committerdate'
 let g:fzf_branch_actions = {
