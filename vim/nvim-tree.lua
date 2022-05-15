@@ -200,4 +200,3 @@ require'nvim-tree'.setup { -- BEGIN_DEFAULT_OPTS
 --     always_show_bufferline = true,
 -- 	  }
 -- }
-
