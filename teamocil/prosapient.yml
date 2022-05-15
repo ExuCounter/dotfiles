@@ -13,7 +13,7 @@ windows:
     root: ~/Desktop/projects/prosapient/styleguide/
     layout: tiled
     panes:
-      - vi
+      - asdf shell nodejs 16.13.0 && vi
   - name: platform
     root: ~/Desktop/projects/prosapient/platform/
     layout: tiled
@@ -22,7 +22,7 @@ windows:
       - OBAN_DISABLED=0 iex -S mix phx.server
       - cd frontend && yarn start
       - echo "yohooo"
-  - name: magic
+  - name: frontend
     root: ~/Desktop/projects/prosapient/platform/frontend/
     layout: tiled
     panes:

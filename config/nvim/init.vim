@@ -97,6 +97,7 @@ Plug 'kyazdani42/nvim-web-devicons'
 " Plug 'romgrk/barbar.nvim'
 Plug 'kyazdani42/nvim-tree.lua'
 Plug 'akinsho/bufferline.nvim', { 'tag': '*' }
+Plug 'glepnir/dashboard-nvim'
 
 call plug#end()
 
