@@ -68,7 +68,7 @@ Plug 'Raimondi/delimitMate'
 Plug 'karb94/neoscroll.nvim'
 Plug 'nacro90/numb.nvim'
 Plug 'beauwilliams/focus.nvim'
-Plug 'easymotion/vim-easymotion' 
+Plug 'easymotion/vim-easymotion'
 Plug 'andymass/vim-matchup'
 Plug 'yazgoo/yank-history'
 Plug 'chentau/marks.nvim'
@@ -98,6 +98,11 @@ Plug 'kyazdani42/nvim-web-devicons'
 Plug 'kyazdani42/nvim-tree.lua'
 Plug 'akinsho/bufferline.nvim', { 'tag': '*' }
 Plug 'glepnir/dashboard-nvim'
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim'
+Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
+Plug 'brooth/far.vim'
+Plug 'lifepillar/vim-solarized8'
 
 call plug#end()
 

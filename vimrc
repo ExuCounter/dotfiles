@@ -90,7 +90,7 @@ let g:dashboard_default_executive ='fzf'
 let g:dashboard_custom_section={
   \ 'b': {
 	\ 'description': ['  Find Word                 <C-p>     '],
-	\ 'command': "exit"},
+	\ 'command': "Rg"},
   \ 'c': {
 	\ 'description': ['  Exit                      leader q  '],
 	\ 'command': "exit"},
@@ -98,3 +98,22 @@ let g:dashboard_custom_section={
 	\ 'description': ['  Find file                 <C-f>     '],
 	\ 'command': "Files"}
 	\ }
+
+" nnoremap <leader>ff <cmd>Telescope find_files<cr>
+" nmap <C-p> <cmd>Telescope live_grep<cr>
+
+"     let g:fzf_colors =                                                                         
+"     \ { 'fg':      ['fg', 'Normal'],                                                           
+"       \ 'bg':      ['bg', 'Normal'],                                                           
+"       \ 'hl':      ['fg', 'Comment'],                                                          
+"       \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],                             
+"       \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],                                       
+"       \ 'hl+':     ['fg', 'Statement'],                                                        
+"       \ 'info':    ['fg', 'PreProc'],                                                          
+"       \ 'border':  ['fg', 'Ignore'],                                                           
+"       \ 'prompt':  ['fg', 'Conditional'],                                                      
+"       \ 'pointer': ['fg', 'Exception'],                                                        
+"       \ 'marker':  ['fg', 'Keyword'],                                                          
+"       \ 'spinner': ['fg', 'Label'],                                                            
+"       \ 'header':  ['fg', 'Comment'] }
+"       

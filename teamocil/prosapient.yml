@@ -1,3 +1,4 @@
+name: prosapient
 windows:
   - name: build
     root: ~/Desktop/projects/prosapient/build/

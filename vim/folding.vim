@@ -4,8 +4,8 @@
 " set foldnestmax=10      " 10 nested fold max
 
 filetype plugin indent on " required
-
 autocmd Filetype * AnyFoldActivate               " activate for all filetypes
+
 let g:anyfold_fold_toplevel = 0
 set foldlevel=99 " Open all folds
 let g:anyfold_fold_display = 1
