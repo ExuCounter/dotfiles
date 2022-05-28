@@ -14,7 +14,6 @@
   "tsserver.formatOnType": true,
   "coc.preferences.formatOnType": true,
   "javascript.suggest.autoImports": true,
-  "typescript.suggest.autoImports": true,
   "javascript.suggestionActions.enabled": false,
   "snippets.ultisnips.directories": ["UltiSnips"],
   "snippets.priority": 99,

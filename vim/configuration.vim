@@ -5,16 +5,15 @@ set encoding=UTF-8
 
 syntax on
 
-au ColorScheme * hi Normal ctermbg=none guibg=none
+" au ColorScheme * hi Normal ctermbg=none guibg=none
+syntax enable
+colorscheme solarized8_flat " colorscheme
+let g:solarized_visibility = "high"
+set background=light
 
-colorscheme nvcode " colorscheme
-
-augroup colorscheme_coc_setup | au!
- au ColorScheme * call s:my_colors_setup()
-augroup END
 
 set timeout timeoutlen=500 ttimeoutlen=100 " fix slow O inserts
-set ve=block " allow put the cursor anyway in visual block mode
+" set ve=block " allow put the cursor anyway in visual block mode
 set complete=.,w,b,u,t,i,kspell
 
 " If you have vim >=8.0 or Neovim >= 0.1.5
@@ -27,6 +26,8 @@ let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 let g:onedark_terminal_italics = 1
 let g:onedark_termcolors = 256
 let g:onedark_hide_endofbuffer = 1 
+
+let g:solarized_extra_hi_groups = 1
 
 " autocmd FileType scss setl iskeyword+=@-@
 
@@ -81,7 +82,7 @@ set numberwidth=5
 
 let g:indentLine_enabled = 1
 let g:indentLine_char = '│'
-let g:indentLine_color_gui = '#303034'
+" let g:indentLine_color_gui = '#303034'
 let g:indentLine_showFirstIndentLevel = 1
 
 let g:db_ui_use_nerd_fonts = 1
