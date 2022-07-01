@@ -73,6 +73,7 @@ Plug 'andymass/vim-matchup'
 Plug 'yazgoo/yank-history'
 Plug 'chentau/marks.nvim'
 Plug 'nvim-lua/plenary.nvim'
+Plug 'tpope/vim-dotenv'
 
 if has('nvim')
   function! UpdateRemotePlugins(...)
