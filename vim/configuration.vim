@@ -29,8 +29,6 @@ let g:onedark_hide_endofbuffer = 1
 
 let g:solarized_extra_hi_groups = 1
 
-" autocmd FileType scss setl iskeyword+=@-@
-
 " Styled components clear buffers to prevent vim lagging
 autocmd BufEnter *.{js,jsx,ts,tsx} :syntax sync fromstart
 autocmd BufLeave *.{js,jsx,ts,tsx} :syntax sync clear
@@ -87,39 +85,10 @@ let g:indentLine_showFirstIndentLevel = 1
 
 let g:db_ui_use_nerd_fonts = 1
 let g:db_ui_show_database_icon = 1
-let g:WebDevIconsNerdTreeBeforeGlyphPadding = ''
-let g:WebDevIconsUnicodeDecorateFolderNodes = v:true
-let g:NERDTreeDirArrowExpandable = " "
-let g:NERDTreeDirArrowCollapsible = " "
-
-let g:dbs = [
-\ { 'name': 'prosapient_dev', 'url': 'postgres://postgres:postgres@localhost:5432/prosapient_dev' },
-\ { 'name': 'prosapient_dev_byoe', 'url': 'postgres://postgres:postgres@localhost:5432/prosapient_dev_byoe' },
-\ { 'name': 'prosapient_dev_mckinsey', 'url': 'postgres://postgres:postgres@localhost:5432/prosapient_dev_mckinsey' },
-\ { 'name': 'prosapient_dev_outreach', 'url': 'postgres://postgres:postgres@localhost:5432/prosapient_dev_outreach' },
-\ ]
 
 call wilder#setup({'modes': [':']})
 
-" let g:NERDTreeMapOpenVSplit = 'v'
-" let g:NERDTreeMapOpenSplit = 's'
-" let g:DevIconsEnableFoldersOpenClose = 1
-
-" let g:NERDTreeWinSize=35
-
-" let NERDTreeMinimalUI=1
-
-" augroup nerdtreehidecwd
-"   autocmd!
-"   autocmd FileType nerdtree setlocal conceallevel=3
-"           \ | syntax match NERDTreeHideCWD #^[</].*$# conceal
-"           \ | setlocal concealcursor=n
-" augroup end
-
 let g:airline#extensions#whitespace#mixed_indent_algo = 1
-
-" Close the tab if NERDTree is the only window remaining in it.
-" autocmd BufEnter * if winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
 
 function! FoldSignColumnToggle()
     if &signcolumn == 'yes'

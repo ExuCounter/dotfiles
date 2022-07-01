@@ -9,7 +9,8 @@
     "graphql",
     "typescriptreact",
     "scss",
-    "html"
+    "html",
+    "vim"
   ],
   "tsserver.formatOnType": true,
   "coc.preferences.formatOnType": true,
