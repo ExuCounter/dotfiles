@@ -4,6 +4,12 @@ hi CocErrorHighlight cterm=underline gui=underline
 hi CocHintHighlight cterm=underline gui=underline
 hi CocWarningHighlight cterm=underline gui=underline
 
+" disable the default highlight group
+let g:conflict_marker_highlight_group = ''
+
+" Include text after begin and end markers
+let g:conflict_marker_begin = '^<<<<<<< .*$'
+let g:conflict_marker_end   = '^>>>>>>> .*$'
 
 " " Matched brackets
 " " hi MatchParen guibg=#3e4452 ctermfg=LightGray guifg=LightGray
@@ -13,13 +19,17 @@ hi! CursorLine cterm=NONE gui=NONE term=NONE
 " hi Blamer guifg=grey guibg=#2c323c
 
 " " Merge conflicts markers highlighting
-" hi ConflictMarkerBegin guibg=#007566 guifg=NONE
-" hi ConflictMarkerOurs guibg=#1b413b 
-" hi ConflictMarkerTheirs guibg=#1f3a4d
-" hi ConflictMarkerEnd guibg=#156393 guifg=NONE 
-" hi ConflictMarkerSeparator guibg=#302f10 guifg=NONE 
-" hi ConflictMarkerCommonAncestorsHunk guibg=#2b2a0f
-" hi ConflictMarkerCommonAncestors guibg=#362f00
+function! HighlightConflictMarker() abort
+   hi ConflictMarkerBegin guibg=#e6cd85 guifg=#FFFFFF
+   hi ConflictMarkerOurs guibg=#FAEFD1
+   hi ConflictMarkerTheirs guibg=#DDEFFA
+   hi ConflictMarkerEnd guibg=#F5DDDC guifg=NONE 
+   hi ConflictMarkerSeparator guibg=NONE guifg=NONE 
+   hi ConflictMarkerCommonAncestorsHunk guibg=NONE
+   hi ConflictMarkerCommonAncestors guibg=NONE
+endfunction
+
+call timer_start(200, { tid -> execute('call HighlightConflictMarker()') })
 
 " " Git diff
 " hi DiffAdd gui=NONE guibg=#2c406e guifg=white cterm=NONE

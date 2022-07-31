@@ -124,6 +124,7 @@ export PATH=/opt/homebrew/bin:$PATH
 export DIRENV_LOG_FORMAT=
 export EDITOR=nvim
 export VISUAL="$EDITOR"
+export CPPFLAGS="-I/opt/homebrew/opt/openjdk/include"
 eval "$(direnv hook zsh)"
 source $HOME/.zshenv
 

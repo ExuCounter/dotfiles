@@ -55,7 +55,6 @@ Plug 'rhysd/conflict-marker.vim'
 Plug 'jacquesbh/vim-showmarks'
 Plug 'mg979/vim-visual-multi', {'branch': 'master'}
 Plug 'phaazon/hop.nvim'
-" Plug 'lukas-reineke/indent-blankline.nvim'
 Plug 'yuttie/comfortable-motion.vim'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
@@ -64,7 +63,6 @@ Plug 'JoosepAlviste/nvim-ts-context-commentstring'
 Plug 'p00f/nvim-ts-rainbow'
 Plug 'windwp/nvim-ts-autotag'
 Plug 'Raimondi/delimitMate'
-" Plug 'jeffkreeftmeijer/vim-numbertoggle'
 Plug 'karb94/neoscroll.nvim'
 Plug 'nacro90/numb.nvim'
 Plug 'beauwilliams/focus.nvim'
@@ -93,9 +91,7 @@ endif
 
 Plug 'Yggdroot/indentLine'
 Plug 'pseewald/vim-anyfold'
-
 Plug 'kyazdani42/nvim-web-devicons'
-" Plug 'romgrk/barbar.nvim'
 Plug 'kyazdani42/nvim-tree.lua'
 Plug 'akinsho/bufferline.nvim', { 'tag': '*' }
 Plug 'glepnir/dashboard-nvim'

@@ -36,6 +36,8 @@ alias grs='git reset --soft'
 alias grh='git reset --hard'
 alias gl='git log --graph --pretty=format:"%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset" --abbrev-commit'
 alias chrome='open -a "Google Chrome"'
+alias kafka='~/Downloads/kafka/bin/kafka-server-start.sh config/server.properties'
+alias zookeeper='~/Downloads/kafka/bin/zookeeper-server-start.sh config/zookeeper.properties'
 
 # Vim aliases
 alias vi="nvim"
