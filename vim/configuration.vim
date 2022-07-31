@@ -21,12 +21,6 @@ if (has("termguicolors"))
 set termguicolors
 endif
 
-" For Neovim 0.1.3 and 0.1.4
-let $NVIM_TUI_ENABLE_TRUE_COLOR=1
-let g:onedark_terminal_italics = 1
-let g:onedark_termcolors = 256
-let g:onedark_hide_endofbuffer = 1 
-
 let g:solarized_extra_hi_groups = 1
 
 " Styled components clear buffers to prevent vim lagging
@@ -86,7 +80,15 @@ let g:indentLine_showFirstIndentLevel = 1
 let g:db_ui_use_nerd_fonts = 1
 let g:db_ui_show_database_icon = 1
 
-call wilder#setup({'modes': [':']})
+call wilder#set_option('renderer', wilder#popupmenu_renderer({
+      \ 'highlighter': wilder#basic_highlighter(),
+      \ 'left': [
+      \   ' ', wilder#popupmenu_devicons(),
+      \ ],
+      \ 'right': [
+      \   ' ', wilder#popupmenu_scrollbar(),
+      \ ],
+      \ }))
 
 let g:airline#extensions#whitespace#mixed_indent_algo = 1
 
@@ -109,4 +111,10 @@ set whichwrap+=<,h
 let g:indent_blankline_show_first_indent_level = v:false
 let g:matchup_matchparen_offscreen = { }
 
+let g:dbs = [
+\ { 'name': 'prosapient_dev', 'url': 'postgres://postgres:postgres@localhost:5432/prosapient_dev' },
+\ { 'name': 'prosapient_dev_byoe', 'url': 'postgres://postgres:postgres@localhost:5432/prosapient_dev_byoe' },
+\ { 'name': 'prosapient_dev_mckinsey', 'url': 'postgres://postgres:postgres@localhost:5432/prosapient_dev_mckinsey' },
+\ { 'name': 'prosapient_dev_outreach', 'url': 'postgres://postgres:postgres@localhost:5432/prosapient_dev_outreach' },
+\ ]
 

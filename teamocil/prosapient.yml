@@ -30,3 +30,9 @@ windows:
       - commands:
          - echo "yahoooo" && nvim
         focus: true
+  # - name: kafka
+  #   root: ~/Downloads/kafka/
+  #   layout: tiled
+  #   panes:
+  #     - bin/zookeeper-server-start.sh config/zookeeper.properties
+  #     - bin/kafka-server-start.sh config/server.properties

@@ -4,7 +4,7 @@ require'nvim-treesitter.configs'.setup {
     enable = true,              -- false will disable the whole extensio
     additional_vim_regex_highlighting = false,
 		use_languagetree = true,
-		disable = { "html" },
+		-- disable = { "html" },
   },
   autotag = {
     enable = true,
