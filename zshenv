@@ -43,3 +43,4 @@ alias zookeeper='~/Downloads/kafka/bin/zookeeper-server-start.sh config/zookeepe
 alias vi="nvim"
 # alias vim="nvim"
 alias code="nvim"
+. "$HOME/.cargo/env"
