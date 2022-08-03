@@ -56,7 +56,7 @@ set cursorline " highlight current line
 set nostartofline " don't reset cursor to start of line when moving around.
 set ruler " show the cursor position
 " set showcmd " show the (partial) command as it’s being typed
-set list
+set nolist
 set shortmess=atI " don't show the intro message when starting Vim
 set showmatch  " highlight matching [{()}] "
 set showmode " show the current mode
@@ -118,3 +118,4 @@ let g:dbs = [
 \ { 'name': 'prosapient_dev_outreach', 'url': 'postgres://postgres:postgres@localhost:5432/prosapient_dev_outreach' },
 \ ]
 
+nmap <Space>f <Plug>teastyluaFormat

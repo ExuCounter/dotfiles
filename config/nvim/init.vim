@@ -102,6 +102,8 @@ Plug 'brooth/far.vim'
 Plug 'lifepillar/vim-solarized8'
 Plug 'nvim-telescope/telescope-media-files.nvim'
 Plug 'nvim-lua/popup.nvim'
+Plug 'wesleimp/stylua.nvim'
+Plug 'willelz/teastylua.nvim'
 
 call plug#end()
 
