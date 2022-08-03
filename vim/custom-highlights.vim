@@ -36,7 +36,12 @@ call timer_start(200, { tid -> execute('call HighlightConflictMarker()') })
 " hi DiffDelete gui=NONE guibg=#693649 guifg=white cterm=NONE
 " hi DiffChange guifg=NONE ctermfg=NONE guibg=NONE ctermbg=NONE gui=NONE cterm=NONE 
 
-" hi VertSplit ctermfg=239 guifg=#303034
+hi VertSplit ctermbg=NONE guibg=NONE
+hi BufferLineFill ctermbg=254 guibg=#eee8d5
+hi BufferLineErrorDiagnostic guifg=red guibg=#ded8c7
+hi BufferLineError guifg=red guibg=#ded8c7
+hi BufferLineWarningDiagnostic guifg=yellow guibg=#ded8c7
+hi BufferLineWarning guifg=yellow guibg=#ded8c7
 " hi TSStrong ctermfg=249 guifg=#abb2bf
 " hi TSEmphasis ctermfg=249 guifg=#abb2bf
 " hi TSUnderline ctermfg=249 guifg=#abb2bf
