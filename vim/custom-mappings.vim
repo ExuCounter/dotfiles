@@ -25,11 +25,11 @@ vnoremap <silent> <C-S> <C-C>:update<CR>
 inoremap <silent> <C-S> <C-O>:update<CR>
 
 " Fast exit
-nmap <Leader>q :q!<cr>
+nmap <Leader>q :bw<cr>
 
 " Clear highlighting on escape in normal mode
 nnoremap <esc> :noh<return><esc>
-nnoremap <silent> <leader>tn :tabnew %<cr>
+nnoremap <silent> <leader>tn :vnew %<cr>
 
 " idk
 inoremap <C-s> <Esc>   """ <C-s> key is <Esc> setting

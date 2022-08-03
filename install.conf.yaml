@@ -27,6 +27,7 @@
     ~/.vim/nvim-tree.lua: vim/nvim-tree.lua
     ~/.vim/windows.vim: vim/windows.vim
     ~/.vim/moves.vim: vim/moves.vim
+    ~/.vim/bufferline.lua: vim/bufferline.lua
 
     ~/.config/nvim/init.vim: config/nvim/init.vim
     ~/.config/nvim/coc-settings.json: config/nvim/coc-settings.json
