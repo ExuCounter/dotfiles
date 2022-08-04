@@ -1,17 +1,17 @@
 " Return to normal mode
-inoremap jj <Esc>
+" inoremap jj <Esc>
 
 " EasyMotion
-map S <cmd>lua require'hop'.hint_char2()<CR>
-nmap s <cmd>lua require'hop'.hint_char1()<CR>
-vmap s <cmd>lua require'hop'.hint_char1()<CR>
-map  <silent>/ <Plug>(easymotion-sn)
+" map S <cmd>lua require'hop'.hint_char2()<CR>
+" nmap s <cmd>lua require'hop'.hint_char1()<CR>
+" vmap s <cmd>lua require'hop'.hint_char1()<CR>
+" map  <silent>/ <Plug>(easymotion-sn)
 
 " idk
-vmap <C-c> <ESC>"+yi
-vmap <C-x> <ESC>"+c
-vmap <C-v> c<ESC>"+p
-imap <C-v> <ESC>"+pa
+" vmap <C-c> <ESC>"+yi
+" vmap <C-x> <ESC>"+c
+" vmap <C-v> c<ESC>"+p
+" imap <C-v> <ESC>"+pa
 
 " Copy file path
 noremap <leader>cp :CopyPath<CR>
@@ -48,7 +48,7 @@ noremap <leader>D "*D
 map  gc  <Plug>Commentary
 nmap gcc <Plug>CommentaryLine
 
-command! -nargs=0 Prettier :CocCommand prettier.formatFile
+" command! -nargs=0 Prettier :CocCommand prettier.formatFile
 
 " Marks
 :nmap <leader>dm :delmarks A-Za-z0-9<cr>

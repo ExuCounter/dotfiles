@@ -1,27 +1,27 @@
-filetype plugin on
+" filetype plugin on
 
-set mouse=a
-set encoding=UTF-8
+" set mouse=a
+" set encoding=UTF-8
 
-syntax on
+" syntax on
 
 " au ColorScheme * hi Normal ctermbg=none guibg=none
-syntax enable
-colorscheme solarized8_flat " colorscheme
-let g:solarized_visibility = "high"
-set background=light
+" syntax enable
+" colorscheme solarized8_flat " colorscheme
+" let g:solarized_visibility = "high"
+" set background=light
 
 
-set timeout timeoutlen=500 ttimeoutlen=100 " fix slow O inserts
+" set timeout timeoutlen=500 ttimeoutlen=100 " fix slow O inserts
 " set ve=block " allow put the cursor anyway in visual block mode
-set complete=.,w,b,u,t,i,kspell
+" set complete=.,w,b,u,t,i,kspell
 
 " If you have vim >=8.0 or Neovim >= 0.1.5
 if (has("termguicolors"))
 set termguicolors
 endif
 
-let g:solarized_extra_hi_groups = 1
+" let g:solarized_extra_hi_groups = 1
 
 " Styled components clear buffers to prevent vim lagging
 autocmd BufEnter *.{js,jsx,ts,tsx} :syntax sync fromstart
@@ -35,50 +35,50 @@ augroup END
 
 autocmd FileType scss setl iskeyword+=@-@
 
-if !has('nvim')
-  set autoread
-  set backspace=indent,eol,start " enable Backspace in insert mode
-  set history=10000 " remember more commands and search history
-  set nocompatible
-endif
+" if !has('nvim')
+"   set autoread
+"   set backspace=indent,eol,start " enable Backspace in insert mode
+"   set history=10000 " remember more commands and search history
+"   set nocompatible
+" endif
 
-set t_Co=256
-set number
-set noswapfile
+" set t_Co=256
+" set number
+" set noswapfile
 
-set lazyredraw            " improve scrolling performance when navigating through large results
-set regexpengine=1        " use old regexp engine
-set ignorecase smartcase  " ignore case only when the pattern contains no capital letters
+" set lazyredraw            " improve scrolling performance when navigating through large results
+" set regexpengine=1        " use old regexp engine
+" set ignorecase smartcase  " ignore case only when the pattern contains no capital letters
 
-let mapleader = "\<Space>" " leader key
+" let mapleader = "\<Space>" " leader key
 
-set cursorline " highlight current line
-set nostartofline " don't reset cursor to start of line when moving around.
-set ruler " show the cursor position
-" set showcmd " show the (partial) command as it’s being typed
-set nolist
-set shortmess=atI " don't show the intro message when starting Vim
-set showmatch  " highlight matching [{()}] "
-set showmode " show the current mode
+" set cursorline " highlight current line
+" set nostartofline " don't reset cursor to start of line when moving around.
+" set ruler " show the cursor position
+" " set showcmd " show the (partial) command as it’s being typed
+" set nolist
+" set shortmess=atI " don't show the intro message when starting Vim
+" set showmatch  " highlight matching [{()}] "
+" set showmode " show the current mode
 
-set hidden " allow unsaved background buffers and remember marks/undo for them
-set nojs " insert only one space after . ? ! with a join command
-set nosol " keep the cursor in the same column when jump in file
-set scrolloff=11 " minimal lines around the cursor
-set shiftwidth=0
-set tabstop=2
-set numberwidth=5
+" set hidden " allow unsaved background buffers and remember marks/undo for them
+" set nojs " insert only one space after . ? ! with a join command
+" set nosol " keep the cursor in the same column when jump in file
+" set scrolloff=11 " minimal lines around the cursor
+" set shiftwidth=0
+" set tabstop=2
+" set numberwidth=5
 
 " let g:lognroll#enable_brackets = 0
 " let g:lognroll#enable_insert_mode = 0
 
-let g:indentLine_enabled = 1
-let g:indentLine_char = '│'
-" let g:indentLine_color_gui = '#303034'
-let g:indentLine_showFirstIndentLevel = 1
+" let g:indentLine_enabled = 1
+" let g:indentLine_char = '│'
+" " let g:indentLine_color_gui = '#303034'
+" let g:indentLine_showFirstIndentLevel = 1
 
-let g:db_ui_use_nerd_fonts = 1
-let g:db_ui_show_database_icon = 1
+" let g:db_ui_use_nerd_fonts = 1
+" let g:db_ui_show_database_icon = 1
 
 call wilder#set_option('renderer', wilder#popupmenu_renderer({
       \ 'highlighter': wilder#basic_highlighter(),
@@ -90,7 +90,7 @@ call wilder#set_option('renderer', wilder#popupmenu_renderer({
       \ ],
       \ }))
 
-let g:airline#extensions#whitespace#mixed_indent_algo = 1
+" let g:airline#extensions#whitespace#mixed_indent_algo = 1
 
 function! FoldSignColumnToggle()
     if &signcolumn == 'yes'
@@ -102,20 +102,20 @@ endfunction
 
 nmap <silent> C :call FoldSignColumnToggle()<CR>
 
-let g:db_ui_force_echo_notifications = 1
+" let g:db_ui_force_echo_notifications = 1
 
-let g:EasyMotion_prompt = 'fast search as fuck:'
-let g:EasyMotion_move_highlight = 0
+" let g:EasyMotion_prompt = 'fast search as fuck:'
+" let g:EasyMotion_move_highlight = 0
 
-set whichwrap+=<,h
-let g:indent_blankline_show_first_indent_level = v:false
-let g:matchup_matchparen_offscreen = { }
+" set whichwrap+=<,h
+" let g:indent_blankline_show_first_indent_level = v:false
+" let g:matchup_matchparen_offscreen = { }
 
-let g:dbs = [
-\ { 'name': 'prosapient_dev', 'url': 'postgres://postgres:postgres@localhost:5432/prosapient_dev' },
-\ { 'name': 'prosapient_dev_byoe', 'url': 'postgres://postgres:postgres@localhost:5432/prosapient_dev_byoe' },
-\ { 'name': 'prosapient_dev_mckinsey', 'url': 'postgres://postgres:postgres@localhost:5432/prosapient_dev_mckinsey' },
-\ { 'name': 'prosapient_dev_outreach', 'url': 'postgres://postgres:postgres@localhost:5432/prosapient_dev_outreach' },
-\ ]
+" let g:dbs = [
+" \ { 'name': 'prosapient_dev', 'url': 'postgres://postgres:postgres@localhost:5432/prosapient_dev' },
+" \ { 'name': 'prosapient_dev_byoe', 'url': 'postgres://postgres:postgres@localhost:5432/prosapient_dev_byoe' },
+" \ { 'name': 'prosapient_dev_mckinsey', 'url': 'postgres://postgres:postgres@localhost:5432/prosapient_dev_mckinsey' },
+" \ { 'name': 'prosapient_dev_outreach', 'url': 'postgres://postgres:postgres@localhost:5432/prosapient_dev_outreach' },
+" \ ]
 
 nmap <Space>f <Plug>teastyluaFormat
