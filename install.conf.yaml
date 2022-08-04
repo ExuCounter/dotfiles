@@ -14,8 +14,6 @@
     ~/.teamocil/prosapient.yml: teamocil/prosapient.yml
     ~/scripts/functions.sh: scripts/functions.sh
     ~/.vim/coc-settings.vim: vim/coc-settings.vim
-    ~/.vim/airline.vim: vim/airline.vim
-    ~/.vim/blamer.vim: vim/blamer.vim
     ~/.vim/configuration.vim: vim/configuration.vim
     ~/.vim/custom-mappings.vim: vim/custom-mappings.vim
     ~/.vim/custom-highlights.vim: vim/custom-highlights.vim
@@ -24,12 +22,21 @@
     ~/.vim/git.vim: vim/git.vim
     ~/.vim/nerdtree.vim: vim/nerdtree.vim
     ~/.vim/treesitter.lua: vim/treesitter.lua
-    ~/.vim/nvim-tree.lua: vim/nvim-tree.lua
+    ~/.vim/nvimtree.lua: vim/nvimtree.lua
     ~/.vim/windows.vim: vim/windows.vim
     ~/.vim/moves.vim: vim/moves.vim
-    ~/.vim/bufferline.lua: vim/bufferline.lua
+    ~/.vim/buffer-line.lua: vim/buffer-line.lua
+    ~/.vim/configuration.lua: vim/configuration.lua
+    ~/.vim/keymaps.lua: vim/keymaps.lua
+    ~/.vim/git.lua: vim/git.lua
+    ~/.vim/marks.lua: vim/marks.lua
+    ~/.vim/plugins.lua: vim/plugins.lua
+    ~/.vim/fzf.lua: vim/fzf.lua
+    ~/.vim/moves.lua: vim/moves.lua
+    ~/.vim/coc.lua: vim/coc.lua
 
-    ~/.config/nvim/init.vim: config/nvim/init.vim
+    # ~/.config/nvim/init.vim: config/nvim/init.vim
+    ~/.config/nvim/init.lua: config/nvim/init.lua
     ~/.config/nvim/coc-settings.json: config/nvim/coc-settings.json
     ~/.config/coc/ultisnips/typescriptreact.snippets: config/coc/ultisnips/typescriptreact.snippets
     ~/.config/coc/extensions/package.json: config/coc/extensions/package.json
