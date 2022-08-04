@@ -24,3 +24,13 @@ vimp.nnoremap('<Leader>grsh', ':Git reset --hard')
 vimp.nnoremap('<Leader>gri', ':Git rebase --interactive HEAD~')
 vimp.nnoremap('<Leader>gcb', ':Git checkout -b')
 vimp.nnoremap('<Leader>gbl', ':Git blame -et<CR>')
+
+-- Disable the default highlight group
+vim.g.conflict_marker_highlight_group = ''
+
+-- Include text after begin and end markers
+vim.g.conflict_marker_begin = '^<<<<<<< .*$' 
+vim.g.conflict_marker_common_ancestors = '^||||||| .*$'
+vim.g.conflict_marker_separator = '^=======$'
+vim.g.conflict_marker_end   = '^>>>>>>> .*$'
+

@@ -1,5 +1,16 @@
+local vimp = require("vimp")
+
 vim.cmd([[
 filetype plugin on
+
+set hidden
+set nobackup
+set nowritebackup
+set cmdheight=1
+set updatetime=300
+set shortmess+=c
+set pumheight=8
+set signcolumn=number
 
 set notimeout
 set encoding=utf-8
@@ -74,3 +85,6 @@ vim.g.dbs = {
 		url = "postgres://postgres:postgres@localhost:5432/prosapient_dev_outreach",
 	},
 }
+
+-- lua prettier
+vimp.nmap("<Space>f", "<Plug>teastyluaFormat")
