@@ -50,7 +50,7 @@ Plug("hail2u/vim-css3-syntax")
 
 -- Another
 Plug("nvim-treesitter/playground")
-Plug("airblade/vim-gitgutter")
+-- Plug("airblade/vim-gitgutter")
 Plug("taku-o/vim-copypath")
 Plug("tpope/vim-surround")
 Plug("rhysd/conflict-marker.vim")
@@ -97,6 +97,7 @@ Plug("willelz/teastylua.nvim")
 Plug("svermeulen/vimpeccable")
 Plug("itchyny/vim-gitbranch")
 Plug("ibhagwan/fzf-lua", { branch = "main" })
+Plug('neovim/nvim-lspconfig')
 
 vim.call("plug#end")
 

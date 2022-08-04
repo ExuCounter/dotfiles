@@ -7,10 +7,10 @@ nnoremap <C-H> <C-W><C-H>
 
 " Fast split
 
-nnoremap <leader>v :vnew %<cr>
-nnoremap <leader>s :new %<cr>
-nnoremap <leader>ev :vnew<cr>
-nnoremap <leader>es :new<cr>
+" nnoremap <leader>v :vnew %<cr>
+" nnoremap <leader>s :new %<cr>
+" nnoremap <leader>ev :vnew<cr>
+" nnoremap <leader>es :new<cr>
 
 " Go to tab by number
 

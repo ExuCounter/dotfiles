@@ -28,7 +28,7 @@ require("nvim-tree").setup({ -- BEGIN_DEFAULT_OPTS
 			custom_only = true,
 			list = {
 				{ key = "<C-t>", action = "close" },
-				{ key = "t", action = "tabnew" },
+				{ key = "t", action = "new %" },
 				{ key = "R", action = "refresh" },
 				{ key = "d", action = "remove" },
 				{ key = "D", action = "trash" },
@@ -134,7 +134,7 @@ require("nvim-tree").setup({ -- BEGIN_DEFAULT_OPTS
 }) -- END_DEFAULT_OPTSg
 
 vimp.nmap("<C-t>", ":NvimTreeToggle<CR>")
-vimp.nnoremap("<leader>r", ":NvimTreeRefresh<CR>")
+vimp.nnoremap({'chord'}, "<leader>r", ":NvimTreeRefresh<CR>")
 vimp.nnoremap({ "chord" }, "<leader>t", ":NvimTreeFindFile<CR>")
 
 -- You dont need to set any of these options. These are the default ones. Only

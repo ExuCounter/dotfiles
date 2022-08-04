@@ -20,11 +20,9 @@
     ~/.vim/folding.vim: vim/folding.vim
     ~/.vim/fzf.vim: vim/fzf.vim
     ~/.vim/git.vim: vim/git.vim
-    ~/.vim/nerdtree.vim: vim/nerdtree.vim
     ~/.vim/treesitter.lua: vim/treesitter.lua
     ~/.vim/nvimtree.lua: vim/nvimtree.lua
     ~/.vim/windows.vim: vim/windows.vim
-    ~/.vim/moves.vim: vim/moves.vim
     ~/.vim/buffer-line.lua: vim/buffer-line.lua
     ~/.vim/configuration.lua: vim/configuration.lua
     ~/.vim/keymaps.lua: vim/keymaps.lua
@@ -34,6 +32,7 @@
     ~/.vim/fzf.lua: vim/fzf.lua
     ~/.vim/moves.lua: vim/moves.lua
     ~/.vim/coc.lua: vim/coc.lua
+    ~/.vim/windows.lua: vim/windows.lua
 
     # ~/.config/nvim/init.vim: config/nvim/init.vim
     ~/.config/nvim/init.lua: config/nvim/init.lua
