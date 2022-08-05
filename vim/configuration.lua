@@ -44,7 +44,8 @@ set timeout
 set timeoutlen=500
 set ttimeoutlen=100
 
-set complete=.,w,b,u,t,i,kspell
+set complete+=.,w,b,u,t,i,kspell
+set completeopt=menu,menuone,noselect
 set whichwrap+=<,h
 
 syntax on

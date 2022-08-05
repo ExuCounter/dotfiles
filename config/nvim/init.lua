@@ -10,6 +10,7 @@ require("nvimtree")
 require("fzf")
 require("moves")
 require("windows")
+require("/lsp/mason")
 
 local numb = require("numb")
 local focus = require("focus")
