@@ -24,12 +24,12 @@ vimp.noremap("cp", ":CopyPath<CR>")
 vimp.noremap("<leader>u", ":e untitled.txt")
 
 -- Save on CTRL + S
-vimp.nnoremap({ "silent" }, "<C-S>", ":w<CR>")
-vimp.vnoremap({ "silent" }, "<C-S>", "<Esc>:w<CR>")
-vimp.inoremap({ "silent" }, "<C-S>", "<Esc>:w<CR>")
+vimp.nnoremap({ "silent" }, "<C-S>", ":w!<CR>")
+vimp.vnoremap({ "silent" }, "<C-S>", "<Esc>:w!<CR>")
+vimp.inoremap({ "silent" }, "<C-S>", "<Esc>:w!<CR>")
 
 -- Fast exit from buffer
-vimp.nmap("<Leader>q", ":bw<cr>")
+vimp.nmap("<Leader>q", ":bd!<cr>")
 
 -- Clear highlighting on escape in normal mode
 vimp.nnoremap("<Esc>", ":noh<cr><esc>")

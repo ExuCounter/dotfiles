@@ -81,10 +81,12 @@ Plug("roxma/nvim-yarp")
 Plug("roxma/vim-hug-neovim-rpc")
 
 Plug("Yggdroot/indentLine")
+-- Plug('lukas-reineke/indent-blankline.nvim')
 Plug("pseewald/vim-anyfold")
 Plug("kyazdani42/nvim-web-devicons")
 Plug("kyazdani42/nvim-tree.lua")
 -- Plug("glepnir/dashboard-nvim")
+--
 Plug("nvim-lua/plenary.nvim")
 Plug("nvim-telescope/telescope.nvim")
 Plug("nvim-telescope/telescope-fzf-native.nvim", { ["do"] = vim.fn["make"] })
@@ -98,17 +100,20 @@ Plug("svermeulen/vimpeccable")
 Plug("itchyny/vim-gitbranch")
 Plug("ibhagwan/fzf-lua", { branch = "main" })
 --
-Plug('neovim/nvim-lspconfig')
+Plug("neovim/nvim-lspconfig")
 
-Plug('williamboman/mason.nvim')
-Plug('williamboman/mason-lspconfig.nvim')
+Plug("williamboman/mason.nvim")
+Plug("williamboman/mason-lspconfig.nvim")
 
-Plug 'hrsh7th/cmp-nvim-lsp'
-Plug 'hrsh7th/cmp-buffer'
-Plug 'hrsh7th/cmp-path'
-Plug 'hrsh7th/cmp-cmdline'
-Plug 'hrsh7th/nvim-cmp'
-Plug 'onsails/lspkind.nvim'
+Plug("hrsh7th/cmp-nvim-lsp")
+Plug("hrsh7th/cmp-buffer")
+Plug("hrsh7th/cmp-path")
+Plug("hrsh7th/cmp-cmdline")
+Plug("hrsh7th/nvim-cmp")
+Plug("onsails/lspkind.nvim")
+Plug("jose-elias-alvarez/null-ls.nvim")
+Plug("lukas-reineke/lsp-format.nvim")
+Plug("sbdchd/neoformat")
+Plug("mhartington/formatter.nvim")
 
 vim.call("plug#end")
-

@@ -38,6 +38,7 @@ alias gl='git log --graph --pretty=format:"%Cred%h%Creset -%C(yellow)%d%Creset %
 alias chrome='open -a "Google Chrome"'
 alias kafka='~/Downloads/kafka/bin/kafka-server-start.sh config/server.properties'
 alias zookeeper='~/Downloads/kafka/bin/zookeeper-server-start.sh config/zookeeper.properties'
+alias prettier='npx prettier'
 
 # Vim aliases
 alias vi="nvim"

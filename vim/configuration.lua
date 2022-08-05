@@ -59,9 +59,9 @@ vim.g.mapleader = " "
 vim.g.solarized_visibility = "high"
 vim.g.solarized_extra_hi_groups = 1
 
-vim.g.indentLine_enabled = 1
-vim.g.indentLine_char = "│"
-vim.g.indentLine_showFirstIndentLevel = 1
+-- vim.g.indentLine_enabled = 1
+-- vim.g.indentLine_char = "│"
+-- vim.g.indentLine_showFirstIndentLevel = 1
 
 vim.g.db_ui_use_nerd_fonts = 1
 vim.g.db_ui_show_database_icon = 1
@@ -71,7 +71,7 @@ vim.g.db_ui_force_echo_notifications = 1
 vim.g.EasyMotion_prompt = "fast search as fuck:"
 vim.g.EasyMotion_move_highlight = 0
 
-vim.g.indent_blankline_show_first_indent_level = false
+-- vim.g.indent_blankline_show_first_indent_level = false
 vim.g.matchup_matchparen_offscreen = {}
 
 vim.g.dbs = {
@@ -88,4 +88,14 @@ vim.g.dbs = {
 }
 
 -- lua prettier
-vimp.nmap("<Space>f", "<Plug>teastyluaFormat")
+-- vimp.nmap("<Space>f", "<Plug>teastyluaFormat")
+--
+
+-- require("indent_blankline").setup({
+-- 	-- for example, context is off by default, use this to turn it on
+-- 	show_current_context = true,
+-- 	show_current_context_start = true,
+-- })
+-- vim.opt.list = true
+-- vim.g.indent_blankline_use_treesitter = true
+
