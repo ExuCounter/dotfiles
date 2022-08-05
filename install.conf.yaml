@@ -33,6 +33,7 @@
     ~/.vim/moves.lua: vim/moves.lua
     ~/.vim/coc.lua: vim/coc.lua
     ~/.vim/windows.lua: vim/windows.lua
+    ~/.vim/lsp/mason.lua: vim/lsp/mason.lua
 
     # ~/.config/nvim/init.vim: config/nvim/init.vim
     ~/.config/nvim/init.lua: config/nvim/init.lua

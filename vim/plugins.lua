@@ -17,7 +17,7 @@ Plug("APZelos/blamer.nvim")
 Plug("brooth/far.vim")
 
 -- Coc
-Plug("neoclide/coc.nvim", { branch = "release" })
+-- Plug("neoclide/coc.nvim", { branch = "release" })
 
 -- DB
 Plug("tpope/vim-dadbod")
@@ -97,7 +97,18 @@ Plug("willelz/teastylua.nvim")
 Plug("svermeulen/vimpeccable")
 Plug("itchyny/vim-gitbranch")
 Plug("ibhagwan/fzf-lua", { branch = "main" })
+--
 Plug('neovim/nvim-lspconfig')
+
+Plug('williamboman/mason.nvim')
+Plug('williamboman/mason-lspconfig.nvim')
+
+Plug 'hrsh7th/cmp-nvim-lsp'
+Plug 'hrsh7th/cmp-buffer'
+Plug 'hrsh7th/cmp-path'
+Plug 'hrsh7th/cmp-cmdline'
+Plug 'hrsh7th/nvim-cmp'
+Plug 'onsails/lspkind.nvim'
 
 vim.call("plug#end")
 
