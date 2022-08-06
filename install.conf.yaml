@@ -13,11 +13,7 @@
     ~/.fzf.zsh: fzf.zsh
     ~/.teamocil/prosapient.yml: teamocil/prosapient.yml
     ~/scripts/functions.sh: scripts/functions.sh
-    ~/.vim/coc-settings.vim: vim/coc-settings.vim
-    ~/.vim/configuration.vim: vim/configuration.vim
-    ~/.vim/custom-mappings.vim: vim/custom-mappings.vim
     ~/.vim/custom-highlights.vim: vim/custom-highlights.vim
-    ~/.vim/folding.vim: vim/folding.vim
     ~/.vim/fzf.vim: vim/fzf.vim
     ~/.vim/git.vim: vim/git.vim
     ~/.vim/treesitter.lua: vim/treesitter.lua
@@ -31,7 +27,6 @@
     ~/.vim/plugins.lua: vim/plugins.lua
     ~/.vim/fzf.lua: vim/fzf.lua
     ~/.vim/moves.lua: vim/moves.lua
-    ~/.vim/coc.lua: vim/coc.lua
     ~/.vim/windows.lua: vim/windows.lua
     ~/.vim/lsp/mason.lua: vim/lsp/mason.lua
 

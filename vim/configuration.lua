@@ -1,6 +1,7 @@
 local vimp = require("vimp")
 
-vim.cmd([[
+vim.cmd(
+    [[
 filetype plugin on
 
 set hidden
@@ -52,7 +53,13 @@ syntax on
 colorscheme solarized8_flat " colorscheme
 set background=light
 set termguicolors
-]])
+
+set foldenable          " dont fold by default
+set foldmethod=indent   " fold based on spaces
+set foldlevelstart=10   " open most folds by default
+set foldnestmax=10      " 10 nested fold max
+]]
+)
 
 vim.g.mapleader = " "
 
@@ -75,16 +82,16 @@ vim.g.EasyMotion_move_highlight = 0
 vim.g.matchup_matchparen_offscreen = {}
 
 vim.g.dbs = {
-	dev = { name = "prosapient_dev", url = "postgres://postgres:postgres@localhost:5432/prosapient_dev" },
-	byoe = { name = "prosapient_dev_byoe", url = "postgres://postgres:postgres@localhost:5432/prosapient_dev_byoe" },
-	mckinsey = {
-		name = "prosapient_dev_mckinsey",
-		url = "postgres://postgres:postgres@localhost:5432/prosapient_dev_mckinsey",
-	},
-	outreach = {
-		name = "prosapient_dev_outreach",
-		url = "postgres://postgres:postgres@localhost:5432/prosapient_dev_outreach",
-	},
+    dev = {name = "prosapient_dev", url = "postgres://postgres:postgres@localhost:5432/prosapient_dev"},
+    byoe = {name = "prosapient_dev_byoe", url = "postgres://postgres:postgres@localhost:5432/prosapient_dev_byoe"},
+    mckinsey = {
+        name = "prosapient_dev_mckinsey",
+        url = "postgres://postgres:postgres@localhost:5432/prosapient_dev_mckinsey"
+    },
+    outreach = {
+        name = "prosapient_dev_outreach",
+        url = "postgres://postgres:postgres@localhost:5432/prosapient_dev_outreach"
+    }
 }
 
 -- lua prettier
@@ -98,4 +105,3 @@ vim.g.dbs = {
 -- })
 -- vim.opt.list = true
 -- vim.g.indent_blankline_use_treesitter = true
-
