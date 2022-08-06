@@ -185,11 +185,19 @@ require("lspconfig").tsserver.setup(
     {
         on_attach = on_attach,
         flags = lsp_flags,
-        init_options = {documentFormatting = true},
         capabilities = capabilities
     }
 )
+
 require("lspconfig").eslint.setup(
+    {
+        on_attach = on_attach,
+        flags = lsp_flags,
+        capabilities = capabilities
+    }
+)
+
+require("lspconfig").sumneko_lua.setup(
     {
         on_attach = on_attach,
         flags = lsp_flags,
