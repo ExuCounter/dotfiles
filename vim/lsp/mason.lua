@@ -1,3 +1,8 @@
+local vimp = require("vimp")
+local cmp = require("cmp")
+local formatter = require("formatter")
+local lsp_config = require("lspconfig")
+
 local opts = {noremap = true, silent = true}
 
 vim.keymap.set("n", "<space>e", vim.diagnostic.open_float, opts)
@@ -38,7 +43,6 @@ local on_attach = function(client, bufnr)
     vim.keymap.set("n", "<space>rn", vim.lsp.buf.rename, bufopts)
     vim.keymap.set("n", "<space>ca", vim.lsp.buf.code_action, bufopts)
     vim.keymap.set("n", "gr", vim.lsp.buf.references, bufopts)
-    -- vim.keymap.set("n", "<space>f", vim.lsp.buf.formatting, bufopts)
 end
 
 local lsp_flags = {
@@ -46,16 +50,11 @@ local lsp_flags = {
     debounce_text_changes = 150
 }
 
-local cmp = require("cmp")
-
 cmp.setup(
     {
         snippet = {
             -- REQUIRED - you must specify a snippet engine
             expand = function(args)
-                -- vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
-                -- require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
-                -- require('snippy').expand_snippet(args.body) -- For `snippy` users.
                 -- vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
             end
         },
@@ -181,7 +180,8 @@ require("mason-lspconfig").setup(
         automatic_installation = true
     }
 )
-require("lspconfig").tsserver.setup(
+
+lsp_config.tsserver.setup(
     {
         on_attach = on_attach,
         flags = lsp_flags,
@@ -189,7 +189,7 @@ require("lspconfig").tsserver.setup(
     }
 )
 
-require("lspconfig").eslint.setup(
+lsp_config.eslint.setup(
     {
         on_attach = on_attach,
         flags = lsp_flags,
@@ -197,7 +197,7 @@ require("lspconfig").eslint.setup(
     }
 )
 
-require("lspconfig").sumneko_lua.setup(
+lsp_config.sumneko_lua.setup(
     {
         on_attach = on_attach,
         flags = lsp_flags,
@@ -220,10 +220,6 @@ sign({name = "DiagnosticSignError", text = "✘"})
 sign({name = "DiagnosticSignWarn", text = "▲"})
 sign({name = "DiagnosticSignHint", text = "⚑"})
 sign({name = "DiagnosticSignInfo", text = ""})
-
--- vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "rounded" })
-
--- vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = "rounded" })
 
 vim.diagnostic.config(
     {
@@ -251,7 +247,7 @@ vim.diagnostic.config(
 vim.cmd(
     [[
 autocmd CursorHold * lua vim.diagnostic.open_float({width = 80})
-hi DiagnosticHint guifg=Blue
+hi DiagnosticHint guifg=Blue guibg=NONE
 " autocmd CursorHoldI * silent! lua vim.lsp.buf.signature_help()
 augroup FormatAutogroup
   autocmd!
@@ -262,86 +258,48 @@ augroup END
 
 vimp.nnoremap({"silent"}, "cn", "<cmd>lua vim.diagnostic.goto_next()<CR>")
 vimp.nnoremap({"silent"}, "cN", "<cmd>lua vim.diagnostic.goto_prev()<CR>")
--- vim.nvim_set_keymap("n", "cn", "<cmd>lua vim.lsp.diagnostic.goto_next()<CR>", { noremap = true, silent = true })
--- vim.nvim_set_keymap("n", "cN", "<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>", { noremap = true, silent = true })
+--
+function map(tbl, f)
+    local t = {}
+    for k, v in pairs(tbl) do
+        t[k] = f(k, v)
+    end
+    return t
+end
 
--- local null_ls = require("null-ls")
+local formatter_filetype =
+    map(
+    {
+        typescriptreact = {},
+        typescript = {},
+        javascript = {},
+        json = {},
+        css = {},
+        scss = {},
+        html = {},
+        less = {},
+        lua = {
+            exe = "luafmt"
+        }
+    },
+    function(k, v)
+        return {
+            function()
+                local configuration = {
+                    exe = v["exe"] or "prettierd",
+                    args = {vim.api.nvim_buf_get_name(0)},
+                    stdin = true
+                }
 
--- local sources = {
--- 	null_ls.builtins.formatting.prettier,
--- 	null_ls.builtins.diagnostics.write_good,
--- 	null_ls.builtins.code_actions.gitsigns,
--- }
+                return configuration
+            end
+        }
+    end
+)
 
--- null_ls.setup({ sources = sources })
-
--- vim.g.neoformat_run_all_formatters = 1
--- vim.g.neoformat_only_msg_on_error = 1
-
-require("formatter").setup(
+formatter.setup(
     {
         logging = false,
-        filetype = {
-            typescriptreact = {
-                -- prettier
-                function()
-                    return {
-                        exe = "prettierd",
-                        args = {vim.api.nvim_buf_get_name(0)},
-                        stdin = true
-                    }
-                end
-            },
-            lua = {
-                -- luafmt
-                function()
-                    return {
-                        exe = "luafmt",
-                        args = {vim.api.nvim_buf_get_name(0)},
-                        stdin = true
-                    }
-                end
-            },
-            typescript = {
-                -- prettier
-                function()
-                    return {
-                        exe = "prettierd",
-                        args = {vim.api.nvim_buf_get_name(0)},
-                        stdin = true
-                    }
-                end
-            },
-            javascript = {
-                -- prettier
-                function()
-                    return {
-                        exe = "prettierd",
-                        args = {vim.api.nvim_buf_get_name(0)},
-                        stdin = true
-                    }
-                end
-            },
-            javascriptreact = {
-                -- prettier
-                function()
-                    return {
-                        exe = "prettierd",
-                        args = {vim.api.nvim_buf_get_name(0)},
-                        stdin = true
-                    }
-                end
-            },
-            json = {
-                -- prettier
-                function()
-                    return {
-                        exe = "prettierd",
-                        args = {vim.api.nvim_buf_get_name(0)},
-                        stdin = true
-                    }
-                end
-            }
-        }
+        filetype = formatter_filetype
     }
 )

@@ -16,15 +16,12 @@ Plug("tpope/vim-fugitive")
 Plug("APZelos/blamer.nvim")
 Plug("brooth/far.vim")
 
--- Coc
--- Plug("neoclide/coc.nvim", { branch = "release" })
-
 -- DB
 Plug("tpope/vim-dadbod")
 Plug("kristijanhusak/vim-dadbod-ui")
 
 -- Fzf
-Plug("junegunn/fzf", { ["do"] = vim.fn["fzf#install"] })
+Plug("junegunn/fzf", {["do"] = vim.fn["fzf#install"]})
 Plug("junegunn/fzf.vim")
 
 -- Vim airline
@@ -40,12 +37,12 @@ Plug("ryanoasis/vim-devicons")
 
 -- Syntax
 Plug("leafgarland/typescript-vim")
-Plug("nvim-treesitter/nvim-treesitter", { ["do"] = "TSUpdate" })
+Plug("nvim-treesitter/nvim-treesitter", {["do"] = "TSUpdate"})
 Plug("rhysd/accelerated-jk")
 Plug("jparise/vim-graphql")
 -- Plug 'pangloss/vim-javascript'
 Plug("ap/vim-css-color")
-Plug("cakebaker/scss-syntax.vim", { ["for"] = { "sass", "scss" } })
+Plug("cakebaker/scss-syntax.vim", {["for"] = {"sass", "scss"}})
 Plug("hail2u/vim-css3-syntax")
 
 -- Another
@@ -55,7 +52,7 @@ Plug("taku-o/vim-copypath")
 Plug("tpope/vim-surround")
 Plug("rhysd/conflict-marker.vim")
 Plug("jacquesbh/vim-showmarks")
-Plug("mg979/vim-visual-multi", { branch = "master" })
+Plug("mg979/vim-visual-multi", {branch = "master"})
 Plug("phaazon/hop.nvim")
 Plug("yuttie/comfortable-motion.vim")
 Plug("christoomey/vim-tmux-navigator")
@@ -80,8 +77,8 @@ Plug("gelguy/wilder.nvim")
 Plug("roxma/nvim-yarp")
 Plug("roxma/vim-hug-neovim-rpc")
 
-Plug("Yggdroot/indentLine")
--- Plug('lukas-reineke/indent-blankline.nvim')
+-- Plug("Yggdroot/indentLine")
+Plug("lukas-reineke/indent-blankline.nvim")
 Plug("pseewald/vim-anyfold")
 Plug("kyazdani42/nvim-web-devicons")
 Plug("kyazdani42/nvim-tree.lua")
@@ -89,7 +86,7 @@ Plug("kyazdani42/nvim-tree.lua")
 --
 Plug("nvim-lua/plenary.nvim")
 Plug("nvim-telescope/telescope.nvim")
-Plug("nvim-telescope/telescope-fzf-native.nvim", { ["do"] = vim.fn["make"] })
+Plug("nvim-telescope/telescope-fzf-native.nvim", {["do"] = vim.fn["make"]})
 Plug("brooth/far.vim")
 Plug("lifepillar/vim-solarized8")
 Plug("nvim-telescope/telescope-media-files.nvim")
@@ -98,7 +95,7 @@ Plug("wesleimp/stylua.nvim")
 Plug("willelz/teastylua.nvim")
 Plug("svermeulen/vimpeccable")
 Plug("itchyny/vim-gitbranch")
-Plug("ibhagwan/fzf-lua", { branch = "main" })
+Plug("ibhagwan/fzf-lua", {branch = "main"})
 --
 Plug("neovim/nvim-lspconfig")
 
@@ -115,5 +112,6 @@ Plug("jose-elias-alvarez/null-ls.nvim")
 Plug("lukas-reineke/lsp-format.nvim")
 Plug("sbdchd/neoformat")
 Plug("mhartington/formatter.nvim")
+Plug "rxi/lume"
 
 vim.call("plug#end")
