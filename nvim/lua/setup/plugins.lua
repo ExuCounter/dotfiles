@@ -113,5 +113,6 @@ Plug("lukas-reineke/lsp-format.nvim")
 Plug("sbdchd/neoformat")
 Plug("mhartington/formatter.nvim")
 Plug "SirVer/ultisnips"
+Plug "ray-x/lsp_signature.nvim"
 
 vim.call("plug#end")
