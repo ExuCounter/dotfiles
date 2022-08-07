@@ -19,11 +19,11 @@
     ~/nvim/lua/setup/treesitter.lua: nvim/lua/setup/treesitter.lua
     ~/nvim/lua/setup/nvimtree.lua: nvim/lua/setup/nvimtree.lua
     ~/nvim/lua/setup/windows.vim: nvim/lua/setup/windows.vim
-    ~/nvim/lua/setup/buffer-line.lua: nvim/lua/setup/buffer-line.lua
+    ~/nvim/lua/setup/bufferline.lua: nvim/lua/setup/bufferline.lua
     ~/nvim/lua/setup/configuration.lua: nvim/lua/setup/configuration.lua
     ~/nvim/lua/setup/keymaps.lua: nvim/lua/setup/keymaps.lua
     ~/nvim/lua/setup/git.lua: nvim/lua/setup/git.lua
-    ~/nvim/lua/setup/mark.lua: nvim/lua/setup/mark.lua
+    ~/nvim/lua/setup/marks.lua: nvim/lua/setup/marks.lua
     ~/nvim/lua/setup/plugins.lua: nvim/lua/setup/plugins.lua
     ~/nvim/lua/setup/fzf.lua: nvim/lua/setup/fzf.lua
     ~/nvim/lua/setup/moves.lua: nvim/lua/setup/moves.lua
@@ -32,7 +32,5 @@
     ~/nvim/lua/setup/lsp/mason.lua: nvim/lua/setup/lsp/mason.lua
 
     ~/nvim/lua/init.lua: nvim/lua/init.lua
-    ~/.config/coc/ultisnips/typescriptreact.snippets: config/coc/ultisnips/typescriptreact.snippets
-    ~/.config/coc/extensions/package.json: config/coc/extensions/package.json
 - shell:
   - [git submodule update --init --recursive, Installing submodules]

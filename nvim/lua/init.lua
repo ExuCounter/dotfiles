@@ -1,12 +1,10 @@
 require("setup/plugins")
 require("setup/treesitter")
 require("setup/configuration")
-require("setup/buffer-line")
-
+require("setup/bufferline")
 require("setup/keymaps")
-
 require("setup/git")
-require("setup/mark")
+require("setup/marks")
 require("setup/nvimtree")
 require("setup/fzf")
 require("setup/moves")
