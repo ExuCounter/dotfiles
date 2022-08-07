@@ -26,7 +26,8 @@ local on_attach = function(client, bufnr)
                     border = "none",
                     source = "always",
                     prefix = " ",
-                    scope = "cursor"
+                    scope = "cursor",
+                    width = 80
                 }
                 vim.diagnostic.open_float(nil, opts)
             end
@@ -226,7 +227,9 @@ vim.diagnostic.config(
         virtual_text = false,
         -- severity_sort = true,
         float = {},
-        signs = true
+        signs = true,
+        update_in_insert = true,
+        severity_sort = true
         -- format = lspkind.cmp_format({
         -- 	mode = "symbol", -- show only symbol annotations
         -- 	maxwidth = 50, -- prevent the popup from showing more than provided characters (e.g 50 will not show more than 50 characters)
@@ -241,7 +244,7 @@ vim.diagnostic.config(
 )
 vim.cmd(
     [[
-hi DiagnosticHint guifg=#519aba guibg=NONE
+hi DiagnosticHint guifg=#8b9898 guibg=NONE
 augroup FormatAutogroup
   autocmd!
   autocmd BufWritePost * FormatWrite

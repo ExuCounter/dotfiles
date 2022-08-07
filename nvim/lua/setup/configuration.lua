@@ -4,7 +4,7 @@ vim.cmd(
     [[
 filetype plugin on
 
-set signcolumn=yes
+set signcolumn=number
 set nobackup
 set nowritebackup
 set cmdheight=1
