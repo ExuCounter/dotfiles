@@ -2,33 +2,32 @@ local vimp = require("vimp")
 local cmp = require("cmp")
 local formatter = require("formatter")
 local lsp_config = require("lspconfig")
-
 local opts = {noremap = true, silent = true}
-
 vim.keymap.set("n", "<space>e", vim.diagnostic.open_float, opts)
 vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, opts)
 vim.keymap.set("n", "]d", vim.diagnostic.goto_next, opts)
--- vim.keymap.set("n", "<space>q", vim.diagnostic.setloclist, opts)
-
 local on_attach = function(client, bufnr)
     -- Enable completion triggered by <c-x><c-o>
-    vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
-
+    -- vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
+    -- require "lsp_signature".on_attach(
+    --     {
+    --         bind = true, -- This is mandatory, otherwise border config won't get registered.
+    --         handler_opts = {
+    --             border = "none" -- double, rounded, single, shadow, none
+    --         },
+    --         floating_window_above_cur_line = false,
+    --         floating_window = false,
+    --         wrap = true
+    --     },
+    --     bufnr
+    -- )
     -- Mappings.
     -- See `:help vim.lsp.*` for documentation on any of the below functions
     local bufopts = {noremap = true, silent = true, buffer = bufnr}
     vim.keymap.set("n", "gD", vim.lsp.buf.declaration, bufopts)
     vim.keymap.set("n", "gd", vim.lsp.buf.definition, bufopts)
-    vim.keymap.set(
-        "n",
-        "K",
-        function()
-            vim.lsp.buf.hover({max_width = 80})
-        end,
-        bufopts
-    )
+    vim.keymap.set("n", "K", vim.lsp.buf.hover, bufopts)
     vim.keymap.set("n", "gi", vim.lsp.buf.implementation, bufopts)
-    -- vim.keymap.set("n", "<C-k>", vim.lsp.buf.signature_help, bufopts)
     vim.keymap.set("n", "<space>wa", vim.lsp.buf.add_workspace_folder, bufopts)
     vim.keymap.set("n", "<space>wr", vim.lsp.buf.remove_workspace_folder, bufopts)
     vim.keymap.set(
@@ -39,7 +38,6 @@ local on_attach = function(client, bufnr)
         end,
         bufopts
     )
-    vim.keymap.set("n", "<space>D", vim.lsp.buf.type_definition, bufopts)
     vim.keymap.set("n", "<space>rn", vim.lsp.buf.rename, bufopts)
     vim.keymap.set("n", "<space>ca", vim.lsp.buf.code_action, bufopts)
     vim.keymap.set("n", "gr", vim.lsp.buf.references, bufopts)
@@ -97,6 +95,7 @@ cmp.setup(
         sources = cmp.config.sources(
             {
                 {name = "nvim_lsp"}
+                -- {name = "nvim_lsp_signature_help"}
                 -- { name = "vsnip" }, -- For vsnip users.
                 -- { name = 'luasnip' }, -- For luasnip users.
                 -- { name = 'ultisnips' }, -- For ultisnips users.
@@ -108,7 +107,6 @@ cmp.setup(
         )
     }
 )
-
 -- Set configuration for specific filetype.
 cmp.setup.filetype(
     "gitcommit",
@@ -123,7 +121,6 @@ cmp.setup.filetype(
         )
     }
 )
-
 -- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
 cmp.setup.cmdline(
     "/",
@@ -134,7 +131,6 @@ cmp.setup.cmdline(
         }
     }
 )
-
 -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
 cmp.setup.cmdline(
     ":",
@@ -150,10 +146,8 @@ cmp.setup.cmdline(
         )
     }
 )
-
 -- Setup lspconfig.
 local capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities())
-
 local lspkind = require("lspkind")
 cmp.setup(
     {
@@ -165,6 +159,7 @@ cmp.setup(
                     -- The function below will be called before any actual modifications from lspkind
                     -- so that you can provide more controls on popup customization. (See [#30](https://github.com/onsails/lspkind-nvim/pull/30))
                     before = function(entry, vim_item)
+                        print(entry)
                         return vim_item
                     end
                 }
@@ -172,7 +167,6 @@ cmp.setup(
         }
     }
 )
-
 require("mason").setup()
 require("mason-lspconfig").setup(
     {
@@ -189,7 +183,6 @@ require("mason-lspconfig").setup(
         automatic_installation = true
     }
 )
-
 lsp_config.tsserver.setup(
     {
         on_attach = on_attach,
@@ -197,7 +190,6 @@ lsp_config.tsserver.setup(
         capabilities = capabilities
     }
 )
-
 lsp_config.eslint.setup(
     {
         on_attach = on_attach,
@@ -205,7 +197,6 @@ lsp_config.eslint.setup(
         capabilities = capabilities
     }
 )
-
 lsp_config.sumneko_lua.setup(
     {
         on_attach = on_attach,
@@ -213,7 +204,6 @@ lsp_config.sumneko_lua.setup(
         capabilities = capabilities
     }
 )
-
 local sign = function(opts)
     vim.fn.sign_define(
         opts.name,
@@ -224,25 +214,19 @@ local sign = function(opts)
         }
     )
 end
-
 sign({name = "DiagnosticSignError", text = "✘"})
 sign({name = "DiagnosticSignWarn", text = "▲"})
 sign({name = "DiagnosticSignHint", text = "⚑"})
 sign({name = "DiagnosticSignInfo", text = ""})
-
 vim.diagnostic.config(
     {
         virtual_text = false,
-        severity_sort = true,
-        float = {
-            -- border = "rounded",
-            source = "always"
-        },
+        -- severity_sort = true,
+        float = {},
         signs = true
         -- format = lspkind.cmp_format({
         -- 	mode = "symbol", -- show only symbol annotations
         -- 	maxwidth = 50, -- prevent the popup from showing more than provided characters (e.g 50 will not show more than 50 characters)
-
         -- 	-- The function below will be called before any actual modifications from lspkind
         -- 	-- so that you can provide more controls on popup customization. (See [#30](https://github.com/onsails/lspkind-nvim/pull/30))
         -- 	before = function(entry, vim_item)
@@ -252,7 +236,6 @@ vim.diagnostic.config(
         -- }),
     }
 )
-
 vim.cmd(
     [[
 autocmd CursorHold * lua vim.diagnostic.open_float({width = 80})
@@ -264,7 +247,6 @@ augroup FormatAutogroup
 augroup END
 ]]
 )
-
 vimp.nnoremap({"silent"}, "cn", "<cmd>lua vim.diagnostic.goto_next()<CR>")
 vimp.nnoremap({"silent"}, "cN", "<cmd>lua vim.diagnostic.goto_prev()<CR>")
 --
@@ -275,7 +257,6 @@ function map(tbl, f)
     end
     return t
 end
-
 local formatter_filetype =
     map(
     {
@@ -299,27 +280,23 @@ local formatter_filetype =
                     args = {vim.api.nvim_buf_get_name(0)},
                     stdin = true
                 }
-
                 return configuration
             end
         }
     end
 )
-
 formatter.setup(
     {
         logging = false,
         filetype = formatter_filetype
     }
 )
-
 capabilities.textDocument.completion.completionItem.snippetSupport = true
-
 lsp_config.emmet_ls.setup(
     {
         on_attach = on_attach,
         capabilities = capabilities,
-        filetypes = {"html", "typescriptreact", "javascriptreact", "css", "sass", "scss", "less"},
+        filetypes = {"html", "css", "sass", "scss", "less"},
         init_options = {
             html = {
                 options = {
