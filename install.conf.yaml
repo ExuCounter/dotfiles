@@ -13,26 +13,25 @@
     ~/.fzf.zsh: fzf.zsh
     ~/.teamocil/prosapient.yml: teamocil/prosapient.yml
     ~/scripts/functions.sh: scripts/functions.sh
-    ~/lua/config/custom-highlights.vim: lua/config/custom-highlights.vim
-    ~/lua/config/fzf.vim: lua/config/fzf.vim
-    ~/lua/config/git.vim: lua/config/git.vim
-    ~/lua/config/treesitter.lua: lua/config/treesitter.lua
-    ~/lua/config/nvimtree.lua: lua/config/nvimtree.lua
-    ~/lua/config/windows.vim: lua/config/windows.vim
-    ~/lua/config/buffer-line.lua: lua/config/buffer-line.lua
-    ~/lua/config/configuration.lua: lua/config/configuration.lua
-    ~/lua/config/keymaps.lua: lua/config/keymaps.lua
-    ~/lua/config/git.lua: lua/config/git.lua
-    ~/lua/config/mark.lua: lua/config/mark.lua
-    ~/lua/config/plugins.lua: lua/config/plugins.lua
-    ~/lua/config/fzf.lua: lua/config/fzf.lua
-    ~/lua/config/moves.lua: lua/config/moves.lua
-    ~/lua/config/windows.lua: lua/config/windows.lua
-    ~/lua/config/util.lua: lua/config/util.lua
-    ~/lua/config/lsp/mason.lua: lua/config/lsp/mason.lua
+    ~/nvim/lua/setup/custom-highlights.vim: nvim/lua/setup/custom-highlights.vim
+    ~/nvim/lua/setup/fzf.vim: nvim/lua/setup/fzf.vim
+    ~/nvim/lua/setup/git.vim: nvim/lua/setup/git.vim
+    ~/nvim/lua/setup/treesitter.lua: nvim/lua/setup/treesitter.lua
+    ~/nvim/lua/setup/nvimtree.lua: nvim/lua/setup/nvimtree.lua
+    ~/nvim/lua/setup/windows.vim: nvim/lua/setup/windows.vim
+    ~/nvim/lua/setup/buffer-line.lua: nvim/lua/setup/buffer-line.lua
+    ~/nvim/lua/setup/configuration.lua: nvim/lua/setup/configuration.lua
+    ~/nvim/lua/setup/keymaps.lua: nvim/lua/setup/keymaps.lua
+    ~/nvim/lua/setup/git.lua: nvim/lua/setup/git.lua
+    ~/nvim/lua/setup/mark.lua: nvim/lua/setup/mark.lua
+    ~/nvim/lua/setup/plugins.lua: nvim/lua/setup/plugins.lua
+    ~/nvim/lua/setup/fzf.lua: nvim/lua/setup/fzf.lua
+    ~/nvim/lua/setup/moves.lua: nvim/lua/setup/moves.lua
+    ~/nvim/lua/setup/windows.lua: nvim/lua/setup/windows.lua
+    ~/nvim/lua/setup/util.lua: nvim/lua/setup/util.lua
+    ~/nvim/lua/setup/lsp/mason.lua: nvim/lua/setup/lsp/mason.lua
 
-    ~/.config/nvim/init.lua: config/nvim/init.lua
-    ~/.config/nvim/coc-settings.json: config/nvim/coc-settings.json
+    ~/nvim/lua/init.lua: nvim/lua/init.lua
     ~/.config/coc/ultisnips/typescriptreact.snippets: config/coc/ultisnips/typescriptreact.snippets
     ~/.config/coc/extensions/package.json: config/coc/extensions/package.json
 - shell:

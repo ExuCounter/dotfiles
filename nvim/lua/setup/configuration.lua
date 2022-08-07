@@ -108,11 +108,11 @@ vimp.nnoremap(
         vimp.unmap_all()
         -- Unload the lua namespace so that the next time require('config.X') is called
         -- it will reload the file
-        require("config.util").unload_lua_namespace("config")
+        require("setup/util").unload_lua_namespace("setup")
         -- Make sure all open buffers are saved
         vim.cmd("silent wa")
         -- Execute our vimrc lua file again to add back our maps
-        dofile(vim.fn.stdpath("config") .. "/init.lua")
+        dofile(os.getenv("HOME") .. "/nvim/lua/init.lua")
 
         print("Reloaded vimrc!")
     end
