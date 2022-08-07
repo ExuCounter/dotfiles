@@ -55,7 +55,7 @@ cmp.setup(
         snippet = {
             -- REQUIRED - you must specify a snippet engine
             expand = function(args)
-                -- vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
+                vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
             end
         },
         window = {
@@ -176,7 +176,16 @@ cmp.setup(
 require("mason").setup()
 require("mason-lspconfig").setup(
     {
-        ensure_installed = {"typescript-language-server"},
+        ensure_installed = {
+            "tsserver",
+            "sumneko_lua",
+            "eslint",
+            "elixirls",
+            "cssls",
+            "sqls",
+            "marksman",
+            "html"
+        },
         automatic_installation = true
     }
 )
@@ -301,5 +310,23 @@ formatter.setup(
     {
         logging = false,
         filetype = formatter_filetype
+    }
+)
+
+capabilities.textDocument.completion.completionItem.snippetSupport = true
+
+lsp_config.emmet_ls.setup(
+    {
+        on_attach = on_attach,
+        capabilities = capabilities,
+        filetypes = {"html", "typescriptreact", "javascriptreact", "css", "sass", "scss", "less"},
+        init_options = {
+            html = {
+                options = {
+                    -- For possible options, see: https://github.com/emmetio/emmet/blob/master/src/config.ts#L79-L267
+                    ["bem.enabled"] = true
+                }
+            }
+        }
     }
 )
