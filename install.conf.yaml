@@ -30,8 +30,8 @@
     ~/.vim/windows.lua: vim/windows.lua
     ~/.vim/lsp/mason.lua: vim/lsp/mason.lua
 
-    # ~/.config/nvim/init.vim: config/nvim/init.vim
     ~/.config/nvim/init.lua: config/nvim/init.lua
+    ~/.config/nvim/lua/config/util.lua: config/nvim/lua/config/util.lua
     ~/.config/nvim/coc-settings.json: config/nvim/coc-settings.json
     ~/.config/coc/ultisnips/typescriptreact.snippets: config/coc/ultisnips/typescriptreact.snippets
     ~/.config/coc/extensions/package.json: config/coc/extensions/package.json

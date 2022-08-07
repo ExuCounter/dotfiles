@@ -4,7 +4,6 @@ vim.cmd(
     [[
 filetype plugin on
 
-set hidden
 set nobackup
 set nowritebackup
 set cmdheight=1
@@ -23,15 +22,13 @@ set ruler " show the cursor position
 
 set nolist
 set shortmess=atI " don't show the intro message when starting Vim
+set indentexpr=
 set showmatch  " highlight matching [{()}] "
 set showmode " show the current mode
 set hidden " allow unsaved background buffers and remember marks/undo for them
 set nojs " insert only one space after . ? ! with a join command
 set nosol " keep the cursor in the same column when jump in file
 set scrolloff=11 " minimal lines around the cursor
-set shiftwidth=0
-set tabstop=2
-set numberwidth=5
 
 set t_Co=256
 set number
@@ -58,6 +55,15 @@ set foldenable          " dont fold by default
 set foldmethod=indent   " fold based on spaces
 set foldlevelstart=10   " open most folds by default
 set foldnestmax=10      " 10 nested fold max
+
+set softtabstop=2
+set shiftwidth=2
+set tabstop=2
+set expandtab
+set smarttab
+set autoindent
+set cindent
+
 ]]
 )
 
@@ -94,14 +100,21 @@ vim.g.dbs = {
     }
 }
 
--- lua prettier
--- vimp.nmap("<Space>f", "<Plug>teastyluaFormat")
---
+-- r = reload vimrc
+vimp.nnoremap(
+    "<leader>0",
+    function()
+        -- Remove all previously added vimpeccable maps
+        print("113")
+        vimp.unmap_all()
+        -- Unload the lua namespace so that the next time require('config.X') is called
+        -- it will reload the file
+        require("config.util").unload_lua_namespace("config")
+        -- Make sure all open buffers are saved
+        vim.cmd("silent wa")
+        -- Execute our vimrc lua file again to add back our maps
+        dofile(vim.fn.stdpath("config") .. "/init.lua")
 
--- require("indent_blankline").setup({
--- 	-- for example, context is off by default, use this to turn it on
--- 	show_current_context = true,
--- 	show_current_context_start = true,
--- })
--- vim.opt.list = true
--- vim.g.indent_blankline_use_treesitter = true
+        print("Reloaded vimrc!")
+    end
+)

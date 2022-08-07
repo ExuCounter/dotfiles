@@ -61,7 +61,6 @@ Plug("djoshea/vim-autoread")
 Plug("JoosepAlviste/nvim-ts-context-commentstring")
 Plug("p00f/nvim-ts-rainbow")
 Plug("windwp/nvim-ts-autotag")
-Plug("Raimondi/delimitMate")
 Plug("karb94/neoscroll.nvim")
 Plug("nacro90/numb.nvim")
 Plug("beauwilliams/focus.nvim")
@@ -72,6 +71,7 @@ Plug("chentau/marks.nvim")
 Plug("nvim-lua/plenary.nvim")
 Plug("tpope/vim-dotenv")
 Plug("akinsho/bufferline.nvim")
+Plug("cohama/lexima.vim")
 
 Plug("gelguy/wilder.nvim")
 Plug("roxma/nvim-yarp")
@@ -112,6 +112,6 @@ Plug("jose-elias-alvarez/null-ls.nvim")
 Plug("lukas-reineke/lsp-format.nvim")
 Plug("sbdchd/neoformat")
 Plug("mhartington/formatter.nvim")
-Plug "rxi/lume"
+Plug "SirVer/ultisnips"
 
 vim.call("plug#end")
