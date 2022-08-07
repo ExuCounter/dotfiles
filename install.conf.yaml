@@ -13,25 +13,25 @@
     ~/.fzf.zsh: fzf.zsh
     ~/.teamocil/prosapient.yml: teamocil/prosapient.yml
     ~/scripts/functions.sh: scripts/functions.sh
-    ~/.vim/custom-highlights.vim: vim/custom-highlights.vim
-    ~/.vim/fzf.vim: vim/fzf.vim
-    ~/.vim/git.vim: vim/git.vim
-    ~/.vim/treesitter.lua: vim/treesitter.lua
-    ~/.vim/nvimtree.lua: vim/nvimtree.lua
-    ~/.vim/windows.vim: vim/windows.vim
-    ~/.vim/buffer-line.lua: vim/buffer-line.lua
-    ~/.vim/configuration.lua: vim/configuration.lua
-    ~/.vim/keymaps.lua: vim/keymaps.lua
-    ~/.vim/git.lua: vim/git.lua
-    ~/.vim/marks.lua: vim/marks.lua
-    ~/.vim/plugins.lua: vim/plugins.lua
-    ~/.vim/fzf.lua: vim/fzf.lua
-    ~/.vim/moves.lua: vim/moves.lua
-    ~/.vim/windows.lua: vim/windows.lua
-    ~/.vim/lsp/mason.lua: vim/lsp/mason.lua
+    ~/lua/config/custom-highlights.vim: lua/config/custom-highlights.vim
+    ~/lua/config/fzf.vim: lua/config/fzf.vim
+    ~/lua/config/git.vim: lua/config/git.vim
+    ~/lua/config/treesitter.lua: lua/config/treesitter.lua
+    ~/lua/config/nvimtree.lua: lua/config/nvimtree.lua
+    ~/lua/config/windows.vim: lua/config/windows.vim
+    ~/lua/config/buffer-line.lua: lua/config/buffer-line.lua
+    ~/lua/config/configuration.lua: lua/config/configuration.lua
+    ~/lua/config/keymaps.lua: lua/config/keymaps.lua
+    ~/lua/config/git.lua: lua/config/git.lua
+    ~/lua/config/mark.lua: lua/config/mark.lua
+    ~/lua/config/plugins.lua: lua/config/plugins.lua
+    ~/lua/config/fzf.lua: lua/config/fzf.lua
+    ~/lua/config/moves.lua: lua/config/moves.lua
+    ~/lua/config/windows.lua: lua/config/windows.lua
+    ~/lua/config/util.lua: lua/config/util.lua
+    ~/lua/config/lsp/mason.lua: lua/config/lsp/mason.lua
 
     ~/.config/nvim/init.lua: config/nvim/init.lua
-    ~/.config/nvim/lua/config/util.lua: config/nvim/lua/config/util.lua
     ~/.config/nvim/coc-settings.json: config/nvim/coc-settings.json
     ~/.config/coc/ultisnips/typescriptreact.snippets: config/coc/ultisnips/typescriptreact.snippets
     ~/.config/coc/extensions/package.json: config/coc/extensions/package.json

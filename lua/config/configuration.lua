@@ -100,12 +100,11 @@ vim.g.dbs = {
     }
 }
 
--- r = reload vimrc
+-- 0 = reload vimrc
 vimp.nnoremap(
     "<leader>0",
     function()
         -- Remove all previously added vimpeccable maps
-        print("113")
         vimp.unmap_all()
         -- Unload the lua namespace so that the next time require('config.X') is called
         -- it will reload the file

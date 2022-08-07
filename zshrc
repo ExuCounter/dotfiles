@@ -125,7 +125,7 @@ export DIRENV_LOG_FORMAT=
 export EDITOR=nvim
 export VISUAL="$EDITOR"
 export CPPFLAGS="-I/opt/homebrew/opt/openjdk/include"
-export LUA_PATH=~/.vim/?.lua
+export LUA_PATH=~/lua/?.lua
 eval "$(direnv hook zsh)"
 source $HOME/.zshenv
 
