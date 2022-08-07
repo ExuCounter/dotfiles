@@ -3,30 +3,40 @@ local cmp = require("cmp")
 local formatter = require("formatter")
 local lsp_config = require("lspconfig")
 local opts = {noremap = true, silent = true}
+
 vim.keymap.set("n", "<space>e", vim.diagnostic.open_float, opts)
 vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, opts)
 vim.keymap.set("n", "]d", vim.diagnostic.goto_next, opts)
+
+function hoverFixed()
+    vim.api.nvim_command("set eventignore=CursorHold")
+    vim.lsp.buf.hover()
+    vim.api.nvim_command('autocmd CursorMoved <buffer> ++once set eventignore=""')
+end
+
 local on_attach = function(client, bufnr)
-    -- Enable completion triggered by <c-x><c-o>
-    -- vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
-    -- require "lsp_signature".on_attach(
-    --     {
-    --         bind = true, -- This is mandatory, otherwise border config won't get registered.
-    --         handler_opts = {
-    --             border = "none" -- double, rounded, single, shadow, none
-    --         },
-    --         floating_window_above_cur_line = false,
-    --         floating_window = false,
-    --         wrap = true
-    --     },
-    --     bufnr
-    -- )
-    -- Mappings.
+    vim.api.nvim_create_autocmd(
+        "CursorHold",
+        {
+            buffer = bufnr,
+            callback = function()
+                local opts = {
+                    focusable = false,
+                    close_events = {"BufLeave", "CursorMoved", "InsertEnter", "FocusLost"},
+                    border = "none",
+                    source = "always",
+                    prefix = " ",
+                    scope = "cursor"
+                }
+                vim.diagnostic.open_float(nil, opts)
+            end
+        }
+    ) -- Mappings.
     -- See `:help vim.lsp.*` for documentation on any of the below functions
     local bufopts = {noremap = true, silent = true, buffer = bufnr}
     vim.keymap.set("n", "gD", vim.lsp.buf.declaration, bufopts)
     vim.keymap.set("n", "gd", vim.lsp.buf.definition, bufopts)
-    vim.keymap.set("n", "K", vim.lsp.buf.hover, bufopts)
+    vim.keymap.set("n", "K", hoverFixed, bufopts)
     vim.keymap.set("n", "gi", vim.lsp.buf.implementation, bufopts)
     vim.keymap.set("n", "<space>wa", vim.lsp.buf.add_workspace_folder, bufopts)
     vim.keymap.set("n", "<space>wr", vim.lsp.buf.remove_workspace_folder, bufopts)
@@ -155,7 +165,7 @@ cmp.setup(
             format = lspkind.cmp_format(
                 {
                     -- mode = "symbol", -- show only symbol annotations
-                    maxwidth = 50, -- prevent the popup from showing more than provided characters (e.g 50 will not show more than 50 characters)
+                    maxwidth = 20, -- prevent the popup from showing more than provided characters (e.g 50 will not show more than 50 characters)
                     -- The function below will be called before any actual modifications from lspkind
                     -- so that you can provide more controls on popup customization. (See [#30](https://github.com/onsails/lspkind-nvim/pull/30))
                     before = function(entry, vim_item)
@@ -173,7 +183,6 @@ require("mason-lspconfig").setup(
         ensure_installed = {
             "tsserver",
             "sumneko_lua",
-            "eslint",
             "elixirls",
             "cssls",
             "sqls",
@@ -190,13 +199,7 @@ lsp_config.tsserver.setup(
         capabilities = capabilities
     }
 )
-lsp_config.eslint.setup(
-    {
-        on_attach = on_attach,
-        flags = lsp_flags,
-        capabilities = capabilities
-    }
-)
+
 lsp_config.sumneko_lua.setup(
     {
         on_attach = on_attach,
@@ -238,15 +241,14 @@ vim.diagnostic.config(
 )
 vim.cmd(
     [[
-autocmd CursorHold * lua vim.diagnostic.open_float({width = 80})
-hi DiagnosticHint guifg=Blue guibg=NONE
-" autocmd CursorHoldI * silent! lua vim.lsp.buf.signature_help()
+hi DiagnosticHint guifg=#519aba guibg=NONE
 augroup FormatAutogroup
   autocmd!
   autocmd BufWritePost * FormatWrite
 augroup END
 ]]
 )
+
 vimp.nnoremap({"silent"}, "cn", "<cmd>lua vim.diagnostic.goto_next()<CR>")
 vimp.nnoremap({"silent"}, "cN", "<cmd>lua vim.diagnostic.goto_prev()<CR>")
 --

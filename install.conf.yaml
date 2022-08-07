@@ -31,6 +31,6 @@
     ~/nvim/lua/setup/util.lua: nvim/lua/setup/util.lua
     ~/nvim/lua/setup/lsp/mason.lua: nvim/lua/setup/lsp/mason.lua
 
-    ~/nvim/lua/init.lua: nvim/lua/init.lua
+    ~/nvim/init.lua: nvim/lua/init.lua
 - shell:
   - [git submodule update --init --recursive, Installing submodules]
