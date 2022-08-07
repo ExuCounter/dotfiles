@@ -4,13 +4,13 @@ vim.cmd(
     [[
 filetype plugin on
 
+set signcolumn=yes
 set nobackup
 set nowritebackup
 set cmdheight=1
-set updatetime=300
+set updatetime=200
 set shortmess+=c
 set pumheight=8
-set signcolumn=number
 
 set notimeout
 set encoding=utf-8
