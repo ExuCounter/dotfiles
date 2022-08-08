@@ -3,10 +3,10 @@ local Plug = vim.fn["plug#"]
 vim.call("plug#begin", "~/.config/nvim/plugged")
 
 -- UI
-Plug("christianchiarulli/nvcode-color-schemes.vim")
+Plug("lifepillar/vim-solarized8")
 
--- Nerdtree
-Plug("preservim/nerdtree")
+-- FileTree
+Plug("kyazdani42/nvim-tree.lua")
 
 -- Commentary
 Plug("tpope/vim-commentary")
@@ -21,12 +21,7 @@ Plug("tpope/vim-dadbod")
 Plug("kristijanhusak/vim-dadbod-ui")
 
 -- Fzf
-Plug("junegunn/fzf", {["do"] = vim.fn["fzf#install"]})
-Plug("junegunn/fzf.vim")
-
--- Vim airline
-Plug("vim-airline/vim-airline")
-Plug("vim-airline/vim-airline-themes")
+Plug("ibhagwan/fzf-lua", {branch = "main"})
 
 -- Windows
 Plug("simeji/winresizer")
@@ -40,14 +35,9 @@ Plug("leafgarland/typescript-vim")
 Plug("nvim-treesitter/nvim-treesitter", {["do"] = "TSUpdate"})
 Plug("rhysd/accelerated-jk")
 Plug("jparise/vim-graphql")
--- Plug 'pangloss/vim-javascript'
-Plug("ap/vim-css-color")
-Plug("cakebaker/scss-syntax.vim", {["for"] = {"sass", "scss"}})
-Plug("hail2u/vim-css3-syntax")
 
 -- Another
 Plug("nvim-treesitter/playground")
--- Plug("airblade/vim-gitgutter")
 Plug("taku-o/vim-copypath")
 Plug("tpope/vim-surround")
 Plug("rhysd/conflict-marker.vim")
@@ -56,7 +46,6 @@ Plug("mg979/vim-visual-multi", {branch = "master"})
 Plug("phaazon/hop.nvim")
 Plug("yuttie/comfortable-motion.vim")
 Plug("christoomey/vim-tmux-navigator")
-Plug("tiagofumo/vim-nerdtree-syntax-highlight")
 Plug("djoshea/vim-autoread")
 Plug("JoosepAlviste/nvim-ts-context-commentstring")
 Plug("p00f/nvim-ts-rainbow")
@@ -77,25 +66,15 @@ Plug("gelguy/wilder.nvim")
 Plug("roxma/nvim-yarp")
 Plug("roxma/vim-hug-neovim-rpc")
 
--- Plug("Yggdroot/indentLine")
 Plug("lukas-reineke/indent-blankline.nvim")
 Plug("pseewald/vim-anyfold")
 Plug("kyazdani42/nvim-web-devicons")
 Plug("kyazdani42/nvim-tree.lua")
 -- Plug("glepnir/dashboard-nvim")
 --
-Plug("nvim-lua/plenary.nvim")
-Plug("nvim-telescope/telescope.nvim")
-Plug("nvim-telescope/telescope-fzf-native.nvim", {["do"] = vim.fn["make"]})
 Plug("brooth/far.vim")
-Plug("lifepillar/vim-solarized8")
-Plug("nvim-telescope/telescope-media-files.nvim")
-Plug("nvim-lua/popup.nvim")
-Plug("wesleimp/stylua.nvim")
-Plug("willelz/teastylua.nvim")
 Plug("svermeulen/vimpeccable")
 Plug("itchyny/vim-gitbranch")
-Plug("ibhagwan/fzf-lua", {branch = "main"})
 --
 Plug("neovim/nvim-lspconfig")
 
@@ -108,12 +87,12 @@ Plug("hrsh7th/cmp-path")
 Plug("hrsh7th/cmp-cmdline")
 Plug("hrsh7th/nvim-cmp")
 Plug("onsails/lspkind.nvim")
-Plug("jose-elias-alvarez/null-ls.nvim")
 Plug("lukas-reineke/lsp-format.nvim")
 Plug("sbdchd/neoformat")
 Plug("mhartington/formatter.nvim")
 Plug "SirVer/ultisnips"
 Plug "ray-x/lsp_signature.nvim"
 Plug "lewis6991/gitsigns.nvim"
+Plug "nvim-lualine/lualine.nvim"
 
 vim.call("plug#end")

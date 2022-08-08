@@ -11,6 +11,9 @@ set cmdheight=1
 set updatetime=200
 set shortmess+=c
 set pumheight=8
+set textwidth=75
+set wrap
+set fillchars=vert:\│
 
 set notimeout
 set encoding=utf-8
@@ -63,6 +66,13 @@ set expandtab
 set smarttab
 set autoindent
 set cindent
+
+set numberwidth=6
+
+hi EndOfBuffer guifg=#fdf6e3
+hi MatchParen guifg=#a074c4
+hi VertSplit guibg=NONE
+autocmd FileType * set formatoptions+=t
 
 ]]
 )
