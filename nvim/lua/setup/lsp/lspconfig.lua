@@ -34,6 +34,8 @@ local function hoverFixed()
     vim.api.nvim_command('autocmd CursorMoved <buffer> ++once set eventignore=""')
 end
 
+local signs = {WARN = "▲", HINT = "⚑", ERROR = "✘", INFO = ""}
+
 M.on_attach = function(client, bufnr)
     vim.api.nvim_create_autocmd(
         "CursorHold",
@@ -45,9 +47,27 @@ M.on_attach = function(client, bufnr)
                     close_events = {"BufLeave", "CursorMoved", "InsertEnter", "FocusLost"},
                     border = "none",
                     source = "always",
-                    prefix = " ",
+                    wrap = true,
+                    prefix = function(diagnostic, i)
+                        local function getPrefix(sign)
+                            return " " .. signs[sign] .. " "
+                        end
+
+                        if diagnostic.severity == vim.diagnostic.severity.ERROR then
+                            return getPrefix("ERROR"), "DiagnosticSignError"
+                        elseif diagnostic.severity == vim.diagnostic.severity.WARN then
+                            return getPrefix("WARN"), "DiagnosticSignWarn"
+                        elseif diagnostic.severity == vim.diagnostic.severity.HINT then
+                            return getPrefix("HINT"), "DiagnosticSignHint"
+                        elseif diagnostic.severity == vim.diagnostic.severity.INFO then
+                            return getPrefix("INFO"), "DiagnosticSignInfo"
+                        end
+                    end,
+                    format = function(diagnostic)
+                        return diagnostic.message .. " "
+                    end,
                     scope = "cursor",
-                    width = 80
+                    header = ""
                 }
                 vim.diagnostic.open_float(nil, opts)
             end
@@ -84,7 +104,16 @@ lspconfig.emmet_ls.setup(
     {
         on_attach = M.on_attach,
         capabilities = M.capabilities,
-        filetypes = {"html", "css", "sass", "scss", "less"},
+        filetypes = {
+            "html",
+            "css",
+            "sass",
+            "scss",
+            "less",
+            "javascript",
+            "typescript",
+            "typescriptreact"
+        },
         init_options = {
             html = {
                 options = {
@@ -106,15 +135,14 @@ local sign = function(opts)
     )
 end
 
-sign({name = "DiagnosticSignError", text = "✘"})
-sign({name = "DiagnosticSignWarn", text = "▲"})
-sign({name = "DiagnosticSignHint", text = "⚑"})
-sign({name = "DiagnosticSignInfo", text = ""})
+sign({name = "DiagnosticSignError", text = signs["ERROR"]})
+sign({name = "DiagnosticSignWarn", text = signs["WARN"]})
+sign({name = "DiagnosticSignHint", text = signs["HINT"]})
+sign({name = "DiagnosticSignInfo", text = signs["INFO"]})
 
 vim.diagnostic.config(
     {
         virtual_text = false,
-        -- severity_sort = true,
         float = {},
         signs = true,
         update_in_insert = true,

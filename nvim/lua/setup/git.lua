@@ -42,7 +42,7 @@ require("gitsigns").setup {
         changedelete = {hl = "GitSignsChange", text = "~", numhl = "GitSignsChangeNr", linehl = "GitSignsChangeLn"}
     },
     current_line_blame = true,
-    sign_priority = 999,
+    sign_priority = 6,
     on_attach = function(bufnr)
         local function map(mode, lhs, rhs, opts)
             opts = vim.tbl_extend("force", {noremap = true, silent = true}, opts or {})
@@ -54,14 +54,14 @@ require("gitsigns").setup {
         map("n", "[c", "&diff ? '[c' : '<cmd>Gitsigns prev_hunk<CR>'", {expr = true})
 
         -- Actions
-        map("n", "<leader>hr", ":Gitsigns reset_hunk<CR>")
-        map("v", "<leader>hr", ":Gitsigns reset_hunk<CR>")
-        map("n", "<leader>hp", "<cmd>Gitsigns preview_hunk<CR>")
-        map("n", "<leader>hb", '<cmd>lua require"gitsigns".blame_line{full=true}<CR>')
+        map("n", "<leader>rh", ":Gitsigns reset_hunk<CR>")
+        map("v", "<leader>rh", ":Gitsigns reset_hunk<CR>")
+        map("n", "<leader>ph", "<cmd>Gitsigns preview_hunk<CR>")
+        map("n", "<leader>bl", '<cmd>lua require"gitsigns".blame_line{full=true}<CR>')
         map("n", "<leader>tb", "<cmd>Gitsigns toggle_current_line_blame<CR>")
-        map("n", "<leader>hd", "<cmd>Gitsigns diffthis<CR>")
-        map("n", "<leader>hD", '<cmd>lua require"gitsigns".diffthis("~")<CR>')
-        map("n", "<leader>td", "<cmd>Gitsigns toggle_deleted<CR>")
+        map("n", "<leader>dt", "<cmd>Gitsigns diffthis<CR>")
+        -- map("n", "<leader>ggd", '<cmd>lua require"gitsigns".diffthis("~")<CR>')
+        -- map("n", "<leader>td", "<cmd>Gitsigns toggle_deleted<CR>")
 
         -- Text object
         map("o", "ih", ":<C-U>Gitsigns select_hunk<CR>")
