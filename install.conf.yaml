@@ -33,6 +33,8 @@
     ~/nvim/lua/setup/lsp/lspconfig.lua: nvim/lua/setup/lsp/lspconfig.lua
     ~/nvim/lua/setup/lsp/cmp.lua: nvim/lua/setup/lsp/cmp.lua
     ~/nvim/lua/setup/formatter.lua: nvim/lua/setup/formatter.lua
+    ~/nvim/lua/setup/utils.lua: nvim/lua/setup/utils.lua
+    ~/nvim/lua/setup/dashboard.lua: nvim/lua/setup/dashboard.lua
 
     ~/nvim/init.lua: nvim/lua/init.lua
 - shell:

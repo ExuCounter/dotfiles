@@ -1,7 +1,21 @@
 local cmp = require("cmp")
+local types = require("cmp.types")
+local compare = require("cmp.config.compare")
 
 cmp.setup(
     {
+        sorting = {
+            priority_weight = 2,
+            comparators = {
+                compare.offset,
+                compare.exact,
+                compare.score,
+                compare.kind,
+                compare.sort_text,
+                compare.length,
+                compare.order
+            }
+        },
         snippet = {
             -- REQUIRED - you must specify a snippet engine
             expand = function(args)
@@ -40,8 +54,10 @@ cmp.setup(
                     end,
                     {"i", "c"}
                 ),
+                -- ["<Esc>"] = cmp.abort(),
+                ["<Esc>"] = cmp.mapping(cmp.mapping.abort(), {"i"}),
                 ["<C-Space>"] = cmp.mapping.complete(),
-                ["<CR>"] = cmp.mapping.confirm({select = true}) -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+                ["<CR>"] = cmp.mapping.confirm({select = false}) -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
             }
         ),
         sources = cmp.config.sources(
@@ -55,6 +71,8 @@ cmp.setup(
         )
     }
 )
+vim.g.lexima_map_escape = ""
+
 -- Set configuration for specific filetype.
 cmp.setup.filetype(
     "gitcommit",

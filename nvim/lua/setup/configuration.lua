@@ -59,13 +59,11 @@ set foldmethod=indent   " fold based on spaces
 set foldlevelstart=10   " open most folds by default
 set foldnestmax=10      " 10 nested fold max
 
-set softtabstop=2
+set tabstop=2     " read as
+set softtabstop=2 " insert as
+set expandtab     " tabs are spaces
+set smartindent
 set shiftwidth=2
-set tabstop=2
-set expandtab
-set smarttab
-set autoindent
-set cindent
 
 set numberwidth=6
 
@@ -127,3 +125,23 @@ vimp.nnoremap(
         print("Reloaded vimrc!")
     end
 )
+
+for _, keymap in pairs(
+    {
+        "zo",
+        "zO",
+        "zc",
+        "zC",
+        "za",
+        "zA",
+        "zv",
+        "zx",
+        "zX",
+        "zm",
+        "zM",
+        "zr",
+        "zR"
+    }
+) do
+    vim.api.nvim_set_keymap("n", keymap, keymap .. "<CMD>IndentBlanklineRefresh<CR>", {noremap = true, silent = true})
+end
