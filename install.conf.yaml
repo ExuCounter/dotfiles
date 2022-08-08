@@ -14,7 +14,6 @@
     ~/.teamocil/prosapient.yml: teamocil/prosapient.yml
     ~/scripts/functions.sh: scripts/functions.sh
     ~/nvim/lua/setup/custom-highlights.vim: nvim/lua/setup/custom-highlights.vim
-    ~/nvim/lua/setup/fzf.vim: nvim/lua/setup/fzf.vim
     ~/nvim/lua/setup/git.vim: nvim/lua/setup/git.vim
     ~/nvim/lua/setup/treesitter.lua: nvim/lua/setup/treesitter.lua
     ~/nvim/lua/setup/nvimtree.lua: nvim/lua/setup/nvimtree.lua
@@ -29,7 +28,11 @@
     ~/nvim/lua/setup/moves.lua: nvim/lua/setup/moves.lua
     ~/nvim/lua/setup/windows.lua: nvim/lua/setup/windows.lua
     ~/nvim/lua/setup/util.lua: nvim/lua/setup/util.lua
+    ~/nvim/lua/setup/lualine.lua: nvim/lua/setup/lualine.lua
     ~/nvim/lua/setup/lsp/mason.lua: nvim/lua/setup/lsp/mason.lua
+    ~/nvim/lua/setup/lsp/lspconfig.lua: nvim/lua/setup/lsp/lspconfig.lua
+    ~/nvim/lua/setup/lsp/cmp.lua: nvim/lua/setup/lsp/cmp.lua
+    ~/nvim/lua/setup/formatter.lua: nvim/lua/setup/formatter.lua
 
     ~/nvim/init.lua: nvim/lua/init.lua
 - shell:

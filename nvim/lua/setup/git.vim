@@ -2,7 +2,6 @@ nnoremap <leader>gcm :Git commit -v -q<CR>
 nnoremap <leader>gd :Git diff 
 nnoremap <leader>gcl :Gclog -50<CR>
 nnoremap <leader>gl :Git log -50<CR>
-nnoremap <silent> <C-g> :GFiles?<cr>
 nnoremap <silent> <Leader>g :Git<cr>
 nnoremap <silent> <Leader>G :Git<cr>
 
