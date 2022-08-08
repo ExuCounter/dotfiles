@@ -13,7 +13,7 @@ set shortmess+=c
 set pumheight=8
 set textwidth=75
 set wrap
-set fillchars=vert:\│
+set fillchars=vert:\ 
 
 set notimeout
 set encoding=utf-8
@@ -70,8 +70,8 @@ set cindent
 set numberwidth=6
 
 hi EndOfBuffer guifg=#fdf6e3
-hi MatchParen guifg=#a074c4
-hi VertSplit guibg=NONE
+hi MatchParen guifg=NONE gui=underline cterm=underline ctermfg=NONE
+" hi VertSplit guibg=NONE
 autocmd FileType * set formatoptions+=t
 
 ]]

@@ -22,17 +22,20 @@ require("bufferline").setup(
             diagnostics = "none",
             show_buffer_close_icons = false,
             show_close_icon = false,
-            indicator_icon = "",
+            indicator_icon = "|",
             offsets = {
                 {
                     filetype = "NvimTree",
                     text = " ",
                     highlight = "Directory",
-                    text_align = "center",
-                    padding = 1
+                    text_align = "center"
                 }
-            },
-            separator_style = "thick"
+            }
+        },
+        highlights = {
+            indicator_selected = {
+                guifg = "#cb4b16"
+            }
         }
     }
 )

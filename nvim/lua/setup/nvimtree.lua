@@ -18,7 +18,7 @@ require("nvim-tree").setup(
         update_cwd = false,
         view = {
             adaptive_size = true,
-            width = 40,
+            width = 42,
             height = 30,
             side = "left",
             hide_root_folder = true,
@@ -54,9 +54,9 @@ require("nvim-tree").setup(
             indent_markers = {
                 enable = true,
                 icons = {
-                    corner = "└ ",
-                    edge = "│ ",
-                    none = "  "
+                    corner = "└",
+                    edge = "│",
+                    none = ""
                 }
             },
             icons = {
