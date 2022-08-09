@@ -49,7 +49,10 @@ require("indent_blankline").setup {
 vim.cmd(
     [[
 hi BufferLineFill ctermbg=254 guibg=#eee8d5
+hi BufferLineBufferSelected gui=bold cterm=bold
 highlight IndentBlanklineChar guifg=#8b9898 gui=nocombine guibg=NONE
 hi typescriptParens guifg=#6d8086
+hi DevIconJs guifg=orange 
+hi DevIconEnv guifg=orange 
 ]]
 )

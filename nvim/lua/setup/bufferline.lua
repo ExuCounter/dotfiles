@@ -26,9 +26,10 @@ bufferline.setup(
             offsets = {
                 {
                     filetype = "NvimTree",
-                    text = " ",
-                    highlight = "Directory",
-                    text_align = "center"
+                    text = "",
+                    highlight = "NvimTreeNormal",
+                    text_align = "center",
+                    padding = 1
                 }
             }
         },

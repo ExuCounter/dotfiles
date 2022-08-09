@@ -1,4 +1,8 @@
 local vimp = require("vimp")
+local opt = vim.opt
+
+opt.splitright = true
+opt.splitbelow = true
 
 vim.cmd(
     [[
@@ -13,7 +17,6 @@ set shortmess+=c
 set pumheight=8
 set textwidth=75
 set wrap
-set fillchars=vert:\ 
 
 set notimeout
 set encoding=utf-8
@@ -80,8 +83,21 @@ hi ConflictMarkerSeparator guibg=NONE guifg=NONE
 hi ConflictMarkerCommonAncestorsHunk guibg=NONE
 hi ConflictMarkerCommonAncestors guibg=NONE
 
+hi MsgArea guifg=#657b83 guibg=#eee8d5
+hi NvimTreeNormal guifg=#657b83 guibg=#eee8d5
 ]]
 )
+
+opt.fillchars = {
+    vert = " ",
+    fold = "⠀",
+    eob = " ", -- suppress ~ at EndOfBuffer
+    --diff = "⣿", -- alternatives = ⣿ ░ ─ ╱
+    msgsep = "‾",
+    foldopen = "▾",
+    foldsep = "│",
+    foldclose = "▸"
+}
 
 vim.g.mapleader = " "
 

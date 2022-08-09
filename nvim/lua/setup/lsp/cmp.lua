@@ -54,18 +54,28 @@ local config = {
                 end,
                 {"i", "c"}
             ),
-            -- ["<Esc>"] = cmp.abort(),
-            ["<Esc>"] = cmp.mapping(cmp.mapping.abort(), {"i"}),
+            ["jj"] = cmp.mapping(
+                function(fallback)
+                    if cmp.visible() then
+                        cmp.abort()
+                        vim.cmd("stopinsert")
+                        return
+                    end
+                    fallback()
+                end,
+                {"i", "c"}
+            ),
+            ["<Esc>"] = cmp.mapping(cmp.mapping.abort(), {"i", "c"}),
             ["<C-Space>"] = cmp.mapping.complete(),
             ["<CR>"] = cmp.mapping.confirm({select = false}) -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
         }
     ),
     sources = cmp.config.sources(
         {
-            {name = "cmp_tabnine"},
-            {name = "nvim_lsp"},
-            {name = "ultisnips"},
-            {name = "buffer"}
+            {name = "cmp_tabnine", keyword_length = 5},
+            {name = "nvim_lsp", keyword_length = 3},
+            {name = "ultisnips", keyword_length = 3},
+            {name = "buffer", keyword_length = 3}
         }
     )
 }
