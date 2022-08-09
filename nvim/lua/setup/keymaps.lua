@@ -1,20 +1,7 @@
 local vimp = require("vimp")
-local hop = require("hop")
-
-hop.setup(
-    {
-        create_hl_autocmd = false,
-        extend_visual = true
-    }
-)
 
 -- Return to normal mode
 vimp.inoremap("jj", "<Esc>")
-
--- Fast search by character
-vimp.noremap("S", hop.hint_char2)
-vimp.nnoremap("s", hop.hint_char1)
-vimp.vnoremap("s", hop.hint_char1)
 
 -- Copy path
 vimp.noremap("cp", ":CopyPath<CR>")

@@ -35,6 +35,7 @@
     ~/nvim/lua/setup/formatter.lua: nvim/lua/setup/formatter.lua
     ~/nvim/lua/setup/utils.lua: nvim/lua/setup/utils.lua
     ~/nvim/lua/setup/dashboard.lua: nvim/lua/setup/dashboard.lua
+    ~/nvim/lua/setup/hop.lua: nvim/lua/setup/hop.lua
 
     ~/nvim/init.lua: nvim/lua/init.lua
 - shell:

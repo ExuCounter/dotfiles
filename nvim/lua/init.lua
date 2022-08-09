@@ -16,6 +16,7 @@ require("setup/formatter")
 require("setup/lualine")
 require("setup/dashboard")
 require("setup/utils")
+require("setup/hop")
 
 local numb = require("numb")
 local focus = require("focus")
