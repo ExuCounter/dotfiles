@@ -1,5 +1,6 @@
 local vimp = require("vimp")
 local branch = vim.fn["gitbranch#name"]()
+local utils = require("setup/utils")
 
 -- Git windows shortcuts
 vimp.nnoremap("<leader>gcm", ":Git commit -v -q <CR>")
@@ -39,7 +40,7 @@ require("gitsigns").setup {
         change = {hl = "GitSignsChange", text = "│", numhl = "GitSignsChangeNr", linehl = "GitSignsChangeLn"},
         delete = {hl = "GitSignsDelete", text = "_", numhl = "GitSignsDeleteNr", linehl = "GitSignsDeleteLn"},
         topdelete = {hl = "GitSignsDelete", text = "‾", numhl = "GitSignsDeleteNr", linehl = "GitSignsDeleteLn"},
-        changedelete = {hl = "GitSignsChange", text = "~", numhl = "GitSignsChangeNr", linehl = "GitSignsChangeLn"}
+        changedelete = {hl = "GitSignsChange", text = "~", numhl = "GitSignsChangeNr", linehl = "GitSignsCh1angeLn"}
     },
     current_line_blame = true,
     sign_priority = 6,
@@ -70,4 +71,20 @@ require("gitsigns").setup {
 }
 
 vim.highlight.create("GitSignsCurrentLineBlame", {guifg = "#8b9898"}, false)
+vim.highlight.create("GitSignsChange", {guifg = "orange", guibg = "NONE"}, false)
+
+function toggleSignColumn()
+    vim.o.signcolumn = vim.o.signcolumn == "yes" and "no" or "yes"
+end
+
+utils.map(
+    "n",
+    "<S-c>",
+    ":lua toggleSignColumn()<cr>",
+    {
+        noremap = false,
+        silent = true
+    }
+)
+
 -- vimp.nnoremap({"chord", "silent"}, "zg", ":IndentBlanklineRefresh<cr>", {})

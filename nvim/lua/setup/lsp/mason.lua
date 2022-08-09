@@ -11,7 +11,8 @@ mason_lspconfig.setup(
             "cssls",
             "sqls",
             "marksman",
-            "html"
+            "html",
+            "eslint"
         },
         automatic_installation = true
     }

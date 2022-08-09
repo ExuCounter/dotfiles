@@ -72,6 +72,14 @@ hi MatchParen guifg=NONE gui=underline cterm=underline ctermfg=NONE
 " hi VertSplit guibg=NONE
 autocmd FileType * set formatoptions+=t
 
+hi ConflictMarkerBegin guibg=#e6cd85 guifg=#FFFFFF
+hi ConflictMarkerOurs guibg=#FAEFD1
+hi ConflictMarkerTheirs guibg=#DDEFFA
+hi ConflictMarkerEnd guibg=#F5DDDC guifg=NONE 
+hi ConflictMarkerSeparator guibg=NONE guifg=NONE 
+hi ConflictMarkerCommonAncestorsHunk guibg=NONE
+hi ConflictMarkerCommonAncestors guibg=NONE
+
 ]]
 )
 
@@ -145,3 +153,5 @@ for _, keymap in pairs(
 ) do
     vim.api.nvim_set_keymap("n", keymap, keymap .. "<CMD>IndentBlanklineRefresh<CR>", {noremap = true, silent = true})
 end
+
+vim.g.lexima_map_escape = ""
