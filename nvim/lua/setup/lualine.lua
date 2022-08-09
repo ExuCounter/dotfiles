@@ -5,7 +5,10 @@ lualine.setup {
         theme = "solarized_light",
         disabled_filetypes = {
             "NvimTree"
-        }
+        },
+        ignore_focus = {"NvimTree"},
+        always_divide_middle = false,
+        globalstatus = true
     },
     sections = {
         lualine_a = {"mode"},
