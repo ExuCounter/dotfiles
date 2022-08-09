@@ -84,6 +84,21 @@ M.on_attach = function(client, bufnr)
     vim.keymap.set("n", "gr", vim.lsp.buf.references, bufopts)
 end
 
+lspconfig.emmet_ls.setup(
+    {
+        on_attach = M.on_attach,
+        capabilities = M.capabilities,
+        filetypes = {"html", "css", "sass", "scss", "less"},
+        init_options = {
+            html = {
+                options = {
+                    ["bem.enabled"] = true
+                }
+            }
+        }
+    }
+)
+
 lspconfig.tsserver.setup(
     {
         on_attach = M.on_attach,
@@ -100,27 +115,11 @@ lspconfig.sumneko_lua.setup(
     }
 )
 
-lspconfig.emmet_ls.setup(
+lspconfig.eslint.setup(
     {
         on_attach = M.on_attach,
-        capabilities = M.capabilities,
-        filetypes = {
-            "html",
-            "css",
-            "sass",
-            "scss",
-            "less",
-            "javascript",
-            "typescript",
-            "typescriptreact"
-        },
-        init_options = {
-            html = {
-                options = {
-                    ["bem.enabled"] = true
-                }
-            }
-        }
+        flags = M.lsp_flags,
+        capabilities = M.capabilities
     }
 )
 

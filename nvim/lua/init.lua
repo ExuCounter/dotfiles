@@ -37,15 +37,18 @@ neoscroll.setup(
 require("indent_blankline").setup {
     show_first_indent_level = false,
     show_current_context = true,
-    show_current_context_start = true
+    show_current_context_start = true,
+    buftype_exclude = {"terminal"},
+    filetype_exclude = {"help", "NvimTree", "dashboard"},
+    use_treesitter = true,
+    char_list = {"¦", "│", "│", "│", "│", "│", "│", "│"},
+    show_foldtext = true
 }
-
-vim.g.indent_blankline_char_list = {"¦", "│", "│", "│", "│", "│", "│", "│"}
-vim.g.indent_blankline_show_foldtext = true
 
 vim.cmd(
     [[
 hi BufferLineFill ctermbg=254 guibg=#eee8d5
 highlight IndentBlanklineChar guifg=#8b9898 gui=nocombine guibg=NONE
+hi typescriptParens guifg=#6d8086
 ]]
 )
