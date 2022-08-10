@@ -8,6 +8,7 @@ vim.cmd(
     [[
 filetype plugin on
 
+" set re=0
 set signcolumn=number
 set nobackup
 set nowritebackup
@@ -93,9 +94,9 @@ opt.fillchars = {
     fold = "⠀",
     eob = " ", -- suppress ~ at EndOfBuffer
     --diff = "⣿", -- alternatives = ⣿ ░ ─ ╱
-    msgsep = "‾",
+    msgsep = " ",
     foldopen = "▾",
-    foldsep = "│",
+    foldsep = " ",
     foldclose = "▸"
 }
 

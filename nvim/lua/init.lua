@@ -39,8 +39,15 @@ require("indent_blankline").setup {
     show_first_indent_level = false,
     show_current_context = true,
     show_current_context_start = true,
-    buftype_exclude = {"terminal"},
-    filetype_exclude = {"help", "NvimTree", "dashboard"},
+    -- buftype_exclude = {"terminal"},
+    -- filetype_exclude = {
+    --     "help",
+    --     "NvimTree",
+    --     "dashboard",
+    --     "FzfLua",
+    --     "fzf",
+    --     ""
+    -- },
     use_treesitter = true,
     char_list = {"¦", "│", "│", "│", "│", "│", "│", "│"},
     show_foldtext = true

@@ -86,5 +86,3 @@ utils.map(
         silent = true
     }
 )
-
--- vimp.nnoremap({"chord", "silent"}, "zg", ":IndentBlanklineRefresh<cr>", {})

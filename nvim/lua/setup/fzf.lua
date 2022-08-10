@@ -3,10 +3,13 @@ local vimp = require("vimp")
 require("fzf-lua").setup(
     {
         winopts = {
-            height = 0.9,
-            width = 0.94,
+            height = 0.5,
+            width = 1,
+            row = 0.9,
+            col = 1,
+            border = {"─", "─", "─", "│", "─", "─", "─", " "},
             preview = {
-                layout = "flex",
+                layout = "horizontal",
                 horizontal = "right:50%"
             }
         },
