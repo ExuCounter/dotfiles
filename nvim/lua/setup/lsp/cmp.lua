@@ -57,26 +57,16 @@ local config = {
                 end,
                 {"i", "c"}
             ),
-            ["jj"] = cmp.mapping(
-                function(fallback)
-                    if cmp.visible() then
-                        cmp.abort()
-                        return
-                    end
-                    fallback()
-                end,
-                {"i", "c"}
-            ),
-            ["<Esc>"] = cmp.mapping(
-                function(fallback)
-                    if cmp.visible() then
-                        cmp.abort()
-                        return
-                    end
-                    fallback()
-                end,
-                {"i", "c"}
-            ),
+            ["jj"] = function(fallback)
+                require("cmp").close()
+                require("cmp").abort()
+                fallback()
+            end,
+            ["<Esc>"] = function(fallback)
+                require("cmp").close()
+                require("cmp").abort()
+                fallback()
+            end,
             ["<C-Space>"] = cmp.mapping.complete(),
             ["<CR>"] = cmp.mapping.confirm({select = false}) -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
         }

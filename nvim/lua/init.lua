@@ -25,7 +25,7 @@ local neoscroll = require("neoscroll")
 numb.setup()
 focus.setup(
     {
-        width = 105
+        width = 97
     }
 )
 neoscroll.setup(
@@ -39,18 +39,13 @@ require("indent_blankline").setup {
     show_first_indent_level = false,
     show_current_context = true,
     show_current_context_start = true,
-    -- buftype_exclude = {"terminal"},
-    -- filetype_exclude = {
-    --     "help",
-    --     "NvimTree",
-    --     "dashboard",
-    --     "FzfLua",
-    --     "fzf",
-    --     ""
-    -- },
     use_treesitter = true,
     char_list = {"¦", "│", "│", "│", "│", "│", "│", "│"},
     show_foldtext = true
+}
+
+require("better_escape").setup {
+    mapping = {"jj"}
 }
 
 vim.cmd(
@@ -61,5 +56,8 @@ highlight IndentBlanklineChar guifg=#8b9898 gui=nocombine guibg=NONE
 hi typescriptParens guifg=#6d8086
 hi DevIconJs guifg=orange 
 hi DevIconEnv guifg=orange 
+hi IndentBlanklineChar guifg=#b3b3b3
+
+" autocmd FileType html inoremap <expr> <cr> getline('.')[col('.') - 1 - 1:col('.')-1] == '><' ? '<cr><c-o>O<tab>': '<cr>'
 ]]
 )

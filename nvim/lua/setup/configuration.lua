@@ -17,7 +17,7 @@ set updatetime=200
 set shortmess+=c
 set pumheight=8
 set textwidth=75
-set wrap
+set nowrap
 
 set notimeout
 set encoding=utf-8
@@ -67,12 +67,13 @@ set softtabstop=2 " insert as
 set expandtab     " tabs are spaces
 set smartindent
 set shiftwidth=2
+set autoindent
 
 set numberwidth=6
 
-hi EndOfBuffer guifg=#fdf6e3
+" hi EndOfBuffer guifg=#fdf6e3
 hi MatchParen guifg=NONE gui=underline cterm=underline ctermfg=NONE
-" hi VertSplit guibg=NONE
+hi VertSplit guibg=NONE guifg=#b3b3b3
 autocmd FileType * set formatoptions+=t
 
 hi ConflictMarkerBegin guibg=#e6cd85 guifg=#FFFFFF
@@ -83,13 +84,23 @@ hi ConflictMarkerSeparator guibg=NONE guifg=NONE
 hi ConflictMarkerCommonAncestorsHunk guibg=NONE
 hi ConflictMarkerCommonAncestors guibg=NONE
 
-hi MsgArea guifg=#657b83 guibg=#eee8d5
-hi NvimTreeNormal guifg=#657b83 guibg=#eee8d5
+" hi MsgArea guifg=#657b83 guibg=#eee8d5
+" hi NvimTreeNormal guifg=#657b83 guibg=#eee8d
+
+function! s:GotoFirstFloat() abort
+  for w in range(1, winnr('$'))
+    let c = nvim_win_get_config(win_getid(w))
+    if c.focusable && !empty(c.relative)
+      execute w . 'wincmd w'
+    endif
+  endfor
+endfunction
+noremap <c-w><space> :<c-u>call <sid>GotoFirstFloat()<cr>
 ]]
 )
 
 opt.fillchars = {
-    vert = " ",
+    vert = "│",
     fold = "⠀",
     eob = " ", -- suppress ~ at EndOfBuffer
     --diff = "⣿", -- alternatives = ⣿ ░ ─ ╱
@@ -104,17 +115,10 @@ vim.g.mapleader = " "
 vim.g.solarized_visibility = "high"
 vim.g.solarized_extra_hi_groups = 1
 
--- vim.g.indentLine_enabled = 1
--- vim.g.indentLine_char = "│"
--- vim.g.indentLine_showFirstIndentLevel = 1
-
 vim.g.db_ui_use_nerd_fonts = 1
 vim.g.db_ui_show_database_icon = 1
 
 vim.g.db_ui_force_echo_notifications = 1
-
-vim.g.EasyMotion_prompt = "fast search as fuck:"
-vim.g.EasyMotion_move_highlight = 0
 
 -- vim.g.indent_blankline_show_first_indent_level = false
 vim.g.matchup_matchparen_offscreen = {}
@@ -170,4 +174,7 @@ for _, keymap in pairs(
     vim.api.nvim_set_keymap("n", keymap, keymap .. "<CMD>IndentBlanklineRefresh<CR>", {noremap = true, silent = true})
 end
 
-vim.g.lexima_map_escape = ""
+vim.g.delimitMate_matchpairs = "(:),[:],{:}"
+vim.g.delimitMate_expand_space = 1
+vim.g.delimitMate_balance_matchpairs = 1
+vim.g.delimitMate_expand_cr = 1

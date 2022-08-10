@@ -77,7 +77,9 @@ Plug("beauwilliams/focus.nvim")
 Plug("svermeulen/vimpeccable")
 Plug "SirVer/ultisnips"
 Plug "nvim-lualine/lualine.nvim"
-Plug "cohama/lexima.vim"
+-- Plug "cohama/lexima.vim"
+Plug "Raimondi/delimitMate"
+Plug "max397574/better-escape.nvim"
 -- Plug("glepnir/dashboard-nvim")
 --
 
