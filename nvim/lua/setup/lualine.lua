@@ -3,12 +3,10 @@ local lualine = require("lualine")
 lualine.setup {
     options = {
         theme = "solarized_light",
-        disabled_filetypes = {
-            "NvimTree"
-        },
-        ignore_focus = {"NvimTree"},
-        always_divide_middle = false,
-        globalstatus = true
+        -- disabled_filetypes = {
+        --     "NvimTree"
+        -- },
+        ignore_focus = {"NvimTree"}
     },
     sections = {
         lualine_a = {"mode"},

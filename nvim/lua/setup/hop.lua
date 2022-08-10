@@ -11,7 +11,7 @@ hop.setup(
 -- Fast search by character
 utils.map("n", "S", "<cmd>lua require'hop'.hint_char2()<cr>")
 utils.map("n", "s", "<cmd>lua require'hop'.hint_char1()<cr>")
-utils.map("n", "s", "<cmd>lua require'hop'.hint_char1()<cr>")
+utils.map("v", "s", "<cmd>lua require'hop'.hint_char1()<cr>")
 
 utils.map(
     "n",

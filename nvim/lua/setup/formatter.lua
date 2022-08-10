@@ -19,6 +19,8 @@ local formatter_filetype =
         scss = {},
         html = {},
         less = {},
+        graphql = {},
+        gql = {},
         lua = {
             exe = "luafmt"
         }

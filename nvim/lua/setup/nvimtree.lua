@@ -68,11 +68,9 @@ require("nvim-tree").setup(
             auto_open = true
         },
         update_focused_file = {
-            enable = false,
-            update_cwd = false,
+            enable = true,
             ignore_list = {}
         },
-        ignore_ft_on_setup = {},
         system_open = {
             cmd = nil,
             args = {}
@@ -106,7 +104,7 @@ require("nvim-tree").setup(
             },
             open_file = {
                 quit_on_open = true,
-                resize_window = false,
+                resize_window = true,
                 window_picker = {
                     enable = true,
                     chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890",
@@ -115,22 +113,6 @@ require("nvim-tree").setup(
                         buftype = {"nofile", "terminal", "help"}
                     }
                 }
-            }
-        },
-        trash = {
-            cmd = "trash",
-            require_confirm = true
-        },
-        log = {
-            enable = false,
-            truncate = false,
-            types = {
-                all = false,
-                config = false,
-                copy_paste = false,
-                diagnostics = false,
-                git = false,
-                profile = false
             }
         }
     }

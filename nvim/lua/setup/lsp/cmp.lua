@@ -30,6 +30,9 @@ local config = {
             bordered = false
         }
     },
+    experimental = {
+        ghost_text = true
+    },
     mapping = cmp.mapping.preset.insert(
         {
             ["<C-b>"] = cmp.mapping.scroll_docs(-4),
@@ -58,14 +61,22 @@ local config = {
                 function(fallback)
                     if cmp.visible() then
                         cmp.abort()
-                        vim.cmd("stopinsert")
                         return
                     end
                     fallback()
                 end,
                 {"i", "c"}
             ),
-            ["<Esc>"] = cmp.mapping(cmp.mapping.abort(), {"i", "c"}),
+            ["<Esc>"] = cmp.mapping(
+                function(fallback)
+                    if cmp.visible() then
+                        cmp.abort()
+                        return
+                    end
+                    fallback()
+                end,
+                {"i", "c"}
+            ),
             ["<C-Space>"] = cmp.mapping.complete(),
             ["<CR>"] = cmp.mapping.confirm({select = false}) -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
         }
