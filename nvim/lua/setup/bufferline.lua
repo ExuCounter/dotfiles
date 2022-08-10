@@ -24,17 +24,8 @@ bufferline.setup(
             show_close_icon = false,
             indicator_icon = "|",
             tab_size = 15,
-            offsets = {
-                {
-                    filetype = "NvimTree",
-                    text = "",
-                    highlight = "NvimTreeNormal",
-                    text_align = "center",
-                    padding = 1
-                }
-            },
-            filetype_exclude = {"fzf", "FzfLua", "dashboard", "packer", "lsp-installer", "help"},
-            buftype_exclude = {"terminal", "fzf", "FzfLua"}
+            filetype_exclude = {"dashboard", "lsp-installer", "help"},
+            buftype_exclude = {"terminal"}
         },
         highlights = {
             indicator_selected = {
