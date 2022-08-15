@@ -4,72 +4,74 @@ local opt = vim.opt
 opt.splitright = true
 opt.splitbelow = true
 
+opt.re = 0
+
+opt.signcolumn = "number"
+opt.cmdheight = 1
+opt.updatetime = 200
+opt.shortmess = "c"
+opt.pumheight = 8
+opt.textwidth = 75
+
+opt.encoding = "utf-8"
+opt.mouse = "a"
+opt.cursorline = true -- highlight current line
+opt.ruler = true -- show the cursor position
+
+opt.shortmess = "atI" -- don't show the intro message when starting Vim
+opt.indentexpr = ""
+opt.showmatch = true -- highlight matching [{()}] "
+opt.showmode = true --show the current mode
+opt.hidden = true -- allow unsaved background buffers and remember marks/undo for them
+opt.scrolloff = 11 -- minimal lines around the cursor
+
+opt.number = true
+opt.lazyredraw = true -- improve scrolling performance when navigating through large results
+
+opt.ignorecase = true -- ignore case only when the pattern contains no capital letters
+
+opt.timeout = true
+opt.timeoutlen = 500
+opt.ttimeoutlen = 100
+
+opt.complete = ".,w,b,u,t,i,kspell"
+opt.completeopt = "menu,menuone,noselect"
+opt.whichwrap = "<,h"
+
+opt.background = "light" -- colorscheme
+
+opt.foldenable = true -- dont fold by default
+opt.foldmethod = "indent" -- fold based on spaces
+opt.foldlevelstart = 10 -- open most folds by default
+opt.foldnestmax = 10 -- 10 nested fold max
+
+opt.tabstop = 2 -- read as
+opt.softtabstop = 2 -- insert as
+opt.expandtab = true -- tabs are spaces
+opt.smartindent = true
+opt.shiftwidth = 2
+opt.autoindent = true
+
+opt.numberwidth = 6
+
+opt.fillchars = {
+    vert = "│",
+    fold = "⠀",
+    eob = " ", -- suppress ~ at EndOfBuffer
+    msgsep = " ",
+    foldopen = "▾",
+    foldsep = " ",
+    foldclose = "▸"
+}
+
+opt.termguicolors = true
+
 vim.cmd(
     [[
 filetype plugin on
-
-" set re=0
-set signcolumn=number
-set nobackup
-set nowritebackup
-set cmdheight=1
-set updatetime=200
-set shortmess+=c
-set pumheight=8
-set textwidth=75
-set nowrap
-
-set notimeout
-set encoding=utf-8
-set mouse=a
-set cursorline " highlight current line
-set nostartofline " don't reset cursor to start of line when moving around.
-set ruler " show the cursor position
-" set showcmd " show the (partial) command as it’s being typed
-
-set nolist
-set shortmess=atI " don't show the intro message when starting Vim
-set indentexpr=
-set showmatch  " highlight matching [{()}] "
-set showmode " show the current mode
-set hidden " allow unsaved background buffers and remember marks/undo for them
-set nojs " insert only one space after . ? ! with a join command
-set nosol " keep the cursor in the same column when jump in file
-set scrolloff=11 " minimal lines around the cursor
-
-set t_Co=256
-set number
-set noswapfile
-
-set lazyredraw            " improve scrolling performance when navigating through large results
-set ignorecase smartcase  " ignore case only when the pattern contains no capital letters
-
-set timeout
-set timeoutlen=500
-set ttimeoutlen=100
-
-set complete+=.,w,b,u,t,i,kspell
-set completeopt=menu,menuone,noselect
-set whichwrap+=<,h
-
 syntax on
-colorscheme solarized8_flat " colorscheme
-set background=light
-set termguicolors
 
-set foldenable          " dont fold by default
-set foldmethod=indent   " fold based on spaces
-set foldlevelstart=10   " open most folds by default
-set foldnestmax=10      " 10 nested fold max
-
-set tabstop=2     " read as
-set softtabstop=2 " insert as
-set expandtab     " tabs are spaces
-set smartindent
-set shiftwidth=2
-set autoindent
-
-set numberwidth=6
+colorscheme solarized8_flat
 
 " hi EndOfBuffer guifg=#fdf6e3
 hi MatchParen guifg=NONE gui=underline cterm=underline ctermfg=NONE
@@ -83,6 +85,14 @@ hi ConflictMarkerEnd guibg=#F5DDDC guifg=NONE
 hi ConflictMarkerSeparator guibg=NONE guifg=NONE 
 hi ConflictMarkerCommonAncestorsHunk guibg=NONE
 hi ConflictMarkerCommonAncestors guibg=NONE
+
+hi BufferLineFill ctermbg=254 guibg=#eee8d5
+hi BufferLineBufferSelected gui=bold cterm=bold
+highlight IndentBlanklineChar guifg=#8b9898 gui=nocombine guibg=NONE
+hi typescriptParens guifg=#6d8086
+hi DevIconJs guifg=orange 
+hi DevIconEnv guifg=orange 
+hi IndentBlanklineChar guifg=#b3b3b3
 
 " hi MsgArea guifg=#657b83 guibg=#eee8d5
 " hi NvimTreeNormal guifg=#657b83 guibg=#eee8d
@@ -98,17 +108,6 @@ endfunction
 noremap <c-w><space> :<c-u>call <sid>GotoFirstFloat()<cr>
 ]]
 )
-
-opt.fillchars = {
-    vert = "│",
-    fold = "⠀",
-    eob = " ", -- suppress ~ at EndOfBuffer
-    --diff = "⣿", -- alternatives = ⣿ ░ ─ ╱
-    msgsep = " ",
-    foldopen = "▾",
-    foldsep = " ",
-    foldclose = "▸"
-}
 
 vim.g.mapleader = " "
 
@@ -140,8 +139,6 @@ vim.g.dbs = {
 vimp.nnoremap(
     "<leader>0",
     function()
-        -- Remove all previously added vimpeccable maps
-        vimp.unmap_all()
         -- Unload the lua namespace so that the next time require('config.X') is called
         -- it will reload the file
         require("setup/util").unload_lua_namespace("setup")

@@ -117,7 +117,3 @@ require("nvim-tree").setup(
         }
     }
 ) -- END_DEFAULT_OPTSg
-
-vimp.nmap("<C-t>", ":NvimTreeToggle<CR>")
-vimp.nmap({"chord"}, "<leader>r", ":NvimTreeRefresh<CR>")
-vimp.nnoremap({"chord"}, "<leader>t", ":NvimTreeFindFile<CR>")
