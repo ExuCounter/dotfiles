@@ -8,6 +8,7 @@ local generic_opts = {
     insert_mode = generic_opts_any,
     normal_mode = generic_opts_any,
     visual_mode = generic_opts_any,
+    operator_mode = generic_opts_any,
     visual_block_mode = generic_opts_any,
     command_mode = generic_opts_any,
     term_mode = {silent = true}
@@ -19,7 +20,8 @@ local mode_adapters = {
     term_mode = "t",
     visual_mode = "v",
     visual_block_mode = "x",
-    command_mode = "c"
+    command_mode = "c",
+    operator_mode = "o"
 }
 
 local defaults = {
@@ -52,13 +54,41 @@ local defaults = {
         ["<leader>x"] = '"*x',
         ["<leader>dd"] = '"*dd',
         ["<leader>D"] = '"*D',
-        ["p"] = '"_dP',
+        ["<leader>p"] = '"_dP',
         -- Buffers
         ["<leader>v"] = ":vnew %<cr>",
         ["<leader>ev"] = ":vnew <cr>",
         ["<leader>s"] = ":new %<cr>",
         ["<leader>l"] = ":bn <cr>",
-        ["<leader>h"] = ":bp <cr>"
+        ["<leader>h"] = ":bp <cr>",
+        -- FZF
+        ["<C-f>"] = ":FzfLua files<CR>",
+        -- ["<C-g>"] = ":FzfLua git_files<CR>",
+        ["<C-q>"] = ":FzfLua command_history<CR>",
+        ["<C-p>"] = ":FzfLua grep_project<CR>",
+        ["<C-b>"] = ":FzfLua buffers<CR>",
+        ["<leader>gco"] = ":FzfLua git_branches<CR>",
+        -- NvimTree
+        ["<C-t>"] = ":NvimTreeToggle<CR>",
+        ["<leader>r"] = ":NvimTreeRefresh<CR>",
+        ["<leader>t"] = ":NvimTreeFindFile<CR>",
+        -- BufferLine`
+        ["<leader>1"] = "<cmd> lua require('bufferline').go_to_buffer(1, true)<cr>",
+        ["<leader>2"] = "<cmd> lua require('bufferline').go_to_buffer(2, true)<cr>",
+        ["<leader>3"] = "<cmd> lua require('bufferline').go_to_buffer(3, true)<cr>",
+        ["<leader>4"] = "<cmd> lua require('bufferline').go_to_buffer(4, true)<cr>",
+        ["<leader>5"] = "<cmd> lua require('bufferline').go_to_buffer(5, true)<cr>",
+        ["<leader>6"] = "<cmd> lua require('bufferline').go_to_buffer(6, true)<cr>",
+        ["<leader>7"] = "<cmd> lua require('bufferline').go_to_buffer(7, true)<cr>",
+        ["<leader>8"] = "<cmd> lua require('bufferline').go_to_buffer(8, true)<cr>",
+        ["<leader>9"] = "<cmd> lua require('bufferline').go_to_buffer(9, true)<cr>",
+        -- Hop
+        ["f"] = "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.AFTER_CURSOR, current_line_only = true })<cr>",
+        ["F"] = "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.BEFORE_CURSOR, current_line_only = true })<cr>",
+        ["t"] = "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.AFTER_CURSOR, current_line_only = true })<cr>",
+        ["T"] = "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.BEFORE_CURSOR, current_line_only = true })<cr>",
+        ["S"] = "<cmd>lua require'hop'.hint_char2()<cr>",
+        ["s"] = "<cmd>lua require'hop'.hint_char1()<cr>"
     },
     visual_mode = {
         -- Save on CTRL + S,
@@ -69,7 +99,18 @@ local defaults = {
         ["<leader>x"] = '"*x',
         ["<leader>dd"] = '"*dd',
         ["<leader>D"] = '"*D',
-        ["p"] = '"_dP'
+        ["p"] = '"_dP',
+        -- Hop
+        ["f"] = "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.AFTER_CURSOR, current_line_only = true })<cr>",
+        ["F"] = "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.BEFORE_CURSOR, current_line_only = true })<cr>",
+        ["t"] = "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.AFTER_CURSOR, current_line_only = true })<cr>",
+        ["T"] = "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.BEFORE_CURSOR, current_line_only = true })<cr>",
+        ["s"] = "<cmd>lua require'hop'.hint_char1()<cr>"
+    },
+    operator_mode = {
+        -- Hop
+        ["f"] = "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.AFTER_CURSOR, current_line_only = true, inclusive_jump = true })<cr>",
+        ["F"] = "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.BEFORE_CURSOR, current_line_only = true, inclusive_jump = true })<cr>"
     }
 }
 
