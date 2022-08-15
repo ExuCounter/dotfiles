@@ -13,7 +13,6 @@
     ~/.fzf.zsh: fzf.zsh
     ~/.teamocil/prosapient.yml: teamocil/prosapient.yml
     ~/scripts/functions.sh: scripts/functions.sh
-    ~/nvim/lua/setup/custom-highlights.vim: nvim/lua/setup/custom-highlights.vim
     ~/nvim/lua/setup/git.vim: nvim/lua/setup/git.vim
     ~/nvim/lua/setup/treesitter.lua: nvim/lua/setup/treesitter.lua
     ~/nvim/lua/setup/nvimtree.lua: nvim/lua/setup/nvimtree.lua
