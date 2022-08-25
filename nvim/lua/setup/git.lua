@@ -1,5 +1,5 @@
 local vimp = require("vimp")
-local branch = vim.fn["gitbranch#name"]()
+local getBranch = vim.fn["gitbranch#name"]
 local utils = require("setup/utils")
 
 -- Git windows shortcuts
@@ -12,9 +12,9 @@ vimp.nnoremap({"chord", "silent"}, "<leader>g", ":Git<cr>")
 vimp.nnoremap({"silent"}, "<leader>G", ":Git<cr>")
 
 -- Git push/pull/fetch shortcuts
-vimp.nnoremap({"chord"}, "<Leader>gbp", ":Git push origin " .. branch .. "<CR>")
-vimp.nnoremap("<Leader>gpf", ":Git push origin --force " .. branch .. "<CR>")
-vimp.nnoremap("<Leader>gpl", ":Git pull origin " .. branch .. "<CR>")
+vimp.nnoremap({"chord"}, "<Leader>gbp", ":Git -c push.default=current push<CR>")
+vimp.nnoremap("<Leader>gpf", ":Git -c push.default=current push --force<CR>")
+vimp.nnoremap("<Leader>gpl", ":Git pull origin " .. getBranch() .. "<CR>")
 vimp.nnoremap("<Leader>gfa", ":Git fetch --all<CR>")
 
 -- Git rebase/blame/checkout/reset shortcuts

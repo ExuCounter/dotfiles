@@ -80,6 +80,7 @@ Plug "nvim-lualine/lualine.nvim"
 Plug "Raimondi/delimitMate"
 Plug "max397574/better-escape.nvim"
 -- Plug("glepnir/dashboard-nvim")
+-- Plug "goolord/alpha-nvim"
 --
 
 vim.call("plug#end")
