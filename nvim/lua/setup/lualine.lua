@@ -3,9 +3,9 @@ local lualine = require("lualine")
 lualine.setup {
     options = {
         theme = "solarized_light",
-        -- disabled_filetypes = {
-        --     "NvimTree"
-        -- },
+        disabled_filetypes = {
+            "alpha"
+        },
         ignore_focus = {"NvimTree"}
     },
     sections = {

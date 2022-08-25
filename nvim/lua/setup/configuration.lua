@@ -125,6 +125,7 @@ vim.g.matchup_matchparen_offscreen = {}
 vim.g.dbs = {
     dev = {name = "prosapient_dev", url = "postgres://postgres:postgres@localhost:5432/prosapient_dev"},
     byoe = {name = "prosapient_dev_byoe", url = "postgres://postgres:postgres@localhost:5432/prosapient_dev_byoe"},
+    lek = {name = "prosapient_dev_lek", url = "postgres://postgres:postgres@localhost:5432/prosapient_dev_lek"},
     mckinsey = {
         name = "prosapient_dev_mckinsey",
         url = "postgres://postgres:postgres@localhost:5432/prosapient_dev_mckinsey"
