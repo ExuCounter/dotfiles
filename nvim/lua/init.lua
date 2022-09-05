@@ -24,7 +24,8 @@ local neoscroll = require("neoscroll")
 numb.setup()
 focus.setup(
     {
-        width = 97
+        width = 97,
+        excluded_filetypes = {"dbout"}
     }
 )
 neoscroll.setup(

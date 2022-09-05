@@ -11,6 +11,7 @@
     ~/.tmux.conf:
     ~/.zshenv:
     ~/.fzf.zsh: fzf.zsh
+    ~/.config/kitty/kitty.conf: kitty.conf
     ~/.teamocil/prosapient.yml: teamocil/prosapient.yml
     ~/scripts/functions.sh: scripts/functions.sh
     ~/nvim/lua/setup/treesitter.lua: nvim/lua/setup/treesitter.lua
