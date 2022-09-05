@@ -88,7 +88,9 @@ local defaults = {
         ["t"] = "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.AFTER_CURSOR, current_line_only = true })<cr>",
         ["T"] = "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.BEFORE_CURSOR, current_line_only = true })<cr>",
         ["S"] = "<cmd>lua require'hop'.hint_char2()<cr>",
-        ["s"] = "<cmd>lua require'hop'.hint_char1()<cr>"
+        ["s"] = "<cmd>lua require'hop'.hint_char1()<cr>",
+        -- DB
+        ["<leader>dt"] = ":DBUIToggle<cr>"
     },
     visual_mode = {
         -- Save on CTRL + S,

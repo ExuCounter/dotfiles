@@ -14,7 +14,7 @@ windows:
     root: ~/Desktop/projects/prosapient/styleguide/
     layout: tiled
     panes:
-      - asdf shell nodejs 16.13.0 && vi
+      - vi
   - name: platform
     root: ~/Desktop/projects/prosapient/platform/
     layout: tiled
@@ -22,13 +22,13 @@ windows:
       - docker-compose up postgres minio
       - OBAN_DISABLED=0 iex -S mix phx.server
       - cd frontend && yarn start
-      - echo "yohooo"
+      - vi
   - name: frontend
     root: ~/Desktop/projects/prosapient/platform/frontend/
     layout: tiled
     panes:
       - commands:
-         - echo "yahoooo" && nvim
+         - vi
         focus: true
   # - name: kafka
   #   root: ~/Downloads/kafka/

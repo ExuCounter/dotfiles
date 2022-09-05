@@ -4,7 +4,8 @@ local actions = require "fzf-lua.actions"
 local fzf_actions = {
     ["ctrl-w"] = actions.file_vsplit,
     ["ctrl-s"] = actions.file_split,
-    ["ctrl-v"] = actions.file_vsplit
+    ["ctrl-v"] = actions.file_vsplit,
+    ["default"] = actions.file_edit_or_qf
 }
 
 require("fzf-lua").setup(

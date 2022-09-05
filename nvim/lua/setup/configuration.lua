@@ -97,6 +97,12 @@ hi IndentBlanklineChar guifg=#b3b3b3
 " hi MsgArea guifg=#657b83 guibg=#eee8d5
 " hi NvimTreeNormal guifg=#657b83 guibg=#eee8d
 
+hi DiagnosticUnderlineWarn gui=undercurl cterm=undercurl
+hi DiagnosticUnderlineHint gui=undercurl cterm=undercurl
+hi DiagnosticUnderlineError gui=undercurl cterm=undercurl
+hi DiagnosticUnderlineInfo gui=undercurl cterm=undercurl
+hi DiagnosticUnderlineHint gui=undercurl cterm=undercurl
+
 function! s:GotoFirstFloat() abort
   for w in range(1, winnr('$'))
     let c = nvim_win_get_config(win_getid(w))
@@ -117,10 +123,13 @@ vim.g.solarized_extra_hi_groups = 1
 vim.g.db_ui_use_nerd_fonts = 1
 vim.g.db_ui_show_database_icon = 1
 
-vim.g.db_ui_force_echo_notifications = 1
+vim.g.db_ui_force_echo_notifications = 0
 
 -- vim.g.indent_blankline_show_first_indent_level = false
 vim.g.matchup_matchparen_offscreen = {}
+
+vim.g.db_ui_win_position = "right"
+vim.g.db_ui_save_location = "~/.config/db_ui/queries"
 
 vim.g.dbs = {
     dev = {name = "prosapient_dev", url = "postgres://postgres:postgres@localhost:5432/prosapient_dev"},
