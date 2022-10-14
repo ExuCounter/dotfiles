@@ -6,7 +6,7 @@ opt.splitbelow = true
 
 opt.re = 0
 
-opt.signcolumn = "number"
+opt.signcolumn = "yes"
 opt.cmdheight = 1
 opt.updatetime = 200
 opt.shortmess = "c"
@@ -52,7 +52,7 @@ opt.smartindent = true
 opt.shiftwidth = 2
 opt.autoindent = true
 
-opt.numberwidth = 6
+opt.numberwidth = 4
 
 opt.fillchars = {
     vert = "│",
@@ -74,7 +74,7 @@ syntax on
 colorscheme solarized8_flat
 
 " hi EndOfBuffer guifg=#fdf6e3
-hi MatchParen guifg=NONE gui=underline cterm=underline ctermfg=NONE
+hi MatchParen guifg=NONE gui=underline cterm=underline ctermbg=66 guifg=white guibg=#b3b3b3
 hi VertSplit guibg=NONE guifg=#b3b3b3
 autocmd FileType * set formatoptions+=t
 

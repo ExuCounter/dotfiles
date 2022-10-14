@@ -7,12 +7,10 @@ local config = {
     sorting = {
         priority_weight = 2,
         comparators = {
+            compare.locality,
+            compare.recently_used,
+            compare.score, -- based on :  score = score + ((#sources - (source_index - 1)) * sorting.priority_weight)
             compare.offset,
-            compare.exact,
-            compare.score,
-            compare.kind,
-            compare.sort_text,
-            compare.length,
             compare.order
         }
     },
@@ -73,10 +71,10 @@ local config = {
     ),
     sources = cmp.config.sources(
         {
-            {name = "cmp_tabnine", keyword_length = 5},
-            {name = "nvim_lsp", keyword_length = 3},
-            {name = "ultisnips", keyword_length = 3},
-            {name = "buffer", keyword_length = 3}
+            {name = "cmp_tabnine", keyword_length = 3, priority = 11},
+            {name = "nvim_lsp", keyword_length = 1, priority = 13},
+            {name = "ultisnips", keyword_length = 1, priority = 10},
+            {name = "buffer", keyword_length = 2, priority = 12}
         }
     )
 }

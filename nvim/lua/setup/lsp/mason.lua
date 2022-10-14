@@ -12,7 +12,8 @@ mason_lspconfig.setup(
             "sqls",
             "marksman",
             "html",
-            "eslint"
+            "eslint",
+            "tailwindcss"
         },
         automatic_installation = true
     }

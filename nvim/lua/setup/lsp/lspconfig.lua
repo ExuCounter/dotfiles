@@ -79,6 +79,8 @@ M.on_attach = function(client, bufnr)
     local bufopts = {noremap = true, silent = true, buffer = bufnr}
     vim.keymap.set("n", "gD", vim.lsp.buf.declaration, bufopts)
     vim.keymap.set("n", "gd", vim.lsp.buf.definition, bufopts)
+    vim.keymap.set("n", "gv", ":vsplit | lua vim.lsp.buf.definition()<CR>")
+    vim.keymap.set("n", "gs", ":split | lua vim.lsp.buf.definition()<CR>")
     vim.keymap.set("n", "K", hoverFixed, bufopts)
     vim.keymap.set("n", "gi", vim.lsp.buf.implementation, bufopts)
     vim.keymap.set("n", "<space>rn", vim.lsp.buf.rename, bufopts)
@@ -101,6 +103,14 @@ lspconfig.emmet_ls.setup(
     }
 )
 
+lspconfig.tailwindcss.setup(
+    {
+        on_attach = M.on_attach,
+        flags = M.lsp_flags,
+        capabilities = M.capabilities
+    }
+)
+
 lspconfig.tsserver.setup(
     {
         on_attach = M.on_attach,
@@ -110,6 +120,14 @@ lspconfig.tsserver.setup(
 )
 
 lspconfig.sumneko_lua.setup(
+    {
+        on_attach = M.on_attach,
+        flags = M.lsp_flags,
+        capabilities = M.capabilities
+    }
+)
+
+lspconfig.sqlls.setup(
     {
         on_attach = M.on_attach,
         flags = M.lsp_flags,

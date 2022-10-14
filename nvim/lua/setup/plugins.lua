@@ -79,6 +79,7 @@ Plug "SirVer/ultisnips"
 Plug "nvim-lualine/lualine.nvim"
 Plug "Raimondi/delimitMate"
 Plug "max397574/better-escape.nvim"
+Plug "NvChad/nvim-colorizer.lua"
 -- Plug("glepnir/dashboard-nvim")
 -- Plug "goolord/alpha-nvim"
 --
