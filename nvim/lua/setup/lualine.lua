@@ -8,20 +8,29 @@ lualine.setup {
         },
         ignore_focus = {"NvimTree"}
     },
+    extensions = {"nvim-tree"},
     sections = {
         lualine_a = {"mode"},
         lualine_b = {
             "branch",
-            {"diff", color = {bg = "#eee8d5"}},
+            {"diff"}
+        },
+        lualine_c = {{"filename", path = 1}},
+        lualine_x = {
             {
                 "diagnostics",
                 color = {bg = "#eee8d5"},
-                symbols = {},
-                signs = {warn = "▲", hint = "⚑", error = "✘", info = ""}
-            }
+                symbols = {
+                    warn = "▲ ",
+                    hint = "⚑ ",
+                    error = "✘ ",
+                    info = " "
+                }
+            },
+            "encoding",
+            "fileformat",
+            "filetype"
         },
-        lualine_c = {"filename"},
-        lualine_x = {"encoding", "fileformat", "filetype"},
         lualine_z = {}
     },
     inactive_sections = {

@@ -29,7 +29,7 @@ local formatter_filetype =
         return {
             function()
                 local configuration = {
-                    exe = v["exe"] or "prettierd",
+                    exe = v["exe"] or "prettier",
                     args = {vim.api.nvim_buf_get_name(0)},
                     stdin = true
                 }

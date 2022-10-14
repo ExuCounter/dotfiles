@@ -20,7 +20,9 @@ require("setup/hop")
 local numb = require("numb")
 local focus = require("focus")
 local neoscroll = require("neoscroll")
+local colorizer = require("colorizer")
 
+colorizer.setup()
 numb.setup()
 focus.setup(
     {
