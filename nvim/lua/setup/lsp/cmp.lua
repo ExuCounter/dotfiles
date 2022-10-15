@@ -1,6 +1,8 @@
 local cmp = require("cmp")
 local compare = require("cmp.config.compare")
 
+require("luasnip.loaders.from_vscode").lazy_load()
+
 local config = {
     enabled = true,
     buffer = false,
@@ -13,12 +15,6 @@ local config = {
             compare.offset,
             compare.order
         }
-    },
-    snippet = {
-        -- REQUIRED - you must specify a snippet engine
-        expand = function(args)
-            vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
-        end
     },
     window = {
         completion = {
@@ -39,21 +35,27 @@ local config = {
                 function(fallback)
                     if cmp.visible() then
                         cmp.select_next_item()
-                        return
+                    elseif luasnip.expand_or_jumpable() then
+                        luasnip.expand_or_jump()
+                    elseif has_words_before() then
+                        cmp.complete()
+                    else
+                        fallback()
                     end
-                    fallback()
                 end,
-                {"i", "c"}
+                {"i", "s"}
             ),
             ["<S-Tab>"] = cmp.mapping(
                 function(fallback)
                     if cmp.visible() then
                         cmp.select_prev_item()
-                        return
+                    elseif luasnip.jumpable(-1) then
+                        luasnip.jump(-1)
+                    else
+                        fallback()
                     end
-                    fallback()
                 end,
-                {"i", "c"}
+                {"i", "s"}
             ),
             ["jj"] = function(fallback)
                 require("cmp").close()
@@ -72,11 +74,21 @@ local config = {
     sources = cmp.config.sources(
         {
             {name = "cmp_tabnine", keyword_length = 3, priority = 11},
-            {name = "nvim_lsp", keyword_length = 1, priority = 13},
-            {name = "ultisnips", keyword_length = 1, priority = 10},
+            {name = "nvim_lsp", keyword_length = 0, priority = 13},
+            {name = "luasnip", keyword_length = 0, priority = 14},
+            {name = "ultisnips", keyword_length = 0, priority = 10},
             {name = "buffer", keyword_length = 2, priority = 12}
         }
-    )
+    ),
+    snippet = {
+        expand = function(args)
+            local luasnip = require("luasnip")
+            if not luasnip then
+                return
+            end
+            luasnip.lsp_expand(args.body)
+        end
+    }
 }
 
 cmp.setup(config)
@@ -119,7 +131,8 @@ local source_mapping = {
     nvim_lsp = "[LSP]",
     nvim_lua = "[Lua]",
     cmp_tabnine = "[TN]",
-    path = "[Path]"
+    path = "[Path]",
+    luasnip = "[Snippet]"
 }
 
 cmp.setup(

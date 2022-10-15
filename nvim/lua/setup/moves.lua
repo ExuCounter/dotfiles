@@ -10,8 +10,8 @@ vim.g.accelerated_jk_acceleration_table = {30, 60, 90}
 
 vim.g.comfortable_motion_no_default_key_mappings = 1
 
-vimp.nmap({"silent"}, "C-u", ':lua require("neoscroll").scroll(-40, true, 100)<CR>')
-vimp.nmap({"silent"}, "C-d", ':lua require("neoscroll").scroll(40, true, 100)<CR>')
+vimp.nmap({"silent"}, "C-u", ':lua require("neoscroll").scroll(-80, true, 100)<CR>')
+vimp.nmap({"silent"}, "C-d", ':lua require("neoscroll").scroll(80, true, 100)<CR>')
 vimp.nmap({"silent"}, "zt", ':lua require("neoscroll").zb(250)<CR>')
 vimp.nmap({"silent"}, "zb", ':lua require("neoscroll").zt(250)<CR>')
 

@@ -29,7 +29,6 @@ Plug("ibhagwan/fzf-lua", {branch = "main"})
 -- Windows
 Plug("christoomey/vim-tmux-navigator")
 Plug("simeji/winresizer")
-Plug("matze/vim-move")
 
 -- Moves
 Plug("rhysd/accelerated-jk")
@@ -80,6 +79,9 @@ Plug "nvim-lualine/lualine.nvim"
 Plug "Raimondi/delimitMate"
 Plug "max397574/better-escape.nvim"
 Plug "NvChad/nvim-colorizer.lua"
+Plug "rafamadriz/friendly-snippets"
+Plug "L3MON4D3/LuaSnip"
+Plug "saadparwaiz1/cmp_luasnip"
 -- Plug("glepnir/dashboard-nvim")
 -- Plug "goolord/alpha-nvim"
 --
