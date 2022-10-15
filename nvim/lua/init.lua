@@ -26,8 +26,9 @@ colorizer.setup()
 numb.setup()
 focus.setup(
     {
-        width = 97,
-        excluded_filetypes = {"dbout"}
+        width = 105,
+        excluded_filetypes = {"dbout"},
+        signcolumn = false
     }
 )
 neoscroll.setup(
