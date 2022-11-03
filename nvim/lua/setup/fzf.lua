@@ -1,4 +1,3 @@
-local vimp = require("vimp")
 local actions = require "fzf-lua.actions"
 
 local fzf_actions = {

@@ -44,7 +44,11 @@ Plug("hrsh7th/cmp-nvim-lsp")
 Plug("hrsh7th/cmp-buffer")
 Plug("hrsh7th/cmp-cmdline")
 Plug("hrsh7th/nvim-cmp")
+Plug("hrsh7th/cmp-nvim-lsp-signature-help")
 Plug("tzachar/cmp-tabnine", {["do"] = "./install.sh"})
+Plug "hrsh7th/cmp-path"
+Plug "kristijanhusak/vim-dadbod-completion"
+Plug "hrsh7th/cmp-calc"
 
 -- LSP
 Plug("onsails/lspkind.nvim")
@@ -73,17 +77,14 @@ Plug("tpope/vim-dotenv")
 Plug("akinsho/bufferline.nvim")
 Plug("lukas-reineke/indent-blankline.nvim")
 Plug("beauwilliams/focus.nvim")
-Plug("svermeulen/vimpeccable")
 Plug "SirVer/ultisnips"
 Plug "nvim-lualine/lualine.nvim"
 Plug "Raimondi/delimitMate"
 Plug "max397574/better-escape.nvim"
 Plug "NvChad/nvim-colorizer.lua"
-Plug "rafamadriz/friendly-snippets"
 Plug "L3MON4D3/LuaSnip"
 Plug "saadparwaiz1/cmp_luasnip"
--- Plug("glepnir/dashboard-nvim")
--- Plug "goolord/alpha-nvim"
---
+Plug "kazhala/close-buffers.nvim"
+Plug "folke/lsp-trouble.nvim"
 
 vim.call("plug#end")

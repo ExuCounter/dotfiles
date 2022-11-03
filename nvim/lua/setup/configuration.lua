@@ -1,4 +1,3 @@
-local vimp = require("vimp")
 local opt = vim.opt
 
 opt.splitright = true
@@ -66,6 +65,19 @@ opt.fillchars = {
 
 opt.termguicolors = true
 
+vim.colorscheme = "solarized8_flat"
+-- vim.highlight.create(
+--     "MatchParen",
+--     {
+--         gui = "underline",
+--         cterm = "underline",
+--         ctermbg = 66,
+--         guifg = "white",
+--         guibg = "#b3b3b3"
+--     },
+--     false
+-- )
+
 vim.cmd(
     [[
 filetype plugin on
@@ -103,6 +115,8 @@ hi DiagnosticUnderlineError gui=undercurl cterm=undercurl
 hi DiagnosticUnderlineInfo gui=undercurl cterm=undercurl
 hi DiagnosticUnderlineHint gui=undercurl cterm=undercurl
 
+hi CmpItemAbbrMatch guifg=#cb4b16
+
 function! s:GotoFirstFloat() abort
   for w in range(1, winnr('$'))
     let c = nvim_win_get_config(win_getid(w))
@@ -117,6 +131,8 @@ noremap <c-w><space> :<c-u>call <sid>GotoFirstFloat()<cr>
 
 vim.g.mapleader = " "
 
+vim.g["far#enable_undo"] = 1
+
 vim.g.solarized_visibility = "high"
 vim.g.solarized_extra_hi_groups = 1
 
@@ -125,7 +141,6 @@ vim.g.db_ui_show_database_icon = 1
 
 vim.g.db_ui_force_echo_notifications = 0
 
--- vim.g.indent_blankline_show_first_indent_level = false
 vim.g.matchup_matchparen_offscreen = {}
 
 vim.g.db_ui_win_position = "right"
@@ -144,22 +159,6 @@ vim.g.dbs = {
         url = "postgres://postgres:postgres@localhost:5432/prosapient_dev_outreach"
     }
 }
-
--- 0 = reload vimrc
-vimp.nnoremap(
-    "<leader>0",
-    function()
-        -- Unload the lua namespace so that the next time require('config.X') is called
-        -- it will reload the file
-        require("setup/util").unload_lua_namespace("setup")
-        -- Make sure all open buffers are saved
-        vim.cmd("silent wa")
-        -- Execute our vimrc lua file again to add back our maps
-        dofile(os.getenv("HOME") .. "/nvim/lua/init.lua")
-
-        print("Reloaded vimrc!")
-    end
-)
 
 for _, keymap in pairs(
     {

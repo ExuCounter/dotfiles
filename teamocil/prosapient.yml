@@ -21,7 +21,7 @@ windows:
     panes:
       - docker-compose up postgres minio
       - OBAN_DISABLED=0 iex -S mix phx.server
-      - cd frontend && yarn start
+      - cd frontend && pnpm start
       - vi
   - name: frontend
     root: ~/Desktop/projects/prosapient/platform/frontend/
@@ -37,7 +37,6 @@ windows:
       - commands:
          - vi
         focus: true
-
   # - name: kafka
   #   root: ~/Downloads/kafka/
   #   layout: tiled
