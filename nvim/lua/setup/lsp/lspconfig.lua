@@ -75,6 +75,7 @@ M.on_attach = function(client, bufnr)
             end
         }
     ) -- Mappings.
+
     -- See `:help vim.lsp.*` for documentation on any of the below functions
     local bufopts = {noremap = true, silent = true, buffer = bufnr}
     vim.keymap.set("n", "gD", vim.lsp.buf.declaration, bufopts)
@@ -177,6 +178,3 @@ augroup FormatAutogroup
 augroup END
 ]]
 )
-
-vimp.nnoremap({"silent"}, "cn", "<cmd>lua vim.diagnostic.goto_next()<CR>")
-vimp.nnoremap({"silent"}, "cN", "<cmd>lua vim.diagnostic.goto_prev()<CR>")

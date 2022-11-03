@@ -1,7 +1,7 @@
 local cmp = require("cmp")
 local compare = require("cmp.config.compare")
 
-require("luasnip.loaders.from_vscode").lazy_load()
+-- require("luasnip.loaders.from_vscode").lazy_load()
 
 local config = {
     enabled = true,
@@ -74,10 +74,17 @@ local config = {
     sources = cmp.config.sources(
         {
             {name = "cmp_tabnine", keyword_length = 3, priority = 11},
-            {name = "nvim_lsp", keyword_length = 0, priority = 13},
-            {name = "luasnip", keyword_length = 0, priority = 14},
-            {name = "ultisnips", keyword_length = 0, priority = 10},
-            {name = "buffer", keyword_length = 2, priority = 12}
+            {name = "nvim_lsp", keyword_length = 0, priority = 14},
+            {name = "nvim_lsp_signature_help", keyword_length = 1},
+            -- {name = "luasnip", keyword_length = 1, priority = 13},
+            -- {name = "ultisnips", keyword_length = 1, priority = 10},
+            {name = "buffer", keyword_length = 2, priority = 12},
+            {name = "calc", keyword_length = 2},
+            {
+                name = "vim-dadbod-completion",
+                keyword_length = 1,
+                priority = 15
+            }
         }
     ),
     snippet = {
@@ -93,7 +100,6 @@ local config = {
 
 cmp.setup(config)
 
--- Set configuration for specific filetype.
 cmp.setup.filetype(
     "gitcommit",
     {
@@ -108,7 +114,6 @@ cmp.setup.filetype(
     }
 )
 
--- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
 cmp.setup.cmdline(
     ":",
     {
@@ -132,38 +137,53 @@ local source_mapping = {
     nvim_lua = "[Lua]",
     cmp_tabnine = "[TN]",
     path = "[Path]",
-    luasnip = "[Snippet]"
+    luasnip = "[SN]",
+    ["vim-dadbod-completion"] = "[SQL]"
+}
+
+local kind_icons = {
+    Text = "",
+    Method = "",
+    Function = "",
+    Constructor = "",
+    Field = "",
+    Variable = "",
+    Class = "ﴯ",
+    Interface = "",
+    Module = "",
+    Property = "ﰠ",
+    Unit = "",
+    Value = "",
+    Enum = "",
+    Keyword = "",
+    Snippet = "",
+    Color = "",
+    File = "",
+    Reference = "",
+    Folder = "",
+    EnumMember = "",
+    Constant = "",
+    Struct = "",
+    Event = "",
+    Operator = "",
+    TypeParameter = ""
 }
 
 cmp.setup(
     {
         formatting = {
-            -- format = lspkind.cmp_format(
-            --     {
-            --         -- mode = "symbol", -- show only symbol annotations
-            --         maxwidth = 20, -- prevent the popup from showing more than provided characters (e.g 50 will not show more than 50 characters)
-            --         -- The function below will be called before any actual modifications from lspkind
-            --         -- so that you can provide more controls on popup customization. (See [#30](https://github.com/onsails/lspkind-nvim/pull/30))
-            --         before = function(entry, vim_item)
-            --             return vim_item
-            --         end
-            --     }
-            -- ),
             format = lspkind.cmp_format(
                 {
                     mode = "symbol_text", -- options: 'text', 'text_symbol', 'symbol_text', 'symbol'
-                    maxwidth = 40, -- prevent the popup from showing more than provided characters (e.g 50 will not show more than 50 characters)
-                    -- The function below will be called before any actual modifications from lspkind
-                    -- so that you can provide more controls on popup customization. (See [#30](https://github.com/onsails/lspkind-nvim/pull/30))
+                    maxwidth = 40,
                     before = function(entry, vim_item)
-                        vim_item.kind = lspkind.presets.default[vim_item.kind]
+                        vim_item.kind = string.format("%s %s", kind_icons[vim_item.kind], vim_item.kind)
 
                         local menu = source_mapping[entry.source.name]
                         if entry.source.name == "cmp_tabnine" then
                             if entry.completion_item.data ~= nil and entry.completion_item.data.detail ~= nil then
                                 menu = entry.completion_item.data.detail .. " " .. menu
                             end
-                            vim_item.kind = ""
                         end
 
                         vim_item.menu = menu

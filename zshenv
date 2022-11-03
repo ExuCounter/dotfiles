@@ -42,6 +42,5 @@ alias prettier='npx prettier'
 
 # Vim aliases
 alias vi="nvim"
-# alias vim="nvim"
 alias code="nvim"
 . "$HOME/.cargo/env"

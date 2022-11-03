@@ -13,8 +13,6 @@ require("setup/lsp/cmp")
 require("setup/lsp/lspconfig")
 require("setup/formatter")
 require("setup/lualine")
-require("setup/dashboard")
-require("setup/utils")
 require("setup/hop")
 
 local numb = require("numb")
@@ -50,3 +48,19 @@ require("indent_blankline").setup {
 require("better_escape").setup {
     mapping = {"jj"}
 }
+
+require("close_buffers").setup(
+    {
+        preserve_window_layout = {"this"},
+        next_buffer_cmd = function(windows)
+            require("bufferline").cycle(1)
+            local bufnr = vim.api.nvim_get_current_buf()
+
+            for _, window in ipairs(windows) do
+                vim.api.nvim_win_set_buf(window, bufnr)
+            end
+        end
+    }
+)
+
+require("trouble").setup {}

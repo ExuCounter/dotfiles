@@ -1,6 +1,6 @@
-local vimp = require("vimp")
-
 local M = {}
+
+local getBranch = vim.fn["gitbranch#name"]
 
 local generic_opts_any = {noremap = true, silent = true}
 
@@ -29,7 +29,15 @@ local defaults = {
         -- Return to normal mode
         ["jj"] = "<ESC>",
         -- Save on CTRL + S,
-        ["<C-S>"] = "<Esc>:w!<CR>"
+        ["<C-S>"] = "<Esc>:w!<CR>",
+        -- Disable Arrow keys in Insert mode
+        ["<up>"] = "<nop>",
+        ["<down>"] = "<nop>",
+        ["<left>"] = "<nop>",
+        ["<right>"] = "<nop>",
+        -- Move lines
+        ["∆"] = "<Esc>:m .+1<CR>==gi",
+        ["˚"] = "<Esc>:m .-2<CR>==gi"
     },
     normal_mode = {
         -- Copy path
@@ -90,7 +98,60 @@ local defaults = {
         ["S"] = "<cmd>lua require'hop'.hint_char2()<cr>",
         ["s"] = "<cmd>lua require'hop'.hint_char1()<cr>",
         -- DB
-        ["<leader>dt"] = ":DBUIToggle<cr>"
+        ["<leader>db"] = ":DBUIToggle<cr>",
+        -- Close buffers
+        ["<leader>cb"] = "<cmd>lua require('close_buffers').delete({ type = 'hidden', force = true })<cr>",
+        -- Reload lua config
+        ["<leader>0"] = function()
+            -- Unload the lua namespace so that the next time require('config.X') is called
+            -- it will reload the file
+            require("setup/util").unload_lua_namespace("setup")
+            -- Make sure all open buffers are saved
+            vim.cmd("silent wa")
+            -- Execute our vimrc lua file again to add back our maps
+            dofile(os.getenv("HOME") .. "/nvim/lua/init.lua")
+
+            print("Reloaded vimrc!")
+        end,
+        -- Git windows shortcuts
+        ["<leader>gcm"] = ":Git commit -v -q <CR>",
+        ["<leader>gd"] = ":Git diff<CR>",
+        ["<leader>gcl"] = ":Gclog -50<CR>",
+        ["<leader>gl"] = ":Git log -50<CR>",
+        ["<C-g>"] = ":GFiles?<cr>",
+        ["<leader>g"] = ":Git<cr>",
+        ["<leader>G"] = ":Git<cr>",
+        -- Git push/pull/fetch shortcuts
+        ["<Leader>gbp"] = ":Git -c push.default=current push<CR>",
+        ["<Leader>gpf"] = ":Git -c push.default=current push --force<CR>",
+        ["<Leader>gpl"] = ":Git pull origin " .. getBranch() .. "<CR>",
+        ["<Leader>gfa"] = ":Git fetch --all<CR>",
+        -- Git rebase/blame/checkout/reset shortcuts
+        ["<Leader>grc"] = ":Git rebase --continue<CR>",
+        ["<Leader>gra"] = ":Git rebase --abort",
+        ["<Leader>grsh"] = ":Git reset --hard",
+        ["<Leader>gri"] = ":Git rebase --interactive HEAD~",
+        ["<Leader>gcb"] = ":Git checkout -b",
+        ["<Leader>gbl"] = ":Git blame -et<CR>",
+        -- Moves
+        ["C-u"] = ':lua require("neoscroll").scroll(-80, true, 100)<CR>',
+        ["C-d"] = ':lua require("neoscroll").scroll(80, true, 100)<CR>',
+        ["zt"] = ':lua require("neoscroll").zb(250)<CR>',
+        ["zb"] = ':lua require("neoscroll").zt(250)<CR>',
+        -- Disable Arrow keys in Normal mode
+        ["<up>"] = "<nop>",
+        ["<down>"] = "<nop>",
+        ["<left>"] = "<nop>",
+        ["<right>"] = "<nop>",
+        -- Move lines by alt + arrows
+        ["∆"] = ":m .+1<CR>==",
+        ["˚"] = ":m .-2<CR>==",
+        -- Accelerated_jk
+        ["j"] = "<Plug>(accelerated_jk_gj)",
+        ["k"] = "<Plug>(accelerated_jk_gk)",
+        -- Diagnostics
+        ["cn"] = "<cmd>lua vim.diagnostic.goto_next()<CR>",
+        ["cN"] = "<cmd>lua vim.diagnostic.goto_prev()<CR>"
     },
     visual_mode = {
         -- Save on CTRL + S,
@@ -107,7 +168,12 @@ local defaults = {
         ["F"] = "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.BEFORE_CURSOR, current_line_only = true })<cr>",
         ["t"] = "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.AFTER_CURSOR, current_line_only = true })<cr>",
         ["T"] = "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.BEFORE_CURSOR, current_line_only = true })<cr>",
-        ["s"] = "<cmd>lua require'hop'.hint_char1()<cr>"
+        ["s"] = "<cmd>lua require'hop'.hint_char1()<cr>",
+        -- Move lines
+        ["∆"] = ":m '>+1<CR>gv-gv",
+        ["˚"] = ":m '<-2<CR>gv-gv",
+        -- Comments
+        ["gc"] = "<Plug>Commentary"
     },
     operator_mode = {
         -- Hop
