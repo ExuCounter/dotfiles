@@ -22,12 +22,18 @@ require("fzf-lua").setup(
         },
         grep = {
             prompt = "Rg>",
-            rg_opts = "--smart-case --no-heading --line-number --color=always -g '!pnpm-lock.yaml' -g '!yarn-error.log' -g '!yarn.lock' "
+            rg_opts = "--smart-case --no-heading --line-number --color=always -g '!pnpm-lock.yaml' -g '!yarn-error.log' -g '!yarn.lock' -g '!dotbot/' "
+        },
+        files = {
+            rg_opts = "--color=never --files --hidden --follow -g '!.git' -g '!dotbot/' "
         },
         actions = {
             live_grep = fzf_actions,
             files = fzf_actions,
-            buffers = fzf_actions
+            buffers = fzf_actions,
+            registers = {
+                ["default"] = actions.paste_register
+            }
         },
         fzf_opts = {["--layout"] = "default", ["-i"] = "", ["--keep-right"] = ""}
     }

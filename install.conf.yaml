@@ -6,14 +6,13 @@
 - clean: ['~']
 
 - link:
-    ~/.vimrc:
-    ~/.zshrc:
-    ~/.tmux.conf:
-    ~/.zshenv:
-    ~/.fzf.zsh: fzf.zsh
-    ~/.config/kitty/kitty.conf: kitty.conf
-    ~/.teamocil/prosapient.yml: teamocil/prosapient.yml
-    ~/scripts/functions.sh: scripts/functions.sh
+    # ~/.zshrc:
+    # ~/.tmux.conf:
+    # ~/.zshenv:
+    # ~/.fzf.zsh: fzf.zsh
+    # ~/.config/kitty/kitty.conf: kitty.conf
+    # ~/.teamocil/prosapient.yml: teamocil/prosapient.yml
+    # ~/scripts/functions.sh: scripts/functions.sh
     ~/nvim/lua/setup/treesitter.lua: nvim/lua/setup/treesitter.lua
     ~/nvim/lua/setup/nvimtree.lua: nvim/lua/setup/nvimtree.lua
     ~/nvim/lua/setup/bufferline.lua: nvim/lua/setup/bufferline.lua
@@ -31,7 +30,7 @@
     ~/nvim/lua/setup/lsp/cmp.lua: nvim/lua/setup/lsp/cmp.lua
     ~/nvim/lua/setup/formatter.lua: nvim/lua/setup/formatter.lua
     ~/nvim/lua/setup/hop.lua: nvim/lua/setup/hop.lua
-
+    ~/nvim/lua/snippets/javascript.lua: nvim/lua/snippets/javascript.lua
     ~/nvim/init.lua: nvim/lua/init.lua
 - shell:
   - [git submodule update --init --recursive, Installing submodules]
