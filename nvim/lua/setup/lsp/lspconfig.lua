@@ -8,7 +8,7 @@ M.lsp_flags = {
     debounce_text_changes = 150
 }
 
-M.capabilities = cmp.update_capabilities(vim.lsp.protocol.make_client_capabilities())
+M.capabilities = cmp.default_capabilities(vim.lsp.protocol.make_client_capabilities())
 
 M.capabilities.textDocument.completion.completionItem = {
     documentationFormat = {"markdown", "plaintext"},
