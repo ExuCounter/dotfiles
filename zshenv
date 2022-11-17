@@ -39,6 +39,7 @@ alias chrome='open -a "Google Chrome"'
 alias kafka='~/Downloads/kafka/bin/kafka-server-start.sh config/server.properties'
 alias zookeeper='~/Downloads/kafka/bin/zookeeper-server-start.sh config/zookeeper.properties'
 alias prettier='npx prettier'
+alias gfa='git fetch --all --prune --jobs=10'
 
 # Vim aliases
 alias vi="nvim"

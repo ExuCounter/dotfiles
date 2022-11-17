@@ -31,7 +31,8 @@ local formatter_filetype =
                 local configuration = {
                     exe = v["exe"] or "prettierd",
                     args = {vim.api.nvim_buf_get_name(0)},
-                    stdin = true
+                    stdin = true,
+                    try_node_modules = true
                 }
                 return configuration
             end

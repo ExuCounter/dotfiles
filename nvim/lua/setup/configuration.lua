@@ -66,17 +66,6 @@ opt.fillchars = {
 opt.termguicolors = true
 
 vim.colorscheme = "solarized8_flat"
--- vim.highlight.create(
---     "MatchParen",
---     {
---         gui = "underline",
---         cterm = "underline",
---         ctermbg = 66,
---         guifg = "white",
---         guibg = "#b3b3b3"
---     },
---     false
--- )
 
 vim.cmd(
     [[
