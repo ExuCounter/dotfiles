@@ -151,7 +151,12 @@ local defaults = {
         ["k"] = "<Plug>(accelerated_jk_gk)",
         -- Diagnostics
         ["cn"] = "<cmd>lua vim.diagnostic.goto_next()<CR>",
-        ["cN"] = "<cmd>lua vim.diagnostic.goto_prev()<CR>"
+        ["cN"] = "<cmd>lua vim.diagnostic.goto_prev()<CR>",
+        -- Navigation
+        ["C-k"] = ":wincmd k<CR>",
+        ["C-j"] = ":wincmd j<CR>",
+        ["C-h"] = ":wincmd h<CR>",
+        ["C-l"] = ":wincmd l<CR>"
     },
     visual_mode = {
         -- Save on CTRL + S,
