@@ -7,14 +7,14 @@ bufferline.setup(
             diagnostics = "none",
             show_buffer_close_icons = false,
             show_close_icon = false,
-            indicator_icon = "|",
+            indicator = {icon = "|", style = "icon"},
             tab_size = 15,
             filetype_exclude = {"dashboard", "lsp-installer", "help"},
             buftype_exclude = {"terminal"}
         },
         highlights = {
             indicator_selected = {
-                guifg = "#cb4b16"
+                fg = "#cb4b16"
             }
         }
     }
