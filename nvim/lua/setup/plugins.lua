@@ -1,90 +1,87 @@
-local Plug = vim.fn["plug#"]
+return require("packer").startup(
+    function(use)
+        use "wbthomason/packer.nvim"
+        -- UI
+        use "lifepillar/vim-solarized8"
+        -- FileTree
+        use "kyazdani42/nvim-tree.lua"
+        -- Commentary
+        use "tpope/vim-commentary"
 
-vim.call("plug#begin", "~/.config/nvim/plugged")
+        -- Git
+        use "tpope/vim-fugitive"
+        use "APZelos/blamer.nvim"
+        use "brooth/far.vim"
+        use "itchyny/vim-gitbranch"
+        use "lewis6991/gitsigns.nvim"
+        use "rhysd/conflict-marker.vim"
 
--- UI
-Plug("lifepillar/vim-solarized8")
+        -- DB
+        use "tpope/vim-dadbod"
+        use "kristijanhusak/vim-dadbod-ui"
 
--- FileTree
-Plug("kyazdani42/nvim-tree.lua")
+        -- Fzf
+        use {"ibhagwan/fzf-lua", branch = "main"}
 
--- Commentary
-Plug("tpope/vim-commentary")
+        -- Windows
+        use "christoomey/vim-tmux-navigator"
+        use "simeji/winresizer"
 
--- Git
-Plug("tpope/vim-fugitive")
-Plug("APZelos/blamer.nvim")
-Plug("brooth/far.vim")
-Plug("itchyny/vim-gitbranch")
-Plug("lewis6991/gitsigns.nvim")
-Plug("rhysd/conflict-marker.vim")
+        -- Moves
+        use "rhysd/accelerated-jk"
+        use "phaazon/hop.nvim"
 
--- DB
-Plug("tpope/vim-dadbod")
-Plug("kristijanhusak/vim-dadbod-ui")
+        -- Syntax
+        use {"nvim-treesitter/nvim-treesitter", run = ":TSUpdate"}
+        use "JoosepAlviste/nvim-ts-context-commentstring"
+        use "windwp/nvim-ts-autotag"
 
--- Fzf
-Plug("ibhagwan/fzf-lua", {branch = "main"})
+        -- CMP
+        use "hrsh7th/cmp-nvim-lsp"
+        use "hrsh7th/cmp-buffer"
+        use "hrsh7th/cmp-cmdline"
+        use "hrsh7th/nvim-cmp"
+        use "hrsh7th/cmp-nvim-lsp-signature-help"
+        use {"tzachar/cmp-tabnine", run = "./install.sh"}
+        use "hrsh7th/cmp-path"
+        use "kristijanhusak/vim-dadbod-completion"
+        use "hrsh7th/cmp-calc"
 
--- Windows
-Plug("christoomey/vim-tmux-navigator")
-Plug("simeji/winresizer")
+        -- LSP
+        use "onsails/lspkind.nvim"
+        use "neovim/nvim-lspconfig"
 
--- Moves
-Plug("rhysd/accelerated-jk")
-Plug("phaazon/hop.nvim")
+        -- Formatting
+        use "mhartington/formatter.nvim"
 
--- Syntax
-Plug("nvim-treesitter/nvim-treesitter", {["do"] = "TSUpdate"})
-Plug("JoosepAlviste/nvim-ts-context-commentstring")
-Plug("windwp/nvim-ts-autotag")
+        -- Mason
+        use "williamboman/mason.nvim"
+        use "williamboman/mason-lspconfig.nvim"
 
--- CMP
-Plug("hrsh7th/cmp-nvim-lsp")
-Plug("hrsh7th/cmp-buffer")
-Plug("hrsh7th/cmp-cmdline")
-Plug("hrsh7th/nvim-cmp")
-Plug("hrsh7th/cmp-nvim-lsp-signature-help")
-Plug("tzachar/cmp-tabnine", {["do"] = "./install.sh"})
-Plug "hrsh7th/cmp-path"
-Plug "kristijanhusak/vim-dadbod-completion"
-Plug "hrsh7th/cmp-calc"
+        -- Icons
+        use "kyazdani42/nvim-web-devicons"
 
--- LSP
-Plug("onsails/lspkind.nvim")
-Plug("neovim/nvim-lspconfig")
-
--- Formatting
-Plug("mhartington/formatter.nvim")
-
--- Mason
-Plug("williamboman/mason.nvim")
-Plug("williamboman/mason-lspconfig.nvim")
-
--- Icons
-Plug("kyazdani42/nvim-web-devicons")
-
--- Another
-Plug("taku-o/vim-copypath")
-Plug("tpope/vim-surround")
-Plug("mg979/vim-visual-multi", {branch = "master"})
-Plug("djoshea/vim-autoread")
-Plug("karb94/neoscroll.nvim")
-Plug("nacro90/numb.nvim")
-Plug("chentoast/marks.nvim")
-Plug("nvim-lua/plenary.nvim")
-Plug("tpope/vim-dotenv")
-Plug("akinsho/bufferline.nvim")
-Plug("lukas-reineke/indent-blankline.nvim")
-Plug("beauwilliams/focus.nvim")
-Plug "SirVer/ultisnips"
-Plug "nvim-lualine/lualine.nvim"
-Plug "Raimondi/delimitMate"
-Plug "max397574/better-escape.nvim"
-Plug "NvChad/nvim-colorizer.lua"
-Plug "L3MON4D3/LuaSnip"
-Plug "saadparwaiz1/cmp_luasnip"
-Plug "kazhala/close-buffers.nvim"
-Plug "folke/lsp-trouble.nvim"
-
-vim.call("plug#end")
+        -- Another
+        use "taku-o/vim-copypath"
+        use "tpope/vim-surround"
+        use {"mg979/vim-visual-multi", branch = "master"}
+        use "djoshea/vim-autoread"
+        use "karb94/neoscroll.nvim"
+        use "nacro90/numb.nvim"
+        use "chentoast/marks.nvim"
+        use "nvim-lua/plenary.nvim"
+        use "tpope/vim-dotenv"
+        use "akinsho/bufferline.nvim"
+        use "lukas-reineke/indent-blankline.nvim"
+        use "beauwilliams/focus.nvim"
+        use "SirVer/ultisnips"
+        use "nvim-lualine/lualine.nvim"
+        use "Raimondi/delimitMate"
+        use "max397574/better-escape.nvim"
+        use "NvChad/nvim-colorizer.lua"
+        use "L3MON4D3/LuaSnip"
+        use "saadparwaiz1/cmp_luasnip"
+        use "kazhala/close-buffers.nvim"
+        use "folke/lsp-trouble.nvim"
+    end
+)
