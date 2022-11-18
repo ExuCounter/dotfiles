@@ -65,8 +65,6 @@ opt.fillchars = {
 
 opt.termguicolors = true
 
-vim.colorscheme = "solarized8_flat"
-
 vim.cmd(
     [[
 filetype plugin on
