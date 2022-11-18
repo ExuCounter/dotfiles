@@ -1,4 +1,8 @@
-local api = require("nvim-tree.api")
+local present, _ = pcall(require, "nvim-tree.api")
+
+if not present then
+    return
+end
 
 vim.g.loaded = 1
 vim.g.loaded_netrwPlugin = 1

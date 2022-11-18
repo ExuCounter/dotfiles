@@ -1,3 +1,9 @@
+local present, gitsigns = pcall(require, "gitsigns")
+
+if not present then
+    return
+end
+
 -- Disable the default highlight group
 vim.g.conflict_marker_highlight_group = ""
 
@@ -7,7 +13,7 @@ vim.g.conflict_marker_common_ancestors = "^||||||| .*$"
 vim.g.conflict_marker_separator = "^=======$"
 vim.g.conflict_marker_end = "^>>>>>>> .*$"
 
-require("gitsigns").setup {
+gitsigns.setup {
     signs = {
         add = {
             hl = "GitSignsAdd",
