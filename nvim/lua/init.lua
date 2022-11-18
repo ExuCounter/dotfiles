@@ -35,7 +35,6 @@ neoscroll.setup(
         mappings = {"<C-u>", "<C-d>", "zt", "zz", "zb"}
     }
 )
-
 require("indent_blankline").setup {
     show_first_indent_level = false,
     show_current_context = true,
@@ -44,23 +43,19 @@ require("indent_blankline").setup {
     char_list = {"¦", "│", "│", "│", "│", "│", "│", "│"},
     show_foldtext = true
 }
-
 require("better_escape").setup {
     mapping = {"jj"}
 }
-
 require("close_buffers").setup(
     {
         preserve_window_layout = {"this"},
         next_buffer_cmd = function(windows)
             require("bufferline").cycle(1)
             local bufnr = vim.api.nvim_get_current_buf()
-
             for _, window in ipairs(windows) do
                 vim.api.nvim_win_set_buf(window, bufnr)
             end
         end
     }
 )
-
 require("trouble").setup {}
