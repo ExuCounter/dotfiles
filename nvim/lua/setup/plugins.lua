@@ -52,7 +52,7 @@ return require("packer").startup(
         -- CMP
         use "hrsh7th/cmp-nvim-lsp"
         use "hrsh7th/cmp-buffer"
-        use "hrsh7th/cmp-cmdline"
+        use {"hrsh7th/cmp-cmdline", commit = "d2dfa338520c99c1f2dc6af9388de081a6e63296"}
         use "hrsh7th/nvim-cmp"
         use "hrsh7th/cmp-nvim-lsp-signature-help"
         -- use {"tzachar/cmp-tabnine", run = "./install.sh"}
