@@ -46,8 +46,8 @@ return require("packer").startup(
 
         -- Syntax
         use {"nvim-treesitter/nvim-treesitter", run = ":TSUpdate"}
-        use "JoosepAlviste/nvim-ts-context-commentstring"
-        use "windwp/nvim-ts-autotag"
+        use {"JoosepAlviste/nvim-ts-context-commentstring", requires = {"nvim-treesitter/nvim-treesitter"}}
+        use {"windwp/nvim-ts-autotag", requires = {"nvim-treesitter/nvim-treesitter"}}
 
         -- CMP
         use "hrsh7th/cmp-nvim-lsp"
