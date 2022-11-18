@@ -1,4 +1,8 @@
-local bufferline = require("bufferline")
+local present, bufferline = pcall(require, "formatter")
+
+if not present then
+    return
+end
 
 bufferline.setup(
     {

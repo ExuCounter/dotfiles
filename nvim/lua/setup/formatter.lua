@@ -1,4 +1,8 @@
-local formatter = require("formatter")
+local present, formatter = pcall(require, "formatter")
+
+if not present then
+    return
+end
 
 local function map(tbl, f)
     local t = {}

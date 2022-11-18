@@ -1,3 +1,9 @@
+local present, fzfLua = pcall(require, "fzf-lua")
+
+if not present then
+    return
+end
+
 local actions = require "fzf-lua.actions"
 
 local fzf_actions = {
@@ -7,7 +13,7 @@ local fzf_actions = {
     ["default"] = actions.file_edit_or_qf
 }
 
-require("fzf-lua").setup(
+fzfLua.setup(
     {
         winopts = {
             height = 0.5,
