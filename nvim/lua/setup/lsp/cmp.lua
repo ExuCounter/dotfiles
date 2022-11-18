@@ -119,9 +119,12 @@ cmp.setup.cmdline(
     {
         mapping = cmp.mapping.preset.cmdline(),
         sources = cmp.config.sources(
-            {
-                {name = "path"}
-            },
+            -- {
+            --     {name = "buffer"}
+            -- },
+            -- {
+            --     {name = "path"}
+            -- }
             {
                 {name = "cmdline"}
             }
@@ -135,7 +138,7 @@ local source_mapping = {
     buffer = "[Buffer]",
     nvim_lsp = "[LSP]",
     nvim_lua = "[Lua]",
-    cmp_tabnine = "[TN]",
+    -- cmp_tabnine = "[TN]",
     path = "[Path]",
     luasnip = "[SN]",
     ["vim-dadbod-completion"] = "[SQL]"
@@ -180,11 +183,11 @@ cmp.setup(
                         vim_item.kind = string.format("%s %s", kind_icons[vim_item.kind], vim_item.kind)
 
                         local menu = source_mapping[entry.source.name]
-                        if entry.source.name == "cmp_tabnine" then
-                            if entry.completion_item.data ~= nil and entry.completion_item.data.detail ~= nil then
-                                menu = entry.completion_item.data.detail .. " " .. menu
-                            end
-                        end
+                        -- if entry.source.name == "cmp_tabnine" then
+                        --     if entry.completion_item.data ~= nil and entry.completion_item.data.detail ~= nil then
+                        --         menu = entry.completion_item.data.detail .. " " .. menu
+                        --     end
+                        -- end
 
                         vim_item.menu = menu
 
