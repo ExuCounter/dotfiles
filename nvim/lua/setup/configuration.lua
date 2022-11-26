@@ -77,13 +77,13 @@ hi MatchParen guifg=NONE gui=underline cterm=underline ctermbg=66 guifg=white gu
 hi VertSplit guibg=NONE guifg=#b3b3b3
 autocmd FileType * set formatoptions+=t
 
-hi ConflictMarkerBegin guibg=#e6cd85 guifg=#FFFFFF
-hi ConflictMarkerOurs guibg=#FAEFD1
-hi ConflictMarkerTheirs guibg=#DDEFFA
-hi ConflictMarkerEnd guibg=#F5DDDC guifg=NONE 
-hi ConflictMarkerSeparator guibg=NONE guifg=NONE 
-hi ConflictMarkerCommonAncestorsHunk guibg=NONE
-hi ConflictMarkerCommonAncestors guibg=NONE
+" hi ConflictMarkerBegin guibg=#e6cd85 guifg=#FFFFFF
+" hi ConflictMarkerOurs guibg=#FAEFD1
+" hi ConflictMarkerTheirs guibg=#DDEFFA
+" hi ConflictMarkerEnd guibg=#F5DDDC guifg=NONE 
+" hi ConflictMarkerSeparator guibg=NONE guifg=NONE 
+" hi ConflictMarkerCommonAncestorsHunk guibg=NONE
+" hi ConflictMarkerCommonAncestors guibg=NONE
 
 hi BufferLineFill ctermbg=254 guibg=#eee8d5
 hi BufferLineBufferSelected gui=bold cterm=bold
@@ -102,7 +102,10 @@ hi DiagnosticUnderlineError gui=undercurl cterm=undercurl
 hi DiagnosticUnderlineInfo gui=undercurl cterm=undercurl
 hi DiagnosticUnderlineHint gui=undercurl cterm=undercurl
 
+hi Error cterm=NONE gui=NONE guifg=NONE ctermbg=NONE
+
 hi CmpItemAbbrMatch guifg=#cb4b16
+hi GitSignsCurrentLineBlame gui=italic
 
 function! s:GotoFirstFloat() abort
   for w in range(1, winnr('$'))
@@ -136,6 +139,10 @@ vim.g.db_ui_save_location = "~/.config/db_ui/queries"
 vim.g.dbs = {
     dev = {name = "prosapient_dev", url = "postgres://postgres:postgres@localhost:5432/prosapient_dev"},
     byoe = {name = "prosapient_dev_byoe", url = "postgres://postgres:postgres@localhost:5432/prosapient_dev_byoe"},
+    aggregator = {
+        name = "prosapient_dev_aggregator",
+        url = "postgres://postgres:postgres@localhost:5432/prosapient_dev_aggregator"
+    },
     lek = {name = "prosapient_dev_lek", url = "postgres://postgres:postgres@localhost:5432/prosapient_dev_lek"},
     mckinsey = {
         name = "prosapient_dev_mckinsey",
