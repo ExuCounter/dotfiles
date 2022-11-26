@@ -9,7 +9,6 @@ mason_lspconfig.setup(
             "sumneko_lua",
             "elixirls",
             "cssls",
-            "sqls",
             "marksman",
             "html",
             "eslint",

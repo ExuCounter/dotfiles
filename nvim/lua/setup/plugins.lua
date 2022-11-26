@@ -23,7 +23,6 @@ return require("packer").startup(
 
         -- Git
         use "tpope/vim-fugitive"
-        use "APZelos/blamer.nvim"
         use "brooth/far.vim"
         use "itchyny/vim-gitbranch"
         use "lewis6991/gitsigns.nvim"
@@ -55,7 +54,6 @@ return require("packer").startup(
         use {"hrsh7th/cmp-cmdline", commit = "d2dfa338520c99c1f2dc6af9388de081a6e63296"}
         use "hrsh7th/nvim-cmp"
         use "hrsh7th/cmp-nvim-lsp-signature-help"
-        -- use {"tzachar/cmp-tabnine", run = "./install.sh"}
         use "hrsh7th/cmp-path"
         use "kristijanhusak/vim-dadbod-completion"
         use "hrsh7th/cmp-calc"
@@ -87,7 +85,6 @@ return require("packer").startup(
         use "akinsho/bufferline.nvim"
         use "lukas-reineke/indent-blankline.nvim"
         use "beauwilliams/focus.nvim"
-        use "SirVer/ultisnips"
         use "nvim-lualine/lualine.nvim"
         use "Raimondi/delimitMate"
         use "max397574/better-escape.nvim"

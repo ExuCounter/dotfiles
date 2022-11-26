@@ -24,6 +24,8 @@ local mode_adapters = {
     operator_mode = "o"
 }
 
+vim.api.nvim_create_user_command("Rg", ":lua require('fzf-lua').live_grep({search=<f-args>})", {nargs = 1})
+
 local defaults = {
     insert_mode = {
         -- Return to normal mode
