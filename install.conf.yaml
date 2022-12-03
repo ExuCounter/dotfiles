@@ -6,13 +6,15 @@
 - clean: ['~']
 
 - link:
-    # ~/.zshrc:
-    # ~/.tmux.conf:
-    # ~/.zshenv:
-    # ~/.fzf.zsh: fzf.zsh
-    # ~/.config/kitty/kitty.conf: kitty.conf
-    # ~/.teamocil/prosapient.yml: teamocil/prosapient.yml
-    # ~/scripts/functions.sh: scripts/functions.sh
+    # configuration
+    ~/.zshrc:
+    ~/.tmux.conf:
+    ~/.zshenv:
+    ~/.fzf.zsh: fzf.zsh
+    ~/.config/kitty/kitty.conf: kitty.conf
+    ~/.teamocil/prosapient.yml: teamocil/prosapient.yml
+    ~/scripts/functions.sh: scripts/functions.sh
+    # vim
     ~/.config/nvim/lua/setup/treesitter.lua: nvim/lua/setup/treesitter.lua
     ~/.config/nvim/lua/setup/nvimtree.lua: nvim/lua/setup/nvimtree.lua
     ~/.config/nvim/lua/setup/bufferline.lua: nvim/lua/setup/bufferline.lua
