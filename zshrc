@@ -7,7 +7,8 @@ export FZF_HIGHLIGHT_PREVIEW_OPTS="--height 100% --preview '(highlight -O ansi -
 export FZF_DEFAULT_OPTS="--height 80% --color=bg+:#eee8d5,fg+:-1,gutter:-1"
 export FZF_CTRL_T_OPTS="--delimiter '/' --nth=-1 $FZF_HIGHLIGHT_PREVIEW_OPTS"
 export BAT_THEME="Solarized (light)"
-export ZSH="/Users/vova777/.oh-my-zsh"
+
+export ZSH="$HOME/.oh-my-zsh"
 
 ZSH_THEME="geoffgarside"
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=12'
@@ -32,3 +33,4 @@ source $HOME/.zshenv
 source $HOME/scripts/functions.sh
 
 . $HOME/.asdf/asdf.sh
+. "$HOME/.cargo/env"

@@ -16,6 +16,7 @@ return require("packer").startup(
         use "wbthomason/packer.nvim"
         -- UI
         use "lifepillar/vim-solarized8"
+        use {"catppuccin/nvim", as = "catppuccin"}
         -- FileTree
         use "kyazdani42/nvim-tree.lua"
         -- Commentary
