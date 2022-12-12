@@ -30,10 +30,10 @@ windows:
       - commands:
          - vi
         focus: true
-  - name: tasks-board 
-    root: ~/Desktop/projects/own/tasks-board/
-    layout: tiled
-    panes:
-      - commands:
-         - vi
-        focus: true
+  # - name: tasks-board 
+  #   root: ~/Desktop/projects/own/tasks-board/
+  #   layout: tiled
+  #   panes:
+  #     - commands:
+  #        - vi
+  #       focus: true

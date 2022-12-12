@@ -74,17 +74,17 @@ gitsigns.setup {
     end
 }
 
-vim.highlight.create("GitSignsCurrentLineBlame", {guifg = "#8b9898"}, false)
-vim.highlight.create("GitSignsChange", {guifg = "orange", guibg = "NONE"}, false)
+-- vim.api.nvim_set_hl("GitSignsCurrentLineBlame", {guifg = "#8b9898"}, false)
+-- vim.api.nvim_set_hl("GitSignsChange", {guifg = "orange", guibg = "NONE"}, false)
 
-function toggleSignColumn()
+local function toggleSignColumn()
     vim.o.signcolumn = vim.o.signcolumn == "yes" and "no" or "yes"
 end
 
 vim.keymap.set(
     "n",
     "<S-c>",
-    ":lua toggleSignColumn()<cr>",
+    toggleSignColumn,
     {
         noremap = false,
         silent = true

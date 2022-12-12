@@ -43,9 +43,11 @@ require("indent_blankline").setup {
     char_list = {"¦", "│", "│", "│", "│", "│", "│", "│"},
     show_foldtext = true
 }
+
 require("better_escape").setup {
     mapping = {"jj"}
 }
+
 require("close_buffers").setup(
     {
         preserve_window_layout = {"this"},

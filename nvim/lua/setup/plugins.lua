@@ -94,6 +94,7 @@ return require("packer").startup(
         use "saadparwaiz1/cmp_luasnip"
         use "kazhala/close-buffers.nvim"
         use "folke/lsp-trouble.nvim"
+        use "folke/neodev.nvim"
 
         if packer_bootstrap then
             require("packer").sync()

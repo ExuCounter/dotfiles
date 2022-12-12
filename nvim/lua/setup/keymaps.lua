@@ -26,6 +26,23 @@ local mode_adapters = {
 
 vim.api.nvim_create_user_command("Rg", ":lua require('fzf-lua').live_grep({search=<f-args>})", {nargs = 1})
 
+function copy_path()
+    vim.api.nvim_command("CopyPath")
+end
+
+vim.api.nvim_create_user_command("POT", ":lua copy_path()", {})
+
+vim.api.nvim_create_user_command(
+    "Cppath",
+    function()
+        local path = vim.fn.expand("%:p")
+        vim.notify(path)
+        vim.fn.setreg("+", path)
+        vim.notify('Copied "' .. path .. '" to the clipboard!')
+    end,
+    {}
+)
+
 local defaults = {
     insert_mode = {
         -- Return to normal mode
