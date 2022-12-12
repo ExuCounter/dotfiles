@@ -13,6 +13,7 @@
     ~/.fzf.zsh: fzf.zsh
     ~/.config/kitty/kitty.conf: kitty.conf
     ~/.teamocil/prosapient.yml: teamocil/prosapient.yml
+    ~/.teamocil/learning.yml: teamocil/learning.yml
     ~/scripts/functions.sh: scripts/functions.sh
     # vim
     ~/.config/nvim/lua/setup/treesitter.lua: nvim/lua/setup/treesitter.lua

@@ -25,6 +25,13 @@ local formatter_filetype =
         less = {},
         graphql = {},
         gql = {},
+        elixir = {
+            exe = "mix",
+            args = {
+                "format",
+                "--"
+            }
+        },
         lua = {
             exe = "luafmt"
         }
@@ -34,15 +41,15 @@ local formatter_filetype =
             function()
                 local configuration = {
                     exe = v["exe"] or "prettierd",
-                    args = {vim.api.nvim_buf_get_name(0)},
-                    stdin = true,
-                    try_node_modules = true
+                    args = v["args"] or {vim.api.nvim_buf_get_name(0)},
+                    stdin = true
                 }
                 return configuration
             end
         }
     end
 )
+
 formatter.setup(
     {
         logging = false,

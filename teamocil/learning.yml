@@ -1,0 +1,12 @@
+name: learning
+windows:
+  - name: dotfiles
+    root: ~/Desktop/projects/own/dotfiles
+    layout: tiled
+    panes:
+      - vi
+  - name: dotfiles
+    root: ~/Desktop/projects/own/learning_sql
+    layout: tiled
+    panes:
+      - vi

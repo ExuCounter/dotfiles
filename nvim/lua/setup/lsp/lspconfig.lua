@@ -3,6 +3,8 @@ local cmp = require("cmp_nvim_lsp")
 
 local M = {}
 
+require("neodev").setup({})
+
 M.lsp_flags = {
     -- This is the default in Nvim 0.7+
     debounce_text_changes = 150
@@ -112,6 +114,14 @@ lspconfig.tailwindcss.setup(
     }
 )
 
+lspconfig.elixirls.setup(
+    {
+        on_attach = M.on_attach,
+        flags = M.lsp_flags,
+        capabilities = M.capabilities
+    }
+)
+
 lspconfig.tsserver.setup(
     {
         on_attach = M.on_attach,
@@ -120,13 +130,150 @@ lspconfig.tsserver.setup(
     }
 )
 
-lspconfig.sumneko_lua.setup(
+lspconfig.lua_ls.setup(
     {
         on_attach = M.on_attach,
         flags = M.lsp_flags,
-        capabilities = M.capabilities
+        capabilities = M.capabilities,
+        settings = {
+            Lua = {
+                completion = {
+                    callSnippet = "Replace"
+                }
+            }
+        }
     }
 )
+
+local function diffConflict(view)
+    local currentBufferNumber = 0
+    local bufferLines = vim.api.nvim_buf_get_lines(currentBufferNumber, 0, -1, true)
+    local currentPos = vim.api.nvim_win_get_cursor(currentBufferNumber)[1]
+    local headPositions = {}
+    local theirPositions = {}
+    local parentStartPositions = {}
+    local parentEndPositions = {}
+
+    local identifiers = {head = "<<<<<<<", parentStart = "|||||||", parentEnd = "=======", their = ">>>>>>>"}
+
+    for i = 1, table.getn(bufferLines) do
+        local line = bufferLines[i]
+
+        if string.find(line, identifiers.head) then
+            table.insert(headPositions, i)
+        end
+        if string.find(line, identifiers.parentStart) then
+            table.insert(parentStartPositions, i)
+        end
+        if string.find(line, identifiers.parentEnd) then
+            table.insert(parentEndPositions, i)
+        end
+        if string.find(line, identifiers.their) then
+            table.insert(theirPositions, i)
+        end
+    end
+
+    local conflicts = {}
+    local current_conflict = nil
+
+    for i = 1, table.getn(headPositions) do
+        local headPos = headPositions[i]
+        local parentStartPos = parentStartPositions[i]
+        local parentEndPos = parentEndPositions[i]
+        local theirPos = theirPositions[i]
+
+        local conflict = {
+            headPos = headPos,
+            parentStartPos = parentStartPos,
+            parentEndPos = parentEndPos,
+            theirPos = theirPos
+        }
+
+        table.insert(conflicts, conflict)
+
+        if currentPos >= headPos and currentPos <= theirPos then
+            current_conflict = conflict
+        end
+    end
+
+    if current_conflict then
+        local headLines =
+            vim.api.nvim_buf_get_lines(
+            currentBufferNumber,
+            current_conflict.headPos,
+            current_conflict.parentStartPos - 1,
+            true
+        )
+        local parentLines =
+            vim.api.nvim_buf_get_lines(
+            currentBufferNumber,
+            current_conflict.parentStartPos,
+            current_conflict.parentEndPos - 1,
+            true
+        )
+        local theirLines =
+            vim.api.nvim_buf_get_lines(
+            currentBufferNumber,
+            current_conflict.parentEndPos,
+            current_conflict.theirPos - 1,
+            true
+        )
+
+        vim.cmd("enew")
+
+        local function setLinesToCurrentBuffer(lines)
+            vim.api.nvim_buf_set_lines(currentBufferNumber, 0, 0, true, lines)
+        end
+
+        if view == "head-their" then
+            setLinesToCurrentBuffer(headLines)
+        elseif view == "head-parent" then
+            setLinesToCurrentBuffer(headLines)
+        elseif view == "parent-their" then
+            setLinesToCurrentBuffer(parentLines)
+        end
+
+        vim.cmd("vnew")
+
+        if view == "head-their" then
+            setLinesToCurrentBuffer(theirLines)
+        elseif view == "head-parent" then
+            setLinesToCurrentBuffer(parentLines)
+        elseif view == "parent-their" then
+            setLinesToCurrentBuffer(parentLines)
+        end
+
+        vim.cmd("windo diffthis")
+    else
+        print("Conflict under cursor not found")
+    end
+end
+
+vim.api.nvim_create_user_command(
+    "DiffHeadTheir",
+    function()
+        diffConflict("head-their")
+    end,
+    {}
+)
+vim.api.nvim_create_user_command(
+    "DiffHeadParent",
+    function()
+        diffConflict("head-parent")
+    end,
+    {}
+)
+vim.api.nvim_create_user_command(
+    "DiffParentTheir",
+    function()
+        diffConflict("parent-their")
+    end,
+    {}
+)
+
+vim.keymap.set("n", "<leader>J", ":DiffHeadTheir<CR>", {})
+vim.keymap.set("n", "<leader>K", ":DiffHeadParent<CR>", {})
+vim.keymap.set("n", "<leader>L", ":DiffParentTheir<CR>", {})
 
 lspconfig.sqlls.setup(
     {
@@ -174,7 +321,7 @@ vim.cmd(
 hi DiagnosticHint guifg=#8b9898 guibg=NONE
 augroup FormatAutogroup
   autocmd!
-  autocmd BufWritePost * FormatWrite
+  autocmd BufWritePost * Format
 augroup END
 ]]
 )
