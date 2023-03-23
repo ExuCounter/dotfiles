@@ -74,7 +74,6 @@ return require("packer").startup(
         use "kyazdani42/nvim-web-devicons"
 
         -- Another
-        use "taku-o/vim-copypath"
         use "tpope/vim-surround"
         use {"mg979/vim-visual-multi", branch = "master"}
         use "djoshea/vim-autoread"

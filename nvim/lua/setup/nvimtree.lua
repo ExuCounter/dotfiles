@@ -74,7 +74,7 @@ require("nvim-tree").setup(
             auto_open = true
         },
         update_focused_file = {
-            enable = true,
+            enable = false,
             ignore_list = {}
         },
         system_open = {

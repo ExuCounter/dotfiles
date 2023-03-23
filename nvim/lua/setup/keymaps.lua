@@ -26,18 +26,42 @@ local mode_adapters = {
 
 vim.api.nvim_create_user_command("Rg", ":lua require('fzf-lua').live_grep({search=<f-args>})", {nargs = 1})
 
-function copy_path()
-    vim.api.nvim_command("CopyPath")
+local function removeExtension(s)
+    return s:match("(.+)%..+")
 end
 
-vim.api.nvim_create_user_command("POT", ":lua copy_path()", {})
+local function copy_path()
+    local path = vim.fn.expand("%:p")
+    local i, j = string.find(path, "frontend/src/")
+    if i and j then
+        local relativePath = string.sub(path, j + 1, -1)
+        path = removeExtension(relativePath)
+    end
+    vim.fn.setreg("+", path)
+    return path
+end
 
 vim.api.nvim_create_user_command(
-    "Cppath",
+    "CopyPath",
     function()
-        local path = vim.fn.expand("%:p")
-        vim.notify(path)
-        vim.fn.setreg("+", path)
+        local path = copy_path()
+        vim.notify('Copied "' .. path .. '" to the clipboard!')
+    end,
+    {}
+)
+
+local function makeImportPath()
+    local path = copy_path()
+    local variable = vim.fn.expand("<cWORD>"):gsub(":", "")
+    path = "import " .. "{ " .. variable .. " }" .. " from " .. "'" .. path .. "'"
+    vim.fn.setreg("+", path)
+    return path
+end
+
+vim.api.nvim_create_user_command(
+    "MakeImport",
+    function()
+        local path = makeImportPath()
         vim.notify('Copied "' .. path .. '" to the clipboard!')
     end,
     {}

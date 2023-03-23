@@ -41,3 +41,4 @@ watchman
 xclip
 yarn
 zsh-syntax-highlighting
+kitty
