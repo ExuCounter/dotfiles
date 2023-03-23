@@ -19,7 +19,6 @@ source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 source $ZSH/oh-my-zsh.sh
 
-export HISTFILE=$HOME/Desktop/projects/own/dotfiles/.zsh_history
 export PATH=/opt/homebrew/bin:$PATH
 export DIRENV_LOG_FORMAT=
 export EDITOR=nvim
