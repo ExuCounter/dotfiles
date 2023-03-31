@@ -19,21 +19,14 @@ source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 source $ZSH/oh-my-zsh.sh
 
-export PATH=/opt/homebrew/bin:$PATH
+export PATH=/opt/homebrew/bin:~/.iex-history:$HOME/elixir_ls:$PATH
 export DIRENV_LOG_FORMAT=
 export EDITOR=nvim
 export VISUAL="$EDITOR"
-export CPPFLAGS="-I/opt/homebrew/opt/openjdk/include -I/opt/homebrew/opt/unixodbc/include"
-export LDFLAGS="-L/opt/homebrew/opt/unixodbc/lib"
-export ASDF_HASHICORP_OVERWRITE_ARCH="amd64"
-export KERL_CONFIGURE_OPTIONS="
-      --enable-darwin-64bit \
-      --with-odbc=/opt/homebrew/opt/unixodbc \
-      --without-javac \
-      "
-export KERL_BUILD_DOCS=yes
+export CPPFLAGS="-I/opt/homebrew/opt/openjdk/include"
 export KERL_INSTALL_HTMLDOCS=no
-export KERL_INSTALL_MANPAGES=no
+export KERL_BUILD_DOCS="yes"
+export ERL_AFLAGS="-kernel shell_history enabled"
 
 export LUA_PATH=~/nvim/lua/?.lua
 

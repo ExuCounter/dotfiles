@@ -16,7 +16,7 @@ return require("packer").startup(
         use "wbthomason/packer.nvim"
         -- UI
         use "lifepillar/vim-solarized8"
-        use {"catppuccin/nvim", as = "catppuccin"}
+        -- use {"catppuccin/nvim", as = "catppuccin"}
         -- FileTree
         use "kyazdani42/nvim-tree.lua"
         -- Commentary
@@ -40,6 +40,8 @@ return require("packer").startup(
         use "christoomey/vim-tmux-navigator"
         use "simeji/winresizer"
 
+        use "dstein64/vim-startuptime"
+
         -- Moves
         use "rhysd/accelerated-jk"
         use "phaazon/hop.nvim"
@@ -57,6 +59,7 @@ return require("packer").startup(
         use "hrsh7th/cmp-nvim-lsp-signature-help"
         use "hrsh7th/cmp-path"
         use "kristijanhusak/vim-dadbod-completion"
+        use "saadparwaiz1/cmp_luasnip"
         use "hrsh7th/cmp-calc"
 
         -- LSP
@@ -77,7 +80,7 @@ return require("packer").startup(
         use "tpope/vim-surround"
         use {"mg979/vim-visual-multi", branch = "master"}
         use "djoshea/vim-autoread"
-        use "karb94/neoscroll.nvim"
+        -- use "karb94/neoscroll.nvim"
         use "nacro90/numb.nvim"
         use "chentoast/marks.nvim"
         use "nvim-lua/plenary.nvim"
@@ -90,10 +93,10 @@ return require("packer").startup(
         use "max397574/better-escape.nvim"
         use "NvChad/nvim-colorizer.lua"
         use "L3MON4D3/LuaSnip"
-        use "saadparwaiz1/cmp_luasnip"
         use "kazhala/close-buffers.nvim"
         use "folke/lsp-trouble.nvim"
         use "folke/neodev.nvim"
+        use "gioele/vim-autoswap"
 
         if packer_bootstrap then
             require("packer").sync()

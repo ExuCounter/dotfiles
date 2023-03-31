@@ -10,7 +10,7 @@ opt.cmdheight = 1
 opt.updatetime = 200
 opt.shortmess = "c"
 opt.pumheight = 8
-opt.textwidth = 75
+opt.textwidth = 100
 
 opt.encoding = "utf-8"
 opt.mouse = "a"
@@ -44,14 +44,16 @@ opt.foldmethod = "indent" -- fold based on spaces
 opt.foldlevelstart = 10 -- open most folds by default
 opt.foldnestmax = 10 -- 10 nested fold max
 
+opt.whichwrap:append "<>[]hl"
+
 opt.tabstop = 2 -- read as
 opt.softtabstop = 2 -- insert as
 opt.expandtab = true -- tabs are spaces
 opt.smartindent = true
 opt.shiftwidth = 2
-opt.autoindent = true
 
 opt.numberwidth = 4
+opt.scroll = 10
 
 opt.fillchars = {
     vert = "│",
