@@ -114,13 +114,16 @@ lspconfig.tailwindcss.setup(
     }
 )
 
-lspconfig.elixirls.setup(
-    {
-        on_attach = M.on_attach,
-        flags = M.lsp_flags,
-        capabilities = M.capabilities
-    }
-)
+-- lspconfig.elixirls.setup(
+--     {
+--         elixirLS = {
+--             dialyzerEnabled = false,
+--             fetchDeps = false
+--         },
+--         on_attach = M.on_attach,
+--         capabilities = M.capabilities
+--     }
+-- )
 
 lspconfig.tsserver.setup(
     {
@@ -321,7 +324,7 @@ vim.cmd(
 hi DiagnosticHint guifg=#8b9898 guibg=NONE
 augroup FormatAutogroup
   autocmd!
-  autocmd BufWritePost * Format
+  autocmd BufWritePost * FormatWrite
 augroup END
 ]]
 )

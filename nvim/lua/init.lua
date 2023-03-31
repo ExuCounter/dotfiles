@@ -17,7 +17,7 @@ require("setup/hop")
 
 local numb = require("numb")
 local focus = require("focus")
-local neoscroll = require("neoscroll")
+-- local neoscroll = require("neoscroll")
 local colorizer = require("colorizer")
 
 colorizer.setup()
@@ -29,19 +29,45 @@ focus.setup(
         signcolumn = false
     }
 )
-neoscroll.setup(
-    {
-        hide_cursor = false,
-        mappings = {"<C-u>", "<C-d>", "zt", "zz", "zb"}
-    }
-)
+-- neoscroll.setup(
+--     {
+--         pre_hook = function()
+--             vim.opt.eventignore:append(
+--                 {
+--                     "WinScrolled",
+--                     "CursorMoved"
+--                 }
+--             )
+--         end,
+--         post_hook = function()
+--             vim.opt.eventignore:remove(
+--                 {
+--                     "WinScrolled",
+--                     "CursorMoved"
+--                 }
+--             )
+--         end,
+--         hide_cursor = false,
+--         mappings = {"zt", "zz", "zb"}
+--     }
+-- )
+
 require("indent_blankline").setup {
-    show_first_indent_level = false,
-    show_current_context = true,
-    show_current_context_start = true,
-    use_treesitter = true,
     char_list = {"¦", "│", "│", "│", "│", "│", "│", "│"},
-    show_foldtext = true
+    show_foldtext = true,
+    show_trailing_blankline_indent = false,
+    show_first_indent_level = false,
+    -- show_current_context = true,
+    show_current_context_start = true,
+    filetype_exclude = {
+        "help",
+        "terminal",
+        "lazy",
+        "lspinfo",
+        "fzf",
+        "mason",
+        ""
+    }
 }
 
 require("better_escape").setup {
@@ -61,3 +87,5 @@ require("close_buffers").setup(
     }
 )
 require("trouble").setup {}
+
+vim.opt.scroll = 12

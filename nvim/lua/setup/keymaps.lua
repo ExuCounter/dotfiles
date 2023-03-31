@@ -177,10 +177,10 @@ local defaults = {
         ["<Leader>gcb"] = ":Git checkout -b",
         ["<Leader>gbl"] = ":Git blame -et<CR>",
         -- Moves
-        ["C-u"] = ':lua require("neoscroll").scroll(-80, true, 100)<CR>',
-        ["C-d"] = ':lua require("neoscroll").scroll(80, true, 100)<CR>',
-        ["zt"] = ':lua require("neoscroll").zb(250)<CR>',
-        ["zb"] = ':lua require("neoscroll").zt(250)<CR>',
+        -- ["C-u"] = ':lua require("neoscroll").scroll(-80, true, 10)<CR>',
+        -- ["C-d"] = ':lua require("neoscroll").scroll(80, true, 100)<CR>',
+        -- ["zt"] = ':lua require("neoscroll").zb(250)<CR>',
+        -- ["zb"] = ':lua require("neoscroll").zt(250)<CR>',
         -- Disable Arrow keys in Normal mode
         ["<up>"] = "<nop>",
         ["<down>"] = "<nop>",
@@ -190,8 +190,8 @@ local defaults = {
         ["∆"] = ":m .+1<CR>==",
         ["˚"] = ":m .-2<CR>==",
         -- Accelerated_jk
-        ["j"] = "<Plug>(accelerated_jk_gj)",
-        ["k"] = "<Plug>(accelerated_jk_gk)",
+        -- ["j"] = "<Plug>(accelerated_jk_gj)",
+        -- ["k"] = "<Plug>(accelerated_jk_gk)",
         -- Diagnostics
         ["cn"] = "<cmd>lua vim.diagnostic.goto_next()<CR>",
         ["cN"] = "<cmd>lua vim.diagnostic.goto_prev()<CR>",
