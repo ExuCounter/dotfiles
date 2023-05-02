@@ -5,8 +5,13 @@ windows:
     layout: tiled
     panes:
       - vi
-  - name: dotfiles
+  - name: sql
     root: ~/Desktop/projects/own/learning_sql
     layout: tiled
     panes:
       - vi
+  - name: finstat
+    root: ~/Desktop/projects/own/finstat/backend/pt
+    layout: tiled
+    panes:
+      - iex -S mix

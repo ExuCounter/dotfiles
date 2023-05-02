@@ -4,21 +4,23 @@ if not present then
     return
 end
 
+local function ts_disable(lang, bufnr)
+    return vim.api.nvim_buf_line_count(bufnr) > 5000 and lang == "tsx"
+end
+
 treesitter.setup(
     {
-        ensure_installed = "all", -- one of "all", "maintained" (parsers with maintainers), or a list of languages
+        ensure_installed = {"graphql", "lua", "javascript", "typescript", "elixir", "html", "css", "heex", "eex", "tsx"}, -- one of "all", "maintained" (parsers with maintainers), or a list of languages
         highlight = {
             enable = true, -- false will disable the whole extensio
-            additional_vim_regex_highlighting = false,
+            disable = function(lang, bufnr)
+                return ts_disable(lang, bufnr)
+            end,
             use_languagetree = true
         },
-        ignore_install = {"phpdoc"},
-        auto_install = true,
+        indent = {enable = true},
         autotag = {
             enable = true
-        },
-        matchup = {
-            enable = false
         },
         context_commentstring = {
             enable = true,

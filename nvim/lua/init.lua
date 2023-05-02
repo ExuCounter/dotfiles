@@ -17,7 +17,6 @@ require("setup/hop")
 
 local numb = require("numb")
 local focus = require("focus")
-local neoscroll = require("neoscroll")
 local colorizer = require("colorizer")
 
 colorizer.setup()
@@ -29,19 +28,23 @@ focus.setup(
         signcolumn = false
     }
 )
-neoscroll.setup(
-    {
-        hide_cursor = false,
-        mappings = {"<C-u>", "<C-d>", "zt", "zz", "zb"}
-    }
-)
+
 require("indent_blankline").setup {
-    show_first_indent_level = false,
-    show_current_context = true,
-    show_current_context_start = true,
-    use_treesitter = true,
     char_list = {"¦", "│", "│", "│", "│", "│", "│", "│"},
-    show_foldtext = true
+    show_foldtext = true,
+    show_trailing_blankline_indent = false,
+    show_first_indent_level = false,
+    -- show_current_context = true,
+    show_current_context_start = true,
+    filetype_exclude = {
+        "help",
+        "terminal",
+        "lazy",
+        "lspinfo",
+        "fzf",
+        "mason",
+        ""
+    }
 }
 
 require("better_escape").setup {
@@ -61,3 +64,7 @@ require("close_buffers").setup(
     }
 )
 require("trouble").setup {}
+
+vim.api.nvim_command("Dotenv ~/Desktop/projects/own/dotfiles")
+
+vim.opt.scroll = 12
