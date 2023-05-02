@@ -7,7 +7,43 @@ end
 vim.g.loaded = 1
 vim.g.loaded_netrwPlugin = 1
 
+local function on_attach(bufnr)
+    local api = require("nvim-tree.api")
+
+    local function opts(desc)
+        return {desc = "nvim-tree: " .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true}
+    end
+
+    -- Default mappings not inserted as:
+    --  remove_keymaps = true
+    --  OR
+    --  view.mappings.custom_only = true
+
+    -- Mappings migrated from view.mappings.list
+    --
+    -- You will need to insert "your code goes here" for any mappings with a custom action_cb
+    vim.keymap.set("n", "<C-t>", api.tree.close, opts("Close"))
+    vim.keymap.set("n", "R", api.tree.reload, opts("Refresh"))
+    vim.keymap.set("n", "d", api.fs.remove, opts("Delete"))
+    vim.keymap.set("n", "D", api.fs.trash, opts("Trash"))
+    vim.keymap.set("n", "x", api.fs.cut, opts("Cut"))
+    vim.keymap.set("n", "c", api.fs.copy.node, opts("Copy"))
+    vim.keymap.set("n", "p", api.fs.paste, opts("Paste"))
+    vim.keymap.set("n", "v", api.node.open.vertical, opts("Open: Vertical Split"))
+    vim.keymap.set("n", "<Tab>", api.node.open.preview, opts("Open Preview"))
+    vim.keymap.set("n", "a", api.fs.create, opts("Create"))
+    vim.keymap.set("n", "i", api.node.show_info_popup, opts("Info"))
+    vim.keymap.set("n", "y", api.fs.copy.filename, opts("Copy Name"))
+    vim.keymap.set("n", "Y", api.fs.copy.relative_path, opts("Copy Relative Path"))
+    vim.keymap.set("n", "r", api.fs.rename, opts("Rename"))
+    vim.keymap.set("n", "-", api.tree.change_root_to_parent, opts("Up"))
+    vim.keymap.set("n", "=", api.tree.change_root_to_node, opts("CD"))
+    vim.keymap.set("n", "<CR>", api.node.open.edit, opts("Open"))
+    vim.keymap.set("n", "o", api.node.open.edit, opts("Open"))
+    vim.keymap.set("n", "<2-LeftMouse>", api.node.open.edit, opts("Open"))
+end
 -- setup with all defaults
+
 -- each of these are documented in `:help nvim-tree.OPTION_NAME`
 require("nvim-tree").setup(
     {
@@ -17,46 +53,21 @@ require("nvim-tree").setup(
         hijack_cursor = false,
         hijack_netrw = false,
         hijack_unnamed_buffer_when_opening = false,
-        ignore_buffer_on_setup = false,
-        open_on_setup = false,
-        open_on_setup_file = false,
         open_on_tab = false,
         sort_by = "name",
         update_cwd = false,
+        on_attach = on_attach,
         view = {
             adaptive_size = false,
             width = 42,
             side = "left",
-            hide_root_folder = true,
             preserve_window_proportions = false,
             number = true,
             relativenumber = false,
-            signcolumn = "no",
-            mappings = {
-                custom_only = true,
-                list = {
-                    {key = "<C-t>", action = "close"},
-                    {key = "t", action = "new %"},
-                    {key = "R", action = "refresh"},
-                    {key = "d", action = "remove"},
-                    {key = "D", action = "trash"},
-                    {key = "x", action = "cut"},
-                    {key = "c", action = "copy"},
-                    {key = "p", action = "paste"},
-                    {key = "v", action = "vsplit"},
-                    {key = "<Tab>", action = "preview"},
-                    {key = "a", action = "create"},
-                    {key = "i", action = "toggle_file_info"},
-                    {key = "y", action = "copy_name"},
-                    {key = "Y", action = "copy_path"},
-                    {key = "r", action = "rename"},
-                    {key = "-", action = "dir_up"},
-                    {key = "=", action = "cd"},
-                    {key = {"<CR>", "o", "<2-LeftMouse>"}, action = "edit"}
-                }
-            }
+            signcolumn = "no"
         },
         renderer = {
+            root_folder_label = false,
             indent_markers = {
                 enable = true,
                 icons = {
