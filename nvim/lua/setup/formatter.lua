@@ -1,58 +1,36 @@
 local present, formatter = pcall(require, "formatter")
+local formatter_filetypes = require "formatter.filetypes"
 
 if not present then
     return
 end
 
-local function map(tbl, f)
-    local t = {}
-    for k, v in pairs(tbl) do
-        t[k] = f(k, v)
-    end
-    return t
-end
+local prettierd_formatter = formatter_filetypes.javascript.prettierd
+local elixir_formatter = formatter_filetypes.elixir.mixformat
+local lua_formatter = formatter_filetypes.lua.luafmt
 
-local formatter_filetype =
-    map(
-    {
-        typescriptreact = {},
-        typescript = {},
-        javascript = {},
-        json = {},
-        css = {},
-        scss = {},
-        html = {},
-        less = {},
-        graphql = {},
-        gql = {},
-        elixir = {
-            exe = "mix",
-            args = {
-                "format",
-                "--"
-            }
-        },
-        lua = {
-            exe = "luafmt"
-        }
+local filetype = {
+    typescriptreact = {prettierd_formatter},
+    typescript = {prettierd_formatter},
+    javascript = {prettierd_formatter},
+    json = {prettierd_formatter},
+    css = {prettierd_formatter},
+    scss = {prettierd_formatter},
+    html = {prettierd_formatter},
+    less = {prettierd_formatter},
+    graphql = {prettierd_formatter},
+    gql = {prettierd_formatter},
+    elixir = {
+        elixir_formatter
     },
-    function(k, v)
-        return {
-            function()
-                local configuration = {
-                    exe = v["exe"] or "prettierd",
-                    args = v["args"] or {vim.api.nvim_buf_get_name(0)},
-                    stdin = true
-                }
-                return configuration
-            end
-        }
-    end
-)
+    lua = {
+        lua_formatter
+    }
+}
 
 formatter.setup(
     {
         logging = false,
-        filetype = formatter_filetype
+        filetype = filetype
     }
 )

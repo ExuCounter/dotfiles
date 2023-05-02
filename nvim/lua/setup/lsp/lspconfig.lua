@@ -114,13 +114,16 @@ lspconfig.tailwindcss.setup(
     }
 )
 
-lspconfig.elixirls.setup(
-    {
-        on_attach = M.on_attach,
-        flags = M.lsp_flags,
-        capabilities = M.capabilities
-    }
-)
+-- lspconfig.elixirls.setup(
+--     {
+--         elixirLS = {
+--             dialyzerEnabled = false,
+--             fetchDeps = false
+--         },
+--         on_attach = M.on_attach,
+--         capabilities = M.capabilities
+--     }
+-- )
 
 lspconfig.tsserver.setup(
     {
@@ -219,7 +222,7 @@ local function diffConflict(view)
             true
         )
 
-        vim.cmd("enew")
+        vim.cmd("e diff-left.txt")
 
         local function setLinesToCurrentBuffer(lines)
             vim.api.nvim_buf_set_lines(currentBufferNumber, 0, 0, true, lines)
@@ -233,7 +236,9 @@ local function diffConflict(view)
             setLinesToCurrentBuffer(parentLines)
         end
 
-        vim.cmd("vnew")
+        vim.cmd("w")
+
+        vim.cmd("vnew diff-right.txt")
 
         if view == "head-their" then
             setLinesToCurrentBuffer(theirLines)
@@ -242,6 +247,8 @@ local function diffConflict(view)
         elseif view == "parent-their" then
             setLinesToCurrentBuffer(parentLines)
         end
+
+        vim.cmd("w")
 
         vim.cmd("windo diffthis")
     else
@@ -321,7 +328,7 @@ vim.cmd(
 hi DiagnosticHint guifg=#8b9898 guibg=NONE
 augroup FormatAutogroup
   autocmd!
-  autocmd BufWritePost * Format
+  autocmd BufWritePost * FormatWrite
 augroup END
 ]]
 )

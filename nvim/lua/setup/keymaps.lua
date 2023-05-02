@@ -138,7 +138,7 @@ local defaults = {
         ["F"] = "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.BEFORE_CURSOR, current_line_only = true })<cr>",
         ["t"] = "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.AFTER_CURSOR, current_line_only = true })<cr>",
         ["T"] = "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.BEFORE_CURSOR, current_line_only = true })<cr>",
-        ["S"] = "<cmd>lua require'hop'.hint_char2()<cr>",
+        -- ["S"] = "<cmd>lua require'hop'.hint_char2()<cr>",
         ["s"] = "<cmd>lua require'hop'.hint_char1()<cr>",
         -- DB
         ["<leader>db"] = ":DBUIToggle<cr>",
@@ -176,11 +176,6 @@ local defaults = {
         ["<Leader>gri"] = ":Git rebase --interactive HEAD~",
         ["<Leader>gcb"] = ":Git checkout -b",
         ["<Leader>gbl"] = ":Git blame -et<CR>",
-        -- Moves
-        ["C-u"] = ':lua require("neoscroll").scroll(-80, true, 100)<CR>',
-        ["C-d"] = ':lua require("neoscroll").scroll(80, true, 100)<CR>',
-        ["zt"] = ':lua require("neoscroll").zb(250)<CR>',
-        ["zb"] = ':lua require("neoscroll").zt(250)<CR>',
         -- Disable Arrow keys in Normal mode
         ["<up>"] = "<nop>",
         ["<down>"] = "<nop>",
@@ -190,8 +185,8 @@ local defaults = {
         ["∆"] = ":m .+1<CR>==",
         ["˚"] = ":m .-2<CR>==",
         -- Accelerated_jk
-        ["j"] = "<Plug>(accelerated_jk_gj)",
-        ["k"] = "<Plug>(accelerated_jk_gk)",
+        -- ["j"] = "<Plug>(accelerated_jk_gj)",
+        -- ["k"] = "<Plug>(accelerated_jk_gk)",
         -- Diagnostics
         ["cn"] = "<cmd>lua vim.diagnostic.goto_next()<CR>",
         ["cN"] = "<cmd>lua vim.diagnostic.goto_prev()<CR>",

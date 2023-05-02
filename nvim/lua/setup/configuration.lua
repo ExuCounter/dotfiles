@@ -10,7 +10,7 @@ opt.cmdheight = 1
 opt.updatetime = 200
 opt.shortmess = "c"
 opt.pumheight = 8
-opt.textwidth = 75
+opt.textwidth = 100
 
 opt.encoding = "utf-8"
 opt.mouse = "a"
@@ -44,14 +44,16 @@ opt.foldmethod = "indent" -- fold based on spaces
 opt.foldlevelstart = 10 -- open most folds by default
 opt.foldnestmax = 10 -- 10 nested fold max
 
+opt.whichwrap:append "<>[]hl"
+
 opt.tabstop = 2 -- read as
 opt.softtabstop = 2 -- insert as
 opt.expandtab = true -- tabs are spaces
 opt.smartindent = true
 opt.shiftwidth = 2
-opt.autoindent = true
 
 opt.numberwidth = 4
+opt.scroll = 10
 
 opt.fillchars = {
     vert = "│",
@@ -495,25 +497,6 @@ vim.g.matchup_matchparen_offscreen = {}
 
 vim.g.db_ui_win_position = "right"
 vim.g.db_ui_save_location = "~/.config/db_ui/queries"
-
-vim.g.dbs = {
-    dev = {name = "prosapient_dev", url = "postgres://postgres:postgres@localhost:5432/prosapient_dev"},
-    byoe = {name = "prosapient_dev_byoe", url = "postgres://postgres:postgres@localhost:5432/prosapient_dev_byoe"},
-    learning_sql = {name = "learning_sql", url = "postgres://postgres:postgres@localhost:5432/learning_sql"},
-    aggregator = {
-        name = "prosapient_dev_aggregator",
-        url = "postgres://postgres:postgres@localhost:5432/prosapient_dev_aggregator"
-    },
-    lek = {name = "prosapient_dev_lek", url = "postgres://postgres:postgres@localhost:5432/prosapient_dev_lek"},
-    mckinsey = {
-        name = "prosapient_dev_mckinsey",
-        url = "postgres://postgres:postgres@localhost:5432/prosapient_dev_mckinsey"
-    },
-    outreach = {
-        name = "prosapient_dev_outreach",
-        url = "postgres://postgres:postgres@localhost:5432/prosapient_dev_outreach"
-    }
-}
 
 for _, keymap in pairs(
     {
