@@ -17,15 +17,14 @@ treesitter.setup(
                 return ts_disable(lang, bufnr)
             end,
             use_languagetree = true
+        },
+        indent = {enable = true},
+        autotag = {
+            enable = true
+        },
+        context_commentstring = {
+            enable = true,
+            enable_autocmd = false
         }
-        -- indent = {enable = true},
-        -- ignore_install = {"phpdoc"},
-        -- autotag = {
-        --     enable = true
-        -- },
-        -- context_commentstring = {
-        --     enable = true,
-        --     enable_autocmd = false
-        -- }
     }
 )

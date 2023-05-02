@@ -17,7 +17,6 @@ require("setup/hop")
 
 local numb = require("numb")
 local focus = require("focus")
--- local neoscroll = require("neoscroll")
 local colorizer = require("colorizer")
 
 colorizer.setup()
@@ -29,28 +28,6 @@ focus.setup(
         signcolumn = false
     }
 )
--- neoscroll.setup(
---     {
---         pre_hook = function()
---             vim.opt.eventignore:append(
---                 {
---                     "WinScrolled",
---                     "CursorMoved"
---                 }
---             )
---         end,
---         post_hook = function()
---             vim.opt.eventignore:remove(
---                 {
---                     "WinScrolled",
---                     "CursorMoved"
---                 }
---             )
---         end,
---         hide_cursor = false,
---         mappings = {"zt", "zz", "zb"}
---     }
--- )
 
 require("indent_blankline").setup {
     char_list = {"¦", "│", "│", "│", "│", "│", "│", "│"},
@@ -87,5 +64,7 @@ require("close_buffers").setup(
     }
 )
 require("trouble").setup {}
+
+vim.api.nvim_command("Dotenv ~/Desktop/projects/own/dotfiles")
 
 vim.opt.scroll = 12
