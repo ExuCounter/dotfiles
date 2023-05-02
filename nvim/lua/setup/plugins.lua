@@ -1,105 +1,89 @@
-local ensure_packer = function()
-    local fn = vim.fn
-    local install_path = fn.stdpath("data") .. "/site/pack/packer/start/packer.nvim"
-    if fn.empty(fn.glob(install_path)) > 0 then
-        fn.system({"git", "clone", "--depth", "1", "https://github.com/wbthomason/packer.nvim", install_path})
-        vim.cmd [[packadd packer.nvim]]
-        return true
-    end
-    return false
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not vim.loop.fs_stat(lazypath) then
+    vim.fn.system(
+        {
+            "git",
+            "clone",
+            "--filter=blob:none",
+            "https://github.com/folke/lazy.nvim.git",
+            "--branch=stable", -- latest stable release
+            lazypath
+        }
+    )
 end
 
-local packer_bootstrap = ensure_packer()
+vim.opt.rtp:prepend(lazypath)
 
-return require("packer").startup(
-    function(use)
-        use "wbthomason/packer.nvim"
+require("lazy").setup(
+    {
+        "wbthomason/packer.nvim",
         -- UI
-        use "lifepillar/vim-solarized8"
-        -- use {"catppuccin/nvim", as = "catppuccin"}
-        -- FileTree
-        use "kyazdani42/nvim-tree.lua"
+        "lifepillar/vim-solarized8",
+        "kyazdani42/nvim-tree.lua",
         -- Commentary
-        use "tpope/vim-commentary"
-
+        "tpope/vim-commentary",
         -- Git
-        use "tpope/vim-fugitive"
-        use "brooth/far.vim"
-        use "itchyny/vim-gitbranch"
-        use "lewis6991/gitsigns.nvim"
-        use "rhysd/conflict-marker.vim"
-
+        "tpope/vim-fugitive",
+        "brooth/far.vim",
+        "itchyny/vim-gitbranch",
+        "lewis6991/gitsigns.nvim",
+        "rhysd/conflict-marker.vim",
         -- DB
-        use "tpope/vim-dadbod"
-        use "kristijanhusak/vim-dadbod-ui"
-
+        "tpope/vim-dadbod",
+        "kristijanhusak/vim-dadbod-ui",
         -- Fzf
-        use {"ibhagwan/fzf-lua", branch = "main"}
-
+        {"ibhagwan/fzf-lua", branch = "main"},
         -- Windows
-        use "christoomey/vim-tmux-navigator"
-        use "simeji/winresizer"
-
-        use "dstein64/vim-startuptime"
-
+        "christoomey/vim-tmux-navigator",
+        "simeji/winresizer",
+        "dstein64/vim-startuptime",
         -- Moves
-        use "rhysd/accelerated-jk"
-        use "phaazon/hop.nvim"
-
+        "rhysd/accelerated-jk",
+        "phaazon/hop.nvim",
         -- Syntax
-        use {"nvim-treesitter/nvim-treesitter", run = ":TSUpdate"}
-        use {"JoosepAlviste/nvim-ts-context-commentstring", requires = {"nvim-treesitter/nvim-treesitter"}}
-        use {"windwp/nvim-ts-autotag", requires = {"nvim-treesitter/nvim-treesitter"}}
-
+        {"nvim-treesitter/nvim-treesitter"},
+        {"JoosepAlviste/nvim-ts-context-commentstring", dependencies = {"nvim-treesitter/nvim-treesitter"}},
+        {"windwp/nvim-ts-autotag", dependencies = {"nvim-treesitter/nvim-treesitter"}},
         -- CMP
-        use "hrsh7th/cmp-nvim-lsp"
-        use "hrsh7th/cmp-buffer"
-        use {"hrsh7th/cmp-cmdline", commit = "d2dfa338520c99c1f2dc6af9388de081a6e63296"}
-        use "hrsh7th/nvim-cmp"
-        use "hrsh7th/cmp-nvim-lsp-signature-help"
-        use "hrsh7th/cmp-path"
-        use "kristijanhusak/vim-dadbod-completion"
-        use "saadparwaiz1/cmp_luasnip"
-        use "hrsh7th/cmp-calc"
-
+        "hrsh7th/cmp-nvim-lsp",
+        "hrsh7th/cmp-buffer",
+        {"hrsh7th/cmp-cmdline", commit = "d2dfa338520c99c1f2dc6af9388de081a6e63296"},
+        "hrsh7th/nvim-cmp",
+        "hrsh7th/cmp-nvim-lsp-signature-help",
+        "hrsh7th/cmp-path",
+        "kristijanhusak/vim-dadbod-completion",
+        "saadparwaiz1/cmp_luasnip",
+        "hrsh7th/cmp-calc",
         -- LSP
-        use "onsails/lspkind.nvim"
-        use "neovim/nvim-lspconfig"
-
+        "onsails/lspkind.nvim",
+        "neovim/nvim-lspconfig",
         -- Formatting
-        use "mhartington/formatter.nvim"
-
+        "mhartington/formatter.nvim",
         -- Mason
-        use "williamboman/mason.nvim"
-        use "williamboman/mason-lspconfig.nvim"
-
+        "williamboman/mason.nvim",
+        "williamboman/mason-lspconfig.nvim",
         -- Icons
-        use "kyazdani42/nvim-web-devicons"
-
+        "kyazdani42/nvim-web-devicons",
         -- Another
-        use "tpope/vim-surround"
-        use {"mg979/vim-visual-multi", branch = "master"}
-        use "djoshea/vim-autoread"
-        -- use "karb94/neoscroll.nvim"
-        use "nacro90/numb.nvim"
-        use "chentoast/marks.nvim"
-        use "nvim-lua/plenary.nvim"
-        use "tpope/vim-dotenv"
-        use "akinsho/bufferline.nvim"
-        use "lukas-reineke/indent-blankline.nvim"
-        use "beauwilliams/focus.nvim"
-        use "nvim-lualine/lualine.nvim"
-        use "Raimondi/delimitMate"
-        use "max397574/better-escape.nvim"
-        use "NvChad/nvim-colorizer.lua"
-        use "L3MON4D3/LuaSnip"
-        use "kazhala/close-buffers.nvim"
-        use "folke/lsp-trouble.nvim"
-        use "folke/neodev.nvim"
-        use "gioele/vim-autoswap"
-
-        if packer_bootstrap then
-            require("packer").sync()
-        end
-    end
+        "tpope/vim-surround",
+        {"mg979/vim-visual-multi", branch = "master"},
+        "djoshea/vim-autoread",
+        "karb94/neoscroll.nvim",
+        "nacro90/numb.nvim",
+        "chentoast/marks.nvim",
+        "nvim-lua/plenary.nvim",
+        "tpope/vim-dotenv",
+        "akinsho/bufferline.nvim",
+        "lukas-reineke/indent-blankline.nvim",
+        "beauwilliams/focus.nvim",
+        "nvim-lualine/lualine.nvim",
+        "Raimondi/delimitMate",
+        "max397574/better-escape.nvim",
+        "NvChad/nvim-colorizer.lua",
+        "L3MON4D3/LuaSnip",
+        "kazhala/close-buffers.nvim",
+        "folke/lsp-trouble.nvim",
+        "folke/neodev.nvim",
+        "gioele/vim-autoswap"
+    }
 )

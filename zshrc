@@ -19,7 +19,7 @@ source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 source $ZSH/oh-my-zsh.sh
 
-export PATH=/opt/homebrew/bin:~/.iex-history:$HOME/elixir_ls:$PATH
+export PATH=/opt/homebrew/bin:$HOME/.iex-history:$HOME/elixir_ls:$PATH
 export DIRENV_LOG_FORMAT=
 export EDITOR=nvim
 export VISUAL="$EDITOR"
@@ -29,7 +29,6 @@ export KERL_BUILD_DOCS="yes"
 export ERL_AFLAGS="-kernel shell_history enabled"
 
 export LUA_PATH=~/nvim/lua/?.lua
-
 
 eval "$(direnv hook zsh)"
 source $HOME/.zshenv

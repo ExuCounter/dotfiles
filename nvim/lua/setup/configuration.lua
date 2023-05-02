@@ -498,25 +498,6 @@ vim.g.matchup_matchparen_offscreen = {}
 vim.g.db_ui_win_position = "right"
 vim.g.db_ui_save_location = "~/.config/db_ui/queries"
 
-vim.g.dbs = {
-    dev = {name = "prosapient_dev", url = "postgres://postgres:postgres@localhost:5432/prosapient_dev"},
-    byoe = {name = "prosapient_dev_byoe", url = "postgres://postgres:postgres@localhost:5432/prosapient_dev_byoe"},
-    learning_sql = {name = "learning_sql", url = "postgres://postgres:postgres@localhost:5432/learning_sql"},
-    aggregator = {
-        name = "prosapient_dev_aggregator",
-        url = "postgres://postgres:postgres@localhost:5432/prosapient_dev_aggregator"
-    },
-    lek = {name = "prosapient_dev_lek", url = "postgres://postgres:postgres@localhost:5432/prosapient_dev_lek"},
-    mckinsey = {
-        name = "prosapient_dev_mckinsey",
-        url = "postgres://postgres:postgres@localhost:5432/prosapient_dev_mckinsey"
-    },
-    outreach = {
-        name = "prosapient_dev_outreach",
-        url = "postgres://postgres:postgres@localhost:5432/prosapient_dev_outreach"
-    }
-}
-
 for _, keymap in pairs(
     {
         "zo",

@@ -222,7 +222,7 @@ local function diffConflict(view)
             true
         )
 
-        vim.cmd("enew")
+        vim.cmd("e diff-left.txt")
 
         local function setLinesToCurrentBuffer(lines)
             vim.api.nvim_buf_set_lines(currentBufferNumber, 0, 0, true, lines)
@@ -236,7 +236,9 @@ local function diffConflict(view)
             setLinesToCurrentBuffer(parentLines)
         end
 
-        vim.cmd("vnew")
+        vim.cmd("w")
+
+        vim.cmd("vnew diff-right.txt")
 
         if view == "head-their" then
             setLinesToCurrentBuffer(theirLines)
@@ -245,6 +247,8 @@ local function diffConflict(view)
         elseif view == "parent-their" then
             setLinesToCurrentBuffer(parentLines)
         end
+
+        vim.cmd("w")
 
         vim.cmd("windo diffthis")
     else
