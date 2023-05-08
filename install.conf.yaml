@@ -38,6 +38,8 @@
     ~/.config/nvim/lua/setup/formatter.lua: nvim/lua/setup/formatter.lua
     ~/.config/nvim/lua/setup/hop.lua: nvim/lua/setup/hop.lua
     ~/.config/nvim/lua/snippets/javascript.lua: nvim/lua/snippets/javascript.lua
+    ~/.config/nvim/lua/snippets/typescript.lua: nvim/lua/snippets/typescript.lua
+    ~/.config/nvim/lua/snippets/react.lua: nvim/lua/snippets/react.lua
     ~/.config/nvim/init.lua: nvim/lua/init.lua
 - shell:
   - [git submodule update --init --recursive, Installing submodules]
