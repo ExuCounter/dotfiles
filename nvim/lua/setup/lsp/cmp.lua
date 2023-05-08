@@ -1,19 +1,27 @@
 local cmp = require("cmp")
 local compare = require("cmp.config.compare")
+local luasnip = require("luasnip")
 
--- require("luasnip.loaders.from_vscode").lazy_load()
+require("luasnip.loaders.from_lua").lazy_load({paths = {"~/.config/nvim/lua/snippets"}})
+require("luasnip").filetype_extend("typescript", {"javascript"})
+require("luasnip").filetype_extend("typescriptreact", {"javascript", "typescript"})
+
+local has_words_before = function()
+    unpack = unpack or table.unpack
+    local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+    return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
+end
 
 local config = {
     enabled = true,
     buffer = false,
     sorting = {
-        priority_weight = 2,
         comparators = {
+            compare.order,
             compare.locality,
             compare.recently_used,
             compare.score, -- based on :  score = score + ((#sources - (source_index - 1)) * sorting.priority_weight)
-            compare.offset,
-            compare.order
+            compare.offset
         }
     },
     window = {
@@ -75,9 +83,8 @@ local config = {
         {
             {name = "cmp_tabnine", keyword_length = 3, priority = 11},
             {name = "nvim_lsp", keyword_length = 0, priority = 14},
+            {name = "luasnip", keyword_length = 1, priority = 999},
             {name = "nvim_lsp_signature_help", keyword_length = 1},
-            -- {name = "luasnip", keyword_length = 1, priority = 13},
-            -- {name = "ultisnips", keyword_length = 1, priority = 10},
             {name = "buffer", keyword_length = 2, priority = 12},
             {name = "calc", keyword_length = 2},
             {
