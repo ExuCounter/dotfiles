@@ -81,10 +81,9 @@ local config = {
     ),
     sources = cmp.config.sources(
         {
-            {name = "cmp_tabnine", keyword_length = 3, priority = 11},
-            {name = "nvim_lsp", keyword_length = 0, priority = 14},
+            {name = "nvim_lsp", keyword_length = 0, priority = 16},
             {name = "luasnip", keyword_length = 1, priority = 999},
-            {name = "nvim_lsp_signature_help", keyword_length = 1},
+            -- {name = "nvim_lsp_signature_help", keyword_length = 1},
             {name = "buffer", keyword_length = 2, priority = 12},
             {name = "calc", keyword_length = 2},
             {
@@ -142,7 +141,6 @@ local source_mapping = {
     buffer = "[Buffer]",
     nvim_lsp = "[LSP]",
     nvim_lua = "[Lua]",
-    -- cmp_tabnine = "[TN]",
     path = "[Path]",
     luasnip = "[SN]",
     ["vim-dadbod-completion"] = "[SQL]"

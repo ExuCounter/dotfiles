@@ -19,7 +19,7 @@ source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 source $ZSH/oh-my-zsh.sh
 
-export PATH=/opt/homebrew/bin:$HOME/.iex-history:$HOME/elixir_ls:$PATH
+export PATH=/opt/homebrew/bin:$HOME/.iex-history:$HOME/elixir_ls:$HOME/.config:$PATH
 export DIRENV_LOG_FORMAT=
 export EDITOR=nvim
 export VISUAL="$EDITOR"
