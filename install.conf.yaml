@@ -18,7 +18,9 @@
     ~/.config/kitty/kitty.conf: kitty.conf
     ~/.teamocil/prosapient.yml: teamocil/prosapient.yml
     ~/.teamocil/learning.yml: teamocil/learning.yml
+    ~/.teamocil/dotfiles.yml: teamocil/dotfiles.yml
     ~/scripts/functions.sh: scripts/functions.sh
+    ~/.config/run_tmux_sessions.sh: run_tmux_sessions.sh
     # vim
     ~/.config/nvim/lua/setup/treesitter.lua: nvim/lua/setup/treesitter.lua
     ~/.config/nvim/lua/setup/nvimtree.lua: nvim/lua/setup/nvimtree.lua

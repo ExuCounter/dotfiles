@@ -1,17 +1,19 @@
 name: learning
 windows:
-  - name: dotfiles
-    root: ~/Desktop/projects/own/dotfiles
-    layout: tiled
-    panes:
-      - vi
   - name: sql
     root: ~/Desktop/projects/own/learning_sql
     layout: tiled
     panes:
       - vi
-  - name: finstat
+  - name: finstat-terminal
     root: ~/Desktop/projects/own/finstat/backend/pt
     layout: tiled
     panes:
       - iex -S mix
+  - name: finstat-terminal
+    root: ~/Desktop/projects/own/finstat/backend/pt
+    layout: tiled
+    panes:
+      - commands:
+        - vi
+        focus: true

@@ -1,15 +1,5 @@
 name: prosapient
 windows:
-  - name: build
-    root: ~/Desktop/projects/prosapient/build/
-    layout: tiled
-    panes:
-     - vi
-  - name: dotfiles
-    root: ~/Desktop/projects/own/dotfiles
-    layout: tiled
-    panes:
-      - vi
   - name: styleguide
     root: ~/Desktop/projects/prosapient/styleguide/
     layout: tiled
@@ -19,7 +9,6 @@ windows:
     root: ~/Desktop/projects/prosapient/platform/
     layout: tiled
     panes:
-      - docker-compose up postgres minio
       - OBAN_DISABLED=0 iex -S mix phx.server
       - cd frontend && pnpm start
       - vi
@@ -30,10 +19,3 @@ windows:
       - commands:
          - vi
         focus: true
-  # - name: tasks-board 
-  #   root: ~/Desktop/projects/own/tasks-board/
-  #   layout: tiled
-  #   panes:
-  #     - commands:
-  #        - vi
-  #       focus: true

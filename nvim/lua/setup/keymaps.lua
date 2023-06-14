@@ -114,6 +114,7 @@ local defaults = {
         ["<leader>h"] = ":bp <cr>",
         -- FZF
         ["<C-f>"] = ":FzfLua files<CR>",
+        ["<C-c>"] = ":FzfLua grep_cword<CR>",
         -- ["<C-g>"] = ":FzfLua git_files<CR>",
         ["<C-q>"] = ":FzfLua command_history<CR>",
         ["<C-p>"] = ":FzfLua grep_project<CR>",
