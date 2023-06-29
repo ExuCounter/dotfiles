@@ -56,19 +56,18 @@ opt.numberwidth = 4
 opt.scroll = 10
 
 opt.fillchars = {
-    vert = "│",
-    fold = "⠀",
-    eob = " ", -- suppress ~ at EndOfBuffer
-    msgsep = " ",
-    foldopen = "▾",
-    foldsep = " ",
-    foldclose = "▸"
+  vert = "│",
+  fold = "⠀",
+  eob = " ", -- suppress ~ at EndOfBuffer
+  msgsep = " ",
+  foldopen = "▾",
+  foldsep = " ",
+  foldclose = "▸",
 }
 
 opt.termguicolors = true
 
-vim.cmd(
-    [[
+vim.cmd [[
 filetype plugin on
 syntax on
 
@@ -119,7 +118,6 @@ function! s:GotoFirstFloat() abort
 endfunction
 noremap <c-w><space> :<c-u>call <sid>GotoFirstFloat()<cr>
 ]]
-)
 
 vim.g.mapleader = " "
 
@@ -138,24 +136,22 @@ vim.g.matchup_matchparen_offscreen = {}
 vim.g.db_ui_win_position = "right"
 vim.g.db_ui_save_location = "~/.config/db_ui/queries"
 
-for _, keymap in pairs(
-    {
-        "zo",
-        "zO",
-        "zc",
-        "zC",
-        "za",
-        "zA",
-        "zv",
-        "zx",
-        "zX",
-        "zm",
-        "zM",
-        "zr",
-        "zR"
-    }
-) do
-    vim.api.nvim_set_keymap("n", keymap, keymap .. "<CMD>IndentBlanklineRefresh<CR>", {noremap = true, silent = true})
+for _, keymap in pairs {
+  "zo",
+  "zO",
+  "zc",
+  "zC",
+  "za",
+  "zA",
+  "zv",
+  "zx",
+  "zX",
+  "zm",
+  "zM",
+  "zr",
+  "zR",
+} do
+  vim.api.nvim_set_keymap("n", keymap, keymap .. "<CMD>IndentBlanklineRefresh<CR>", { noremap = true, silent = true })
 end
 
 vim.g.delimitMate_matchpairs = "(:),[:],{:}"
