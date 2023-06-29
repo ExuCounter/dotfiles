@@ -6,6 +6,6 @@ email = volodymyr.potiichuk@prosapient.com
 
 [merge]
 	tool = vimdiff
-	conflictstyle = diff3
+  conflictstyle = diff3
 [mergetool]
 	prompt = false

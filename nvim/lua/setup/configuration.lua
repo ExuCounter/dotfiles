@@ -165,3 +165,5 @@ vim.g.delimitMate_expand_cr = 1
 
 vim.g["far#source"] = "agnvim"
 vim.g["far#auto_preview"] = 0
+
+vim.g["slime_target"] = "tmux"
