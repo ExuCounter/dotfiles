@@ -1,4 +1,4 @@
-local ls = require("luasnip")
+local ls = require "luasnip"
 local s = ls.snippet
 local sn = ls.snippet_node
 local isn = ls.indent_snippet_node
@@ -13,9 +13,15 @@ local fmt = require("luasnip.extras.fmt").fmt
 local snippets = {}
 local autosnippets = {}
 
-local type_declaration = s("t", fmt([[
+local type_declaration = s(
+  "t",
+  fmt(
+    [[
 type {} = {}
-]], {i(1, "Name"), i(2, "number")}))
+]],
+    { i(1, "Name"), i(2, "number") }
+  )
+)
 
 table.insert(snippets, type_declaration)
 
