@@ -7,7 +7,7 @@ end
 
 local prettierd_formatter = formatter_filetypes.javascript.prettierd
 local elixir_formatter = formatter_filetypes.elixir.mixformat
-local lua_formatter = formatter_filetypes.lua.luafmt
+local lua_formatter = formatter_filetypes.lua.stylua
 
 local filetype = {
     typescriptreact = {prettierd_formatter},

@@ -114,7 +114,7 @@ local defaults = {
         ["<leader>h"] = ":bp <cr>",
         -- FZF
         ["<C-f>"] = ":FzfLua files<CR>",
-        ["<C-c>"] = ":FzfLua grep_cword<CR>",
+        ["<C-C>"] = ":FzfLua grep_cword<CR>",
         -- ["<C-g>"] = ":FzfLua git_files<CR>",
         ["<C-q>"] = ":FzfLua command_history<CR>",
         ["<C-p>"] = ":FzfLua grep_project<CR>",
@@ -150,6 +150,7 @@ local defaults = {
             -- Unload the lua namespace so that the next time require('config.X') is called
             -- it will reload the file
             require("setup/util").unload_lua_namespace("setup")
+            require("setup/util").unload_lua_namespace("custom-plugins/diff-conflict-parts/lua")
             -- Make sure all open buffers are saved
             vim.cmd("silent wa")
             -- Execute our vimrc lua file again to add back our maps

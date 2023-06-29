@@ -84,6 +84,11 @@ require("lazy").setup(
         "kazhala/close-buffers.nvim",
         "folke/lsp-trouble.nvim",
         "folke/neodev.nvim",
-        "gioele/vim-autoswap"
+        "gioele/vim-autoswap",
+        {"ms-jpq/coq_nvim", branch = "coq"},
+        "jpalardy/vim-slime"
+        -- {dir = "../custom-plugins/diff-conflict-parts/lua/init.lua"}
     }
 )
+
+vim.opt.rtp:prepend("~/.config/nvim/lua/plugins/diff-conflict-parts")
