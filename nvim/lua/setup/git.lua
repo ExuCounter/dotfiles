@@ -1,7 +1,7 @@
 local present, gitsigns = pcall(require, "gitsigns")
 
 if not present then
-    return
+  return
 end
 
 -- Disable the default highlight group
@@ -14,79 +14,74 @@ vim.g.conflict_marker_separator = "^=======$"
 vim.g.conflict_marker_end = "^>>>>>>> .*$"
 
 gitsigns.setup {
-    signs = {
-        add = {
-            hl = "GitSignsAdd",
-            text = "▎",
-            numhl = "GitSignsAddNr",
-            linehl = "GitSignsAddLn"
-        },
-        change = {
-            hl = "GitSignsChange",
-            text = "▎",
-            numhl = "GitSignsChangeNr",
-            linehl = "GitSignsChangeLn"
-        },
-        delete = {
-            hl = "GitSignsDelete",
-            text = "契",
-            numhl = "GitSignsDeleteNr",
-            linehl = "GitSignsDeleteLn"
-        },
-        topdelete = {
-            hl = "GitSignsDelete",
-            text = "契",
-            numhl = "GitSignsDeleteNr",
-            linehl = "GitSignsDeleteLn"
-        },
-        changedelete = {
-            hl = "GitSignsChange",
-            text = "▎",
-            numhl = "GitSignsChangeNr",
-            linehl = "GitSignsChangeLn"
-        }
+  signs = {
+    add = {
+      hl = "GitSignsAdd",
+      text = "▎",
+      numhl = "GitSignsAddNr",
+      linehl = "GitSignsAddLn",
     },
-    current_line_blame = true,
-    sign_priority = 6,
-    on_attach = function(bufnr)
-        local function map(mode, lhs, rhs, opts)
-            opts = vim.tbl_extend("force", {noremap = true, silent = true}, opts or {})
-            vim.api.nvim_buf_set_keymap(bufnr, mode, lhs, rhs, opts)
-        end
-
-        -- Navigation
-        map("n", "]c", "&diff ? ']c' : '<cmd>Gitsigns next_hunk<CR>'", {expr = true})
-        map("n", "[c", "&diff ? '[c' : '<cmd>Gitsigns prev_hunk<CR>'", {expr = true})
-
-        -- Actions
-        map("n", "<leader>rh", ":Gitsigns reset_hunk<CR>")
-        map("v", "<leader>rh", ":Gitsigns reset_hunk<CR>")
-        map("n", "<leader>ph", "<cmd>Gitsigns preview_hunk<CR>")
-        map("n", "<leader>bl", '<cmd>lua require"gitsigns".blame_line{full=true}<CR>')
-        map("n", "<leader>tb", "<cmd>Gitsigns toggle_current_line_blame<CR>")
-        map("n", "<leader>dt", "<cmd>Gitsigns diffthis<CR>")
-        -- map("n", "<leader>ggd", '<cmd>lua require"gitsigns".diffthis("~")<CR>')
-        -- map("n", "<leader>td", "<cmd>Gitsigns toggle_deleted<CR>")
-
-        -- Text object
-        map("o", "ih", ":<C-U>Gitsigns select_hunk<CR>")
-        map("x", "ih", ":<C-U>Gitsigns select_hunk<CR>")
+    change = {
+      hl = "GitSignsChange",
+      text = "▎",
+      numhl = "GitSignsChangeNr",
+      linehl = "GitSignsChangeLn",
+    },
+    delete = {
+      hl = "GitSignsDelete",
+      text = "契",
+      numhl = "GitSignsDeleteNr",
+      linehl = "GitSignsDeleteLn",
+    },
+    topdelete = {
+      hl = "GitSignsDelete",
+      text = "契",
+      numhl = "GitSignsDeleteNr",
+      linehl = "GitSignsDeleteLn",
+    },
+    changedelete = {
+      hl = "GitSignsChange",
+      text = "▎",
+      numhl = "GitSignsChangeNr",
+      linehl = "GitSignsChangeLn",
+    },
+  },
+  current_line_blame = true,
+  sign_priority = 6,
+  on_attach = function(bufnr)
+    local function map(mode, lhs, rhs, opts)
+      opts = vim.tbl_extend("force", { noremap = true, silent = true }, opts or {})
+      vim.api.nvim_buf_set_keymap(bufnr, mode, lhs, rhs, opts)
     end
+
+    -- Navigation
+    map("n", "]c", "&diff ? ']c' : '<cmd>Gitsigns next_hunk<CR>'", { expr = true })
+    map("n", "[c", "&diff ? '[c' : '<cmd>Gitsigns prev_hunk<CR>'", { expr = true })
+
+    -- Actions
+    map("n", "<leader>rh", ":Gitsigns reset_hunk<CR>")
+    map("v", "<leader>rh", ":Gitsigns reset_hunk<CR>")
+    map("n", "<leader>ph", "<cmd>Gitsigns preview_hunk<CR>")
+    map("n", "<leader>bl", '<cmd>lua require"gitsigns".blame_line{full=true}<CR>')
+    map("n", "<leader>tb", "<cmd>Gitsigns toggle_current_line_blame<CR>")
+    map("n", "<leader>dt", "<cmd>Gitsigns diffthis<CR>")
+    -- map("n", "<leader>ggd", '<cmd>lua require"gitsigns".diffthis("~")<CR>')
+    -- map("n", "<leader>td", "<cmd>Gitsigns toggle_deleted<CR>")
+
+    -- Text object
+    map("o", "ih", ":<C-U>Gitsigns select_hunk<CR>")
+    map("x", "ih", ":<C-U>Gitsigns select_hunk<CR>")
+  end,
 }
 
 -- vim.api.nvim_set_hl("GitSignsCurrentLineBlame", {guifg = "#8b9898"}, false)
 -- vim.api.nvim_set_hl("GitSignsChange", {guifg = "orange", guibg = "NONE"}, false)
 
 local function toggleSignColumn()
-    vim.o.signcolumn = vim.o.signcolumn == "yes" and "no" or "yes"
+  vim.o.signcolumn = vim.o.signcolumn == "yes" and "no" or "yes"
 end
 
-vim.keymap.set(
-    "n",
-    "<S-c>",
-    toggleSignColumn,
-    {
-        noremap = false,
-        silent = true
-    }
-)
+vim.keymap.set("n", "<S-c>", toggleSignColumn, {
+  noremap = false,
+  silent = true,
+})

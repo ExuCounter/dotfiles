@@ -1,4 +1,4 @@
-local ls = require("luasnip")
+local ls = require "luasnip"
 local s = ls.snippet
 local sn = ls.snippet_node
 local isn = ls.indent_snippet_node
@@ -13,79 +13,81 @@ local fmt = require("luasnip.extras.fmt").fmt
 local snippets = {}
 local autosnippets = {}
 
-local arrow_function =
-    s(
-    "aw",
-    fmt(
-        [[
+local arrow_function = s(
+  "aw",
+  fmt(
+    [[
 const {} = ({}) => {{
   {}
 }}
 ]],
-        {
-            i(1, "fn"),
-            i(2, "props"),
-            i(3, "")
-        }
-    )
+    {
+      i(1, "fn"),
+      i(2, "props"),
+      i(3, ""),
+    }
+  )
 )
 
 table.insert(snippets, arrow_function)
 
-local console_log = s("cl", fmt([[
+local console_log = s(
+  "cl",
+  fmt(
+    [[
 console.log({}, "DEBUG_MODE")
-]], {i(1, "")}))
+]],
+    { i(1, "") }
+  )
+)
 
 table.insert(snippets, console_log)
 
-local component =
-    s(
-    "c",
-    fmt(
-        [[
+local component = s(
+  "c",
+  fmt(
+    [[
 const {} = ({}) => {{
   {}
   return <></>
 }} 
 ]],
-        {
-            i(1, "Component"),
-            i(2, "props"),
-            i(3, "")
-        }
-    )
+    {
+      i(1, "Component"),
+      i(2, "props"),
+      i(3, ""),
+    }
+  )
 )
 
 table.insert(snippets, component)
 
-local import =
-    s(
-    "i",
-    fmt(
-        [[
+local import = s(
+  "i",
+  fmt(
+    [[
   import {{{}}} from "{}"
 ]],
-        {
-            i(1, ""),
-            i(2, "")
-        }
-    )
+    {
+      i(1, ""),
+      i(2, ""),
+    }
+  )
 )
 
 table.insert(snippets, import)
 
-local import_from_schema =
-    s(
-    "is",
-    fmt(
-        [[
+local import_from_schema = s(
+  "is",
+  fmt(
+    [[
   import {{{}}} from "{}"
 ]],
-        {
-            i(1, ""),
-            i(2, "graphql-tools/__generated__/schema")
-        }
-    )
+    {
+      i(1, ""),
+      i(2, "graphql-tools/__generated__/schema"),
+    }
+  )
 )
 
 table.insert(snippets, import_from_schema)
