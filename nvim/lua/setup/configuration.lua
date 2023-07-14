@@ -4,13 +4,14 @@ opt.splitright = true
 opt.splitbelow = true
 
 opt.re = 0
+opt.scroll = 12
 
 opt.signcolumn = "yes"
 opt.cmdheight = 1
 opt.updatetime = 200
 opt.shortmess = "c"
 opt.pumheight = 8
-opt.textwidth = 100
+opt.textwidth = 150
 
 opt.encoding = "utf-8"
 opt.mouse = "a"

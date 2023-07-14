@@ -18,14 +18,16 @@ require "setup/hop"
 local numb = require "numb"
 local focus = require "focus"
 local colorizer = require "colorizer"
-local diffconflictparts = require "diff-conflict-parts"
+local diffconflictparts = require "diff_conflict_parts"
 
-diffconflictparts.setup()
+diffconflictparts.setup {
+  direction = "vertical",
+}
 
 colorizer.setup()
 numb.setup()
 focus.setup {
-  width = 105,
+  width = 65,
   excluded_filetypes = { "dbout" },
   signcolumn = false,
 }
@@ -65,5 +67,3 @@ require("close_buffers").setup {
 require("trouble").setup {}
 
 vim.api.nvim_command "Dotenv ~/Desktop/projects/own/dotfiles"
-
-vim.opt.scroll = 12

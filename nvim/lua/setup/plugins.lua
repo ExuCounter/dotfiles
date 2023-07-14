@@ -84,7 +84,8 @@ require("lazy").setup {
   "gioele/vim-autoswap",
   { "ms-jpq/coq_nvim", branch = "coq" },
   "jpalardy/vim-slime",
+  "ExuCounter/diff_conflict_parts.nvim",
   -- {dir = "../custom-plugins/diff-conflict-parts/lua/init.lua"}
 }
 
-vim.opt.rtp:prepend "~/.config/nvim/lua/plugins/diff-conflict-parts"
+-- vim.opt.rtp:prepend "~/.config/nvim/lua/plugins/diff_conflict_parts"

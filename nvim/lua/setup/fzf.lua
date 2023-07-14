@@ -11,6 +11,7 @@ local fzf_actions = {
   ["ctrl-s"] = actions.file_split,
   ["ctrl-v"] = actions.file_vsplit,
   ["default"] = actions.file_edit_or_qf,
+  ["ctrl-]"] = actions.file_sel_to_qf,
 }
 
 fzfLua.setup {
