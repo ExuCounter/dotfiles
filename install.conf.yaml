@@ -10,14 +10,16 @@
     ~/.zshrc:
     ~/.gitconfig: .gitconfig
     ~/.tool-versions: .tool-versions
-    ~/.tool-versions: .tool-versions
     ~/.zsh_history: .zsh_history
     ~/.tmux.conf:
     ~/.zshenv:
     ~/.fzf.zsh: fzf.zsh
     ~/.config/kitty/kitty.conf: kitty.conf
-    ~/scripts/functions.sh: scripts/functions.sh
-    ~/.config/run_tmux_sessions.sh: run_tmux_sessions.sh
+    # scripts
+    ~/.config/sh/:
+      glob: true
+      force: true
+      path: sh/*
     # tmux windows management
     ~/.teamocil/:
       glob: true

@@ -21,7 +21,6 @@ require("lazy").setup {
   "tpope/vim-commentary",
   -- Git
   "tpope/vim-fugitive",
-  "brooth/far.vim",
   "itchyny/vim-gitbranch",
   "lewis6991/gitsigns.nvim",
   "rhysd/conflict-marker.vim",
@@ -33,7 +32,6 @@ require("lazy").setup {
   -- Windows
   "christoomey/vim-tmux-navigator",
   "simeji/winresizer",
-  "dstein64/vim-startuptime",
   -- Moves
   "rhysd/accelerated-jk",
   "phaazon/hop.nvim",
@@ -57,8 +55,8 @@ require("lazy").setup {
   -- Formatting
   "mhartington/formatter.nvim",
   -- Mason
-  "williamboman/mason.nvim",
-  "williamboman/mason-lspconfig.nvim",
+  -- "williamboman/mason.nvim",
+  -- "williamboman/mason-lspconfig.nvim",
   -- Icons
   "kyazdani42/nvim-web-devicons",
   -- Another

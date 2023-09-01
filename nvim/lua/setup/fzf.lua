@@ -14,6 +14,20 @@ local fzf_actions = {
   ["ctrl-]"] = actions.file_sel_to_qf,
 }
 
+respect_gitignore = true
+
+vim.api.nvim_create_user_command("ToggleDisrespectGitIgnore", function()
+  respect_gitignore = not respect_gitignore
+end, {})
+
+local rg_flag = function()
+  if respect_gitignore then
+    return ""
+  else
+    return "-u"
+  end
+end
+
 fzfLua.setup {
   winopts = {
     height = 0.5,
@@ -29,9 +43,10 @@ fzfLua.setup {
   grep = {
     prompt = "Rg>",
     rg_opts = "--smart-case --no-heading --line-number --color=always -g '!pnpm-lock.yaml' -g '!yarn-error.log' -g '!yarn.lock' -g '!dotbot/' ",
+    rg_glob = true,
   },
   files = {
-    rg_opts = "--color=never --files --hidden --follow -g '!.git' -g '!dotbot/' ",
+    rg_opts = "--color=never --files --hidden --follow -g '!.git' -g '!dotbot/' " .. rg_flag(),
   },
   actions = {
     live_grep = fzf_actions,
