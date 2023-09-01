@@ -5,15 +5,10 @@ windows:
     layout: tiled
     panes:
       - vi
-  - name: finstat-terminal
-    root: ~/Desktop/projects/own/finstat/backend/pt
-    layout: tiled
-    panes:
-      - iex -S mix
-  - name: finstat-terminal
-    root: ~/Desktop/projects/own/finstat/backend/pt
+  - name: project
+    root: ~/Desktop/projects/own
     layout: tiled
     panes:
       - commands:
-        - vi
+        - ls
         focus: true

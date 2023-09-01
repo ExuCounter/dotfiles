@@ -1,0 +1,17 @@
+name: build 
+windows:
+  - name: notes 
+    root: ~/Desktop/projects/own/build/
+    layout: tiled
+    panes:
+      - vi notes.txt
+  - name: sql 
+    root: ~/Desktop/projects/own/build/
+    layout: tiled
+    panes:
+      - vi sql.sql
+  - name: elixir 
+    root: ~/Desktop/projects/own/build/
+    layout: tiled
+    panes:
+      - vi elixir.ex

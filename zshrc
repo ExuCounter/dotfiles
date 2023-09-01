@@ -19,7 +19,7 @@ source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 source $ZSH/oh-my-zsh.sh
 
-export PATH=/opt/homebrew/bin:$HOME/.iex-history:$HOME/elixir_ls:$HOME/.config:$PATH
+export PATH=/opt/homebrew/opt/postgresql@15/bin:/opt/homebrew/bin:$HOME/.iex-history:$HOME/elixir_ls:$HOME/.config/sh:$PATH
 export DIRENV_LOG_FORMAT=
 export EDITOR=nvim
 export VISUAL="$EDITOR"
@@ -31,11 +31,11 @@ export ERL_AFLAGS="-kernel shell_history enabled"
 export LUA_PATH=~/nvim/lua/?.lua
 
 eval "$(direnv hook zsh)"
-source $HOME/.zshenv
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-source $HOME/scripts/functions.sh
+source $HOME/.config/sh/aliases.sh
+source $HOME/.config/sh/run_tmux_sessions.sh
 
 . $HOME/.asdf/asdf.sh
 . "$HOME/.cargo/env"
