@@ -1,0 +1,15 @@
+name: expert-portal
+windows:
+  - name: backend
+    root: ~/Desktop/projects/prosapient/expert-portal/backend
+    layout: tiled
+    panes:
+      - python3 -m pipenv shell
+      - cd frontend
+  - name: frontend
+    root: ~/Desktop/projects/prosapient/expert-portal/frontend
+    layout: tiled
+    panes:
+      - commands:
+         - vi
+        focus: true

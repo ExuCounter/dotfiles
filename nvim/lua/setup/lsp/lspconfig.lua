@@ -107,16 +107,16 @@ lspconfig.tailwindcss.setup {
   capabilities = M.capabilities,
 }
 
--- lspconfig.elixirls.setup(
---     {
---         elixirLS = {
---             dialyzerEnabled = false,
---             fetchDeps = false
---         },
---         on_attach = M.on_attach,
---         capabilities = M.capabilities
---     }
--- )
+lspconfig.elixirls.setup {
+  elixirLS = {
+    fetchDeps = false,
+  },
+  cmd = {
+    "/opt/homebrew/bin/elixir-ls",
+  },
+  on_attach = M.on_attach,
+  capabilities = M.capabilities,
+}
 
 lspconfig.tsserver.setup {
   on_attach = M.on_attach,
@@ -144,6 +144,18 @@ lspconfig.sqlls.setup {
 }
 
 lspconfig.eslint.setup {
+  on_attach = M.on_attach,
+  flags = M.lsp_flags,
+  capabilities = M.capabilities,
+}
+
+lspconfig.dockerls.setup {
+  on_attach = M.on_attach,
+  flags = M.lsp_flags,
+  capabilities = M.capabilities,
+}
+
+lspconfig.docker_compose_language_service.setup {
   on_attach = M.on_attach,
   flags = M.lsp_flags,
   capabilities = M.capabilities,

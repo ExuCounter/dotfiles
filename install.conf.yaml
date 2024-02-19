@@ -12,14 +12,22 @@
     ~/.tool-versions: .tool-versions
     ~/.zsh_history: .zsh_history
     ~/.tmux.conf:
-    ~/.zshenv:
-    ~/.fzf.zsh: fzf.zsh
     ~/.config/kitty/kitty.conf: kitty.conf
+    # zsh
+    ~/.config/zsh/:
+      glob: true
+      force: true
+      path: zsh/*
     # scripts
     ~/.config/sh/:
       glob: true
       force: true
       path: sh/*
+    # bin
+    ~/.config/bin/:
+      glob: true
+      force: true
+      path: bin/*
     # tmux windows management
     ~/.teamocil/:
       glob: true
