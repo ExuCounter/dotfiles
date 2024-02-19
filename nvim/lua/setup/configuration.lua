@@ -1,10 +1,12 @@
 local opt = vim.opt
 
+vim.opt.undofile = true
+
 opt.splitright = true
 opt.splitbelow = true
 
 opt.re = 0
-opt.scroll = 12
+opt.scroll = 8
 
 opt.signcolumn = "yes"
 opt.cmdheight = 1
@@ -54,7 +56,7 @@ opt.smartindent = true
 opt.shiftwidth = 2
 
 opt.numberwidth = 4
-opt.scroll = 10
+-- opt.scroll = 10
 
 opt.fillchars = {
   vert = "│",

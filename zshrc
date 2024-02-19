@@ -1,41 +1,52 @@
 #!/usr/bin/env bash
 
-export ASDF_DIR=$HOME/.asdf/
-export FZF_DEFAULT_COMMAND='ag --hidden --ignore node_modules -g ""'
-export FZF_CTRL_T_COMMAND=$FZF_DEFAULT_COMMAND
-export FZF_HIGHLIGHT_PREVIEW_OPTS="--height 100% --preview '(highlight -O ansi -l {} 2> /dev/null || cat {} || tree -C {}) 2> /dev/null' --preview-window=up:40%"
-export FZF_DEFAULT_OPTS="--height 80% --color=bg+:#eee8d5,fg+:-1,gutter:-1"
-export FZF_CTRL_T_OPTS="--delimiter '/' --nth=-1 $FZF_HIGHLIGHT_PREVIEW_OPTS"
-export BAT_THEME="Solarized (light)"
+# Git aliases
+alias gco='git checkout'
+alias gs='git status'
+alias gst="git stash"
+alias ga='git add'
+alias gb='git branch'
+alias gcm='git commit -m'
+alias gd='git diff'
+alias gpl='git pull origin $(git rev-parse --abbrev-ref HEAD)'
+alias gp='git push origin'
+alias gpf='git push origin -f'
+alias grs='git reset --soft'
+alias grh='git reset --hard'
+alias gl='git log --graph --pretty=format:"%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset" --abbrev-commit'
+alias chrome='open -a "Google Chrome"'
+alias prettier='npx prettier'
+alias gfa='git fetch --all --prune --jobs=10'
 
-export ZSH="$HOME/.oh-my-zsh"
+# Vim aliases
+alias vi="nvim"
+alias code="nvim"
 
 ZSH_THEME="geoffgarside"
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=12'
 
 plugins=(git zsh-autosuggestions web-search dirhistory)
 
-source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+export ASDF_DIR=$HOME/.asdf/
+export CARGO_DIR=$HOME/.cargo/
+export ZSH_DIR=$HOME/.oh-my-zsh/
 
-source $ZSH/oh-my-zsh.sh
-
-export PATH=/opt/homebrew/opt/postgresql@15/bin:/opt/homebrew/bin:$HOME/.iex-history:$HOME/elixir_ls:$HOME/.config/sh:$PATH
-export DIRENV_LOG_FORMAT=
+# export DIRENV_LOG_FORMAT=
 export EDITOR=nvim
 export VISUAL="$EDITOR"
-export CPPFLAGS="-I/opt/homebrew/opt/openjdk/include"
-export KERL_INSTALL_HTMLDOCS=no
-export KERL_BUILD_DOCS="yes"
-export ERL_AFLAGS="-kernel shell_history enabled"
 
 export LUA_PATH=~/nvim/lua/?.lua
+export PATH=/opt/homebrew/opt/postgresql@15/bin:$HOME/.config/bin:/opt/homebrew/bin:$HOME/.iex-history:$HOME/elixir_ls:$PATH
 
 eval "$(direnv hook zsh)"
 
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+source $ZSH_DIR/oh-my-zsh.sh
+source $ASDF_DIR/asdf.sh
+source $CARGO_DIR/env
+source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
-source $HOME/.config/sh/aliases.sh
-source $HOME/.config/sh/run_tmux_sessions.sh
+for file in $HOME/.config/zsh/*; do
+  [ -f $file ] && source "$file"
+done
 
-. $HOME/.asdf/asdf.sh
-. "$HOME/.cargo/env"
+setopt share_history

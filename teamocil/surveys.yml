@@ -1,0 +1,43 @@
+name: surveys 
+windows:
+  - name: panels-ps
+    root: ~/Desktop/projects/prosapient/survey-panels/
+    layout: tiled
+    panes:
+      - docker-compose up
+      - psql -d survey_panels -U postgres -h 0.0.0.0
+  - name: datatool-ps
+    root: ~/Desktop/projects/prosapient/survey-datatool/
+    layout: tiled
+    panes:
+      - cd backend && docker-compose up
+      - cd backend && pipenv --python 3.14.0 && pipenv run gunicorn main:app --workers 4 --worker-class uvicorn.workers.UvicornWorker --bind 0.0.0.0:4000
+  - name: facade-ps
+    root: ~/Desktop/projects/prosapient/survey-facade/
+    layout: tiled
+    panes:
+      - docker-compose up
+      - cd backend && pipenv --python 3.14.0 && pipenv run python src/manage.py runserver 0.0.0.0:8000 
+      - cd frontend && npm run dev:remix
+      - cd frontend && npm run dev:express
+  - name: builder-ps
+    root: ~/Desktop/projects/prosapient/survey-builder/
+    layout: tiled
+    panes:
+      - docker-compose up
+      - pipenv --python 3.14.0 && pipenv run gunicorn main:app --workers 4 --worker-class uvicorn.workers.UvicornWorker --bind 0.0.0.0:8001
+      - psql -d survey_builder -U postgres -h 0.0.0.0 -p 5433
+  - name: datatool
+    root: ~/Desktop/projects/prosapient/survey-datatool/frontend/
+    layout: tiled
+    panes:
+      - commands:
+         - vi
+        focus: true
+  - name: facade
+    root: ~/Desktop/projects/prosapient/survey-facade/frontend/
+    layout: tiled
+    panes:
+      - commands:
+         - vi
+        focus: true

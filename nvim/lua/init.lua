@@ -26,27 +26,24 @@ diffconflictparts.setup {
 
 colorizer.setup()
 numb.setup()
-focus.setup {
-  width = 65,
-  excluded_filetypes = { "dbout" },
-  signcolumn = false,
-}
+-- focus.setup {
+--   width = 45,
+--   excluded_filetypes = { "dbout" },
+--   signcolumn = false,
+-- }
 
-require("indent_blankline").setup {
-  char_list = { "¦", "│", "│", "│", "│", "│", "│", "│" },
-  show_foldtext = true,
-  show_trailing_blankline_indent = false,
-  show_first_indent_level = false,
-  -- show_current_context = true,
-  show_current_context_start = true,
-  filetype_exclude = {
-    "help",
-    "terminal",
-    "lazy",
-    "lspinfo",
-    "fzf",
-    "mason",
-    "",
+require("ibl").setup {
+  indent = { char = { "¦", "│", "│", "│", "│", "│", "│", "│" } },
+  exclude = {
+    filetypes = {
+      "help",
+      "terminal",
+      "lazy",
+      "lspinfo",
+      "fzf",
+      "mason",
+      "",
+    },
   },
 }
 

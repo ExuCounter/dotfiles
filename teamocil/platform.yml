@@ -1,16 +1,16 @@
-name: prosapient
+name: platform 
 windows:
   - name: styleguide
     root: ~/Desktop/projects/prosapient/styleguide/
     layout: tiled
     panes:
       - vi
-  - name: platform
+  - name: backend 
     root: ~/Desktop/projects/prosapient/platform/
     layout: tiled
     panes:
-      - OBAN_DISABLED=0 iex -S mix phx.server
-      - cd frontend && pnpm start
+      # - OBAN_DISABLED=0 iex -S mix phx.server
+      # - cd frontend && pnpm start
       - vi
   - name: frontend
     root: ~/Desktop/projects/prosapient/platform/frontend/

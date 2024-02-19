@@ -11,7 +11,7 @@ end
 treesitter.setup {
   ensure_installed = { "graphql", "lua", "javascript", "typescript", "elixir", "html", "css", "heex", "eex", "tsx" }, -- one of "all", "maintained" (parsers with maintainers), or a list of languages
   highlight = {
-    enable = true, -- false will disable the whole extensio
+    enable = true, -- false will disable the whole extensions
     disable = function(lang, bufnr)
       return ts_disable(lang, bufnr)
     end,
@@ -21,8 +21,9 @@ treesitter.setup {
   autotag = {
     enable = true,
   },
-  context_commentstring = {
-    enable = true,
-    enable_autocmd = false,
-  },
+}
+
+require("ts_context_commentstring").setup {
+  enable = true,
+  enable_autocmd = false,
 }
