@@ -29,10 +29,15 @@
       force: true
       path: bin/*
     # tmux windows management
-    ~/.teamocil/:
+    ~/.config/teamocil/:
       glob: true
       force: true
       path: teamocil/*
+    # fzf tmux sessions plugin
+    ~/.config/fzf_tmux_sessions/:
+      glob: true
+      force: true
+      path: fzf_tmux_sessions/*
     # nvim
     ~/.config/nvim/: 
       glob: true
