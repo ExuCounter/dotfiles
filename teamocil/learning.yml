@@ -1,5 +1,10 @@
 name: learning
 windows:
+  - name: wow1
+    root: ~/Desktop/projects/own/
+    layout: tiled
+    panes:
+      - vi
   - name: sql
     root: ~/Desktop/projects/own/learning_sql
     layout: tiled

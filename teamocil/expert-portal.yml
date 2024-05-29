@@ -4,7 +4,7 @@ windows:
     root: ~/Desktop/projects/prosapient/expert-portal
     layout: tiled
     panes:
-      - cd backend/src && python3 manage.py runserver
+      - source bin/activate && cd backend/src && python manage.py runserver
       - docker-compose --file expert-portal.docker-compose.yml up database
       - cd frontend && pnpm start
   - name: frontend

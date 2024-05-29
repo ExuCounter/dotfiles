@@ -1,0 +1,24 @@
+name: transcribio
+windows:
+  - name: processes
+    root: ~/Desktop/projects/prosapient/transcribio
+    layout: tiled
+    panes:
+      - docker-compose up -d db redis backend
+      - sleep 5 && docker-compose run --rm backend python /app/src/manage.py rundramatiq
+      - sleep 5 && docker-compose run --rm --service-ports backend python src/manage.py runserver 0.0.0.0:8000
+      - cd frontend && pnpm start
+  - name: backend 
+    root: ~/Desktop/projects/prosapient/transcribio/backend
+    layout: tiled
+    panes:
+      - commands:
+         - vi
+        focus: true
+  - name: frontend
+    root: ~/Desktop/projects/prosapient/transcribio/frontend
+    layout: tiled
+    panes:
+      - commands:
+         - vi
+        focus: true

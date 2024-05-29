@@ -1,11 +1,11 @@
 name: surveys 
 windows:
-  - name: panels-ps
+  - name: panels-ps-wow
     root: ~/Desktop/projects/prosapient/survey-panels/
     layout: tiled
     panes:
-      - docker-compose up
-      - psql -d survey_panels -U postgres -h 0.0.0.0
+      # - docker-compose up
+      # - psql -d survey_panels -U postgres -h 0.0.0.0
   - name: datatool-ps
     root: ~/Desktop/projects/prosapient/survey-datatool/
     layout: tiled
@@ -18,8 +18,7 @@ windows:
     panes:
       - docker-compose up
       - cd backend && pipenv --python 3.14.0 && pipenv run python src/manage.py runserver 0.0.0.0:8000 
-      - cd frontend && npm run dev:remix
-      - cd frontend && npm run dev:express
+      - cd frontend && npm run dev
   - name: builder-ps
     root: ~/Desktop/projects/prosapient/survey-builder/
     layout: tiled
@@ -40,4 +39,3 @@ windows:
     panes:
       - commands:
          - vi
-        focus: true

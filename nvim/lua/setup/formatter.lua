@@ -7,6 +7,7 @@ end
 
 local prettierd_formatter = formatter_filetypes.javascript.prettierd
 local elixir_formatter = formatter_filetypes.elixir.mixformat
+local python_formatter = formatter_filetypes.python.autopep8
 local lua_formatter = formatter_filetypes.lua.stylua
 
 local filetype = {
@@ -27,6 +28,25 @@ local filetype = {
     lua_formatter,
   },
 }
+
+-- python = {
+--   function()
+--     return {
+--       exe = "black",
+--       args = {
+--         "-l",
+--         120,
+--         "-S",
+--         "-C",
+--         "-q",
+--         "--stdin-filename",
+--         vim.fn.fnameescape(vim.api.nvim_buf_get_name(0)),
+--         "-",
+--       },
+--       stdin = true,
+--     }
+--   end,
+-- },
 
 formatter.setup {
   logging = false,

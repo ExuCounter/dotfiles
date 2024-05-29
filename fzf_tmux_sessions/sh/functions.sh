@@ -1,5 +1,6 @@
 function list_tmux_sessions {
-  tmux list-sessions | sed -E 's/:.*$//' | awk \"/^[a-zA-Z]/\" | grep -v '^$(tmux display-message -p "#S")\$'
+  # tmux list-sessions | sed -E 's/:.*$//' | awk \"/^[a-zA-Z]/\" | grep -v "$(tmux display-message -p '#S')"
+  tmux list-sessions | sed -E 's/:.*$//' | awk \"/^[a-zA-Z]/\"
 }
 
 export -f list_tmux_sessions
@@ -98,19 +99,19 @@ export SESSIONS_PROMPT="sessions> "
 export TEAMOCIL_HEADER="Press Ctrl-E to edit / Enter to start teamocil session"
 export TEAMOCIL_PROMPT="teamocil>"
 
-export PROCESSES_HEADER="Press Enter to move to process; Ctrl-D for kill"
+export PROCESSES_HEADER="Press Enter to move to process / Ctrl-D for kill"
 export PROCESSES_PROMPT="processes>"
 
-function change_env_variable {
-  echo "export $1=$2" >> $ENV_FILE
+function source_env_file {
+  source $ENV_FILE
 }
 
 function clear_env_file {
   : > $ENV_FILE
 }
 
-function source_env_file {
-  source $ENV_FILE
+function change_env_variable {
+  echo "export $1=$2" >> $ENV_FILE
 }
 
 export -f change_env_variable
@@ -123,7 +124,7 @@ function __preview {
   if [[ $SELECTED_FZF_SESSION ]]; then 
       echo $1 | awk '{print $2}' | xargs -I pane_id tmux capture-pane -eJ -t pane_id && tmux show-buffer
   else
-    if [[ $IS_TEAMOCIL_SESSION ]]; then 
+    if [[ $IS_TEAMOCIL_SESSION ]] ; then 
       cat "$TEAMOCIL_FOLDER/$1.yml"
     else
       list_tmux_windows $1
@@ -178,7 +179,7 @@ function __bind_ctrl_e {
   source_env_file
 
   if [[ $IS_TEAMOCIL_SESSION ]]; then 
-    echo "execute(change_env_variable TEAMOCIL_SESSION $1)+abort+abort"
+    echo "execute(change_env_variable TEAMOCIL_SESSION $1)+abort"
   fi
 }
 
@@ -205,7 +206,7 @@ function fzf_tmux_sessions {
   source_env_file
 
   if [[ ! $session_or_process ]]; then
-    if [[ $IS_TEAMOCIL_SESSION ]]; then
+    if [[ $IS_TEAMOCIL_SESSION ]] && [[ $TEAMOCIL_SESSION ]]; then
       tmux new-window nvim $TEAMOCIL_FOLDER/$TEAMOCIL_SESSION.yml
     fi
 
