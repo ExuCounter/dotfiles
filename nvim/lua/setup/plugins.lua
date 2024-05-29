@@ -83,6 +83,7 @@ require("lazy").setup {
   { "ms-jpq/coq_nvim", branch = "coq" },
   "jpalardy/vim-slime",
   "ExuCounter/diff_conflict_parts.nvim",
+  "github/copilot.vim",
   -- {dir = "../custom-plugins/diff-conflict-parts/lua/init.lua"}
 }
 

@@ -143,6 +143,23 @@ lspconfig.sqlls.setup {
   capabilities = M.capabilities,
 }
 
+lspconfig.pylsp.setup {
+  on_attach = M.on_attach,
+  flags = M.lsp_flags,
+  capabilities = M.capabilities,
+  settings = {
+    pylsp = {
+      plugins = {
+        pycodestyle = {
+          enabled = true,
+          ignore = { "E501", "E231" },
+          maxLineLength = 120,
+        },
+      },
+    },
+  },
+}
+
 lspconfig.eslint.setup {
   on_attach = M.on_attach,
   flags = M.lsp_flags,
