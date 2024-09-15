@@ -58,7 +58,7 @@ require("lazy").setup {
   -- "williamboman/mason.nvim",
   -- "williamboman/mason-lspconfig.nvim",
   -- Icons
-  "kyazdani42/nvim-web-devicons",
+  "nvim-tree/nvim-web-devicons",
   -- Another
   "tpope/vim-surround",
   { "mg979/vim-visual-multi", branch = "master" },
@@ -73,7 +73,7 @@ require("lazy").setup {
   "beauwilliams/focus.nvim",
   "nvim-lualine/lualine.nvim",
   "Raimondi/delimitMate",
-  "max397574/better-escape.nvim",
+  "max397576/better-escape.nvim",
   "NvChad/nvim-colorizer.lua",
   "L3MON4D3/LuaSnip",
   "kazhala/close-buffers.nvim",
@@ -86,5 +86,8 @@ require("lazy").setup {
   "github/copilot.vim",
   -- {dir = "../custom-plugins/diff-conflict-parts/lua/init.lua"}
 }
+
+require'nvim-tree'.setup {}
+require'nvim-web-devicons'.setup{}
 
 -- vim.opt.rtp:prepend "~/.config/nvim/lua/plugins/diff_conflict_parts"

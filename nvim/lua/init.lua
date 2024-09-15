@@ -63,4 +63,4 @@ require("close_buffers").setup {
 }
 require("trouble").setup {}
 
-vim.api.nvim_command "Dotenv ~/Desktop/projects/own/dotfiles"
+-- vim.api.nvim_command "Dotenv ~/Desktop/projects/own/dotfiles"

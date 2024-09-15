@@ -1,14 +1,14 @@
 name: expert-portal
 windows:
   - name: backend
-    root: ~/Desktop/projects/prosapient/expert-portal
+    root: ~/projects/expert-portal
     layout: tiled
     panes:
-      - source bin/activate && cd backend/src && python manage.py runserver
-      - docker-compose --file expert-portal.docker-compose.yml up database
+      - docker compose up db redis
+      - docker compose run --service-ports backend python src/manage.py runserver 0.0.0.0:8000
       - cd frontend && pnpm start
   - name: frontend
-    root: ~/Desktop/projects/prosapient/expert-portal/frontend
+    root: ~/projects/expert-portal/frontend
     layout: tiled
     panes:
       - commands:
