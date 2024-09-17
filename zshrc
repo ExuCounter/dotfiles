@@ -27,7 +27,7 @@ ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=12'
 
 plugins=(git zsh-autosuggestions web-search dirhistory)
 
-export ASDF_DIR=$HOME/.asdf/
+# export ASDF_DIR=$HOME/.asdf/
 export CARGO_DIR=$HOME/.cargo/
 export ZSH_DIR=$HOME/.oh-my-zsh/
 
@@ -41,8 +41,8 @@ export PATH=/opt/homebrew/opt/postgresql@15/bin:$HOME/.config/bin:/opt/homebrew/
 eval "$(direnv hook zsh)"
 
 source $ZSH_DIR/oh-my-zsh.sh
-source $ASDF_DIR/asdf.sh
-source $CARGO_DIR/env
+# source $ASDF_DIR/asdf.sh
+# source $CARGO_DIR/env
 source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 for file in $HOME/.config/zsh/*; do
@@ -50,3 +50,8 @@ for file in $HOME/.config/zsh/*; do
 done
 
 setopt share_history
+
+source <(fzf --zsh)
+
+. /opt/homebrew/opt/asdf/libexec/asdf.sh
+export PATH="/opt/homebrew/opt/postgresql@15/bin:$PATH"
