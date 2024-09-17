@@ -84,6 +84,24 @@ require("lazy").setup {
   "jpalardy/vim-slime",
   "ExuCounter/diff_conflict_parts.nvim",
   "github/copilot.vim",
+  {
+    "mistricky/codesnap.nvim",
+    build = "make",
+    keys = {
+      { "cc", "<cmd>CodeSnap<cr>", mode = "x", desc = "Save selected code snapshot into clipboard" },
+      { "<leader>cs", "<cmd>CodeSnapSave<cr>", mode = "x", desc = "Save selected code snapshot in ~/Screenshots/" },
+    },
+    opts = {
+      save_path = "~/Screenshots",
+      watermark = "@volodymyrpotiichuk",
+      code_font_family = "JetBrains Mono",
+      watermark_font_family = "JetBrains Mono",
+      bg_x_padding = 30,
+      bg_y_padding = 82,
+      has_line_number = true,
+    },
+    lazy = false,
+  },
   -- {dir = "../custom-plugins/diff-conflict-parts/lua/init.lua"}
 }
 
