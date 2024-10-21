@@ -1,7 +1,7 @@
 name: dotfiles
 windows:
   - name: dotfiles
-    root: ~/Desktop/projects/own/dotfiles
+    root: ~/projects/dotfiles
     layout: tiled
     panes:
       - commands:

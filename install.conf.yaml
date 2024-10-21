@@ -29,7 +29,7 @@
       force: true
       path: bin/*
     # tmux windows management
-    ~/teamocil/:
+    ~/.teamocil/:
       glob: true
       force: true
       path: teamocil/*

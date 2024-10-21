@@ -25,10 +25,10 @@ alias code="nvim"
 ZSH_THEME="geoffgarside"
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=12'
 
-plugins=(git zsh-autosuggestions web-search dirhistory)
+plugins=(git web-search dirhistory asdf)
 
 export ASDF_DIR=$HOME/.asdf/
-export CARGO_DIR=$HOME/.cargo/
+# export CARGO_DIR=$HOME/.cargo/
 export ZSH_DIR=$HOME/.oh-my-zsh/
 
 # export DIRENV_LOG_FORMAT=
@@ -36,17 +36,21 @@ export EDITOR=nvim
 export VISUAL="$EDITOR"
 
 export LUA_PATH=~/nvim/lua/?.lua
-export PATH=/opt/homebrew/opt/postgresql@15/bin:$HOME/.config/bin:/opt/homebrew/bin:$HOME/.iex-history:$HOME/elixir_ls:$PATH
+export PATH=/opt/homebrew/opt/postgresql@15/bin:$HOME/.config/bin:/opt/homebrew/bin:$HOME/.iex-history:$HOME/elixir_ls:$HOME/bin:$PATH
 
 eval "$(direnv hook zsh)"
 
 source $ZSH_DIR/oh-my-zsh.sh
 source $ASDF_DIR/asdf.sh
-source $CARGO_DIR/env
-source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+# source $CARGO_DIR/env
 
 for file in $HOME/.config/zsh/*; do
   [ -f $file ] && source "$file"
 done
 
 setopt share_history
+
+alias kitty=~/.local/kitty.app/bin/kitty
+source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+export DD_REMOTE_CONFIGURATION_ENABLED=true
