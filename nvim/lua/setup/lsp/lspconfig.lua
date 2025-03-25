@@ -101,11 +101,11 @@ lspconfig.emmet_ls.setup {
   },
 }
 
-lspconfig.tailwindcss.setup {
-  on_attach = M.on_attach,
-  flags = M.lsp_flags,
-  capabilities = M.capabilities,
-}
+-- lspconfig.tailwindcss.setup {
+--   on_attach = M.on_attach,
+--   flags = M.lsp_flags,
+--   capabilities = M.capabilities,
+-- }
 
 lspconfig.elixirls.setup {
   elixirLS = {

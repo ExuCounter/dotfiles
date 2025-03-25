@@ -122,6 +122,8 @@ endfunction
 noremap <c-w><space> :<c-u>call <sid>GotoFirstFloat()<cr>
 ]]
 
+vim.g.number = true
+
 vim.g.mapleader = " "
 
 vim.g["far#enable_undo"] = 1

@@ -1,0 +1,22 @@
+name: lernado
+windows:
+  - name: processes
+    root: ~/Desktop/projects/own/lernado/
+    layout: tiled
+    panes:
+      - cd backend && iex -S mix phx.server
+      - cd frontend && npm run dev
+      - echo "Hello, World!"
+      - echo "Hello, World!"
+  - name: backend 
+    root: ~/Desktop/projects/own/lernado/backend
+    layout: tiled
+    panes:
+      - commands:
+         - vi
+  - name: frontend
+    root: ~/Desktop/projects/own/lernado/frontend
+    layout: tiled
+    panes:
+      - commands:
+         - vi
