@@ -55,3 +55,6 @@ source <(fzf --zsh)
 
 . /opt/homebrew/opt/asdf/libexec/asdf.sh
 export PATH="/opt/homebrew/opt/postgresql@15/bin:$PATH"
+alias pro_ops=/Users/volodymyr.potiichuk/Desktop/projects/prosapient/pro-ops/_build/prod/rel/bakeware/pro_ops
+
+export AWS_PROFILE=platform-test
