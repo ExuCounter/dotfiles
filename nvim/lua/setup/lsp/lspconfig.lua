@@ -101,11 +101,7 @@ lspconfig.emmet_ls.setup {
   },
 }
 
--- lspconfig.tailwindcss.setup {
---   on_attach = M.on_attach,
---   flags = M.lsp_flags,
---   capabilities = M.capabilities,
--- }
+
 
 lspconfig.elixirls.setup {
   elixirLS = {
@@ -118,7 +114,7 @@ lspconfig.elixirls.setup {
   capabilities = M.capabilities,
 }
 
-lspconfig.tsserver.setup {
+lspconfig.ts_ls.setup {
   on_attach = M.on_attach,
   flags = M.lsp_flags,
   capabilities = M.capabilities,
@@ -141,6 +137,21 @@ lspconfig.sqlls.setup {
   on_attach = M.on_attach,
   flags = M.lsp_flags,
   capabilities = M.capabilities,
+}
+
+lspconfig.tailwindcss.setup {
+  on_attach = M.on_attach,
+  flags = M.lsp_flags,
+  capabilities = M.capabilities,
+  settings = {
+    tailwindCSS = {
+          userLanguages = {
+        elixir = "html",
+        html = "html",
+        css = "css"
+      }
+    },
+  }
 }
 
 lspconfig.pylsp.setup {

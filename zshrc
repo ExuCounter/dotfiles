@@ -58,3 +58,4 @@ export PATH="/opt/homebrew/opt/postgresql@15/bin:$PATH"
 alias pro_ops=/Users/volodymyr.potiichuk/Desktop/projects/prosapient/pro-ops/_build/prod/rel/bakeware/pro_ops
 
 export AWS_PROFILE=platform-test
+alias pro_ops=/Users/volodymyr.potiichuk/Desktop/projects/prosapient/pro-ops/burrito_out/pro_ops_macos
