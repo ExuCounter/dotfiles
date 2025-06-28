@@ -24,7 +24,7 @@ local mode_adapters = {
   operator_mode = "o",
 }
 
-vim.api.nvim_create_user_command("Rg", ":lua require('fzf-lua').live_grep({search=<f-args>})", { nargs = 1 })
+vim.api.nvim_create_user_command("Rg", ":lua require('fzf-lua').live_grep({search=<f-args>, cmd='rg',})", { nargs = 1 })
 
 local function removeExtension(s)
   return s:match "(.+)%..+"

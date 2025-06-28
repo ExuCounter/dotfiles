@@ -1,0 +1,14 @@
+name: blog
+windows:
+  - name: processes
+    root: ~/Desktop/projects/own/blog/
+    layout: tiled
+    panes:
+      - iex -S mix phx.server
+      - echo "Hello, World!"
+  - name: backend 
+    root: ~/Desktop/projects/own/blog
+    layout: tiled
+    panes:
+      - commands:
+         - vi

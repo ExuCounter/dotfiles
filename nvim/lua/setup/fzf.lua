@@ -44,6 +44,7 @@ fzfLua.setup {
     prompt = "Rg>",
     rg_opts = "--smart-case --no-heading --line-number --color=always -g '!pnpm-lock.yaml' -g '!yarn-error.log' -g '!yarn.lock' -g '!dotbot/' ",
     rg_glob = true,
+    silent = true
   },
   files = {
     rg_opts = "--color=never --files --hidden --follow -g '!.git' -g '!dotbot/' " .. rg_flag(),
