@@ -1,4 +1,3 @@
-local lspconfig = require "lspconfig"
 local cmp = require "cmp_nvim_lsp"
 
 local M = {}
@@ -88,10 +87,10 @@ M.on_attach = function(client, bufnr)
   vim.keymap.set("n", "gr", vim.lsp.buf.references, bufopts)
 end
 
-lspconfig.emmet_ls.setup {
-  on_attach = M.on_attach,
+-- Define LSP configurations
+vim.lsp.config("emmet_ls", {
   capabilities = M.capabilities,
-  filetypes = { "html", "css", "sass", "scss", "less" },
+  on_attach = M.on_attach,
   init_options = {
     html = {
       options = {
@@ -99,31 +98,31 @@ lspconfig.emmet_ls.setup {
       },
     },
   },
-}
+})
 
-
-
-lspconfig.elixirls.setup {
-  elixirLS = {
-    fetchDeps = false,
-  },
-  cmd = {
-    "/opt/homebrew/bin/elixir-ls",
-  },
-  on_attach = M.on_attach,
+vim.lsp.config("elixirls", {
+  cmd = { "/opt/homebrew/bin/elixir-ls" },
+  filetypes = { "elixir", "eelixir", "heex", "surface" },
+  root_markers = { "mix.exs", ".git" },
   capabilities = M.capabilities,
-}
+  on_attach = M.on_attach,
+  settings = {
+    elixirLS = {
+      fetchDeps = false,
+    },
+  },
+})
 
-lspconfig.ts_ls.setup {
+vim.lsp.config("ts_ls", {
+  capabilities = M.capabilities,
   on_attach = M.on_attach,
   flags = M.lsp_flags,
-  capabilities = M.capabilities,
-}
+})
 
-lspconfig.lua_ls.setup {
+vim.lsp.config("lua_ls", {
+  capabilities = M.capabilities,
   on_attach = M.on_attach,
   flags = M.lsp_flags,
-  capabilities = M.capabilities,
   settings = {
     Lua = {
       completion = {
@@ -131,33 +130,36 @@ lspconfig.lua_ls.setup {
       },
     },
   },
-}
+})
 
-lspconfig.sqlls.setup {
+vim.lsp.config("sqlls", {
+  cmd = { "sql-language-server", "up", "--method", "stdio" },
+  filetypes = { "sql", "mysql" },
+  root_markers = { ".git" },
+  capabilities = M.capabilities,
   on_attach = M.on_attach,
   flags = M.lsp_flags,
-  capabilities = M.capabilities,
-}
+})
 
-lspconfig.tailwindcss.setup {
+-- vim.lsp.config("tailwindcss", {
+--   capabilities = M.capabilities,
+--   on_attach = M.on_attach,
+--   flags = M.lsp_flags,
+--   settings = {
+--     tailwindCSS = {
+--       userLanguages = {
+--         elixir = "html",
+--         html = "html",
+--         css = "css"
+--       }
+--     },
+--   }
+-- })
+
+vim.lsp.config("pylsp", {
+  capabilities = M.capabilities,
   on_attach = M.on_attach,
   flags = M.lsp_flags,
-  capabilities = M.capabilities,
-  settings = {
-    tailwindCSS = {
-          userLanguages = {
-        elixir = "html",
-        html = "html",
-        css = "css"
-      }
-    },
-  }
-}
-
-lspconfig.pylsp.setup {
-  on_attach = M.on_attach,
-  flags = M.lsp_flags,
-  capabilities = M.capabilities,
   settings = {
     pylsp = {
       plugins = {
@@ -169,25 +171,55 @@ lspconfig.pylsp.setup {
       },
     },
   },
-}
+})
 
-lspconfig.eslint.setup {
+vim.lsp.config("eslint", {
+  capabilities = M.capabilities,
   on_attach = M.on_attach,
   flags = M.lsp_flags,
-  capabilities = M.capabilities,
-}
+})
 
-lspconfig.dockerls.setup {
+vim.lsp.config("dockerls", {
+  capabilities = M.capabilities,
   on_attach = M.on_attach,
   flags = M.lsp_flags,
-  capabilities = M.capabilities,
-}
+})
 
-lspconfig.docker_compose_language_service.setup {
+vim.lsp.config("docker_compose_language_service", {
+  capabilities = M.capabilities,
   on_attach = M.on_attach,
   flags = M.lsp_flags,
+})
+
+vim.lsp.config("elp", {
   capabilities = M.capabilities,
-}
+  on_attach = M.on_attach,
+  flags = M.lsp_flags,
+  settings = {
+    elp = {
+      diagnostics = {
+        disabled = {
+          "W0030",
+          "W0031",
+          "W0032"
+        }
+      }
+    }
+  }
+})
+
+-- Enable all configured LSP servers
+vim.lsp.enable("emmet_ls")
+vim.lsp.enable("elixirls")
+vim.lsp.enable("ts_ls")
+vim.lsp.enable("lua_ls")
+vim.lsp.enable("sqlls")
+-- vim.lsp.enable("tailwindcss")
+vim.lsp.enable("pylsp")
+vim.lsp.enable("eslint")
+vim.lsp.enable("dockerls")
+vim.lsp.enable("docker_compose_language_service")
+vim.lsp.enable("elp")
 
 local sign = function(opts)
   vim.fn.sign_define(opts.name, {
@@ -216,3 +248,5 @@ augroup FormatAutogroup
   autocmd BufWritePost * FormatWrite
 augroup END
 ]]
+
+  vim.g.copilot_proxy_strict_ssl = false
