@@ -24,7 +24,7 @@ function list_tmux_session_processes {
 export -f list_tmux_session_processes
 
 function list_available_teamocil_sessions {
-  files=$(ls $HOME/.config/teamocil/)
+  files=$(ls $TEAMOCIL_FOLDER)
   tmux_sessions_array=$(list_tmux_sessions)
 
   for file in $files; do
@@ -91,7 +91,7 @@ function list_tmux_windows {
 export -f list_tmux_windows
 
 export ENV_FILE=$HOME/log.sh
-export TEAMOCIL_FOLDER=$HOME/.config/teamocil/
+export TEAMOCIL_FOLDER=$HOME/.teamocil/
 
 export SESSIONS_HEADER="Press Ctrl-T for switch to processes / Ctrl-D for kill session"
 export SESSIONS_PROMPT="sessions> "

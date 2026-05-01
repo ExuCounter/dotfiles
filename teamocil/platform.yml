@@ -1,19 +1,19 @@
 name: platform 
 windows:
   - name: styleguide
-    root: ~/Desktop/projects/prosapient/styleguide/
+    root: ~/Desktop/projects/prosapient/react-ui-kit/
     layout: tiled
     panes:
       - vi
   - name: backend
-    root: ~/Desktop/projects/prosapient/platform/
+    root: ~/Desktop/projects/prosapient/platform-backend/
     layout: tiled
     panes:
       - OBAN_DISABLED=1 iex -S mix phx.server
       - cd frontend && pnpm start
       - vi
   - name: frontend
-    root: ~/Desktop/projects/prosapient/platform/frontend/
+    root: ~/Desktop/projects/prosapient/platform-backend/frontend/
     layout: tiled
     panes:
       - commands:

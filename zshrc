@@ -27,7 +27,7 @@ ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=12'
 
 plugins=(git zsh-autosuggestions web-search dirhistory)
 
-export ASDF_DIR=$HOME/.asdf/
+# export ASDF_DIR=$HOME/.asdf/
 export CARGO_DIR=$HOME/.cargo/
 export ZSH_DIR=$HOME/.oh-my-zsh/
 
@@ -36,13 +36,13 @@ export EDITOR=nvim
 export VISUAL="$EDITOR"
 
 export LUA_PATH=~/nvim/lua/?.lua
-export PATH=/opt/homebrew/opt/postgresql@15/bin:$HOME/.config/bin:/opt/homebrew/bin:$HOME/.iex-history:$HOME/elixir_ls:$PATH
+export PATH=/opt/homebrew/opt/postgresql@15/bin:$HOME/.config/bin:/opt/homebrew/bin:$HOME/.iex-history:$HOME/elixir_ls:$HOME/bin:$PATH
 
 eval "$(direnv hook zsh)"
 
 source $ZSH_DIR/oh-my-zsh.sh
-source $ASDF_DIR/asdf.sh
-source $CARGO_DIR/env
+# source $ASDF_DIR/asdf.sh
+# source $CARGO_DIR/env
 source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 for file in $HOME/.config/zsh/*; do
@@ -50,3 +50,14 @@ for file in $HOME/.config/zsh/*; do
 done
 
 setopt share_history
+
+source <(fzf --zsh)
+
+. /opt/homebrew/opt/asdf/libexec/asdf.sh
+export PATH="/opt/homebrew/opt/postgresql@15/bin:$PATH"
+alias pro_ops=/Users/volodymyr.potiichuk/Desktop/projects/prosapient/pro-ops/_build/prod/rel/bakeware/pro_ops
+
+export AWS_PROFILE=platform-test
+alias pro_ops=/Users/volodymyr.potiichuk/Desktop/projects/prosapient/pro-ops/burrito_out/pro_ops_macos
+export PATH="/opt/homebrew/opt/postgresql@16/bin:$PATH"
+alias pro_ops=/Users/volodymyr.potiichuk/Desktop/projects/prosapient/pro-ops/burrito_out/pro_ops_macos
