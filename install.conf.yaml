@@ -13,6 +13,7 @@
     ~/.zsh_history: .zsh_history
     ~/.tmux.conf:
     ~/.config/kitty/kitty.conf: kitty.conf
+    ~/.claude.json: .claude.json
     # zsh
     ~/.config/zsh/:
       glob: true

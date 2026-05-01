@@ -36,7 +36,7 @@ export EDITOR=nvim
 export VISUAL="$EDITOR"
 
 export LUA_PATH=~/nvim/lua/?.lua
-export PATH=/opt/homebrew/opt/postgresql@15/bin:$HOME/.config/bin:/opt/homebrew/bin:$HOME/.iex-history:$HOME/elixir_ls:$PATH
+export PATH=/opt/homebrew/opt/postgresql@15/bin:$HOME/.config/bin:/opt/homebrew/bin:$HOME/.iex-history:$HOME/elixir_ls:$HOME/bin:$PATH
 
 eval "$(direnv hook zsh)"
 
@@ -58,4 +58,6 @@ export PATH="/opt/homebrew/opt/postgresql@15/bin:$PATH"
 alias pro_ops=/Users/volodymyr.potiichuk/Desktop/projects/prosapient/pro-ops/_build/prod/rel/bakeware/pro_ops
 
 export AWS_PROFILE=platform-test
+alias pro_ops=/Users/volodymyr.potiichuk/Desktop/projects/prosapient/pro-ops/burrito_out/pro_ops_macos
+export PATH="/opt/homebrew/opt/postgresql@16/bin:$PATH"
 alias pro_ops=/Users/volodymyr.potiichuk/Desktop/projects/prosapient/pro-ops/burrito_out/pro_ops_macos

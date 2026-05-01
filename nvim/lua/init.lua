@@ -14,6 +14,7 @@ require "setup/lsp/lspconfig"
 require "setup/formatter"
 require "setup/lualine"
 require "setup/hop"
+require "setup/codecompanion"
 
 local numb = require "numb"
 local focus = require "focus"
@@ -45,10 +46,6 @@ require("ibl").setup {
       "",
     },
   },
-}
-
-require("better_escape").setup {
-  mapping = { "jj" },
 }
 
 require("close_buffers").setup {
