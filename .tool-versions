@@ -1,4 +1,8 @@
-nodejs 16.14.0
-python 3.10.2
-erlang 25.1.1
+uv 0.7.16
+python 3.11.9
+nodejs 24.4.0
+rust 1.82.0
 yarn 1.21.1
+elixir 1.19.0-otp-28
+erlang 28.1.1
+ruby 3.0.5

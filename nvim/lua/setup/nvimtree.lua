@@ -4,8 +4,11 @@ if not present then
   return
 end
 
-vim.g.loaded = 1
-vim.g.loaded_netrwPlugin = 1
+-- vim.g.loaded = 1
+-- vim.g.loaded_netrwPlugin = 1
+vim.g.experimental = {
+  check_rtp = false
+}
 
 local function on_attach(bufnr)
   local api = require "nvim-tree.api"

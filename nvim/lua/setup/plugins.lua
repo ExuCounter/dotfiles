@@ -73,35 +73,62 @@ require("lazy").setup {
   "beauwilliams/focus.nvim",
   "nvim-lualine/lualine.nvim",
   "Raimondi/delimitMate",
-  "max397574/better-escape.nvim",
   "NvChad/nvim-colorizer.lua",
   "L3MON4D3/LuaSnip",
   "kazhala/close-buffers.nvim",
   "folke/lsp-trouble.nvim",
   "folke/neodev.nvim",
   "gioele/vim-autoswap",
-  { "ms-jpq/coq_nvim", branch = "coq" },
+  -- { "ms-jpq/coq_nvim", branch = "coq" },
   "jpalardy/vim-slime",
   "ExuCounter/diff_conflict_parts.nvim",
-  "github/copilot.vim",
-  {
-    "mistricky/codesnap.nvim",
-    build = "make",
-    keys = {
-      { "cc", "<cmd>CodeSnap<cr>", mode = "x", desc = "Save selected code snapshot into clipboard" },
-      { "<leader>cs", "<cmd>CodeSnapSave<cr>", mode = "x", desc = "Save selected code snapshot in ~/Screenshots/" },
-    },
-    opts = {
-      save_path = "~/Screenshots",
-      watermark = "@volodymyrpotiichuk",
-      code_font_family = "JetBrains Mono",
-      watermark_font_family = "JetBrains Mono",
-      bg_x_padding = 30,
-      bg_y_padding = 82,
-      has_line_number = true,
-    },
-    lazy = false,
-  },
+  -- "github/copilot.vim",
+  -- {
+  --   "mistricky/codesnap.nvim",
+  --   build = "make",
+  --   keys = {
+  --     { "cc", "<cmd>CodeSnap<cr>", mode = "x", desc = "Save selected code snapshot into clipboard" },
+  --     { "<leader>cs", "<cmd>CodeSnapSave<cr>", mode = "x", desc = "Save selected code snapshot in ~/Screenshots/" },
+  --   },
+  --   opts = {
+  --     save_path = "~/Screenshots",
+  --     watermark = "@volodymyrpotiichuk",
+  --     code_font_family = "JetBrains Mono",
+  --     watermark_font_family = "JetBrains Mono",
+  --     bg_x_padding = 30,
+  --     bg_y_padding = 82,
+  --     has_line_number = true,
+  --   },
+  --   lazy = false,
+  -- },
+  -- {
+    -- "ravitemer/mcphub.nvim",
+    -- dependencies = {
+    --   "nvim-lua/plenary.nvim",
+    -- },
+    -- build = "npm install -g mcp-hub@latest",  -- Installs `mcp-hub` node binary globally
+    -- config = function()
+    --   require("mcphub").setup()
+    -- end
+  -- },
+  -- {
+    -- "olimorris/codecompanion.nvim",
+    -- opts = {},
+    -- dependencies = {
+    --   "nvim-lua/plenary.nvim",
+    --   "nvim-treesitter/nvim-treesitter",
+    -- }
+  -- },
+  -- {
+  --   "OXY2DEV/markview.nvim",
+  --   lazy = false,
+  --   opts = {
+  --     preview = {
+  --       filetypes = { "markdown", "codecompanion" },
+  --       ignore_buftypes = {},
+  --     },
+  --   },
+  -- },
   -- {dir = "../custom-plugins/diff-conflict-parts/lua/init.lua"}
 }
 

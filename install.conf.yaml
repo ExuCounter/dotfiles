@@ -7,12 +7,13 @@
 
 - link:
     # configuration
-    ~/.zshrc:
+    ~/.zshrc: zshrc
     ~/.gitconfig: .gitconfig
     ~/.tool-versions: .tool-versions
     ~/.zsh_history: .zsh_history
     ~/.tmux.conf:
     ~/.config/kitty/kitty.conf: kitty.conf
+    ~/.claude.json: .claude.json
     # zsh
     ~/.config/zsh/:
       glob: true
@@ -29,7 +30,7 @@
       force: true
       path: bin/*
     # tmux windows management
-    ~/teamocil/:
+    ~/.teamocil/:
       glob: true
       force: true
       path: teamocil/*

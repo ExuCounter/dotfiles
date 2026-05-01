@@ -9,3 +9,5 @@ email = 49032640+ExuCounter@users.noreply.github.com
   conflictstyle = diff3
 [mergetool]
 	prompt = false
+[url "git@github.com:"]
+	insteadOf = https://github.com/
