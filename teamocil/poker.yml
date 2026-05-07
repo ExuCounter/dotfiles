@@ -1,0 +1,12 @@
+name: poker
+windows:
+  - name: processes
+    root: ~/Desktop/projects/poker/
+    layout: tiled
+    panes:
+      - iex -S mix phx.server
+  - name: backend
+    root: ~/Desktop/projects/poker/
+    layout: tiled
+    panes:
+      - echo 'hi'

@@ -11,3 +11,5 @@ email = 49032640+ExuCounter@users.noreply.github.com
 	prompt = false
 [url "git@github.com:"]
 	insteadOf = https://github.com/
+[http]
+	sslcainfo = /path/to/cacert.pem

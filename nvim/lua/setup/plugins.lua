@@ -34,7 +34,7 @@ require("lazy").setup {
   "simeji/winresizer",
   -- Moves
   "rhysd/accelerated-jk",
-  "phaazon/hop.nvim",
+  "folke/flash.nvim",
   -- Syntax
   { "nvim-treesitter/nvim-treesitter" },
   { "JoosepAlviste/nvim-ts-context-commentstring", dependencies = { "nvim-treesitter/nvim-treesitter" } },
