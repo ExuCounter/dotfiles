@@ -1,0 +1,48 @@
+// Zed settings
+//
+// For information on how to configure Zed, see the Zed
+// documentation: https://zed.dev/docs/configuring-zed
+//
+// To see all of Zed's default settings without changing your
+// custom settings, run `zed: open default settings` from the
+// command palette (cmd-shift-p / ctrl-shift-p)
+{
+  "agent": {
+    "dock": "right",
+    "sidebar_side": "right",
+    "favorite_models": [],
+    "model_parameters": [],
+  },
+  "disable_ai": false,
+  "hover_popover_delay": 200,
+  "project_panel": {
+    "dock": "left",
+  },
+  "agent_servers": {
+    "claude-acp": {
+      "type": "registry",
+    },
+  },
+  "vim_mode": true,
+  "icon_theme": {
+    "mode": "dark",
+    "light": "Zed (Default)",
+    "dark": "Zed (Default)",
+  },
+  "ui_font_size": 16,
+  "buffer_font_size": 15,
+  "theme": {
+    "mode": "dark",
+    "light": "Solarized Light",
+    "dark": "Catppuccin Mocha",
+  },
+  "terminal": {
+    "default_height": 700,
+    "shell": {
+      "with_arguments": {
+        "program": "/bin/zsh", // or /bin/bash depending on your preference
+        "args": ["-c", "tmux new-session -A -s platform 'teamocil platform'"],
+      },
+    },
+  },
+}

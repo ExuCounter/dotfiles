@@ -11,3 +11,5 @@ email = volodymyr.potiichuk@prosapient.com
 	prompt = false
 [url "git@github.com:"]
 	insteadOf = https://github.com/
+[http]
+	sslcainfo = /Users/volodymyrpotiichuk/.netskope/cacert.pem

@@ -23,24 +23,26 @@ alias vi="nvim"
 alias code="nvim"
 
 ZSH_THEME="geoffgarside"
-ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=12'
 
-plugins=(git zsh-autosuggestions web-search dirhistory)
+# source ~/.zsh/catppuccin_mocha-zsh-syntax-highlighting.zsh
+
+plugins=(git zsh-syntax-highlighting zsh-autosuggestions web-search dirhistory)
 
 # export ASDF_DIR=$HOME/.asdf/
 export CARGO_DIR=$HOME/.cargo/
-export ZSH_DIR=$HOME/.oh-my-zsh/
 
 # export DIRENV_LOG_FORMAT=
-export EDITOR=nvim
+export EDITOR=zed
 export VISUAL="$EDITOR"
 
+export PKG_CONFIG_PATH="/opt/homebrew/opt/icu4c/lib/pkgconfig"
 export LUA_PATH=~/nvim/lua/?.lua
-export PATH=/opt/homebrew/opt/postgresql@15/bin:$HOME/.config/bin:/opt/homebrew/bin:$HOME/.iex-history:$HOME/elixir_ls:$HOME/bin:$PATH
+export HOMEBREW_PREFIX=/opt/homebrew
+export PATH=/opt/homebrew/opt/postgresql@15/bin:$HOME/.config/bin:/opt/homebrew/bin:$HOME/.iex-history:$HOME/elixir_ls:$HOME/bin:${ASDF_DATA_DIR:-$HOME/.asdf}:$HOME/.asdf/shims:$HOME/.rd/bin:$PATH
 
 eval "$(direnv hook zsh)"
 
-source $ZSH_DIR/oh-my-zsh.sh
+source ~/.oh-my-zsh/oh-my-zsh.sh
 # source $ASDF_DIR/asdf.sh
 # source $CARGO_DIR/env
 source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
@@ -53,7 +55,6 @@ setopt share_history
 
 source <(fzf --zsh)
 
-. /opt/homebrew/opt/asdf/libexec/asdf.sh
 export PATH="/opt/homebrew/opt/postgresql@15/bin:$PATH"
 alias pro_ops=/Users/volodymyr.potiichuk/Desktop/projects/prosapient/pro-ops/_build/prod/rel/bakeware/pro_ops
 
@@ -61,3 +62,12 @@ export AWS_PROFILE=platform-test
 alias pro_ops=/Users/volodymyr.potiichuk/Desktop/projects/prosapient/pro-ops/burrito_out/pro_ops_macos
 export PATH="/opt/homebrew/opt/postgresql@16/bin:$PATH"
 alias pro_ops=/Users/volodymyr.potiichuk/Desktop/projects/prosapient/pro-ops/burrito_out/pro_ops_macos
+
+function zed_tmux() {
+  SESSION=$(basename "$PWD")
+  tmux new-session -A -s $SESSION teamocil $SESSION
+}
+
+export HEX_CACERTS_PATH="$HOME/corp-ca.pem"
+export SSL_CERT_FILE="$HOME/corp-ca.pem"
+export NODE_EXTRA_CA_CERTS="$HOME/corp-ca.pem"

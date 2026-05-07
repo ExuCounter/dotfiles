@@ -126,13 +126,8 @@ local defaults = {
     ["<leader>7"] = "<cmd> lua require('bufferline').go_to_buffer(7, true)<cr>",
     ["<leader>8"] = "<cmd> lua require('bufferline').go_to_buffer(8, true)<cr>",
     ["<leader>9"] = "<cmd> lua require('bufferline').go_to_buffer(9, true)<cr>",
-    -- Hop
-    ["f"] = "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.AFTER_CURSOR, current_line_only = true })<cr>",
-    ["F"] = "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.BEFORE_CURSOR, current_line_only = true })<cr>",
-    ["t"] = "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.AFTER_CURSOR, current_line_only = true })<cr>",
-    ["T"] = "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.BEFORE_CURSOR, current_line_only = true })<cr>",
-    -- ["S"] = "<cmd>lua require'hop'.hint_char2()<cr>",
-    ["s"] = "<cmd>lua require'hop'.hint_char1()<cr>",
+    -- Flash (f/F/t/T are handled by flash's char mode)
+    ["s"] = "<cmd>lua require'flash'.jump()<cr>",
     -- DB
     ["<leader>db"] = ":DBUIToggle<cr>",
     -- Close buffers
@@ -200,12 +195,8 @@ local defaults = {
     ["<leader>dd"] = '"*dd',
     ["<leader>D"] = '"*D',
     ["p"] = '"_dP',
-    -- Hop
-    ["f"] = "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.AFTER_CURSOR, current_line_only = true })<cr>",
-    ["F"] = "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.BEFORE_CURSOR, current_line_only = true })<cr>",
-    ["t"] = "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.AFTER_CURSOR, current_line_only = true })<cr>",
-    ["T"] = "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.BEFORE_CURSOR, current_line_only = true })<cr>",
-    ["s"] = "<cmd>lua require'hop'.hint_char1()<cr>",
+    -- Flash (f/F/t/T are handled by flash's char mode)
+    ["s"] = "<cmd>lua require'flash'.jump()<cr>",
     -- Move lines
     ["∆"] = ":m '>+1<CR>gv-gv",
     ["˚"] = ":m '<-2<CR>gv-gv",
@@ -213,9 +204,7 @@ local defaults = {
     ["gc"] = "<Plug>Commentary",
   },
   operator_mode = {
-    -- Hop
-    ["f"] = "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.AFTER_CURSOR, current_line_only = true, inclusive_jump = true })<cr>",
-    ["F"] = "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.BEFORE_CURSOR, current_line_only = true, inclusive_jump = true })<cr>",
+    -- Flash's char mode handles f/F/t/T in operator-pending mode
   },
 }
 
