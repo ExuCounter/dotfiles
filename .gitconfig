@@ -6,7 +6,7 @@ email = volodymyr.potiichuk@prosapient.com
 
 [merge]
 	tool = vimdiff
-  conflictstyle = diff3
+	conflictStyle = diff3
 [mergetool]
 	prompt = false
 [url "git@github.com:"]

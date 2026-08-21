@@ -38,7 +38,7 @@ export VISUAL="$EDITOR"
 export PKG_CONFIG_PATH="/opt/homebrew/opt/icu4c/lib/pkgconfig"
 export LUA_PATH=~/nvim/lua/?.lua
 export HOMEBREW_PREFIX=/opt/homebrew
-export PATH=/opt/homebrew/opt/postgresql@15/bin:$HOME/.config/bin:/opt/homebrew/bin:$HOME/.iex-history:$HOME/elixir_ls:$HOME/bin:${ASDF_DATA_DIR:-$HOME/.asdf}:$HOME/.asdf/shims:$HOME/.rd/bin:$PATH
+export PATH=/opt/homebrew/opt/postgresql@15/bin:$HOME/.config/bin:/opt/homebrew/bin:$HOME/.iex-history:$HOME/elixir_ls:$HOME/bin:${ASDF_DATA_DIR:-$HOME/.asdf}:$HOME/.asdf/shims:$HOME/.rd/bin:$HOME/zig-macos-aarch64-0.14:$PATH
 
 eval "$(direnv hook zsh)"
 
@@ -71,3 +71,4 @@ function zed_tmux() {
 export HEX_CACERTS_PATH="$HOME/corp-ca.pem"
 export SSL_CERT_FILE="$HOME/corp-ca.pem"
 export NODE_EXTRA_CA_CERTS="$HOME/corp-ca.pem"
+alias pro_ops=/Users/volodymyrpotiichuk/Desktop/projects/prosapient/pro-ops/_build/prod/rel/pro_ops/bin/pro_ops

@@ -1,29 +1,62 @@
-local present, treesitter = pcall(require, "nvim-treesitter.configs")
+local present, nvim_treesitter = pcall(require, "nvim-treesitter")
 
 if not present then
   return
 end
 
-local function ts_disable(lang, bufnr)
-  return vim.api.nvim_buf_line_count(bufnr) > 5000 and lang == "tsx"
+local langs = {
+  "graphql",
+  "lua",
+  "javascript",
+  "typescript",
+  "tsx",
+  "elixir",
+  "heex",
+  "eex",
+  "html",
+  "css",
+}
+
+nvim_treesitter.install(langs)
+
+local ft_to_lang = {
+  typescriptreact = "tsx",
+  eelixir = "eex",
+}
+
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = {
+    "graphql",
+    "lua",
+    "javascript",
+    "typescript",
+    "typescriptreact",
+    "elixir",
+    "heex",
+    "eelixir",
+    "html",
+    "css",
+  },
+  callback = function(args)
+    local ft = vim.bo[args.buf].filetype
+    local lang = ft_to_lang[ft] or ft
+    if lang == "tsx" and vim.api.nvim_buf_line_count(args.buf) > 5000 then
+      return
+    end
+    pcall(vim.treesitter.start, args.buf, lang)
+    vim.bo[args.buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+  end,
+})
+
+local ok_ctx, ctx = pcall(require, "ts_context_commentstring")
+if ok_ctx then
+  ctx.setup {
+    enable = true,
+    enable_autocmd = false,
+  }
 end
 
-treesitter.setup {
-  ensure_installed = { "graphql", "lua", "javascript", "typescript", "elixir", "html", "css", "heex", "eex", "tsx" }, -- one of "all", "maintained" (parsers with maintainers), or a list of languages
-  highlight = {
-    enable = true, -- false will disable the whole extensions
-    disable = function(lang, bufnr)
-      return ts_disable(lang, bufnr)
-    end,
-    use_languagetree = true,
-  },
-  indent = { enable = true },
-  autotag = {
-    enable = true,
-  },
-}
-
-require("ts_context_commentstring").setup {
-  enable = true,
-  enable_autocmd = false,
-}
+local ok_autotag, autotag = pcall(require, "nvim-ts-autotag")
+if ok_autotag then
+  autotag.setup()
+end
