@@ -36,9 +36,9 @@ require("lazy").setup {
   "rhysd/accelerated-jk",
   "folke/flash.nvim",
   -- Syntax
-  { "nvim-treesitter/nvim-treesitter" },
-  { "JoosepAlviste/nvim-ts-context-commentstring", dependencies = { "nvim-treesitter/nvim-treesitter" } },
-  { "windwp/nvim-ts-autotag", dependencies = { "nvim-treesitter/nvim-treesitter" } },
+  { "nvim-treesitter/nvim-treesitter", build = ":TSUpdate" },
+  { "JoosepAlviste/nvim-ts-context-commentstring" },
+  { "windwp/nvim-ts-autotag" },
   -- CMP
   "hrsh7th/cmp-nvim-lsp",
   "hrsh7th/cmp-buffer",

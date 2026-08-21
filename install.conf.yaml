@@ -14,7 +14,8 @@
     ~/.tmux.conf:
     ~/.config/kitty/kitty.conf: kitty.conf
     ~/.claude.json: .claude.json
-    ~/.config/kitty/theme.conf: theme.con
+    ~/.config/kitty/theme.conf: theme.conf
+    ~/.config/herdr/config.toml: herdr.toml
     # zsh
     ~/.config/zsh/:
       glob: true

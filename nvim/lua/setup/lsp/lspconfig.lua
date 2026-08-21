@@ -113,10 +113,27 @@ vim.lsp.config("elixirls", {
   },
 })
 
+local function get_tsserver_path()
+  local paths = vim.fn.glob(
+    vim.fn.expand "~" .. "/.asdf/installs/nodejs/*/lib/node_modules/typescript/lib/tsserver.js",
+    false,
+    true
+  )
+  if #paths > 0 then
+    table.sort(paths)
+    return paths[#paths]
+  end
+end
+
 vim.lsp.config("ts_ls", {
   capabilities = M.capabilities,
   on_attach = M.on_attach,
   flags = M.lsp_flags,
+  init_options = {
+    tsserver = {
+      path = get_tsserver_path(),
+    },
+  },
 })
 
 vim.lsp.config("lua_ls", {
@@ -173,11 +190,11 @@ vim.lsp.config("pylsp", {
   },
 })
 
-vim.lsp.config("eslint", {
-  capabilities = M.capabilities,
-  on_attach = M.on_attach,
-  flags = M.lsp_flags,
-})
+-- vim.lsp.config("eslint", {
+--   capabilities = M.capabilities,
+--   on_attach = M.on_attach,
+--   flags = M.lsp_flags,
+-- })
 
 vim.lsp.config("dockerls", {
   capabilities = M.capabilities,
@@ -216,7 +233,7 @@ vim.lsp.enable("lua_ls")
 vim.lsp.enable("sqlls")
 -- vim.lsp.enable("tailwindcss")
 vim.lsp.enable("pylsp")
-vim.lsp.enable("eslint")
+-- vim.lsp.enable("eslint")
 vim.lsp.enable("dockerls")
 vim.lsp.enable("docker_compose_language_service")
 vim.lsp.enable("elp")
