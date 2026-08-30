@@ -17,6 +17,7 @@
     ~/.claude/settings.json: claude/settings.json
     ~/.claude/hooks/glow-preview.sh: claude/hooks/glow-preview.sh
     ~/.claude/hooks/hunk-review.sh: claude/hooks/hunk-review.sh
+    ~/.claude/hooks/mark-edit.sh: claude/hooks/mark-edit.sh
     ~/.config/glow/solarized-light.json: glow/solarized-light.json
     ~/.config/kitty/theme.conf: theme.conf
     ~/.config/herdr/config.toml: herdr.toml

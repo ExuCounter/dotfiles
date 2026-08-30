@@ -39,6 +39,11 @@
             "type": "command",
             "command": "bash \"$HOME/.claude/hooks/glow-preview.sh\"",
             "timeout": 5
+          },
+          {
+            "type": "command",
+            "command": "bash \"$HOME/.claude/hooks/mark-edit.sh\"",
+            "timeout": 2
           }
         ]
       }
