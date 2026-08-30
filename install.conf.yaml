@@ -14,6 +14,10 @@
     ~/.tmux.conf:
     ~/.config/kitty/kitty.conf: kitty.conf
     ~/.claude.json: .claude.json
+    ~/.claude/settings.json: claude/settings.json
+    ~/.claude/hooks/glow-preview.sh: claude/hooks/glow-preview.sh
+    ~/.claude/hooks/hunk-review.sh: claude/hooks/hunk-review.sh
+    ~/.config/glow/solarized-light.json: glow/solarized-light.json
     ~/.config/kitty/theme.conf: theme.conf
     ~/.config/herdr/config.toml: herdr.toml
     # zsh
@@ -67,3 +71,9 @@
             ln -sfn "$f" "$HOME/RaycastScripts/$(basename "$f")"
           done
       description: Symlink Raycast-tagged scripts from ~/.config/bin into ~/RaycastScripts (visible folder)
+    - command: |
+        if command -v herdr >/dev/null 2>&1; then
+          mkdir -p "$HOME/.claude/skills/use-herdr"
+          herdr --skill > "$HOME/.claude/skills/use-herdr/SKILL.md"
+        fi
+      description: Refresh the use-herdr skill from the installed herdr binary
