@@ -16,4 +16,4 @@ elixir_prompt_info() {
   done
 }
 
-PROMPT='[%*] %{$fg[cyan]%}%n%{$reset_color%}:%{$fg[green]%}%c%{$reset_color%}$(git_prompt_info)$(elixir_prompt_info) %(!.#.$) '
+PROMPT='[%*] %{$fg[green]%}%c%{$reset_color%}$(git_prompt_info)$(elixir_prompt_info) %(!.#.$) '
