@@ -46,6 +46,12 @@ if [ -z "$pane_id" ] || [ "$pane_id" = "null" ]; then
 fi
 
 style="$HOME/.config/glow/solarized-light.json"
+
+# If the previous glow left `less` open, quit it. At a shell prompt this
+# just runs the bogus command `q` (harmless "command not found").
+herdr pane send-keys "$pane_id" q enter 2>/dev/null || true
+herdr pane run "$pane_id" clear 2>/dev/null || true
+
 if [ -f "$style" ]; then
   herdr pane run "$pane_id" glow -s "$style" -p "$file_path" >/dev/null 2>&1 || true
 else
