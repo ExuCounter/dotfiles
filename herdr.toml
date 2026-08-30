@@ -1,3 +1,70 @@
+onboarding = false
 [theme]
 name = "solarized"
 auto_switch = true
+
+[keys]
+prefix = "ctrl+a"
+
+split_vertical = "prefix+v"
+split_horizontal = "prefix+s"
+
+reload_config = "prefix+shift+i"
+close_pane = "prefix+x"
+close_workspace = "prefix+shift+x"
+
+last_pane = "prefix+0"
+workspace_picker = "prefix+w"
+
+previous_tab = "prefix+h"
+next_tab = "prefix+l"
+
+previous_agent = "prefix+k"
+next_agent = "prefix+j"
+focus_agent = "prefix+ctrl+1..9"
+
+navigate_workspace_up = "k"
+navigate_workspace_down = "j"
+navigate_pane_up = "K"
+navigate_pane_down = "J"
+
+[[keys.command]]
+key = "prefix+f"
+type = "popup"
+command = "~/.config/fzf_herdr_workspaces/bin/fzf_herdr_workspaces.sh"
+width = "75%"
+height = "50%"
+
+# Smart pane navigation: focus neighbor pane, or spill to prev/next workspace at edge.
+[[keys.command]]
+key = "ctrl+h"
+type = "shell"
+command = "~/.config/herdr_layouts/smart_pane_nav.sh left"
+
+[[keys.command]]
+key = "ctrl+j"
+type = "shell"
+command = "~/.config/herdr_layouts/smart_pane_nav.sh down"
+
+[[keys.command]]
+key = "ctrl+k"
+type = "shell"
+command = "~/.config/herdr_layouts/smart_pane_nav.sh up"
+
+[[keys.command]]
+key = "ctrl+l"
+type = "shell"
+command = "~/.config/herdr_layouts/smart_pane_nav.sh right"
+
+[ui]
+tab_bar_right = [
+  { type = "command", command = "n=$(herdr agent list | jq -r '[.result.agents[] | select(.agent_status==\"blocked\")] | length'); [ \"$n\" -gt 0 ] && printf '🔴 %s agents waiting' \"$n\"", interval_seconds = 2 },
+  { type = "command", command = "top -l 1 -n 0 | awk '/CPU usage/ {printf \"CPU %.0f%%\", $3+$5}'", interval_seconds = 5 },
+  { type = "command", command = "pmset -g batt | awk '/InternalBattery/ {for (i=1;i<=NF;i++) if ($i ~ /%/) {gsub(\";\",\"\",$i); print \"Bat \"$i; exit}}'", interval_seconds = 30 },
+  { type = "datetime", format = "%d/%m/%y %a %H:%M:%S" },
+]
+tab_bar_right_separator = " | "
+
+[ui.toast]
+delivery = "terminal"
+delay_seconds = 1

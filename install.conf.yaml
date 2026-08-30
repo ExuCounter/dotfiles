@@ -41,6 +41,16 @@
       glob: true
       force: true
       path: fzf_tmux_sessions/*
+    # herdr layout scripts (teamocil replacement)
+    ~/.config/herdr_layouts/:
+      glob: true
+      force: true
+      path: herdr_layouts/*
+    # fzf herdr workspace switcher (bound to prefix+f)
+    ~/.config/fzf_herdr_workspaces/:
+      glob: true
+      force: true
+      path: fzf_herdr_workspaces/*
     # nvim
     ~/.config/nvim/:
       glob: true
@@ -50,3 +60,10 @@
     ~/.config/nvim/init.lua: nvim/lua/init.lua
 - shell:
     - [git submodule update --init --recursive, Installing submodules]
+    - command: |
+        mkdir -p "$HOME/RaycastScripts"
+        find "$HOME/.config/bin" -maxdepth 1 -type f -name '*.sh' -exec grep -l '@raycast.schemaVersion' {} \; |
+          while IFS= read -r f; do
+            ln -sfn "$f" "$HOME/RaycastScripts/$(basename "$f")"
+          done
+      description: Symlink Raycast-tagged scripts from ~/.config/bin into ~/RaycastScripts (visible folder)
