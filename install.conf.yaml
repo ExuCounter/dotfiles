@@ -15,11 +15,13 @@
     ~/.config/kitty/kitty.conf: kitty.conf
     ~/.claude.json: .claude.json
     ~/.claude/settings.json: claude/settings.json
+    ~/.claude/statusline-command.sh: claude/statusline-command.sh
     ~/.claude/hooks/glow-preview.sh: claude/hooks/glow-preview.sh
     ~/.claude/hooks/hunk-review.sh: claude/hooks/hunk-review.sh
     ~/.claude/hooks/mark-edit.sh: claude/hooks/mark-edit.sh
     ~/.claude/skills/spawn-worktree/SKILL.md: claude/skills/spawn-worktree/SKILL.md
     ~/.claude/skills/drop-worktree/SKILL.md: claude/skills/drop-worktree/SKILL.md
+    ~/.claude/skills/open-workspace/SKILL.md: claude/skills/open-workspace/SKILL.md
     ~/.config/glow/solarized-light.json: glow/solarized-light.json
     ~/.config/kitty/theme.conf: theme.conf
     ~/.config/herdr/config.toml: herdr.toml

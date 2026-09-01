@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
-# PostToolUse hook: preview .md files Claude writes in a dedicated glow pane.
-# Reuses the same pane across fires via herdr's durable pane title.
+# PostToolUse hook: preview each .md file Claude writes in its own herdr tab,
+# labeled by the file's basename so you can flip between recent previews.
+# Re-firing on the same file reloads that tab; other files get their own tab.
 # No-ops outside a herdr session.
 
 set -eu
@@ -25,30 +26,36 @@ case "$file_path" in
 esac
 
 [ "${HERDR_ENV:-}" = "1" ] || exit 0
-[ -n "${HERDR_PANE_ID:-}" ] || exit 0
 [ -n "${HERDR_WORKSPACE_ID:-}" ] || exit 0
 command -v herdr >/dev/null 2>&1 || exit 0
 command -v glow >/dev/null 2>&1 || exit 0
 command -v jq >/dev/null 2>&1 || exit 0
 
-pane_title="glow-preview"
-source_id="glow-preview-hook"
+base="$(basename "$file_path")"
+# Trim to a sane tab label length.
+label="${base:0:40}"
 
-pane_id="$(herdr pane list --workspace "$HERDR_WORKSPACE_ID" 2>/dev/null \
-  | jq -r --arg t "$pane_title" '.result.panes[]? | select(.title == $t) | .pane_id' \
+# Find an existing tab with this label.
+tab_id="$(herdr tab list --workspace "$HERDR_WORKSPACE_ID" 2>/dev/null \
+  | jq -r --arg l "$label" '.result.tabs[]? | select(.label == $l) | .tab_id' \
   | head -1)"
 
-if [ -z "$pane_id" ] || [ "$pane_id" = "null" ]; then
-  pane_id="$(herdr pane split --pane "$HERDR_PANE_ID" --direction right --no-focus 2>/dev/null \
-    | jq -r '.result.pane.pane_id // empty')"
-  [ -n "$pane_id" ] || exit 0
-  herdr pane report-metadata "$pane_id" --source "$source_id" --title "$pane_title" >/dev/null 2>&1 || true
+if [ -z "$tab_id" ] || [ "$tab_id" = "null" ]; then
+  cwd_dir="$(dirname "$file_path")"
+  tab_id="$(herdr tab create --workspace "$HERDR_WORKSPACE_ID" --label "$label" --cwd "$cwd_dir" --no-focus 2>/dev/null \
+    | jq -r '.result.tab.tab_id // empty')"
+  [ -n "$tab_id" ] || exit 0
 fi
+
+# Grab the (first) pane belonging to that tab.
+pane_id="$(herdr pane list --workspace "$HERDR_WORKSPACE_ID" 2>/dev/null \
+  | jq -r --arg t "$tab_id" '.result.panes[]? | select(.tab_id == $t) | .pane_id' \
+  | head -1)"
+[ -n "$pane_id" ] || exit 0
 
 style="$HOME/.config/glow/solarized-light.json"
 
-# If the previous glow left `less` open, quit it. At a shell prompt this
-# just runs the bogus command `q` (harmless "command not found").
+# If a previous glow left `less` open, exit it before reloading.
 herdr pane send-keys "$pane_id" q enter 2>/dev/null || true
 herdr pane run "$pane_id" clear 2>/dev/null || true
 
