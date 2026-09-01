@@ -3,21 +3,6 @@
     "defaultMode": "auto"
   },
   "model": "claude-opus-4-7",
-  "enabledPlugins": {
-    "feature-dev@claude-plugins-official": true,
-    "typescript-lsp@claude-plugins-official": true,
-    "mcp-server-dev@claude-plugins-official": true,
-    "datadog@claude-plugins-official": true
-  },
-  "effortLevel": "high",
-  "skipAutoPermissionPrompt": true,
-  "theme": "auto",
-  "mcpServers": {
-    "tidewave": {
-      "type": "http",
-      "url": "http://localhost:4000/tidewave/mcp"
-    }
-  },
   "hooks": {
     "SessionStart": [
       {
@@ -63,5 +48,30 @@
   },
   "worktree": {
     "baseRef": "fresh"
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "bash \"$HOME/.claude/statusline-command.sh\""
+  },
+  "enabledPlugins": {
+    "feature-dev@claude-plugins-official": true,
+    "typescript-lsp@claude-plugins-official": true,
+    "mcp-server-dev@claude-plugins-official": true,
+    "datadog@claude-plugins-official": true
+  },
+  "effortLevel": "high",
+  "tui": "fullscreen",
+  "voice": {
+    "enabled": false,
+    "mode": "hold"
+  },
+  "theme": "auto",
+  "skipAutoPermissionPrompt": true,
+  "voiceEnabled": false,
+  "mcpServers": {
+    "tidewave": {
+      "type": "http",
+      "url": "http://localhost:4000/tidewave/mcp"
+    }
   }
 }
