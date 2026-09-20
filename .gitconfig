@@ -4,6 +4,8 @@
 name = Vova Potiichuk
 email = volodymyr.potiichuk@prosapient.com
 
+[core]
+	excludesFile = ~/.gitignore_global
 [merge]
 	tool = vimdiff
 	conflictStyle = diff3

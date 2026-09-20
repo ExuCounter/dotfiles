@@ -54,14 +54,14 @@ Always create a new tab in the workspace and start a Claude session in it — th
 herdr tab create --workspace <workspace-id> --focus
 ```
 
-Parse `.result.root_pane.pane_id` from the response. Then wait for the shell to initialise and start Claude:
+Parse `.result.root_pane.pane_id` from the response. `agent start` polls for shell
+readiness internally — don't sleep first, just call it with a generous timeout:
 
 ```bash
-sleep 2
-herdr agent start <unique-name> --kind claude --pane <root-pane-id>
+herdr agent start <unique-name> --kind claude --pane <root-pane-id> --timeout 15000
 ```
 
-Pick `<unique-name>` from the workspace label plus a short suffix if needed (agent names must be unique among live agents). If `agent start` errors with "pane not at prompt", sleep 2 more seconds and retry once.
+Pick `<unique-name>` from the workspace label plus a short suffix if needed (agent names must be unique among live agents).
 
 ## Report back
 
