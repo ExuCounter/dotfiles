@@ -85,6 +85,32 @@ that worktree — with nothing to indicate anything was wrong. A hook can't be f
 it just runs. If you want to check whether anything is stuck undelivered right now,
 `herdr-worktree-wake.sh status` reports it instantly.
 
+## What arrives in your terminal, and how to answer it
+
+When that worktree session ends a turn with a `[worktree-status: ...]` marker, a single
+line is delivered into your pane, shaped like this:
+
+```
+[auto] worktree fix/foo (pane w1B:p1): [worktree-status: needs-decision] 3 questions ready, see above | full message: /Users/you/.herdr/worktree-relay/fix-foo/1758…-needs-decision.md — read that file for the complete content; the worktree pane's scrollback cannot be read back (Claude runs on the terminal's alternate screen) | reply with: herdr agent prompt w1B:p1 "<your answer>"
+```
+
+Three parts, and all three matter:
+
+1. **The marker**, inline — enough to tell what kind of interruption this is without
+   reading anything.
+2. **A relay file path** holding that turn's *complete* response text. `cat` it. This is
+   the whole content, questions and all — you never need to fetch anything from the
+   worktree pane or ask that session to repeat itself.
+3. **A ready-to-run reply command**, pane id already filled in.
+
+Do **not** try `herdr pane read <pane>` to recover the worktree's output. It will return
+a truncated tail no matter what `--lines` you pass: Claude Code runs on the terminal's
+alternate screen, and herdr's own docs state that rows leaving the alternate screen never
+enter host scrollback. That is exactly why the content is pushed to a file instead.
+
+Then: relay the questions to the user **one at a time** (`AskUserQuestion`), per the
+global CLAUDE.md rule, and send each answer back with the command from part 3.
+
 ## Report back
 
 One line: which worktree/branch the idea went to, whether that session was `working`
