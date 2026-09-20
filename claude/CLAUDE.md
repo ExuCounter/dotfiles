@@ -55,6 +55,9 @@ more than a few minutes:
    me. Do all investigation and grilling in the new worktree, not just the eventual
    edits, so my main terminal never runs a single command for this task; it stays free
    for something else.
+4. **If it's a frontend change, preview it visually before implementing** — see
+   "Frontend changes" below. This happens inside the worktree too, and its
+   `needs-decision` marker carries the Artifact URL back to me.
 
 This applies whenever `HERDR_ENV=1`; outside a herdr session `spawn-worktree`'s own
 preconditions will refuse, so just grill and work in the current checkout instead.
@@ -101,6 +104,27 @@ Never ask the main session to read your pane's scrollback, and never expect it t
 Code runs on the terminal's alternate screen, so `herdr pane read` returns a truncated
 tail no matter what `--lines` it passes — rows that leave the alternate screen are gone.
 The relay file exists precisely because that read cannot work.
+
+## Frontend changes — preview before building
+
+When a task changes what I'd see in a browser, do not go straight to code. Use the
+`frontend-preview` skill first: it captures the current state, mocks up 2-3 directions
+using the project's real design tokens, and publishes one Artifact page with before,
+after, and the options side by side. Then it stops and waits for me to pick.
+
+The test for whether this applies is one question: **would a screenshot of the app look
+different after this change?** New page, redesign, layout, component, styling, or copy
+on a visible surface — yes. Renamed route, query tuning, a test, build config — no, even
+if the request mentions a UI word in passing.
+
+Skip it — out loud, in one line, never silently — when the change has exactly one
+sensible form (a typo, a colour I already named), when I gave you a mock or screenshot
+to match, or when I say to just build it.
+
+While waiting for my pick, write **no** implementation code, not even the scaffolding.
+Pre-building your recommended option skips this step while appearing to follow it. This
+gate comes before the TDD cycle below: pick the direction first, then write the failing
+test for it.
 
 ## TDD is mandatory
 
