@@ -82,6 +82,26 @@ screen-detected idle/blocked state alone:
 Always the last line, always exactly one of the two. Don't add this in the user's main
 terminal — only in a session that was spawned into or routed to a worktree.
 
+**Your whole response body reaches them — write it for them, not for this pane.** When
+the marker fires, the `Stop` hook saves your *entire* final message to a relay file under
+`~/.herdr/worktree-relay/<branch>/` and the notification delivered to the main session
+carries that path. So "see above" is a real pointer, not a dead one: the main session
+reads the full text from the file, with nothing fetched from this pane and nothing you
+have to repeat.
+
+Two things follow from that:
+
+- Put the complete content in the response body — every question, every option, every
+  recommendation, spelled out. Don't compress it down on the assumption that only the
+  marker travels. It all travels.
+- Make the body self-contained, the same way the "Context re-entry" rule asks. The person
+  reading it is in a different terminal with none of this session's scrollback.
+
+Never ask the main session to read your pane's scrollback, and never expect it to. Claude
+Code runs on the terminal's alternate screen, so `herdr pane read` returns a truncated
+tail no matter what `--lines` it passes — rows that leave the alternate screen are gone.
+The relay file exists precisely because that read cannot work.
+
 ## TDD is mandatory
 
 Every change follows **failing test first → implement → verify**:
