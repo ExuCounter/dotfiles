@@ -2,7 +2,7 @@
   "permissions": {
     "defaultMode": "auto"
   },
-  "model": "claude-opus-4-7",
+  "model": "opus[1m]",
   "hooks": {
     "SessionStart": [
       {
@@ -12,6 +12,11 @@
             "type": "command",
             "command": "bash \"$HOME/.claude/hooks/herdr-agent-state.sh\" session",
             "timeout": 10
+          },
+          {
+            "type": "command",
+            "command": "bash \"$HOME/.claude/hooks/herdr-worktree-resume.sh\"",
+            "timeout": 5
           }
         ]
       }
@@ -41,6 +46,11 @@
             "type": "command",
             "command": "bash \"$HOME/.claude/hooks/hunk-review.sh\"",
             "timeout": 5
+          },
+          {
+            "type": "command",
+            "command": "bash \"$HOME/.claude/hooks/herdr-worktree-notify.sh\"",
+            "timeout": 5
           }
         ]
       }
@@ -59,7 +69,7 @@
     "mcp-server-dev@claude-plugins-official": true,
     "datadog@claude-plugins-official": true
   },
-  "effortLevel": "high",
+  "effortLevel": "medium",
   "tui": "fullscreen",
   "voice": {
     "enabled": false,
@@ -67,6 +77,33 @@
   },
   "theme": "auto",
   "skipAutoPermissionPrompt": true,
+  "autoMode": {
+    "environment": [
+      "### Org-wide",
+      "(removed)",
+      "(removed)",
+      "(removed)",
+      "(removed)",
+      "(removed)",
+      "(removed)",
+      "(removed)",
+      "(removed)",
+      "(removed)",
+      "(removed)",
+      "(removed)",
+      "(removed)",
+      "(removed)",
+      "(removed)",
+      "(removed)",
+      "(removed)",
+      "(removed)",
+      "(removed)",
+      "### User-specific",
+      "(removed)",
+      "(removed)",
+      "(removed)"
+    ]
+  },
   "voiceEnabled": false,
   "mcpServers": {
     "tidewave": {

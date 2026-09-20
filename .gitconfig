@@ -4,6 +4,8 @@
 name = Vova Potiichuk
 email = 49032640+ExuCounter@users.noreply.github.com
 
+[core]
+	excludesFile = ~/.gitignore_global
 [merge]
 	tool = vimdiff
 	conflictStyle = diff3

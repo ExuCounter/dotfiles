@@ -1,0 +1,3 @@
+# Personal ignores that apply across every repo, kept out of tracked .gitignore
+# files so they don't show up for collaborators. Managed via dotfiles + dotbot.
+/worktrees/
