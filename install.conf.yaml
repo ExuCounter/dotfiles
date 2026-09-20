@@ -29,6 +29,7 @@
     ~/.claude/skills/grilling/SKILL.md: claude/skills/grilling/SKILL.md
     ~/.claude/skills/grill-me/SKILL.md: claude/skills/grill-me/SKILL.md
     ~/.claude/skills/send-to-worktree/SKILL.md: claude/skills/send-to-worktree/SKILL.md
+    ~/.claude/skills/frontend-preview/SKILL.md: claude/skills/frontend-preview/SKILL.md
     ~/.config/glow/solarized-light.json: glow/solarized-light.json
     ~/Library/Preferences/glow/glow.yml: glow/glow.yml
     ~/.config/kitty/theme.conf: theme.conf
