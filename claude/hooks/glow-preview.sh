@@ -1,8 +1,7 @@
 #!/usr/bin/env bash
-# PostToolUse hook: preview each .md file Claude writes in its own herdr tab,
-# labeled by the file's basename so you can flip between recent previews.
-# Re-firing on the same file reloads that tab; other files get their own tab.
-# No-ops outside a herdr session.
+# PostToolUse hook: preview the .md file Claude writes in a single, fixed
+# herdr tab. Every write — regardless of which file — reloads that same tab
+# instead of spawning a new one. No-ops outside a herdr session.
 
 set -eu
 
@@ -31,9 +30,7 @@ command -v herdr >/dev/null 2>&1 || exit 0
 command -v glow >/dev/null 2>&1 || exit 0
 command -v jq >/dev/null 2>&1 || exit 0
 
-base="$(basename "$file_path")"
-# Trim to a sane tab label length.
-label="${base:0:40}"
+label="glow-preview"
 
 # Find an existing tab with this label.
 tab_id="$(herdr tab list --workspace "$HERDR_WORKSPACE_ID" 2>/dev/null \
