@@ -38,7 +38,7 @@ export VISUAL="$EDITOR"
 export PKG_CONFIG_PATH="/opt/homebrew/opt/icu4c/lib/pkgconfig"
 export LUA_PATH=~/nvim/lua/?.lua
 export HOMEBREW_PREFIX=/opt/homebrew
-export PATH=/opt/homebrew/opt/postgresql@15/bin:$HOME/.config/bin:/opt/homebrew/bin:$HOME/.iex-history:$HOME/elixir_ls:$HOME/bin:${ASDF_DATA_DIR:-$HOME/.asdf}:$HOME/.asdf/shims:$HOME/.rd/bin:$HOME/zig-macos-aarch64-0.14:$PATH
+export PATH=$HOME/.asdf/shims:${ASDF_DATA_DIR:-$HOME/.asdf}/bin:/opt/homebrew/opt/postgresql@15/bin:$HOME/.config/bin:/opt/homebrew/bin:$HOME/.iex-history:$HOME/elixir_ls:$HOME/bin:$HOME/.rd/bin:$HOME/zig-macos-aarch64-0.14:$PATH
 
 eval "$(direnv hook zsh)"
 
