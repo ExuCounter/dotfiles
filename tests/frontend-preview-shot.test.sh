@@ -144,4 +144,11 @@ teardown
 
 echo
 echo "$pass passed, $fail failed"
+
+# This file keeps its own counters (it predates tests/lib.sh), so hand them to
+# the shared tally run.sh reads — without this the runner counts zero and stays
+# green no matter what happens in here.
+TESTS_RUN=$((TESTS_RUN + pass + fail))
+TESTS_FAILED=$((TESTS_FAILED + fail))
+
 [ "$fail" -eq 0 ]
