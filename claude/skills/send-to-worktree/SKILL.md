@@ -69,50 +69,39 @@ user's current terminal never blocks on the routed session's work.
 Write the idea the way the user phrased it; don't compress it into a shorter summary
 that drops detail the other session will need.
 
-## Nothing else to do — the hook handles the reply
+## Checking on it — nothing will interrupt you
 
-The routed session may hit a decision point that needs the user before it can act on
-this, or it may just finish. **You don't need to launch or relaunch anything** — a
-global `Stop` hook (`herdr-worktree-notify.sh`, dotfiles-managed) fires on every
-completed turn in every session and checks for the `[worktree-status: ...]` marker
-automatically, as long as the worktree already has a `.herdr-worktree-meta` file at its
-root (written once by `spawn-worktree` when it was created).
+The new session may hit a decision point that needs the user — a `grilling` question,
+anything it can't resolve alone — or it may just finish. **Nothing will tell you when
+that happens.** The bash relay that used to push a notification into your pane has been
+removed, and Whiska's owl has not yet grown the half that delivers a collected question
+to the main session.
 
-This matters specifically because of how the previous design broke: it required
-relaunching a one-shot watcher after *every single reply*, and a coordinating session
-that sent the reply but forgot that step silently killed all future notifications for
-that worktree — with nothing to indicate anything was wrong. A hook can't be forgotten;
-it just runs. If you want to check whether anything is stuck undelivered right now,
-`herdr-worktree-wake.sh status` reports it instantly.
+So the worktree writes, and you go and look. Every turn there ends with a
+`[worktree-status: ...]` marker (the global "Worktree status marker" rule), and its whole
+final message — questions, options, recommendations — is written to that repo's doorstep
+by Whiska's `Stop` hook, whether or not the owl is running:
 
-## What arrives in your terminal, and how to answer it
-
-When that worktree session ends a turn with a `[worktree-status: ...]` marker, a single
-line is delivered into your pane, shaped like this:
-
-```
-[auto] worktree fix/foo (pane w1B:p1): [worktree-status: needs-decision] 3 questions ready, see above | full message: /Users/you/.herdr/worktree-relay/fix-foo/1758…-needs-decision.md — read that file for the complete content; the worktree pane's scrollback cannot be read back (Claude runs on the terminal's alternate screen) | reply with: herdr agent prompt w1B:p1 "<your answer>"
+```bash
+ls <main-checkout>/.git/whiska/doorstep/*.json     # still waiting
 ```
 
-Three parts, and all three matter:
+A `.collected` suffix means the owl has already filed it as a question in that repo's
+house. Neither state pings you.
 
-1. **The marker**, inline — enough to tell what kind of interruption this is without
-   reading anything.
-2. **A relay file path** holding that turn's *complete* response text. `cat` it. This is
-   the whole content, questions and all — you never need to fetch anything from the
-   worktree pane or ask that session to repeat itself.
-3. **A ready-to-run reply command**, pane id already filled in.
+Practically, that means: when you have handed work to a worktree and have nothing else to
+do, check on it rather than assuming silence is progress. `herdr agent prompt <pane-id>
+"<your answer>"` is still how you reply — `herdr worktree list` and the pane id from the
+create response are how you find it.
 
-Do **not** try `herdr pane read <pane>` to recover the worktree's output. It will return
-a truncated tail no matter what `--lines` you pass: Claude Code runs on the terminal's
-alternate screen, and herdr's own docs state that rows leaving the alternate screen never
-enter host scrollback. That is exactly why the content is pushed to a file instead.
-
-Then: relay the questions to the user **one at a time** (`AskUserQuestion`), per the
-global CLAUDE.md rule, and send each answer back with the command from part 3.
+Do **not** try `herdr pane read <pane>` to recover what the session said. It returns a
+truncated tail no matter what `--lines` you pass: Claude Code runs on the terminal's
+alternate screen, and rows that leave it never enter host scrollback. The doorstep entry
+is the full text; the pane is not.
 
 ## Report back
 
-One line: which worktree/branch the idea went to, whether that session was `working`
-(queued) or free to pick it up immediately, and that you'll flag it here if it needs
-anything. Do not linger, do not start investigating the idea yourself here.
+One line: which worktree/branch the idea went to, and whether that session was `working`
+(queued) or free to pick it up immediately. Say plainly that nothing will interrupt the
+user when it needs something — offer to check on it instead. Do not linger, do not start
+investigating the idea yourself here.

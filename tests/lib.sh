@@ -67,20 +67,12 @@ assert_no_file() {
 
 # --- sandbox ----------------------------------------------------------------
 
-# Fresh sandbox per test: temp HOME, empty queue, empty relay dir, mock herdr
-# that logs every invocation and can be told to fail a fixed number of times.
+# Fresh sandbox per test: temp HOME and a mock herdr that logs every invocation
+# and can be told to fail a fixed number of times.
 setup_sandbox() {
   SANDBOX="$(mktemp -d)"
   export HOME="$SANDBOX/home"
   mkdir -p "$HOME/.herdr"
-  export HERDR_WAKE_QUEUE="$HOME/.herdr/worktree-wake-queue"
-  export HERDR_WAKE_LOCK="$SANDBOX/lock"
-  export HERDR_WAKE_RELAY_DIR="$HOME/.herdr/worktree-relay"
-  # Keep retries fast so a "delivery fails" test finishes in milliseconds
-  # instead of the 60s the production defaults would take.
-  export HERDR_WAKE_RETRIES=2
-  export HERDR_WAKE_RETRY_SLEEP=0
-
   MOCK_BIN="$SANDBOX/bin"
   mkdir -p "$MOCK_BIN"
   export MOCK_HERDR_LOG="$SANDBOX/herdr-calls.log"
@@ -116,5 +108,3 @@ herdr_fail_next() { echo "$1" > "$MOCK_HERDR_FAIL_FILE"; }
 herdr_prompt_calls() { grep '^agent prompt ' "$MOCK_HERDR_LOG" 2>/dev/null || true; }
 herdr_prompt_count() { herdr_prompt_calls | grep -c . || true; }
 
-WAKE="$REPO_ROOT/bin/herdr-worktree-wake.sh"
-NOTIFY_HOOK="$REPO_ROOT/claude/hooks/herdr-worktree-notify.sh"

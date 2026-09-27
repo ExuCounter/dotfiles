@@ -2,7 +2,7 @@
   "permissions": {
     "defaultMode": "auto"
   },
-  "model": "opus[1m]",
+  "model": "claude-fable-5-1[1m]",
   "hooks": {
     "SessionStart": [
       {
@@ -12,11 +12,6 @@
             "type": "command",
             "command": "bash \"$HOME/.claude/hooks/herdr-agent-state.sh\" session",
             "timeout": 10
-          },
-          {
-            "type": "command",
-            "command": "bash \"$HOME/.claude/hooks/herdr-worktree-resume.sh\"",
-            "timeout": 5
           }
         ]
       }
@@ -45,11 +40,6 @@
           {
             "type": "command",
             "command": "bash \"$HOME/.claude/hooks/hunk-review.sh\"",
-            "timeout": 5
-          },
-          {
-            "type": "command",
-            "command": "bash \"$HOME/.claude/hooks/herdr-worktree-notify.sh\"",
             "timeout": 5
           }
         ]

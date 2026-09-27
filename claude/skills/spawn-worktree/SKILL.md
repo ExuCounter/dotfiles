@@ -80,66 +80,40 @@ Write the task text the way the user described it — don't summarize it into so
 thinner. If there was no specific task (the user just wanted an empty worktree), skip
 this step.
 
-## Register it for notifications
+## Checking on it — nothing will interrupt you
 
 The new session may hit a decision point that needs the user — a `grilling` question,
-anything it can't resolve alone — or it may just finish. Notifications are handled by a
-global `Stop` hook (`herdr-worktree-notify.sh`, dotfiles-managed), which fires on every
-completed turn in every session and checks for the `[worktree-status: ...]` marker (see
-the global "Worktree status marker" rule) automatically — nothing to launch here, and
-nothing that needs relaunching after every reply. Your only job is to mark the worktree
-so the hook recognizes it. Get your own pane id first:
+anything it can't resolve alone — or it may just finish. **Nothing will tell you when
+that happens.** The bash relay that used to push a notification into your pane has been
+removed, and Whiska's owl has not yet grown the half that delivers a collected question
+to the main session.
+
+So the worktree writes, and you go and look. Every turn there ends with a
+`[worktree-status: ...]` marker (the global "Worktree status marker" rule), and its whole
+final message — questions, options, recommendations — is written to that repo's doorstep
+by Whiska's `Stop` hook, whether or not the owl is running:
 
 ```bash
-herdr pane current | jq -r '.result.pane.pane_id'
+ls <main-checkout>/.git/whiska/doorstep/*.json     # still waiting
 ```
 
-Then write a small meta file at the worktree's root — this is what tells the hook
-"this session belongs to a worktree, and here's where to send updates":
+A `.collected` suffix means the owl has already filed it as a question in that repo's
+house. Neither state pings you.
 
-```bash
-printf '%s\t%s\t%s\n' "<branch-name>" "<root-pane-id>" "<your-own-pane-id>" > worktrees/<branch-name>/.herdr-worktree-meta
-```
+Practically, that means: when you have handed work to a worktree and have nothing else to
+do, check on it rather than assuming silence is progress. `herdr agent prompt <pane-id>
+"<your answer>"` is still how you reply — `herdr worktree list` and the pane id from the
+create response are how you find it.
 
-That's it — the hook does the rest, using the same durable queue (`herdr-worktree-wake.sh`)
-so a notification survives even if your main pane is busy at the exact moment it fires,
-and retries delivery instead of dropping it silently. If you want to check whether
-anything is stuck undelivered, `herdr-worktree-wake.sh status` reports it instantly. A
-`SessionStart` hook already calls `herdr-worktree-wake.sh resume` on every new session,
-which retries anything still stuck — useful if your main pane was unreachable (you'd
-quit Claude) when a notification first tried to arrive.
-
-One real limitation, stated plainly: this only fires when a turn *completes*. If the
-worktree session hangs mid-turn and never finishes at all, nothing will ever tell you —
-there's no separate staleness timeout anymore. If that's a real risk for a given task,
-say so and check on it yourself rather than assuming silence means it's fine.
-
-## What arrives in your terminal, and how to answer it
-
-When that worktree session ends a turn with a `[worktree-status: ...]` marker, a single
-line is delivered into your pane, shaped like this:
-
-```
-[auto] worktree fix/foo (pane w1B:p1): [worktree-status: needs-decision] 3 questions ready, see above | full message: /Users/you/.herdr/worktree-relay/fix-foo/1758…-needs-decision.md — read that file for the complete content; the worktree pane's scrollback cannot be read back (Claude runs on the terminal's alternate screen) | reply with: herdr agent prompt w1B:p1 "<your answer>"
-```
-
-Three parts, and all three matter:
-
-1. **The marker**, inline — enough to tell what kind of interruption this is without
-   reading anything.
-2. **A relay file path** holding that turn's *complete* response text. `cat` it. This is
-   the whole content, questions and all — you never need to fetch anything from the
-   worktree pane or ask that session to repeat itself.
-3. **A ready-to-run reply command**, pane id already filled in.
-
-Do **not** try `herdr pane read <pane>` to recover the worktree's output. It will return
-a truncated tail no matter what `--lines` you pass: Claude Code runs on the terminal's
-alternate screen, and herdr's own docs state that rows leaving the alternate screen never
-enter host scrollback. That is exactly why the content is pushed to a file instead.
-
-Then: relay the questions to the user **one at a time** (`AskUserQuestion`), per the
-global CLAUDE.md rule, and send each answer back with the command from part 3.
+Do **not** try `herdr pane read <pane>` to recover what the session said. It returns a
+truncated tail no matter what `--lines` you pass: Claude Code runs on the terminal's
+alternate screen, and rows that leave it never enter host scrollback. The doorstep entry
+is the full text; the pane is not.
 
 ## Report back
 
-One line: "Created worktree <branch> at worktrees/<branch>, Claude is working on it there — I'll let you know if it needs anything." Do not linger. Do not do any of the task yourself, in this session — that's what the new one is for.
+One line: "Created worktree <branch> at worktrees/<branch>, Claude is working on it
+there." Do **not** promise to let them know when it needs something — nothing delivers
+that any more. Say instead that it won't interrupt them, and offer to check on it. Do not
+linger. Do not do any of the task yourself, in this session — that's what the new one is
+for.
