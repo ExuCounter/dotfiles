@@ -51,13 +51,13 @@ more than a few minutes:
 3. **If the brief is thin, grill from inside the worktree.** Once you're in the new
    session, if it's missing real detail (what "done" looks like, which part of the app,
    what data it uses, edge cases) — use the `grilling` skill there, ending each round
-   with `[worktree-status: needs-decision] <question>` so the watcher relays it back to
-   me. Do all investigation and grilling in the new worktree, not just the eventual
+   with `[worktree-status: needs-decision] <question>` so the question is on the record
+   for me to pick up. Do all investigation and grilling in the new worktree, not just the eventual
    edits, so my main terminal never runs a single command for this task; it stays free
    for something else.
 4. **If it's a frontend change, preview it visually before implementing** — see
    "Frontend changes" below. This happens inside the worktree too, and its
-   `needs-decision` marker carries the Artifact URL back to me.
+   `needs-decision` marker should carry the Artifact URL in the response body.
 
 This applies whenever `HERDR_ENV=1`; outside a herdr session `spawn-worktree`'s own
 preconditions will refuse, so just grill and work in the current checkout instead.
@@ -71,9 +71,9 @@ fresh worktree from the latest base branch — don't reuse old trees.
 ## Worktree status marker
 
 If you're running inside a spawned or routed worktree (not the user's main terminal),
-end every response with one plain marker line so the watcher (see `spawn-worktree` /
-`send-to-worktree`) can tell what's actually going on, instead of guessing from herdr's
-screen-detected idle/blocked state alone:
+end every response with one plain marker line, so what happened is on the record rather
+than guessed from herdr's screen-detected idle/blocked state. Whiska's owl reads exactly
+this marker to classify the turn, so the spelling matters:
 
 - `[worktree-status: done]` — the task is fully finished, nothing needed from the user.
 - `[worktree-status: needs-decision] <a short pointer, in one line>` — you're stopping
@@ -85,25 +85,27 @@ screen-detected idle/blocked state alone:
 Always the last line, always exactly one of the two. Don't add this in the user's main
 terminal — only in a session that was spawned into or routed to a worktree.
 
-**Your whole response body reaches them — write it for them, not for this pane.** When
-the marker fires, the `Stop` hook saves your *entire* final message to a relay file under
-`~/.herdr/worktree-relay/<branch>/` and the notification delivered to the main session
-carries that path. So "see above" is a real pointer, not a dead one: the main session
-reads the full text from the file, with nothing fetched from this pane and nothing you
-have to repeat.
+**Nothing delivers this to the main terminal right now.** The bash relay that used to
+watch for the marker and push it into my pane has been removed; Whiska's owl is taking
+over, and the half that delivers a collected question to the main session is not built
+yet. So today the marker is *recorded*, not *delivered*: when the owl is running it
+collects your whole final message off the house's doorstep and files it as a question,
+and I go and look. When it is not running, the message waits on the doorstep until it is.
+Either way, I come to you — you are never pinged.
 
-Two things follow from that:
+That makes the marker more load-bearing, not less, and the same two rules follow:
 
 - Put the complete content in the response body — every question, every option, every
-  recommendation, spelled out. Don't compress it down on the assumption that only the
-  marker travels. It all travels.
-- Make the body self-contained, the same way the "Context re-entry" rule asks. The person
-  reading it is in a different terminal with none of this session's scrollback.
+  recommendation, spelled out. Your whole final message is what gets stored, so nothing
+  is lost by writing it out, and everything is lost by compressing it into the marker.
+- Make the body self-contained, the same way the "Context re-entry" rule asks. Whoever
+  reads it is in a different terminal with none of this session's scrollback, possibly
+  much later.
 
 Never ask the main session to read your pane's scrollback, and never expect it to. Claude
 Code runs on the terminal's alternate screen, so `herdr pane read` returns a truncated
 tail no matter what `--lines` it passes — rows that leave the alternate screen are gone.
-The relay file exists precisely because that read cannot work.
+Storing the whole message is what makes that irrelevant.
 
 ## Frontend changes — preview before building
 

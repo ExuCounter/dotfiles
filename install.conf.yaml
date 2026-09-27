@@ -19,8 +19,6 @@
     ~/.claude/CLAUDE.md: claude/CLAUDE.md
     ~/.claude/statusline-command.sh: claude/statusline-command.sh
     ~/.claude/hooks/glow-preview.sh: claude/hooks/glow-preview.sh
-    ~/.claude/hooks/herdr-worktree-resume.sh: claude/hooks/herdr-worktree-resume.sh
-    ~/.claude/hooks/herdr-worktree-notify.sh: claude/hooks/herdr-worktree-notify.sh
     ~/.claude/hooks/hunk-review.sh: claude/hooks/hunk-review.sh
     ~/.claude/hooks/mark-edit.sh: claude/hooks/mark-edit.sh
     ~/.claude/skills/spawn-worktree/SKILL.md: claude/skills/spawn-worktree/SKILL.md
@@ -30,6 +28,18 @@
     ~/.claude/skills/grill-me/SKILL.md: claude/skills/grill-me/SKILL.md
     ~/.claude/skills/send-to-worktree/SKILL.md: claude/skills/send-to-worktree/SKILL.md
     ~/.claude/skills/frontend-preview/SKILL.md: claude/skills/frontend-preview/SKILL.md
+    ~/.claude/skills/wayfinder: claude/skills/wayfinder
+    ~/.claude/skills/codebase-design: claude/skills/codebase-design
+    ~/.claude/skills/domain-modeling: claude/skills/domain-modeling
+    ~/.claude/skills/writing-for-agents: claude/skills/writing-for-agents
+    ~/.claude/skills/c4-architecture: claude/skills/c4-architecture
+    ~/.claude/skills/command-creator: claude/skills/command-creator
+    ~/.claude/skills/domain-name-brainstormer: claude/skills/domain-name-brainstormer
+    ~/.claude/skills/handoff: claude/skills/handoff
+    ~/.claude/skills/lesson-learned: claude/skills/lesson-learned
+    ~/.claude/skills/research: claude/skills/research
+    ~/.claude/skills/tdd: claude/skills/tdd
+    ~/.claude/skills/to-spec: claude/skills/to-spec
     ~/.config/glow/solarized-light.json: glow/solarized-light.json
     ~/Library/Preferences/glow/glow.yml: glow/glow.yml
     ~/.config/kitty/theme.conf: theme.conf
