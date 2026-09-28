@@ -89,19 +89,19 @@ if [ -n "$used" ]; then
   fi
 
   if [ "$used_tokens" -ge "$t_dead" ]; then
-    color="\033[90m"; zone="Dead — start new session"
+    color="\033[90m"
   elif [ "$used_tokens" -ge "$t_dump" ]; then
-    color="\033[31m"; zone="ExDump — handoff now"
+    color="\033[31m"
   elif [ "$used_tokens" -ge "$t_code" ]; then
-    color="\033[38;5;208m"; zone="Dump — wrap up, prep handoff"
+    color="\033[38;5;208m"
   elif [ "$used_tokens" -ge "$t_plan" ]; then
-    color="\033[33m"; zone="Code-only — finish task, no new plans"
+    color="\033[33m"
   else
-    color="\033[32m"; zone="Planning — keep coding"
+    color="\033[32m"
   fi
 
-  printf "%b%b  ${color}[%s]${reset} %s%% \033[38;5;240m(%s)${reset}  ${dim}·${reset} ${color}%s${reset}" \
-    "$model_label" "$git_segment" "$bar" "$used_int" "$tokens_label" "$zone"
+  printf "%b%b  ${color}[%s]${reset} %s%% \033[38;5;240m(%s)${reset}" \
+    "$model_label" "$git_segment" "$bar" "$used_int" "$tokens_label"
 else
   printf "%b%b" "$model_label" "$git_segment"
 fi
