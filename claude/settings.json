@@ -2,7 +2,7 @@
   "permissions": {
     "defaultMode": "auto"
   },
-  "model": "claude-fable-5-1[1m]",
+  "model": "opus[1m]",
   "hooks": {
     "SessionStart": [
       {
@@ -75,23 +75,23 @@
       "**Repository visibility**: assume private \u2014 origin is `gitlab.com:prosapient/platform/platform/platform-backend.git`; visibility check not queryable here",
       "**Internal sharing / snippet hosting**: None configured \u2014 treat public paste/gist services as outside the trust boundary",
       "**Secrets management**: HashiCorp Vault (VAULT_ADDR marker found); repo also gitignores `/config/*.secret.exs` and `.envrc`",
-      "**Default / protected branches**: `main` is the default branch (production, fast-forwarded from `staging`); `staging` is the integration branch and MR target; `master` is legacy/abandoned \u2014 never branch from, target, or treat as default, whatever a tool reports; branch protection not queryable here (gh check unavailable)",
+      "**Default / protected branches**: `main` is the default branch (production, fast-forwarded from `staging`); `staging` is the integration branch and MR target; `master` is legacy/abandoned — never branch from, target, or treat as default, whatever a tool reports; branch protection not queryable here (gh check unavailable)",
       "**CI/CD deploy targets**: GitLab CI, with Spot Instances auto-created from `spot-crm/<name>` branches for isolated testing; staging and production environments per CLAUDE.md; Datadog for health checks/monitoring",
       "**Network posture**: None configured",
       "**Source control**: GitLab (gitlab.com), this repo (`prosapient/platform/platform/platform-backend`) and its remote(s) only",
       "**Trusted internal domains**: `prosapient.app` and `prosapient.com` (e.g. `platform.prosapient.com`, `*.test.prosapient.app`, `prosapient.staging.prosapient.app`, `dbhub.production.prosapient.app`)",
       "**Trusted cloud buckets**: None configured",
       "**Key internal services**: `dbhub.production.prosapient.app` (contacted in recent usage); `platform-quickwins.test.prosapient.app` (contacted in recent usage); Datadog (https://app.datadoghq.com/) for monitoring",
-      "**Internal package registry**: None configured \u2014 package registry host seen is gitlab.com (source control, not a distinct package registry)",
-      "**Sensitive data locations & audiences**: `/config/*.secret.exs`, `.envrc`, `config/prod.exs`, `deploy/register_on_iam.sh`, `docker/consul-template/secrets.json.ctmpl`, `e2e_tests/.env`, `e2e_tests/.env.example`, `frontend/.env` \u2014 credentials/secrets material, share only with audiences cleared at the [named+specifics] bar",
+      "**Internal package registry**: None configured — package registry host seen is gitlab.com (source control, not a distinct package registry)",
+      "**Sensitive data locations & audiences**: `/config/*.secret.exs`, `.envrc`, `config/prod.exs`, `deploy/register_on_iam.sh`, `docker/consul-template/secrets.json.ctmpl`, `e2e_tests/.env`, `e2e_tests/.env.example`, `frontend/.env` — credentials/secrets material, share only with audiences cleared at the [named+specifics] bar",
       "**Data retention / declassification**: None configured",
-      "**Sensitive remote targets**: any namespace/host/container with `prod`/`production` as a whole word or segment \u2014 includes `dbhub.production.prosapient.app`, `platform.prosapient.com` (production env per README), `config/prod.exs`",
-      "**Protected deployment namespaces / environments**: `production` (README lists `production` env at platform.prosapient.com); k8s namespace `apps` seen in recent usage (2\u00d7) \u2014 treat as a working namespace, not confirmed as protected/prod on its own",
-      "**Protected IaC scopes**: IAM, RBAC, networking, quota, and node-pool resources; anything tagged `prod`/`production` as a whole word/segment \u2014 includes `deploy/register_on_iam.sh` (IAM-related script)",
+      "**Sensitive remote targets**: any namespace/host/container with `prod`/`production` as a whole word or segment — includes `dbhub.production.prosapient.app`, `platform.prosapient.com` (production env per README), `config/prod.exs`",
+      "**Protected deployment namespaces / environments**: `production` (README lists `production` env at platform.prosapient.com); k8s namespace `apps` seen in recent usage (2×) — treat as a working namespace, not confirmed as protected/prod on its own",
+      "**Protected IaC scopes**: IAM, RBAC, networking, quota, and node-pool resources; anything tagged `prod`/`production` as a whole word/segment — includes `deploy/register_on_iam.sh` (IAM-related script)",
       "### User-specific",
       "**Primary use of Claude Code**: software development (Elixir/Phoenix umbrella app for CRM/expert-network platform, using Tidewave MCP for Elixir/Phoenix tasks)",
       "**Trusted repo**: this repo (`/Users/volodymyrpotiichuk/Desktop/projects/prosapient/platform/platform`) and its `origin` remote at `gitlab.com:prosapient/platform/platform/platform-backend.git`",
-      "**Org-specific CLIs**: `mix` (Elixir/Phoenix, 135\u00d7 in-session), `mise`/`asdf` (toolchain version managers), `iex` (Elixir shell), `pnpm` (frontend), `npx` (Playwright E2E)"
+      "**Org-specific CLIs**: `mix` (Elixir/Phoenix, 135× in-session), `mise`/`asdf` (toolchain version managers), `iex` (Elixir shell), `pnpm` (frontend), `npx` (Playwright E2E)"
     ]
   },
   "voiceEnabled": false,
