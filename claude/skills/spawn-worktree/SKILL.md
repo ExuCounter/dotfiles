@@ -66,14 +66,16 @@ and the owl never sees it finish or ask anything. Claude Code loads hooks at sta
 this has to happen before `agent start`, not after.
 
 If the main checkout has `.claude/hooks/whiska.sh` and the new worktree has no
-`.claude/settings.json`, copy the setup over — the hooks, the skills and the settings,
-never `settings.local.json` (it is this machine's local overrides):
+`.claude/settings.json`, copy the hooks and the settings over — nothing else. Never
+`settings.local.json` (this machine's local overrides), and never `.claude/skills`: the
+skills are main-session tools (read a delivered line, reply, spawn), a mouse speaks
+through its Stop hook alone, and the person's own skills live in `~/.claude/skills`,
+which Claude Code reads in every directory.
 
 ```bash
 if [ -f .claude/hooks/whiska.sh ] && [ ! -f worktrees/<branch-name>/.claude/settings.json ]; then
   mkdir -p worktrees/<branch-name>/.claude
   cp -R .claude/hooks .claude/settings.json worktrees/<branch-name>/.claude/
-  [ -d .claude/skills ] && cp -R .claude/skills worktrees/<branch-name>/.claude/
 fi
 ```
 

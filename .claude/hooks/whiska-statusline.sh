@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
 # Whiska's project statusline (ADR-0027). A project-level statusLine
 # replaces the global one rather than merging with it, so this runs your
-# global statusline first and appends one line: whether the owl is
-# watching or down (always, so a blank line never passes for a working
-# Whiska), how many whiskas are on this machine when there is more than
-# one, the mice alive here, one open question in detail or a count for
-# more, and which other whiska has something waiting. Only the owl is
-# shown when nothing waits.
+# global statusline first and appends this repo's own line: what is
+# waiting in this house, and how many mice are alive here. Nothing is
+# appended when the repo is quiet.
+#
+# The owl's state and the machine-wide view are not here: they are drawn
+# once on herdr's tab bar (ADR-0048).
 #
 # Written by `whiska init`. The binary and runtime are resolved the same
 # way the hook shim resolves them, at run time, never baked in here.
@@ -69,9 +69,9 @@ fi
 
 segment=""
 if [ -n "$whiska_bin" ] && [ -n "$escript_bin" ]; then
-  segment="$(cd "$dir" && "$escript_bin" "$whiska_bin" statusline 2>/dev/null)"
+  segment="$(cd "$dir" && "$escript_bin" "$whiska_bin" statusline --here 2>/dev/null)"
 elif [ -n "$whiska_bin" ]; then
-  segment="$(cd "$dir" && "$whiska_bin" statusline 2>/dev/null)"
+  segment="$(cd "$dir" && "$whiska_bin" statusline --here 2>/dev/null)"
 fi
 
 if [ -n "$base" ] && [ -n "$segment" ]; then

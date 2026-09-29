@@ -22,4 +22,3 @@ While waiting for my pick, write **no** implementation code, not even the scaffo
 Pre-building your recommended option skips this step while appearing to follow it. This
 gate comes before the TDD rule: pick the direction first, then write the failing
 test for it.
-

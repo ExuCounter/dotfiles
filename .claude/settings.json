@@ -24,6 +24,7 @@
   },
   "statusLine": {
     "command": "bash \"${CLAUDE_PROJECT_DIR:-.}/.claude/hooks/whiska-statusline.sh\"",
+    "refreshInterval": 15,
     "type": "command"
   }
 }

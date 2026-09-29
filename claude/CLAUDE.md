@@ -19,8 +19,8 @@ I am juggling several projects, each with several concurrent sessions, and have 
 the thread by the time I return to any one of them. Write every user-facing message for cold
 re-entry — assume I remember nothing from the scrollback:
 
-- **Open with a recap.** Before any summary, decision point, or question: 2–3 plain sentences on
-  what we were just working on, why, and where it stands now.
+- **The first line is the recap.** One sentence that says what we were working on and
+  where it stands now, so a decision or question that follows makes sense cold.
 - **Plain language.** No invented codenames, abbreviations, or callbacks like "the earlier fix"
   or "option B from before" — restate the thing in place, every time.
 - **Self-contained questions.** When asking me to decide something, the question itself
