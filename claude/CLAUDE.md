@@ -62,7 +62,7 @@ more than a few minutes:
    worktree, not just the eventual edits, so my main terminal never runs a single
    command for this task; it stays free for something else.
 4. **If it's a frontend change, preview it visually before implementing** — see
-   "Frontend changes" below. This happens inside the worktree too, and the response
+   the frontend-preview rule. This happens inside the worktree too, and the response
    body and its worktree-status marker should carry the Artifact URL.
 
 This applies whenever `HERDR_ENV=1`; outside a herdr session `spawn-worktree`'s own
@@ -110,37 +110,6 @@ makes that irrelevant.
 
 This section moves into the block `whiska init` writes into each project's `CLAUDE.md`
 once Whiska ships it (Whiska ADR-0017); it is kept here until then.
-
-## Frontend changes — preview before building
-
-When a task changes what I'd see in a browser, do not go straight to code. Use the
-`frontend-preview` skill first: it captures the current state, mocks up 2-3 directions
-using the project's real design tokens, and publishes one Artifact page with before,
-after, and the options side by side. Then it stops and waits for me to pick.
-
-The test for whether this applies is one question: **would a screenshot of the app look
-different after this change?** New page, redesign, layout, component, styling, or copy
-on a visible surface — yes. Renamed route, query tuning, a test, build config — no, even
-if the request mentions a UI word in passing.
-
-Skip it — out loud, in one line, never silently — when the change has exactly one
-sensible form (a typo, a colour I already named), when I gave you a mock or screenshot
-to match, or when I say to just build it.
-
-While waiting for my pick, write **no** implementation code, not even the scaffolding.
-Pre-building your recommended option skips this step while appearing to follow it. This
-gate comes before the TDD cycle below: pick the direction first, then write the failing
-test for it.
-
-## TDD is mandatory
-
-Every change follows **failing test first → implement → verify**:
-1. Write the test(s) that capture the desired behavior and watch them **fail** (red).
-2. Implement the minimum to make them pass.
-3. Run the suite + typecheck and confirm green.
-
-Don't write implementation before a failing test exists. When fixing a bug, reproduce it with a
-failing test first.
 
 ## Verify before claiming "done"
 
