@@ -1,6 +1,6 @@
 ---
 name: frontend-preview
-description: "Show a visual before/after with 2-3 design options as a published Artifact, and block for the user's pick, BEFORE writing any frontend implementation code. Use when a task changes what a user sees in a browser — a new page, a redesign, a component, layout, styling or copy change — or when the user invokes /frontend-preview."
+description: "Show what a frontend change looks like, as a published Artifact of real screenshots. Two modes: before implementation, 2-3 design options with a blocking pick; for a change already built, a before/after of what shipped with no pick. Use when a task changes what a user sees in a browser — a new page, a redesign, a component, layout, styling or copy change — when the user asks to see or preview a frontend change they already made, or when the user invokes /frontend-preview."
 ---
 
 # frontend-preview
@@ -38,6 +38,24 @@ API route, a query optimisation, a test, a build config — no, even if the word
 - The user explicitly says to just build it.
 
 Never skip it silently. If you decide it doesn't apply, say so in one line and move on.
+
+## Variant: the change is already built
+
+Sometimes the user wants to *see* a change that already exists — a commit they just made,
+work another session shipped, a branch under review. Same machinery, three differences,
+and they don't need re-deriving each time:
+
+- **Before** is the surface at the commit before the change (`git show <sha>^:<path>`),
+  not an option you invented. Copy that file next to the real one as
+  `preview__<Name>Before.tsx` so its relative imports keep resolving, and render both.
+- **After** is the current code — one panel per state the change touches, not one per
+  design direction. Steps 4's "one option is the smallest change" and the option
+  tradeoffs don't apply; drop them.
+- **Don't block.** There's nothing to pick. Publish, hand over the URL, and end with
+  `finished`, not `needs-decision`.
+
+Everything else — rung choice, real data, reading every PNG back, the artifact — is
+unchanged.
 
 ## Everything you make here is disposable
 
@@ -122,6 +140,33 @@ Two more things worth knowing:
   and still succeeds. The script judges by the file, not the stderr. So should you.
 - Captures are viewport-sized, not full-page. For content below the fold pass a taller
   `--height` rather than hunting for a full-page flag — headless Chrome has none.
+
+**When the state needs an interaction, drive Playwright instead.** The script shoots a
+page at rest; it cannot hover, focus, open a tooltip or a menu. If the surface looks
+wrong at rest — icons greyed until the row is hovered, a control that only shows its
+label on focus — a resting-only shot reads as broken, and you need both frames. Most
+frontend repos already have Playwright installed, so a ~30-line script is cheaper than
+faking the state in CSS:
+
+```js
+import { chromium } from "playwright"
+const page = await (await chromium.launch()).newPage({
+  viewport: { width: 1280, height: 900 }, deviceScaleFactor: 2,
+})
+page.on("pageerror", e => problems.push(e.message))
+page.on("requestfailed", r => problems.push(r.url()))   // catches a stylesheet or icon that never loaded
+await page.goto(url, { waitUntil: "networkidle" })
+await panel.screenshot({ path: "...-resting.png" })     // locator.screenshot crops to one panel
+await icon.hover()
+await panel.screenshot({ path: "...-hovered.png" })
+```
+
+Run it from the project directory so `playwright` resolves, and read the collected
+`pageerror` / `requestfailed` lines — they catch the unstyled-page case earlier than the
+`--like` check does. An element screenshot clips overlays at the element's edge, so give
+the preview stage enough padding for a tooltip to land inside it. Never fake a hover with
+a CSS override in the preview page: the component's own `:hover` rules, and the
+`!important` ones that deliberately survive hover, are exactly what you're checking.
 
 **If the surface doesn't exist yet** — a brand-new page — do not fake a "before". Render
 an explicit `Nothing here yet — this surface is new` panel in that slot on the final

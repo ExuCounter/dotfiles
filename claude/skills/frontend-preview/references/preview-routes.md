@@ -91,6 +91,66 @@ nothing, which reads like a broken rung rather than a bug in the harness.
 Import the entry's CSS exactly as it already does — that import is what pulls in the
 compiled Tailwind.
 
+### Vite whose HTML a backend serves (verified)
+
+The hard case, and common in Rails/Phoenix/Django apps with a React front end: the dev
+server has **no page of its own** — no `index.html`, the build input is `/src/index.tsx`,
+and the real HTML comes from the backend, which boots the app with server-injected props
+(auth, CSRF, a bootstrap payload). You cannot branch in the entry module, because you
+cannot load a page that runs it without logging in.
+
+Add a **second entry and a second dev config** instead. Nothing existing is edited, so
+there is no entry-point branch to forget at cleanup:
+
+```
+preview__.html                 <div id="root"> + <script src="/src/preview__/main.tsx">
+src/preview__/main.tsx         mounts the component in the real provider stack
+vite.preview__.config.ts       the app pipeline, its own port, proxies to the backend
+```
+
+Four things decide whether it works:
+
+- **Copy the provider stack from the test harness, not from the app entry.** A repo with
+  component tests already has a wrapper that mounts one component with the real theme,
+  icons, toasts, router and Apollo client and *without* the auth bootstrap — that file is
+  the answer to "which providers does this component need", already debugged. Find it
+  (`renderWithProviders`, `TestProviders`, `renderWithTheme`) and mirror it.
+- **Mirror the app's pipeline, minus the dev-only plugins.** Same Tailwind, JSX, SVG,
+  tsconfig-paths and Node-shim plugins; drop the type-checker and bundle-visualizer, which
+  only produce overlay noise. The repo's test config is usually exactly this list already.
+- **Proxy what the backend serves.** Icon sprites, fonts and `/graphql` come from the
+  backend's origin; `server.proxy` keeps them same-origin so nothing is silently blocked.
+  Verify with `requestfailed` during capture, not by eye.
+- **Pick a free port.** Vite's `strictPort` means a collision is a hard failure, and the
+  app's own dev server usually holds the obvious one. Take something far away (3111) and
+  bump on the first collision rather than debugging it.
+
+Ambient contexts that are heavy to construct (a project/filter/router chain behind a
+`useProject`/`useTabs` hook) don't need their real providers if the preview never clicks
+them. A `resolveId` plugin **in the preview config only** swaps the hook module for a
+stub, which keeps the stub out of the app config and out of the component:
+
+```ts
+{
+  name: "preview__:stub-contexts",
+  enforce: "pre",
+  async resolveId(source, importer, options) {
+    if (!importer || importer.includes("/src/preview__/")) return null
+    const resolved = await this.resolve(source, importer, { ...options, skipSelf: true })
+    if (resolved?.id.includes("/hooks/useOutreachAnalytics.ts"))
+      return this.resolve("/src/preview__/stubs.ts", importer, { ...options, skipSelf: true })
+    return null
+  },
+}
+```
+
+Match on the **resolved** id, not the import specifier — the component imports these by
+relative path, which a plain `resolve.alias` never sees. Stub only the ambient contexts;
+anything the change itself touches must stay real, and say so on the artifact.
+
+One more thing, in a fresh worktree: `node_modules` doesn't exist there. Install before
+you wonder why `vite` isn't found.
+
 ### Vite with a router
 
 Add a route rather than branching: `/preview__/:option` in the same router instance, so
@@ -136,6 +196,9 @@ development-only block, and point it at a template that extends the app's base l
 
 If wiring a route is heavier than it's worth, rung 3 is close to free here, because
 these stacks serve a genuine static stylesheet.
+
+When one of these backends serves the HTML but a JS bundler owns the components, the
+surface belongs to the bundler — use the backend-served Vite recipe above instead.
 
 ## Rung 3 — standalone HTML, the app's real stylesheet
 
