@@ -29,7 +29,14 @@
     ~/.claude/skills/grilling/SKILL.md: claude/skills/grilling/SKILL.md
     ~/.claude/skills/grill-me/SKILL.md: claude/skills/grill-me/SKILL.md
     ~/.claude/skills/send-to-worktree/SKILL.md: claude/skills/send-to-worktree/SKILL.md
-    ~/.claude/skills/frontend-preview/SKILL.md: claude/skills/frontend-preview/SKILL.md
+    # force: this target was a real directory holding a linked SKILL.md until the
+    # skill grew a references/ folder. dotbot's relink replaces a symlink but not a
+    # directory, so without force ./install fails here on every machine that ran an
+    # older revision. force makes that first run rm -rf the directory, so anything
+    # kept by hand under ~/.claude/skills/frontend-preview/ is deleted with it.
+    ~/.claude/skills/frontend-preview:
+      path: claude/skills/frontend-preview
+      force: true
     ~/.claude/skills/wayfinder: claude/skills/wayfinder
     ~/.claude/skills/codebase-design: claude/skills/codebase-design
     ~/.claude/skills/domain-modeling: claude/skills/domain-modeling
