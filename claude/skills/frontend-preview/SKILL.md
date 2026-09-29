@@ -36,6 +36,9 @@ API route, a query optimisation, a test, a build config — no, even if the word
 - The user gave you a mock, a Figma frame, or a screenshot to match — the direction is
   already picked. Go implement it.
 - The user explicitly says to just build it.
+- The user wants to *look at* something that already exists rather than choose how it
+  should look — "show me what OrderSummary renders as". Nothing is being decided, so
+  there is nothing to block on. That's the `render-component` skill.
 
 Never skip it silently. If you decide it doesn't apply, say so in one line and move on.
 
