@@ -41,6 +41,23 @@
             "type": "command",
             "command": "bash \"$HOME/.claude/hooks/hunk-review.sh\"",
             "timeout": 5
+          },
+          {
+            "type": "command",
+            "command": "bash \"$HOME/.claude/hooks/main-session-notify.sh\" stop",
+            "timeout": 5
+          }
+        ]
+      }
+    ],
+    "Notification": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"$HOME/.claude/hooks/main-session-notify.sh\" notification",
+            "timeout": 5
           }
         ]
       }
