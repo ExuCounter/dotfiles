@@ -17,6 +17,8 @@
     ~/.claude/settings.json: claude/settings.json
     ~/.claude/CLAUDE.md: claude/CLAUDE.md
     ~/.claude/rules/comments-and-docs.md: claude/rules/comments-and-docs.md
+    ~/.claude/rules/tdd.md: claude/rules/tdd.md
+    ~/.claude/rules/frontend-preview.md: claude/rules/frontend-preview.md
     ~/.claude/statusline-command.sh: claude/statusline-command.sh
     ~/.claude/hooks/glow-preview.sh: claude/hooks/glow-preview.sh
     ~/.claude/hooks/hunk-review.sh: claude/hooks/hunk-review.sh
