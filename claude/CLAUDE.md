@@ -74,42 +74,15 @@ place.
 After the work is merged, use `drop-worktree` to clean up. For the next task, spawn a
 fresh worktree from the latest base branch — don't reuse old trees.
 
-## Worktree status marker
+## Worktree status marker and reports
 
-If you're running inside a spawned or routed worktree (not the user's main terminal),
-end every response with one plain marker line, so what happened is on the record rather
-than guessed from herdr's screen-detected idle/blocked state. Whiska reads exactly this
-marker to classify the turn, so the spelling matters:
-
-- `[worktree-status: done]` — the task is fully finished, nothing needed from the user.
-- `[worktree-status: needs-decision] <a short pointer, in one line>` — you're stopping
-  because only the user can decide something. If it's a single short question, put it
-  right there. If it's a `grilling` round with several questions, write something like
-  "3 questions ready, see above" and leave the actual questions in the response body.
-
-Always the last line, always exactly one of the two. Don't add this in the user's main
-terminal — only in a session that was spawned into or routed to a worktree.
-
-Whiska collects your whole final message and delivers a one-line pointer to the main
-session when that repo has been `whiska init`-ed, the owl is running, and a main
-session is recorded (`whiska doctor` says which of those is missing). The person reads
-it with `whiska questions <id>` and answers with `whiska reply <id>`. A forgotten marker
-still gets delivered, as an unmarked question. Two rules follow:
-
-- Put the complete content in the response body — every question, every option, every
-  recommendation, spelled out. Your whole final message is what gets stored; the marker
-  is only the pointer.
-- Make the body self-contained, the same way the "Context re-entry" rule asks. Whoever
-  reads it is in a different terminal with none of this session's scrollback, possibly
-  much later.
-
-Never ask the main session to read your pane's scrollback, and never expect it to.
-Claude Code runs on the terminal's alternate screen, so `herdr pane read` returns a
-truncated tail no matter what `--lines` it passes. Storing the whole message is what
-makes that irrelevant.
-
-This section moves into the block `whiska init` writes into each project's `CLAUDE.md`
-once Whiska ships it (Whiska ADR-0017); it is kept here until then.
+Whiska ships these now. In a repo that has run `whiska init`, the block in that repo's
+`CLAUDE.md` says how a worktree session ends its turn (an invisible marker line, three
+U+2063 characters for finished, two for a decision, with the pointer sentence on the line
+above), how a message reaches the person, and how every session writes its message.
+Follow that block. In a repo without it, end a worktree session's turn with the same
+invisible marker and write the message the same way: short, outcomes not mechanics,
+verified not assumed, one decision or "Nothing is waiting on you".
 
 ## Verify before claiming "done"
 

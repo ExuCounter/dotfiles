@@ -46,20 +46,28 @@ worktree off the latest base branch; an old tree is never reused.
 ## Worktree status marker
 
 A mouse — a session running inside a spawned or routed worktree, never the person's
-main session — ends every response with one plain marker line, so what happened is on
-the record rather than guessed from a screen-detected idle state. Whiska reads exactly
-this marker to classify the turn, so the spelling matters:
+main session — ends every response with one marker line, so what happened is on the
+record rather than guessed from a screen-detected idle state. The line is written in
+invisible characters: Whiska reads it, and the person watching the pane sees nothing
+there. The spelling matters exactly.
 
-- `[worktree-status: done]` — the task is fully finished and nothing is needed from
-  the person.
-- `[worktree-status: needs-decision] <a short pointer, in one line>` — stopping
-  because only the person can decide something. A single short question goes right
-  there. A grilling round with several questions says something like "3 questions
-  ready, see above" and leaves the questions themselves in the response body.
+- **Finished, nothing needed from the person** — a last line of
+  three U+2063 characters (INVISIBLE SEPARATOR), `⁣⁣⁣`, and nothing
+  else on it.
+- **Stopping because only the person can decide something** — a last line of
+  two U+2063 characters, `⁣⁣`. The pointer goes
+  on the line above it, as ordinary readable prose: the short question itself when there
+  is one, or something like "3 questions ready, see above" when a grilling round leaves
+  several in the response body.
 
-Always the last line, always exactly one of the two. The main session never writes one
-— only a mouse does. A turn that forgets it is delivered anyway, as an unmarked
-question, which is the loud direction on purpose.
+Always the last line, always exactly one of the two, nothing else on that line. The
+main session never writes one — only a mouse does. A turn that forgets it is delivered
+anyway, as an unmarked question, which is the loud direction on purpose.
+
+The older spelling — `[worktree-status: done]`, and
+`[worktree-status: needs-decision] <a short pointer>` — is still read, so a turn
+already in flight is never lost. Do not write it: it prints in the pane, which is the
+whole reason it was replaced.
 <!-- whiska:marker:end -->
 
 <!-- whiska:delivery:start -->
@@ -94,60 +102,45 @@ produces something for the mouse, it goes out as the reply.
 ## How a session writes its message
 
 Every message to the person — from a mouse ending a turn, and from the main session
-answering in this repo — is a report, not a status dump. For a mouse it is the only
-thing they see of the whole turn, and they see it later and somewhere else, so it
-carries every fact that matters and assumes nothing they could only get from the
-scrollback. The main session writes the same way; it is only shorter, since the
-person is right there.
+answering here — is a report, not a log, and it is short. A finished report
+fits in six lines. A decision is the question, its options and a recommendation,
+nothing else. The main session writes the same way, shorter still, since the person
+is right there.
 
-Write it in this order, dropping any line that has nothing to say:
+Say, in this order, skipping what has nothing to say:
 
-1. **One line saying what is true now.** The outcome, not the activity — "the search
-   box filters as you type", not "implemented filtering".
-2. **Where it lives** — the branch, the files — but only when the person has to go
-   there to look or to carry on.
-3. **What it does, or what changed**, in their terms: what the thing can do now that
-   it could not before.
-4. **Verified, not assumed.** What was run and what came back — the tests, the app,
-   the command end to end. If it was not run, say so plainly and say why. Never call
-   something working on the strength of having written it.
-5. **One thing worth knowing**, and only if there is one: a surprise, a constraint, a
-   choice they would want to know was made.
-6. **Either "Nothing is waiting on you"** or the one decision — spelled out with its
-   options, the trade-off, and a recommendation.
+1. **One line: what is true now.** The outcome, not the activity — "the search box
+   filters as you type", not "implemented filtering".
+2. **What changed**, in the person's terms, in one or two lines.
+3. **Verified, not assumed.** What was run and what came back, in one line: "31 tests
+   pass, no failures". Not run: say so, and why.
+4. **One thing worth knowing**, only if it changes what the person does next.
+5. **"Nothing is waiting on you"**, or the one decision: the question, each option with
+   its trade-off in a line, a recommendation. The body carries every option in
+   full; the marker line is only the pointer.
 
-Every question, every option, every recommendation goes in that body, in full. The
-marker line is only the pointer to it.
+Leave out: where it lives, unless the person has to open the files; how the work was
+done; review passes, reviewer findings, retries, and fixes that fixed themselves;
+tool output — read it and send what it means; lessons and reflections, which go in
+the repo's docs, not the message; anything the person could simply ask for.
 
-Rules that hold throughout:
-
-- **Outcomes, not mechanics.** What the person can now do, not what the session did
-  to get there. No retries, no routine progress, no fix that fixed itself.
-- **Never paste tool output or a status line.** Read it as evidence and send what it
-  means: "31 tests pass, no failures", not the runner's tail.
-- **Their words, not Whiska's.** Whiska's own vocabulary — mouse, owl, house,
-  doorstep, collection, delivery slot, and the status labels themselves — never
-  appears in the message. Say "this branch" or "the isolated copy", not "the mouse";
-  name the concrete decision, not "needs-decision". The marker line is the one
-  exception, and it is stripped out before the person reads the message.
-- **Ask for their word only** when the next step really needs a review, approval,
-  merge or design pick. Otherwise say nothing is waiting, and stop.
-- **Short sentences. No headers unless the message is long.** Do not restate the task
-  and do not narrate the steps taken.
-
-Where this repo's other instructions already say to open with a recap, keep a
-question self-contained, or raise one decision at a time, they still hold — this part
-does not repeat them.
+**Outcomes, not mechanics**, and their words, not Whiska's. Whiska's own vocabulary
+never appears in the message: mouse, owl, house, doorstep, delivery slot, and the
+status labels themselves. Say "this branch", name the concrete decision. The marker
+line is the one exception, and it is stripped out before the person reads it. Ask for their word only when the
+next step needs a review, approval, merge or design pick; otherwise say nothing is
+waiting, and stop. Short sentences, no headers. Other rules in this file about recaps,
+self-contained questions and one decision at a time still hold.
 <!-- whiska:report:end -->
 
 <!-- whiska:finish:start -->
 ## Before a turn is done
 
-A turn about to end on `[worktree-status: done]` has one more piece of work in it:
-showing that it is done. These five steps, in order, in the mouse's own session,
-before the marker goes down. A turn ending on a decision for the person skips all of
-it — that turn is waiting on them, not claiming to be finished — and the person's main
-session never runs it at all.
+A turn about to end on the finished marker — three U+2063 characters — has one more piece
+of work in it: showing that it is done. These five steps, in order, in the mouse's own
+session, before the marker goes down. A turn ending on a decision for the person skips
+all of it — that turn is waiting on them, not claiming to be finished — and the person's
+main session never runs it at all.
 
 1. **Read the work back against what was asked.** The brief that started the turn, the
    ticket it names, and whatever this repo writes down: its specs, its glossary, its
