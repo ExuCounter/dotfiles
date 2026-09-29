@@ -172,6 +172,11 @@ main session never runs it at all.
      and screen-reader access, empty and error states, small screens, and whatever
      design language the repo already has.
 
+   The turn waits for them: it does not end until every reviewer has reported,
+   inside this same turn, and what they found is handled. There is no such thing as
+   a progress note to the person — a turn that is neither finished nor asking for
+   a decision does not end at all.
+
    A reviewer's finding is a claim, not a verdict. Verify each one against the code
    before acting on it and drop the ones that do not survive, because a confident
    subagent is still a subagent. Fix what is real, under step 2's two limits.
