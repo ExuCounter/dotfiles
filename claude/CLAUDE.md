@@ -141,38 +141,3 @@ failing test first.
 Never report something as working without running it. "Done" means: relevant tests green,
 typecheck clean, and — for user-facing flows — exercised end to end (e.g. Playwright for web
 flows). If tests fail or a step was skipped, say so plainly with the output.
-
-## Pushing committed work — use the gate when it's set up
-
-Before pushing any committed work, check whether this repo has the
-[no-mistakes gate](https://github.com/kunchenguid/no-mistakes) initialized:
-`no-mistakes status` — if it reports "repo not initialized", the gate isn't
-set up here and a plain `git push` is fine (don't silently run `no-mistakes
-init` yourself; ask first if you think it should be). If it *is* initialized,
-drive the push through the gate instead of a plain `git push` — invoke the
-`no-mistakes` skill (or `/no-mistakes`) rather than pushing directly to
-`origin`, so the change actually gets reviewed/tested before it ships.
-
-## Orchestrating the gate (builder/driver split)
-
-Targets the [no-mistakes gate](https://github.com/kunchenguid/no-mistakes) — adapt if using a
-different gate. The agent that *built* a feature sits on a huge context; if that same agent
-drives the review gate, that context gets resent on every monitoring turn. A fresh, cheap driver
-instead makes a park→decide→resume roundtrip cost ~30k tokens instead of ~200k.
-
-- **Builders never drive the gate.** A builder agent builds, commits on its branch, and ends its
-  task with a `HANDOFF: INTENT` paragraph — a thorough statement of what changed and why, for
-  the reviewer. Its large transcript is read once and never resumed for gate-driving.
-- **A fresh tiny driver agent per worktree** (cheap model, few-k-token context) runs the gate:
-  it starts the review with the handed-off intent, monitors progress, and answers the gate's
-  questions.
-- **Gate rules for the driver:** apply auto-fixable findings; approve info-only findings; for
-  anything that needs a human decision, PARK — quote the finding verbatim and end the task so
-  the orchestrator can relay it to me, then resume the driver with my decision. Resume a
-  builder only when a finding needs real code fixes.
-- Never end a subagent's turn while a gate run is active — its background processes are
-  orphaned the moment the turn ends.
-
-**Bonus — cross-provider review:** having a different provider review than the one that built
-(e.g. Claude Code implements, Codex reviews, or vice versa) catches a different distribution of
-bugs, and spreads the token load across two subscriptions.
