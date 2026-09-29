@@ -3,7 +3,7 @@
       relink: true
       create: true
 
-- clean: ["~", "~/.claude/hooks", "~/.claude/skills"]
+- clean: ["~", "~/.claude/hooks", "~/.claude/skills", "~/.claude/rules"]
 
 - link:
     # configuration
@@ -16,6 +16,7 @@
     ~/.config/kitty/kitty.conf: kitty.conf
     ~/.claude/settings.json: claude/settings.json
     ~/.claude/CLAUDE.md: claude/CLAUDE.md
+    ~/.claude/rules/comments-and-docs.md: claude/rules/comments-and-docs.md
     ~/.claude/statusline-command.sh: claude/statusline-command.sh
     ~/.claude/hooks/glow-preview.sh: claude/hooks/glow-preview.sh
     ~/.claude/hooks/hunk-review.sh: claude/hooks/hunk-review.sh
