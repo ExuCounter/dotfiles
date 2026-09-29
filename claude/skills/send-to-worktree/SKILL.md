@@ -69,39 +69,18 @@ user's current terminal never blocks on the routed session's work.
 Write the idea the way the user phrased it; don't compress it into a shorter summary
 that drops detail the other session will need.
 
-## Checking on it — nothing will interrupt you
+## Checking on it
 
-The new session may hit a decision point that needs the user — a `grilling` question,
-anything it can't resolve alone — or it may just finish. **Nothing will tell you when
-that happens.** The bash relay that used to push a notification into your pane has been
-removed, and Whiska's owl has not yet grown the half that delivers a collected question
-to the main session.
-
-So the worktree writes, and you go and look. Every turn there ends with a
-`[worktree-status: ...]` marker (the global "Worktree status marker" rule), and its whole
-final message — questions, options, recommendations — is written to that repo's doorstep
-by Whiska's `Stop` hook, whether or not the owl is running:
-
-```bash
-ls <main-checkout>/.git/whiska/doorstep/*.json     # still waiting
-```
-
-A `.collected` suffix means the owl has already filed it as a question in that repo's
-house. Neither state pings you.
-
-Practically, that means: when you have handed work to a worktree and have nothing else to
-do, check on it rather than assuming silence is progress. `herdr agent prompt <pane-id>
-"<your answer>"` is still how you reply — `herdr worktree list` and the pane id from the
-create response are how you find it.
-
-Do **not** try `herdr pane read <pane>` to recover what the session said. It returns a
-truncated tail no matter what `--lines` you pass: Claude Code runs on the terminal's
-alternate screen, and rows that leave it never enter host scrollback. The doorstep entry
-is the full text; the pane is not.
+Questions from this worktree reach you through Whiska when this repo has been
+`whiska init`-ed and the owl is running (`whiska doctor` checks). Every turn there ends
+with a worktree-status marker; Whiska delivers a one-line pointer into the main session
+and `whiska questions <id>` shows the whole message. Do not read the pane to find out
+what it said: Claude Code runs on the alternate screen and `herdr pane read` returns a
+truncated tail.
 
 ## Report back
 
 One line: which worktree/branch the idea went to, and whether that session was `working`
-(queued) or free to pick it up immediately. Say plainly that nothing will interrupt the
-user when it needs something — offer to check on it instead. Do not linger, do not start
+(queued) or free to pick it up immediately. Say that it won't interrupt the user and
+that Whiska will deliver its question when it has one. Do not linger, do not start
 investigating the idea yourself here.

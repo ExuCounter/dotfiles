@@ -194,11 +194,9 @@ deliverable.
 
 End the turn. Write nothing else.
 
-If you're in a worktree, the last line is:
-
-```
-[worktree-status: needs-decision] Frontend preview ready — pick A, B or C: <artifact URL>
-```
+If you're in a worktree, end with the worktree-status marker (`needs-decision`), with
+the Artifact URL both in the body and in the marker's pointer, for example
+`Frontend preview ready — pick A, B or C: <artifact URL>`.
 
 In the user's main terminal, just give them the URL and the question.
 
