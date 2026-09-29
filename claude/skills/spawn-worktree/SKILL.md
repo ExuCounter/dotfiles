@@ -55,6 +55,30 @@ Capture the JSON response. You need:
 
 If the response is missing either field, stop and report the raw response. Do not guess IDs.
 
+## Carry Whiska's hooks into the worktree — before Claude starts
+
+A worktree only contains committed files. When the repo's `.claude/` folder is not
+committed (a work repo where `whiska init` was run but the folder was never added),
+the new worktree has no `Stop` hook, so the session there never writes to the doorstep
+and the owl never sees it finish or ask anything. Claude Code loads hooks at startup, so
+this has to happen before `agent start`, not after.
+
+If the main checkout has `.claude/hooks/whiska.sh` and the new worktree has no
+`.claude/settings.json`, copy the setup over — the hooks, the skills and the settings,
+never `settings.local.json` (it is this machine's local overrides):
+
+```bash
+if [ -f .claude/hooks/whiska.sh ] && [ ! -f worktrees/<branch-name>/.claude/settings.json ]; then
+  mkdir -p worktrees/<branch-name>/.claude
+  cp -R .claude/hooks .claude/settings.json worktrees/<branch-name>/.claude/
+  [ -d .claude/skills ] && cp -R .claude/skills worktrees/<branch-name>/.claude/
+fi
+```
+
+Skip it silently when the worktree already has a `settings.json` (the folder is
+committed there, which is the ADR-0016 shape) or when the main checkout has no Whiska.
+The copy is untracked in the worktree and disappears with it.
+
 ## Start Claude in the new workspace
 
 This is the default. Only skip if the user said "don't start Claude" or equivalent.
