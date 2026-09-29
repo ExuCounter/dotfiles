@@ -54,7 +54,8 @@
     "feature-dev@claude-plugins-official": true,
     "typescript-lsp@claude-plugins-official": true,
     "mcp-server-dev@claude-plugins-official": true,
-    "datadog@claude-plugins-official": true
+    "datadog@claude-plugins-official": true,
+    "chrome-devtools-mcp@claude-plugins-official": true
   },
   "effortLevel": "medium",
   "tui": "fullscreen",
@@ -69,8 +70,8 @@
       "### Org-wide",
       "**Organization**: prosapient (GitLab group `prosapient/platform`)",
       "**Cloud provider(s)**: None configured",
-      "**Repository visibility**: assume private \u2014 origin is `gitlab.com:prosapient/platform/platform/platform-backend.git`; visibility check not queryable here",
-      "**Internal sharing / snippet hosting**: None configured \u2014 treat public paste/gist services as outside the trust boundary",
+      "**Repository visibility**: assume private — origin is `gitlab.com:prosapient/platform/platform/platform-backend.git`; visibility check not queryable here",
+      "**Internal sharing / snippet hosting**: None configured — treat public paste/gist services as outside the trust boundary",
       "**Secrets management**: HashiCorp Vault (VAULT_ADDR marker found); repo also gitignores `/config/*.secret.exs` and `.envrc`",
       "**Default / protected branches**: `main` is the default branch (production, fast-forwarded from `staging`); `staging` is the integration branch and MR target; `master` is legacy/abandoned — never branch from, target, or treat as default, whatever a tool reports; branch protection not queryable here (gh check unavailable)",
       "**CI/CD deploy targets**: GitLab CI, with Spot Instances auto-created from `spot-crm/<name>` branches for isolated testing; staging and production environments per CLAUDE.md; Datadog for health checks/monitoring",

@@ -2,9 +2,6 @@
 # Whiska's hooks. Takes the hook's name - pre-tool-use or stop - and hands
 # the payload on stdin to `whiska hook <name>`.
 #
-# On `stop` it runs the repo's review loop first and only calls Whiska when
-# that lets the turn end (ADR-0042, and the addendum to ADR-0036).
-#
 # Written by `whiska init` and checked into the repo so the rules travel with
 # it (ADR-0016). Everything machine-specific is resolved here, when the hook
 # runs, rather than baked into .claude/settings.json where it would name one
@@ -14,27 +11,6 @@
 # lookup ends by searching the filesystem directly rather than trusting it.
 # WHISKA_BIN and WHISKA_ESCRIPT override either, and are ignored if they do
 # not point at something runnable.
-
-hook_name="${1:-}"
-
-if [ "$hook_name" = "stop" ]; then
-  # stdin can only be read once, and both the loop and Whiska need it.
-  payload="$(cat)"
-  hook_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-  review_loop="$hook_dir/review-loop.sh"
-
-  if [ -r "$review_loop" ]; then
-    # No output means the loop is content and the turn really is over.
-    # Anything else is its block decision, which is Claude Code's to read -
-    # and nothing goes on the doorstep, because nothing has finished.
-    verdict="$(printf '%s' "$payload" | bash "$review_loop")"
-    if [ -n "$verdict" ]; then
-      printf '%s
-' "$verdict"
-      exit 0
-    fi
-  fi
-fi
 
 whiska_bin="${WHISKA_BIN:-}"
 if [ -n "$whiska_bin" ] && [ ! -x "$whiska_bin" ]; then
@@ -80,23 +56,9 @@ if [ -z "$escript_bin" ]; then
   done
 fi
 
-# stop has already had its stdin read above, so the captured payload is piped
-# back in. pre-tool-use is the hot path (ADR-0033) and still has its own, so
-# it execs straight through and costs no extra process.
-if [ "$hook_name" = "stop" ]; then
-  if [ -n "$escript_bin" ]; then
-    # Not `exit 0`: exec used to carry the hook's status out, and the doctor
-    # reads it to tell a working hook from a binary that does not know it.
-    printf '%s' "$payload" | "$escript_bin" "$whiska_bin" hook "$@"
-    exit $?
-  fi
-  if ! printf '%s' "$payload" | "$whiska_bin" hook "$@"; then
-    echo "whiska: could not run $whiska_bin - allowing the call" >&2
-  fi
-  exit 0
-fi
-
 if [ -n "$escript_bin" ]; then
+  # Not `exit 0`: exec carries the hook's status out, and the doctor reads it
+  # to tell a working hook from a binary that does not know it.
   exec "$escript_bin" "$whiska_bin" hook "$@"
 fi
 

@@ -15,7 +15,15 @@ If the person passed an id ($ARGUMENTS is not empty), run exactly this instead:
     whiska questions $ARGUMENTS
 
 The person cannot see the command's output, only your reply. So your whole
-reply is that output, verbatim, inside one fenced code block: every line,
-nothing shortened, nothing paraphrased, no commentary before or after. Then
-stop. Answering is the person's move — never reply to a question, guess an
+reply is that output, verbatim, as markdown: every line, nothing shortened,
+nothing paraphrased, no commentary before or after, and no fence around it
+— a code block would show the mouse's bold and backticks raw instead of
+rendering them. Then stop. Answering is the person's move — never reply to a question, guess an
 answer, or act on one on their behalf.
+
+One exception, and only when the person passed an id: if that one question
+ends in a set of lettered options and there are 4 or fewer of them, offer
+them with the AskUserQuestion tool exactly as `whiska-delivered` describes,
+and relay the pick with `whiska reply <id> "<the letter and its label>"`.
+With `--full` there are several questions and no single picker can stand
+for all of them, so there is no picker at all.
