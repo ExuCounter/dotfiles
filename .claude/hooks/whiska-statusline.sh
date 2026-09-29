@@ -1,15 +1,17 @@
 #!/usr/bin/env bash
-# Whiska's project statusline (ADR-0027). A project-level statusLine
-# replaces the global one rather than merging with it, so this runs your
-# global statusline first and appends this repo's own line: what is
-# waiting in this house, and how many mice are alive here. Nothing is
-# appended when the repo is quiet.
+# Whiska's project statusline (ADR-0051): a board, one row per mouse in
+# this repo — its branch, what herdr says it is doing, and either the
+# question waiting on you or its last action.
 #
-# The owl's state and the machine-wide view are not here: they are drawn
-# once on herdr's tab bar (ADR-0048).
+# A project-level statusLine replaces the global one rather than merging
+# with it, so your global statusline runs first and the board goes under
+# it.
 #
-# Written by `whiska init`. The binary and runtime are resolved the same
-# way the hook shim resolves them, at run time, never baked in here.
+# Nothing here starts Whiska. The owl writes the board to a file every
+# couple of seconds and this prints it, which is what makes a two-second
+# refresh affordable in every open session at once.
+#
+# Written by `whiska init`.
 
 input="$(cat)"
 
@@ -24,58 +26,60 @@ case "$global" in
   *) base="$(printf '%s' "$input" | bash -c "$global" 2>/dev/null)" ;;
 esac
 
+[ -n "$base" ] && printf '%s
+' "$base"
+
 dir=""
 if command -v jq >/dev/null 2>&1; then
   dir="$(printf '%s' "$input" | jq -r '.workspace.current_dir // .workspace.project_dir // .cwd // empty' 2>/dev/null)"
 fi
 [ -d "$dir" ] || dir="$PWD"
 
-whiska_bin="${WHISKA_BIN:-}"
-if [ -n "$whiska_bin" ] && [ ! -x "$whiska_bin" ]; then
-  whiska_bin=""
-fi
-if [ -z "$whiska_bin" ]; then
-  whiska_bin="$(command -v whiska 2>/dev/null)" || whiska_bin=""
-fi
-if [ -z "$whiska_bin" ] && [ -x "$HOME/.local/bin/whiska" ]; then
-  whiska_bin="$HOME/.local/bin/whiska"
-fi
+# A mouse's own pane never draws the board: it is the person's view of
+# their mice, and a mouse has no use for its siblings' rows.
+case "$dir" in
+  */worktrees/*) exit 0 ;;
+esac
 
-# An escript begins `#!/usr/bin/env escript`, so it only runs when escript is
-# on PATH. With a version manager in play it is not found at all - and asking
-# the version manager does not help when it is off PATH too, which is exactly
-# the case a hook lands in. So the last resort reads its install directory.
-escript_bin="${WHISKA_ESCRIPT:-}"
-if [ -n "$escript_bin" ] && [ ! -x "$escript_bin" ]; then
-  escript_bin=""
-fi
-if [ -z "$escript_bin" ]; then
-  escript_bin="$(command -v escript 2>/dev/null)" || escript_bin=""
-fi
-if [ -z "$escript_bin" ] && command -v asdf >/dev/null 2>&1; then
-  escript_bin="$(asdf which escript 2>/dev/null)" || escript_bin=""
-fi
-if [ -z "$escript_bin" ]; then
-  escript_bin="$(ls -1 "${ASDF_DATA_DIR:-$HOME/.asdf}"/installs/erlang/*/bin/escript     2>/dev/null | sort -V | tail -1)"
-fi
-if [ -z "$escript_bin" ]; then
-  for candidate in /opt/homebrew/bin/escript /usr/local/bin/escript; do
-    if [ -x "$candidate" ]; then
-      escript_bin="$candidate"
-      break
-    fi
-  done
-fi
+# The board is named after the main checkout, so a session sitting in a
+# subfolder walks up until it finds one.
+home="${WHISKA_HOME:-$HOME/.whiska}"
+board=""
+probe="$dir"
+while [ -n "$probe" ] && [ "$probe" != "/" ] && [ "$probe" != "." ]; do
+  # LC_ALL=C so tr counts bytes: a path with a non-ASCII character in it
+  # must be spelled the same here as the owl spells it.
+  candidate="$home/board/$(printf '%s' "$probe" | LC_ALL=C tr -c 'A-Za-z0-9' '-')"
+  if [ -f "$candidate" ]; then
+    board="$candidate"
+    break
+  fi
+  probe="$(dirname "$probe")"
+done
 
-segment=""
-if [ -n "$whiska_bin" ] && [ -n "$escript_bin" ]; then
-  segment="$(cd "$dir" && "$escript_bin" "$whiska_bin" statusline --here 2>/dev/null)"
-elif [ -n "$whiska_bin" ]; then
-  segment="$(cd "$dir" && "$whiska_bin" statusline --here 2>/dev/null)"
-fi
+[ -n "$board" ] && [ -s "$board" ] || exit 0
 
-if [ -n "$base" ] && [ -n "$segment" ]; then
-  printf '%s · %s' "$base" "$segment"
-else
-  printf '%s%s' "$base" "$segment"
+# BSD stat first, then GNU, and each answer is checked rather than trusted:
+# `stat -f` on GNU means --file-system and prints a paragraph.
+mtime="$(stat -f %m "$board" 2>/dev/null)"
+case "$mtime" in
+  "" | *[!0-9]*) mtime="$(stat -c %Y "$board" 2>/dev/null)" ;;
+esac
+case "$mtime" in
+  "" | *[!0-9]*) exit 0 ;;
+esac
+age=$(( $(date +%s) - mtime ))
+
+# A board nothing has refreshed is still mostly true for a little while,
+# and hiding it the moment something goes wrong is the worse failure. Past
+# a minute it stops being worth showing; herdr's tab bar says the owl is
+# down either way (ADR-0048). Ten seconds, not five: a house waiting on a
+# slow herdr can miss a couple of its own two-second writes without the owl
+# being down at all.
+if [ "$age" -le 10 ]; then
+  cat "$board"
+elif [ "$age" -le 60 ]; then
+  printf '🦉 owl down · %ss stale
+' "$age"
+  awk '{ printf "%c[2m%s%c[0m%c", 27, $0, 27, 10 }' "$board"
 fi
