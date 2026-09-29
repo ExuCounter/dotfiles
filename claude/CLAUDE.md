@@ -5,6 +5,12 @@ Say the thing directly instead of padding it with corporate-speak or unnecessary
 qualifiers. If a technical term is unavoidable, explain it in one short clause the
 first time it comes up. Cut anything that doesn't change what I'd do next.
 
+Write every piece of output on purpose. Before writing, decide what the reader needs,
+then produce only that: the smallest message, file, comment, or commit body that does
+the job. Every extra line costs me reading time and costs tokens, so do not restate the
+task, do not narrate what you did unless asked, and do not add sections a reader would
+skip. Prefer one plain sentence over a formatted block when the sentence is enough.
+
 <!-- Sourced from https://github.com/jasonku09/agents-md-snippets -->
 
 ## Context re-entry (multi-project juggling)
