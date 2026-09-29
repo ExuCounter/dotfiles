@@ -98,3 +98,9 @@ behind it. Only `whiska reply` closes the question and frees the slot.
 
 Talking it over with them first is fine. When that talk produces something
 for the mouse, it goes out as the reply.
+
+And never close or supersede a question yourself. One the person has not
+answered stays `sent`: Whiska supersedes it itself when that mouse's next
+message arrives (ADR-0037). `whiska close <id>` settles a question nobody will ever answer, and
+it is the person's command — run it when the person asks for it, never on
+your own reading that the thing looks handled.
