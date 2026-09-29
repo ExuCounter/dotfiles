@@ -38,6 +38,7 @@
     ~/.claude/skills/frontend-preview:
       path: claude/skills/frontend-preview
       force: true
+    ~/.claude/skills/render-component: claude/skills/render-component
     ~/.claude/skills/wayfinder: claude/skills/wayfinder
     ~/.claude/skills/codebase-design: claude/skills/codebase-design
     ~/.claude/skills/domain-modeling: claude/skills/domain-modeling
