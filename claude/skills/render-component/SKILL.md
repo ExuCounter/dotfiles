@@ -10,7 +10,8 @@ A browser can only open URLs, so the job is to give that component a URL of its 
 photograph what comes back.
 
 Everything you build here is a **harness**: throwaway scaffolding that exists to hold the
-component up to the light. It is deleted in step 5. The component itself is never edited
+component up to the light. It all goes in one directory, `preview__/` at the repo root,
+and step 5 deletes that directory with one command. The component itself is never edited
 — the moment you change the thing you were asked to look at, the picture stops being
 evidence.
 
@@ -50,24 +51,21 @@ launches. You need a URL and a port.
 
 Then mount the component. **Where** it mounts is per-framework and is written down once,
 in [`../frontend-preview/references/preview-routes.md`](../frontend-preview/references/preview-routes.md)
-— the route file for each framework, the dev guard, the traps. Read it; it is shared with
-the `frontend-preview` skill and is the single copy. One place this skill departs from it,
-and `harness.md` says where and why: that file mounts a *page* inside the real layout,
-while a component needs an instance you control.
+— the `preview__/` convention, the mount point for each framework, the dev guard, the
+traps, and the one command that removes it all. Read it; it is shared with the
+`frontend-preview` skill and is the single copy.
 
 **What** you wrap the component in is this skill's half, with verified React and Vue
 scaffolds in [`references/harness.md`](references/harness.md). Read that before writing
 the harness file.
 
-Four rules hold the harness to disposable:
+Three rules hold the harness to disposable, on top of the convention:
 
-- **Name it `preview__`.** One greppable token. A *leading* underscore means "private,
-  not a route" in Next.js, so `__preview` 404s — measured, which is why the convention
-  reads backwards.
-- **Guard it to development**, so it is inert if it ever escapes: `import.meta.env.DEV`
-  for Vite, `process.env.NODE_ENV !== 'development'` for Next.
-- **Additive only.** A new harness file, and at most one branch in an entry point. The
-  component under the lens is read, never written.
+- **Guard it to development**, so it is inert if it ever escapes. Most of these
+  frameworks ship the preview route into a production build; the per-framework guard and
+  what each one was measured to do are in that reference's table.
+- **Additive only.** New files in `preview__/`, plus whatever thin loader the framework's
+  router forces. The component under the lens is read, never written.
 - **Fixtures are fake.** Invented names, invented numbers, shaped like the real thing.
   Never a copied user record.
 
@@ -82,9 +80,12 @@ success everywhere except a human's eyes:
 
 ```bash
 frontend-preview-shot.sh --width 900 --height 600 --wait 2500 --stable \
-  "http://localhost:5173/?preview__=order-summary" \
+  "http://localhost:5173/preview__/?p=order-summary" \
   .frontend-preview/<slug>/order-summary.png
 ```
+
+The screenshots go in `.frontend-preview/`, not in `preview__/`: they are what the user
+looks at after the harness is gone, so step 5 must not take them.
 
 `--stable` shoots again at double the wait and requires the two to agree, which is how a
 half-hydrated component gets caught. The full exit-code table is in
@@ -136,29 +137,15 @@ file and shooting again; `--width 390 --height 844` gets you mobile.
 
 ## Step 5 — Delete the harness
 
-Before the turn ends, whatever the user does next. Delete the harness **directory first**,
-the entry-point branch second — the branch is the thread that leads back to the files, so
-cutting it first leaves them orphaned and findable only by path.
+Before the turn ends, whatever the user does next. The look-first listing, the one
+removal command and the three checks that say it worked are in `preview-routes.md` under
+"Removal". Run them from there rather than from memory — the command deletes recursively
+and has to be anchored to the repo root first.
 
-```bash
-find . -path '*preview__*' -not -path './node_modules/*' -not -path './.git/*'
-grep -rn "preview__" --exclude-dir=node_modules --exclude-dir=dist --exclude-dir=.next .
-git status --short
-git diff HEAD --stat
-```
+Two things that section does not know about:
 
-Both searches have to come back empty, and you need both: the harness files carry
-`preview__` in their **path**, not their contents, so the grep alone reports a clean tree
-while `src/preview__/` is still sitting there.
-
-The entry-point branch is the one that gets forgotten, because it lives in a file that was
-already there. If getting the harness up meant installing anything, `package.json` and the
-lockfile are part of the harness too. Leave the harness uncommitted while it exists — once
-it is in a commit, `git status` comes back clean and says nothing.
-
-Then confirm the guard did its job, rather than trusting it: production-build once and grep
-the output for a distinctive fixture string. `harness.md` says what that check catches.
-
-The PNGs can stay until the work merges **if** they are ignored —
-`git check-ignore .frontend-preview/` answers that, and this is a user-level setting that
-is not on every machine. If it is not ignored, delete them now.
+- If getting the harness up meant installing anything, `package.json` and the lockfile
+  are part of the harness too, and neither is ignored.
+- The PNGs in `.frontend-preview/` can stay until the work merges **if** they are
+  ignored. `git check-ignore .frontend-preview/` answers that; it is a machine-local
+  setting and is not on every machine. If it is not ignored, delete them now.
