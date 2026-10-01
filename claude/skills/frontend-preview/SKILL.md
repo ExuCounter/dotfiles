@@ -252,6 +252,13 @@ direction here" and show one, rather than padding the count. For each, write one
 on what it trades away — more code, a new dependency, a slower page, a pattern the
 codebase doesn't have yet. An option list with no downsides is a sales pitch.
 
+**Name what each option does surface by surface.** A page is usually several things the
+user could decide separately — a picker, a filter bar, the table itself. Keep the options
+whole, since each one is a coherent point of view and a parts bin is not, but list the
+surfaces by name on every card so "A, but B's filter bar" is something the user can say
+precisely instead of describing it in prose. Don't offer a per-surface menu; one page,
+one pick, with mixing available if they want it.
+
 ## Step 5 — Render the options
 
 Same tool as step 2. Shoot every option at the **same width** as the before capture — a
@@ -316,13 +323,14 @@ The page must carry, in this order:
    later, from a worktree they've forgotten. No "as discussed".
 2. **Before → After, side by side**, at the same width, so the comparison is honest.
 3. **One card per option**: screenshot, a plain-language name, what it changes, what it
-   costs, and roughly how much work it is.
+   costs, and roughly how much work it is — plus, when the page has more than one
+   surface worth deciding, a line per surface naming what this option does there.
 4. **Your recommendation, with a reason.** Don't hide behind neutrality — you've looked
    at the code, you have a view. One option, one sentence why.
 5. **How the options were rendered** — which rung, and where the data came from. One
    line. If you used rung 5, the words "visual approximation" go here.
 6. **How to answer**: "reply with A, B, or C" — and make clear they can also say
-   "none of these".
+   "none of these", or mix by surface: "A, but B's filter bar".
 
 Keep it to one screen of scrolling per viewport. This is a decision aid, not a
 deliverable.
@@ -341,6 +349,9 @@ In the user's main terminal, just give them the URL and the question.
 
 Once the user chooses:
 
+- **If the answer mixed options, render the combination once before deleting anything.**
+  Nobody has seen that page yet, and two options that each work alone can collide. Same
+  rung, same width, one shot; show it and carry on unless they object.
 - **Delete the preview first**, before the real work starts — the look-first listing,
   the one removal command and the three checks that say it worked are all in
   `preview-routes.md` under "Removal". Run them there rather than from memory: the
