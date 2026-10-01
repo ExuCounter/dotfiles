@@ -1,6 +1,6 @@
 ---
 name: frontend-preview
-description: "Show what a frontend change looks like, as a published Artifact of real screenshots. Two modes: before implementation, 2-3 design options with a blocking pick; for a change already built, a before/after of what shipped with no pick. Use when a task changes what a user sees in a browser — a new page, a redesign, a component, layout, styling or copy change — when the user asks to see or preview a frontend change they already made, or when the user invokes /frontend-preview."
+description: "Show what a frontend change looks like, as a published Artifact of real screenshots. Two modes: before implementation, 2-3 design options with a blocking pick; for a change already built, a before/after of what shipped with no pick. Invoke it yourself, unprompted, whenever a task changes what a user sees in a browser and the change cannot be judged by reading the diff — a new page, a redesign, a component, a layout, spacing, colour, a chart, a state that renders differently — before writing any implementation code. Also use when the user asks to see or preview a frontend change they already made, or invokes /frontend-preview. Do not wait to be asked and do not ask permission first. Text-only changes are the exception: copy, a label, a typo, a translation string."
 ---
 
 # frontend-preview
@@ -20,18 +20,26 @@ wrong*. They reject a direction that was fine. Steps 3 and 5 exist to stop that.
 
 ## When this runs
 
-Run it when the honest answer to this is yes:
+Nobody has to ask for it. When the answer to this is yes, run it unprompted, before
+you write any implementation code:
 
 > Would a screenshot of the app look different after this change?
 
-That's the whole test. A new page, a redesign, a layout or spacing change, a component,
-a state that renders differently, a copy change on a visible surface — yes. A renamed
-API route, a query optimisation, a test, a build config — no, even if the word
-"dashboard" appears in the request.
+That's the whole test. Invoking the skill is how you raise the question — don't ask
+the user whether they'd like a preview first, and don't offer one instead of running
+one. Borderline counts as yes.
+
+A new page, a redesign, a layout or spacing change, a component, a colour, a chart, a
+state that renders differently — yes. A renamed API route, a query optimisation, a
+test, a build config — no, even if the word "dashboard" appears in the request. Copy
+on its own — yes only when the new words change the shape of the thing, a heading that
+now wraps to two lines or a button that outgrows its row.
 
 **Skip it, and say you're skipping it, when:**
 
-- The change is visually trivial and has exactly one sensible form (fix a typo, bump one
+- The change is text only — copy, a label, a typo, a translation string, an alt
+  attribute — and nothing about the layout moves.
+- The change is visually trivial and has exactly one sensible form (bump one
   colour the user already named, revert a known-good commit).
 - The user gave you a mock, a Figma frame, or a screenshot to match — the direction is
   already picked. Go implement it.
