@@ -7,3 +7,5 @@
 # Matches any file or directory of that name at any depth, so the harness can never
 # be committed by accident — and so `git status` is not the thing that finds it.
 preview__*
+
+**/.claude/settings.local.json
