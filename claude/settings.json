@@ -68,10 +68,10 @@
     "command": "bash \"$HOME/.claude/statusline-command.sh\""
   },
   "enabledPlugins": {
-    "feature-dev@claude-plugins-official": true,
+    "feature-dev@claude-plugins-official": false,
     "typescript-lsp@claude-plugins-official": true,
-    "mcp-server-dev@claude-plugins-official": true,
-    "datadog@claude-plugins-official": true,
+    "mcp-server-dev@claude-plugins-official": false,
+    "datadog@claude-plugins-official": false,
     "chrome-devtools-mcp@claude-plugins-official": true
   },
   "effortLevel": "medium",
@@ -115,5 +115,29 @@
       "type": "http",
       "url": "http://localhost:4000/tidewave/mcp"
     }
+  },
+  "skillOverrides": {
+    "anthropic-skills:docs": "user-invocable-only",
+    "anthropic-skills:docx": "user-invocable-only",
+    "anthropic-skills:google-workspace": "user-invocable-only",
+    "anthropic-skills:import-memory": "user-invocable-only",
+    "anthropic-skills:morning": "user-invocable-only",
+    "anthropic-skills:pdf": "user-invocable-only",
+    "anthropic-skills:pptx": "user-invocable-only",
+    "anthropic-skills:skill-creator": "user-invocable-only",
+    "anthropic-skills:xlsx": "user-invocable-only",
+    "dataviz": "user-invocable-only",
+    "schedule": "user-invocable-only",
+    "run": "user-invocable-only",
+    "keybindings-help": "user-invocable-only",
+    "simplify": "user-invocable-only",
+    "fewer-permission-prompts": "user-invocable-only",
+    "security-review": "user-invocable-only",
+    "init": "user-invocable-only",
+    "update-config": "user-invocable-only",
+    "claude-api": "user-invocable-only",
+    "loop": "user-invocable-only",
+    "artifact-capabilities": "name-only",
+    "workflow-authoring": "name-only"
   }
 }
