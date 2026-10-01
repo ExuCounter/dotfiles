@@ -58,7 +58,10 @@ and they don't need re-deriving each time:
 
 - **Before** is the surface at the commit before the change (`git show <sha>^:<path>`),
   not an option you invented. Copy that file next to the real one as
-  `preview__<Name>Before.tsx` so its relative imports keep resolving, and render both.
+  `preview__<Name>Before.tsx` — it has to sit among real source, because that is where
+  its relative imports resolve. It carries the token in its name, so the removal command
+  takes it along with the folder, provided that command is run from the repo root as
+  written. Render both.
 - **After** is the current code — one panel per state the change touches, not one per
   design direction. Steps 4's "one option is the smallest change" and the option
   tradeoffs don't apply; drop them.
@@ -76,14 +79,18 @@ Two rules, and the first is the one that matters:
 want, not the "obvious parts", not the scaffolding. The entire value of this skill is
 that nothing real exists until the choice is made.
 
-**Anything you add to the real tree is marked disposable and deleted before merge.**
-Rung 2 below puts a preview route inside the running app, which is the only way to get
-the app's real CSS, fonts and providers. That's allowed, under these conditions:
+**Everything you add to the real tree goes in one directory and is deleted before
+merge.** Rung 2 below puts a preview route inside the running app, which is the only way
+to get the app's real CSS, fonts and providers. That's allowed, under these conditions:
 
-- It lives under a name that announces itself — `preview__` — so it's greppable, and
-  it is guarded to development so it is inert if it ever escapes.
-- It is **additive only**: a new route file, and at most one branch in an existing
-  entry point. You do not edit a real component to see how it would look.
+- It lives in `preview__/` at the repo root — a name that announces itself, and the one
+  thing the removal command has to find. A framework whose router only reads its own
+  directory also needs a thin loader in that directory; which path, per framework, is in
+  [`references/preview-routes.md`](references/preview-routes.md).
+- It is **guarded to development**, so it is inert if it ever escapes. Most of these
+  frameworks compile the preview route into a production build — that reference's table
+  says which, and what each guard was measured to do.
+- It is **additive only**: the component you are previewing is read, never written.
 - It never merges. Delete it after the pick, before you write the real thing.
 
 Do this in a **worktree**, where the tree is already disposable. Working directly in the
@@ -193,15 +200,16 @@ which is what makes a mockup read as broken.
 So take the **highest rung this project supports**, and drop only when the one above is
 genuinely unavailable. Framework-by-framework recipes and the traps in each are in
 [`references/preview-routes.md`](references/preview-routes.md) — read it before you
-build rung 2, 3 or 4. It also carries the two rules every recipe follows: name the route
-`preview__`, and guard it to development.
+build rung 2, 3 or 4. It also carries the `preview__/` convention every recipe follows,
+and the removal command.
 
 1. **Storybook or an existing component sandbox.** If the project already runs one, a
    new story is the cheapest honest render there is, and nothing about the app changes.
    Best when the change is one component.
-2. **A throwaway route in the real app** — `/preview__/option-a`, importing the real
-   layout, providers, CSS and components. Real Tailwind build, real fonts, real tokens,
-   no guessing. This is the default for anything page-shaped. Needs a worktree.
+2. **A throwaway route in the real app** — `/preview__/option-a` on a routed framework,
+   `/preview__/?p=option-a` on plain Vite — importing the real layout, providers, CSS
+   and components. Real Tailwind build, real fonts, real tokens, no guessing. This is
+   the default for anything page-shaped. Needs a worktree.
 3. **Standalone HTML that links the app's real stylesheet.** `<link rel="stylesheet"
    href="http://localhost:3000/...">` pointed at the dev server's compiled CSS, with
    markup written in the app's real class names. Use when the app can't easily mount an
@@ -263,6 +271,9 @@ for opt in a b; do
     ".frontend-preview/<slug>/shots/option-$opt.png" || exit 1
 done
 ```
+
+That URL is the routed-framework form. On plain Vite the options live on one page:
+`http://localhost:5173/preview__/?p=option-$opt`.
 
 Pair each capture with the before shot **at its own viewport** — the mobile options
 against the mobile before, not the desktop one. The check reads how much of the viewport
@@ -330,16 +341,16 @@ In the user's main terminal, just give them the URL and the question.
 
 Once the user chooses:
 
-- **Delete the preview route first.** `preview__` and the entry-point branch, gone,
-  before the real work starts. `git status` comes back clean of preview work before you
-  write the real thing — the entry-point branch is the one that gets forgotten, because
-  it lives in a file that was already there.
+- **Delete the preview first**, before the real work starts — the look-first listing,
+  the one removal command and the three checks that say it worked are all in
+  `preview-routes.md` under "Removal". Run them there rather than from memory: the
+  command deletes recursively and has to be anchored first.
 - Build the real thing in the real tree, now under the normal TDD rule.
 - Treat the chosen mockup as the spec. When you're done, screenshot the real
   implementation the same way and compare it against that mockup — this is where the
   ordinary screenshot-iterate loop takes over.
-- Leave `.frontend-preview/<slug>/` alone until the work merges; it's the reference.
-  It's ignored globally, so it never dirties `git status`.
+- Leave `.frontend-preview/<slug>/` alone until the work merges; it's the reference,
+  and it is not part of the harness the removal command takes.
 
 If the user says "none of these", you learned the direction is wrong for the price of
 some throwaway markup. That's the skill working, not failing. Ask what's off and go again.
