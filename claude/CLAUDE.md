@@ -62,7 +62,7 @@ more than a few minutes:
    worktree, not just the eventual edits, so my main terminal never runs a single
    command for this task; it stays free for something else.
 4. **If it's a frontend change, preview it visually before implementing** — see
-   the frontend-preview rule. This happens inside the worktree too, and the response
+   "Frontend preview" below. This happens inside the worktree too, and the response
    body and its worktree-status marker should carry the Artifact URL.
 
 This applies whenever `HERDR_ENV=1`; outside a herdr session `spawn-worktree`'s own
@@ -73,6 +73,31 @@ place.
 
 After the work is merged, use `drop-worktree` to clean up. For the next task, spawn a
 fresh worktree from the latest base branch — don't reuse old trees.
+
+## Frontend preview
+
+Run the `frontend-preview` skill on your own, without me asking for it, whenever a
+task changes something I'd see in a browser and I can't tell whether it's right by
+reading the diff. New page, layout, component, spacing, colour, chart, a state that
+renders differently, a redesign — fire it. Don't ask permission first; invoking it
+*is* how you ask.
+
+This holds everywhere, not only inside a worktree: in-place edits count too.
+
+The test is one question: **could I check this change without looking at a picture
+of it?** If no, preview it.
+
+Skip it — and say in one line that you're skipping it — only when:
+
+- It's text only: copy, a label, a typo, a translation string, an alt attribute.
+- It's one obvious form with nothing to choose (a colour I already named, a revert).
+- I gave you a mock, a Figma frame or a screenshot to match.
+- I said just build it.
+- Nothing is being decided, I only want to look at something that already exists —
+  that's `render-component`, not this.
+
+When it's borderline, preview it. A preview I didn't need costs me thirty seconds;
+a wrong direction built out costs an afternoon.
 
 ## Worktree status marker and reports
 
