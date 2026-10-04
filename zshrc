@@ -72,3 +72,8 @@ export HEX_CACERTS_PATH="$HOME/corp-ca.pem"
 export SSL_CERT_FILE="$HOME/corp-ca.pem"
 export NODE_EXTRA_CA_CERTS="$HOME/corp-ca.pem"
 alias pro_ops=/Users/volodymyrpotiichuk/Desktop/projects/prosapient/pro-ops/_build/prod/rel/pro_ops/bin/pro_ops
+
+# herdr-automatic-rename: live tab naming hook
+for _f in $HOME/.config/herdr/plugins/github/herdr-automatic-rename-*/shell/hook.zsh(N); do
+  source $_f; break
+done

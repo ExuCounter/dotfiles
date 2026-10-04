@@ -85,8 +85,9 @@ current checkout.
   the preview link.
 - Before anything non-trivial this session does itself, give a 2–4 line plan and wait
   for the person's ok. A mouse does not: it builds, and stops only on a real decision.
-- After the merge, `drop-worktree`. The next mouse gets a fresh worktree off the latest
-  base branch; never reuse an old tree.
+- After the merge, leave the worktree: the owl removes a landed one, pane and branch.
+  `drop-worktree` drops one early.
+- Never reuse an old tree: a new mouse gets a fresh one off the latest base branch.
 <!-- whiska:worktrees:end -->
 
 <!-- whiska:marker:start -->

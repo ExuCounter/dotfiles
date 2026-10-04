@@ -3,7 +3,7 @@
       relink: true
       create: true
 
-- clean: ["~", "~/.claude/hooks", "~/.claude/skills", "~/.claude/rules"]
+- clean: ["~", "~/.claude/hooks", "~/.claude/skills", "~/.claude/rules", "~/.claude/agents"]
 
 - link:
     # configuration
@@ -19,17 +19,15 @@
     ~/.claude/rules/comments-and-docs.md: claude/rules/comments-and-docs.md
     ~/.claude/rules/tdd.md: claude/rules/tdd.md
     ~/.claude/rules/frontend-preview.md: claude/rules/frontend-preview.md
+    ~/.claude/rules/browser-automation.md: claude/rules/browser-automation.md
     ~/.claude/statusline-command.sh: claude/statusline-command.sh
     ~/.claude/hooks/glow-preview.sh: claude/hooks/glow-preview.sh
     ~/.claude/hooks/hunk-review.sh: claude/hooks/hunk-review.sh
     ~/.claude/hooks/mark-edit.sh: claude/hooks/mark-edit.sh
     ~/.claude/hooks/main-session-notify.sh: claude/hooks/main-session-notify.sh
-    ~/.claude/skills/spawn-worktree/SKILL.md: claude/skills/spawn-worktree/SKILL.md
-    ~/.claude/skills/drop-worktree/SKILL.md: claude/skills/drop-worktree/SKILL.md
     ~/.claude/skills/open-workspace/SKILL.md: claude/skills/open-workspace/SKILL.md
     ~/.claude/skills/grilling/SKILL.md: claude/skills/grilling/SKILL.md
     ~/.claude/skills/grill-me/SKILL.md: claude/skills/grill-me/SKILL.md
-    ~/.claude/skills/send-to-worktree/SKILL.md: claude/skills/send-to-worktree/SKILL.md
     # force: this target was a real directory holding a linked SKILL.md until the
     # skill grew a references/ folder. dotbot's relink replaces a symlink but not a
     # directory, so without force ./install fails here on every machine that ran an
@@ -51,6 +49,16 @@
     ~/.claude/skills/research: claude/skills/research
     ~/.claude/skills/tdd: claude/skills/tdd
     ~/.claude/skills/to-spec: claude/skills/to-spec
+    # wio: vendored from the workersio/skills plugin (v0.1.0, MIT) rather than
+    # installed as a plugin. The plugin ships a PostToolUse hook that fires on
+    # every edit whose path looks like a test, and a plugin's hooks cannot be
+    # disabled on their own — `claude plugin disable` takes the whole plugin.
+    # The copy drops scripts/test-review-reminder.py, which was only ever the
+    # hook's helper. Updating means re-copying from upstream by hand.
+    ~/.claude/skills/wio: claude/skills/wio
+    ~/.claude/agents/wio-candidate-scout.md: claude/agents/wio-candidate-scout.md
+    ~/.claude/agents/wio-strategy-critic.md: claude/agents/wio-strategy-critic.md
+    ~/.claude/agents/wio-test-reviewer.md: claude/agents/wio-test-reviewer.md
     ~/.config/glow/solarized-light.json: glow/solarized-light.json
     ~/Library/Preferences/glow/glow.yml: glow/glow.yml
     ~/.config/kitty/theme.conf: theme.conf
@@ -112,3 +120,21 @@
           herdr --skill > "$HOME/.claude/skills/use-herdr/SKILL.md"
         fi
       description: Refresh the use-herdr skill from the installed herdr binary
+    - command: |
+        python3 - <<'EOF'
+        import json, pathlib
+        # Plugin updates ship chrome-devtools-mcp without --isolated, so every
+        # agent session reaches for the one shared Chrome profile and the second
+        # one fails. Claude Code reads the commit-sha copy, not the version-named
+        # one, so patch every copy. Takes effect on the next session start.
+        root = pathlib.Path.home() / ".claude/plugins/cache"
+        for f in root.glob("*/chrome-devtools-mcp/*/mcp.json"):
+            c = json.loads(f.read_text())
+            for srv in c.get("mcpServers", {}).values():
+                a = srv.get("args", [])
+                if "--isolated" not in a:
+                    a.append("--isolated")
+                    f.write_text(json.dumps(c, indent=2) + "\n")
+                    print("patched", f)
+        EOF
+      description: Keep --isolated on the chrome-devtools MCP server (plugin updates drop it)
