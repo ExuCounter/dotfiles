@@ -53,8 +53,9 @@ Never skip it silently. If you decide it doesn't apply, say so in one line and m
 ## Variant: the change is already built
 
 Sometimes the user wants to *see* a change that already exists — a commit they just made,
-work another session shipped, a branch under review. Same machinery, three differences,
-and they don't need re-deriving each time:
+work another session shipped, a branch under review. This is also how a build that went
+through a preview finishes; see "After the pick". Same machinery, three differences, and
+they don't need re-deriving each time:
 
 - **Before** is the surface at the commit before the change (`git show <sha>^:<path>`),
   not an option you invented. Copy that file next to the real one as
@@ -357,9 +358,17 @@ Once the user chooses:
   `preview-routes.md` under "Removal". Run them there rather than from memory: the
   command deletes recursively and has to be anchored first.
 - Build the real thing in the real tree, now under the normal TDD rule.
-- Treat the chosen mockup as the spec. When you're done, screenshot the real
-  implementation the same way and compare it against that mockup — this is where the
-  ordinary screenshot-iterate loop takes over.
+- **Treat the chosen mockup as the spec, and prove it.** When the build is done, run the
+  "already built" variant above against the real implementation and publish one artifact:
+  the original before, the mockup the user picked, and what actually shipped, all at the
+  same width. That is the same screenshot-iterate loop as always — the difference is that
+  the result is kept and handed over, instead of being looked at once and lost.
+- **Read the shipped shot against the mockup yourself before handing over the URL.** A
+  gap you can see is one to fix, or to name in the message if you're leaving it on
+  purpose. Publishing a difference you hadn't noticed is how the user finds it for you.
+- **This fires only when a preview ran and a mockup exists.** No preview, no mockup,
+  nothing to compare against — finish the ordinary way rather than manufacturing a
+  comparison.
 - Leave `.frontend-preview/<slug>/` alone until the work merges; it's the reference,
   and it is not part of the harness the removal command takes.
 

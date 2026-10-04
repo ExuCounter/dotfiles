@@ -1,6 +1,30 @@
 {
   "hooks": {
-    "PreToolUse": [],
-    "Stop": []
+    "PreToolUse": [
+      {
+        "hooks": [
+          {
+            "command": "bash \"$CLAUDE_PROJECT_DIR/.claude/hooks/whiska.sh\" pre-tool-use",
+            "type": "command"
+          }
+        ],
+        "matcher": "Write|Edit|MultiEdit|NotebookEdit|Bash"
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "command": "bash \"$CLAUDE_PROJECT_DIR/.claude/hooks/whiska.sh\" stop",
+            "type": "command"
+          }
+        ]
+      }
+    ]
+  },
+  "statusLine": {
+    "command": "bash \"${CLAUDE_PROJECT_DIR:-.}/.claude/hooks/whiska-statusline.sh\"",
+    "refreshInterval": 2,
+    "type": "command"
   }
 }

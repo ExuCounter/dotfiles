@@ -65,6 +65,7 @@ tab_bar_right = [
   { type = "datetime", format = "%d/%m/%y %a %H:%M:%S" },
 ]
 tab_bar_right_separator = " | "
+prompt_new_tab_name = false
 
 # Herdr's toasts and sounds fire for any background workspace and cannot be
 # filtered per workspace — every worktree session is an agent of kind `claude`

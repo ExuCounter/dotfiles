@@ -1,4 +1,143 @@
 {
+  "permissions": {
+    "defaultMode": "auto"
+  },
+  "model": "opus[1m]",
+  "skillOverrides": {
+    "anthropic-skills:docs": "user-invocable-only",
+    "anthropic-skills:docx": "user-invocable-only",
+    "anthropic-skills:google-workspace": "user-invocable-only",
+    "anthropic-skills:import-memory": "user-invocable-only",
+    "anthropic-skills:morning": "user-invocable-only",
+    "anthropic-skills:pdf": "user-invocable-only",
+    "anthropic-skills:pptx": "user-invocable-only",
+    "anthropic-skills:skill-creator": "user-invocable-only",
+    "anthropic-skills:xlsx": "user-invocable-only",
+    "artifact-capabilities": "name-only",
+    "claude-api": "user-invocable-only",
+    "dataviz": "user-invocable-only",
+    "fewer-permission-prompts": "user-invocable-only",
+    "init": "user-invocable-only",
+    "keybindings-help": "user-invocable-only",
+    "loop": "user-invocable-only",
+    "run": "user-invocable-only",
+    "schedule": "user-invocable-only",
+    "security-review": "user-invocable-only",
+    "simplify": "user-invocable-only",
+    "update-config": "user-invocable-only",
+    "workflow-authoring": "name-only"
+  },
+  "hooks": {
+    "Notification": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"$HOME/.claude/hooks/main-session-notify.sh\" notification",
+            "timeout": 5
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"$HOME/.claude/hooks/glow-preview.sh\"",
+            "timeout": 5
+          },
+          {
+            "type": "command",
+            "command": "bash \"$HOME/.claude/hooks/mark-edit.sh\"",
+            "timeout": 2
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"$HOME/.claude/hooks/no-raw-cdp.sh\"",
+            "timeout": 5
+          }
+        ]
+      },
+      {
+        "matcher": "Write|Edit|MultiEdit|NotebookEdit|Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"$HOME/.claude/hooks/whiska.sh\" pre-tool-use"
+          }
+        ]
+      }
+    ],
+    "SessionStart": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"$HOME/.claude/hooks/herdr-agent-state.sh\" session",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"$HOME/.claude/hooks/hunk-review.sh\"",
+            "timeout": 5
+          },
+          {
+            "type": "command",
+            "command": "bash \"$HOME/.claude/hooks/main-session-notify.sh\" stop",
+            "timeout": 5
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"$HOME/.claude/hooks/whiska.sh\" stop"
+          }
+        ]
+      }
+    ]
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "bash \"$HOME/.claude/hooks/whiska-statusline.sh\"",
+    "refreshInterval": 2
+  },
+  "enabledPlugins": {
+    "chrome-devtools-mcp@claude-plugins-official": true,
+    "datadog@claude-plugins-official": false,
+    "feature-dev@claude-plugins-official": false,
+    "mcp-server-dev@claude-plugins-official": false,
+    "typescript-lsp@claude-plugins-official": true
+  },
+  "extraKnownMarketplaces": {},
+  "effortLevel": "medium",
+  "tui": "fullscreen",
+  "voice": {
+    "enabled": false,
+    "mode": "hold"
+  },
+  "skipWorkflowUsageWarning": true,
+  "theme": "auto",
+  "skipAutoPermissionPrompt": true,
   "autoMode": {
     "environment": [
       "### Org-wide",
@@ -26,148 +165,11 @@
       "**Org-specific CLIs**: `mix` (Elixir/Phoenix, 135× in-session), `mise`/`asdf` (toolchain version managers), `iex` (Elixir shell), `pnpm` (frontend), `npx` (Playwright E2E)"
     ]
   },
-  "effortLevel": "medium",
-  "enabledPlugins": {
-    "chrome-devtools-mcp@claude-plugins-official": true,
-    "datadog@claude-plugins-official": false,
-    "feature-dev@claude-plugins-official": false,
-    "mcp-server-dev@claude-plugins-official": false,
-    "typescript-lsp@claude-plugins-official": true
-  },
-  "hooks": {
-    "Notification": [
-      {
-        "hooks": [
-          {
-            "command": "bash \"$HOME/.claude/hooks/main-session-notify.sh\" notification",
-            "timeout": 5,
-            "type": "command"
-          }
-        ],
-        "matcher": "*"
-      }
-    ],
-    "PostToolUse": [
-      {
-        "hooks": [
-          {
-            "command": "bash \"$HOME/.claude/hooks/glow-preview.sh\"",
-            "timeout": 5,
-            "type": "command"
-          },
-          {
-            "command": "bash \"$HOME/.claude/hooks/mark-edit.sh\"",
-            "timeout": 2,
-            "type": "command"
-          }
-        ],
-        "matcher": "Write|Edit|MultiEdit"
-      }
-    ],
-    "PreToolUse": [
-      {
-        "hooks": [
-          {
-            "command": "bash \"$HOME/.claude/hooks/no-raw-cdp.sh\"",
-            "timeout": 5,
-            "type": "command"
-          }
-        ],
-        "matcher": "Bash"
-      },
-      {
-        "hooks": [
-          {
-            "command": "bash \"$HOME/.claude/hooks/whiska.sh\" pre-tool-use",
-            "type": "command"
-          }
-        ],
-        "matcher": "Write|Edit|MultiEdit|NotebookEdit|Bash"
-      }
-    ],
-    "SessionStart": [
-      {
-        "hooks": [
-          {
-            "command": "bash \"$HOME/.claude/hooks/herdr-agent-state.sh\" session",
-            "timeout": 10,
-            "type": "command"
-          }
-        ],
-        "matcher": "*"
-      }
-    ],
-    "Stop": [
-      {
-        "hooks": [
-          {
-            "command": "bash \"$HOME/.claude/hooks/hunk-review.sh\"",
-            "timeout": 5,
-            "type": "command"
-          },
-          {
-            "command": "bash \"$HOME/.claude/hooks/main-session-notify.sh\" stop",
-            "timeout": 5,
-            "type": "command"
-          }
-        ],
-        "matcher": "*"
-      },
-      {
-        "hooks": [
-          {
-            "command": "bash \"$HOME/.claude/hooks/whiska.sh\" stop",
-            "type": "command"
-          }
-        ]
-      }
-    ]
-  },
+  "voiceEnabled": false,
   "mcpServers": {
     "tidewave": {
       "type": "http",
       "url": "http://localhost:4000/tidewave/mcp"
     }
-  },
-  "model": "opus[1m]",
-  "permissions": {
-    "defaultMode": "auto"
-  },
-  "skillOverrides": {
-    "anthropic-skills:docs": "user-invocable-only",
-    "anthropic-skills:docx": "user-invocable-only",
-    "anthropic-skills:google-workspace": "user-invocable-only",
-    "anthropic-skills:import-memory": "user-invocable-only",
-    "anthropic-skills:morning": "user-invocable-only",
-    "anthropic-skills:pdf": "user-invocable-only",
-    "anthropic-skills:pptx": "user-invocable-only",
-    "anthropic-skills:skill-creator": "user-invocable-only",
-    "anthropic-skills:xlsx": "user-invocable-only",
-    "artifact-capabilities": "name-only",
-    "claude-api": "user-invocable-only",
-    "dataviz": "user-invocable-only",
-    "fewer-permission-prompts": "user-invocable-only",
-    "init": "user-invocable-only",
-    "keybindings-help": "user-invocable-only",
-    "loop": "user-invocable-only",
-    "run": "user-invocable-only",
-    "schedule": "user-invocable-only",
-    "security-review": "user-invocable-only",
-    "simplify": "user-invocable-only",
-    "update-config": "user-invocable-only",
-    "workflow-authoring": "name-only"
-  },
-  "skipAutoPermissionPrompt": true,
-  "statusLine": {
-    "command": "bash \"$HOME/.claude/hooks/whiska-statusline.sh\"",
-    "refreshInterval": 2,
-    "type": "command"
-  },
-  "theme": "auto",
-  "tui": "fullscreen",
-  "voice": {
-    "enabled": false,
-    "mode": "hold"
-  },
-  "voiceEnabled": false
+  }
 }

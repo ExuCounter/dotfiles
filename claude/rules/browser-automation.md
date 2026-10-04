@@ -2,8 +2,11 @@
 
 Interactive browser work — clicking, typing, submitting a form, reading the DOM back —
 goes through the **chrome-devtools MCP server**. It is configured with `--isolated`, so
-it takes a throwaway profile and never collides with a browser some other session left
-running.
+each run takes a throwaway profile of its own. Without the flag the server does not grab
+your everyday Chrome — it falls back to one shared profile at
+`~/.cache/chrome-devtools-mcp/chrome-profile`, which every agent session reaches for at
+once. The first session to claim it wins and the rest are refused, so this surfaces only
+when more than one session is doing browser work.
 
 Do not hand-roll Chrome DevTools Protocol over `--remote-debugging-port`. A `PreToolUse`
 hook blocks it, for three reasons measured on this machine:
@@ -41,8 +44,22 @@ disallows — assume they do not work on this machine until proven otherwise.
 prints.
 
 **"The browser is already running for &lt;profile&gt;"** means `--isolated` has gone missing
-from the server's args — most likely a plugin update restored the defaults. Say so rather
-than reaching for a port.
+from the server's args — a plugin update ships the file without it. Say so and stop; do
+not route around it.
+
+Playwright against the installed Chrome is not the escape hatch. Neither is a port, a
+second MCP client, or `--browserUrl`. Each of them lands on a profile some other session
+already holds, which is the contention `--isolated` exists to remove — so the workaround
+reproduces the failure the error was warning about. Playwright is fine when the task is
+Playwright, a test or a scripted flow the project already owns; never as a way past this
+error.
+
+The fix is `./install` in the dotfiles repo, which puts `--isolated` back on every copy
+under `~/.claude/plugins/cache/*/chrome-devtools-mcp/*/`. Patch every copy, not the one
+that looks active: Claude Code reads the commit-sha-named directory, while the `.in_use`
+markers sit in the version-named one, so the obvious copy is the wrong one. The server is
+spawned at session start, so the session has to restart before the flag means anything —
+the running process is the one to check (`ps` for `chrome-devtools-mcp`), not the file.
 
 A still frame of a page at rest needs no browser of its own: `frontend-preview-shot.sh`
 is enough, and it validates its own captures. It cannot hover, focus or click, so an
