@@ -55,11 +55,6 @@
             "command": "bash \"$HOME/.claude/hooks/glow-preview.sh\"",
             "timeout": 5,
             "type": "command"
-          },
-          {
-            "command": "bash \"$HOME/.claude/hooks/mark-edit.sh\"",
-            "timeout": 2,
-            "type": "command"
           }
         ],
         "matcher": "Write|Edit|MultiEdit"
@@ -111,7 +106,7 @@
         "hooks": [
           {
             "command": "bash \"$HOME/.claude/hooks/hunk-review.sh\"",
-            "timeout": 5,
+            "timeout": 10,
             "type": "command"
           }
         ],
