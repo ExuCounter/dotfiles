@@ -1,5 +1,7 @@
-# hunk-review.sh opens a review tab only when a worktree session ends a turn
-# finished, and the review covers the whole branch, not just uncommitted work.
+# hunk-review.sh opens a review tab, in the main checkout's workspace, only when
+# a worktree session ends a turn finished, and the review covers the whole
+# branch, not just uncommitted work. Tabs are named for the branch, never
+# duplicated, never focused, and closed once their worktree is dropped.
 # Each case feeds the hook a Stop payload the way Claude Code does, inside a
 # real git repo with a real linked worktree, and reads back what it asked
 # herdr and hunk to do.
@@ -11,13 +13,14 @@ QUESTION='⁣⁣'
 
 # A sandbox whose PATH holds a mock herdr that answers `tab list` from
 # $MOCK_TABS, `pane list` from $MOCK_PANES, `pane process-info` from
-# $MOCK_PROCESS and `tab create` with a fixed tab, and a mock hunk whose
+# $MOCK_PROCESS, `workspace list` with the main checkout as workspace wm and the
+# worktree as w1, and `tab create` with a fixed tab, and a mock hunk whose
 # `session reload` fails when MOCK_HUNK_RELOAD_FAIL=1. Both log their argv.
 # MAIN is a repo on master; WT a linked worktree on feat-x under worktrees/.
 setup_review_sandbox() {
   setup_sandbox
   export HUNK_LOG="$SANDBOX/hunk-calls.log"
-  export MOCK_TABS="$SANDBOX/tabs.json" MOCK_PANES="$SANDBOX/panes.json" MOCK_PROCESS="$SANDBOX/process.json"
+  export MOCK_WORKSPACES="$SANDBOX/workspaces.json" MOCK_TABS="$SANDBOX/tabs.json" MOCK_PANES="$SANDBOX/panes.json" MOCK_PROCESS="$SANDBOX/process.json"
   : > "$HUNK_LOG"
   echo '[]' > "$MOCK_TABS"
   echo '[{"pane_id":"w1:p4","tab_id":"w1:t4"}]' > "$MOCK_PANES"
@@ -29,6 +32,7 @@ setup_review_sandbox() {
 printf '%s\n' "$*" >> "$MOCK_HERDR_LOG"
 case "$1 $2" in
   "tab list") printf '{"result":{"tabs":%s}}\n' "$(cat "$MOCK_TABS")" ;;
+  "workspace list") cat "$MOCK_WORKSPACES" ;;
   "pane list") printf '{"result":{"panes":%s}}\n' "$(cat "$MOCK_PANES")" ;;
   "pane process-info") printf '{"result":{"process_info":%s}}\n' "$(cat "$MOCK_PROCESS")" ;;
   "tab create") echo '{"result":{"tab":{"tab_id":"w1:t9"},"root_pane":{"pane_id":"w1:p9"}}}' ;;
@@ -53,6 +57,12 @@ MOCK
   # git answers with the resolved path (/private/var, not /var), and so does the hook.
   MAIN="$(git -C "$MAIN" rev-parse --show-toplevel)"
   WT="$(git -C "$MAIN/worktrees/feat-x" rev-parse --show-toplevel)"
+  cat > "$MOCK_WORKSPACES" <<JSON
+{"result":{"workspaces":[
+{"workspace_id":"wm","worktree":{"is_linked_worktree":false,"repo_root":"$MAIN"}},
+{"workspace_id":"w1","worktree":{"is_linked_worktree":true,"repo_root":"$MAIN"}},
+{"workspace_id":"wo","worktree":{"is_linked_worktree":false,"repo_root":"$SANDBOX/other"}}]}}
+JSON
 }
 
 # What the open review tab's pane has in the foreground: a process name, or
@@ -90,7 +100,7 @@ echo two >> "$WT/a.txt"
 git_commit "$WT" change
 base="$(git -C "$WT" merge-base HEAD master)"
 run_hook "$WT" "Done.\n$DONE"
-assert_contains "$(herdr_calls)" "tab create --workspace w1 --label hunk-review --cwd $WT --no-focus" "herdr calls" &&
+assert_contains "$(herdr_calls)" "tab create --workspace wm --label review: feat-x --cwd $WT --no-focus" "herdr calls" &&
   assert_contains "$(herdr_calls)" "pane run w1:p9 hunk diff $base --theme solarized-light --watch" "herdr calls" &&
   pass
 teardown_sandbox
@@ -153,7 +163,7 @@ teardown_sandbox
 it "a turn that ends on a question opens nothing"
 setup_review_sandbox
 echo two >> "$WT/a.txt"
-echo '[{"tab_id":"w1:t4","label":"hunk-review"}]' > "$MOCK_TABS"
+echo '[{"tab_id":"w1:t4","label":"review: feat-x"}]' > "$MOCK_TABS"
 run_hook "$WT" "Which one?\nPick A or B, see above.\n$QUESTION"
 assert_no_tab && assert_equals "$(hunk_calls)" "" "hunk calls" && pass
 teardown_sandbox
@@ -189,7 +199,7 @@ it "an open review tab is reloaded against the base, not duplicated"
 setup_review_sandbox
 echo two >> "$WT/a.txt"
 base="$(git -C "$WT" merge-base HEAD master)"
-echo '[{"tab_id":"w1:t4","label":"hunk-review"}]' > "$MOCK_TABS"
+echo '[{"tab_id":"w1:t4","label":"review: feat-x"}]' > "$MOCK_TABS"
 run_hook "$WT" "Done.\n$DONE"
 assert_contains "$(hunk_calls)" "session reload --repo $WT -- diff $base --theme solarized-light --watch" "hunk calls" &&
   assert_no_tab &&
@@ -200,7 +210,7 @@ teardown_sandbox
 it "an open review tab whose hunk cannot be reached is replaced"
 setup_review_sandbox
 echo two >> "$WT/a.txt"
-echo '[{"tab_id":"w1:t4","label":"hunk-review"}]' > "$MOCK_TABS"
+echo '[{"tab_id":"w1:t4","label":"review: feat-x"}]' > "$MOCK_TABS"
 MOCK_HUNK_RELOAD_FAIL=1 run_hook "$WT" "Done.\n$DONE"
 assert_contains "$(herdr_calls)" "tab close w1:t4" "herdr calls" &&
   assert_contains "$(herdr_calls)" "tab create" "herdr calls" &&
@@ -210,7 +220,7 @@ teardown_sandbox
 it "an open review tab left at an idle prompt is replaced"
 setup_review_sandbox
 echo two >> "$WT/a.txt"
-echo '[{"tab_id":"w1:t4","label":"hunk-review"}]' > "$MOCK_TABS"
+echo '[{"tab_id":"w1:t4","label":"review: feat-x"}]' > "$MOCK_TABS"
 pane_running shell
 MOCK_HUNK_RELOAD_FAIL=1 run_hook "$WT" "Done.\n$DONE"
 assert_contains "$(herdr_calls)" "tab close w1:t4" "herdr calls" && pass
@@ -219,7 +229,7 @@ teardown_sandbox
 it "an open review tab running something else is left alone"
 setup_review_sandbox
 echo two >> "$WT/a.txt"
-echo '[{"tab_id":"w1:t4","label":"hunk-review"}]' > "$MOCK_TABS"
+echo '[{"tab_id":"w1:t4","label":"review: feat-x"}]' > "$MOCK_TABS"
 pane_running vim
 MOCK_HUNK_RELOAD_FAIL=1 run_hook "$WT" "Done.\n$DONE"
 assert_not_contains "$(herdr_calls)" "tab close" "herdr calls" && assert_no_tab && pass
@@ -242,4 +252,39 @@ printf '{"last_assistant_message":"Done.\\n%s"}' "$DONE" |
   PATH="$MOCK_BIN" HERDR_ENV=1 HERDR_WORKSPACE_ID=w1 CLAUDE_PROJECT_DIR="$WT" /bin/bash "$HOOK"
 status=$?
 assert_equals "$status" "0" "exit code" && assert_equals "$(herdr_calls)" "" "herdr calls" && pass
+teardown_sandbox
+
+it "the tab is named for the branch without its fix/ or feat/ prefix"
+setup_review_sandbox
+git -C "$MAIN" worktree add -q "$MAIN/worktrees/fix/deep" -b fix/deep
+WT4="$(git -C "$MAIN/worktrees/fix/deep" rev-parse --show-toplevel)"
+echo two >> "$WT4/a.txt"
+run_hook "$WT4" "Done.\n$DONE"
+assert_contains "$(herdr_calls)" "--label review: deep --cwd $WT4" "herdr calls" && pass
+teardown_sandbox
+
+it "the review tab never takes focus"
+setup_review_sandbox
+echo two >> "$WT/a.txt"
+run_hook "$WT" "Done.\n$DONE"
+assert_contains "$(herdr_calls)" "--no-focus" "herdr calls" &&
+  assert_not_contains "$(herdr_calls)" "tab focus" "herdr calls" &&
+  assert_not_contains "$(herdr_calls)" "workspace focus" "herdr calls" && pass
+teardown_sandbox
+
+it "the tab goes in the main workspace, never the worktree's own"
+setup_review_sandbox
+echo two >> "$WT/a.txt"
+run_hook "$WT" "Done.\n$DONE"
+assert_not_contains "$(herdr_calls)" "--workspace w1" "herdr calls" && pass
+teardown_sandbox
+
+it "a review tab whose worktree was dropped is closed on the next stop"
+setup_review_sandbox
+echo '[{"tab_id":"w1:t4","label":"review: feat-x"},{"tab_id":"w1:t5","label":"review: gone"},{"tab_id":"w1:t6","label":"notes"}]' > "$MOCK_TABS"
+run_hook "$MAIN" "Hi.\n$DONE"
+assert_contains "$(herdr_calls)" "tab close w1:t5" "herdr calls" &&
+  assert_not_contains "$(herdr_calls)" "tab close w1:t4" "herdr calls" &&
+  assert_not_contains "$(herdr_calls)" "tab close w1:t6" "herdr calls" &&
+  assert_no_tab && pass
 teardown_sandbox
