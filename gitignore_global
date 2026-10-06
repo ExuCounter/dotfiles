@@ -9,3 +9,7 @@
 preview__*
 
 **/.claude/settings.local.json
+
+# Whiska writes this id file into every worktree it starts a session in. It is
+# never content, so it must not show in reviews or keep a worktree looking changed.
+.whiska-mouse

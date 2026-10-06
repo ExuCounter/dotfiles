@@ -23,7 +23,6 @@
     ~/.claude/statusline-command.sh: claude/statusline-command.sh
     ~/.claude/hooks/glow-preview.sh: claude/hooks/glow-preview.sh
     ~/.claude/hooks/hunk-review.sh: claude/hooks/hunk-review.sh
-    ~/.claude/hooks/mark-edit.sh: claude/hooks/mark-edit.sh
     ~/.claude/hooks/main-session-notify.sh: claude/hooks/main-session-notify.sh
     ~/.claude/skills/open-workspace/SKILL.md: claude/skills/open-workspace/SKILL.md
     ~/.claude/skills/grilling/SKILL.md: claude/skills/grilling/SKILL.md
@@ -120,6 +119,26 @@
           herdr --skill > "$HOME/.claude/skills/use-herdr/SKILL.md"
         fi
       description: Refresh the use-herdr skill from the installed herdr binary
+    - command: |
+        # An extension runs with full user permissions; move the pin only to a
+        # commit whose code has been read.
+        pin=6bd96646070a3f6c5ad096611b8af05156a59204
+        installed_commit() {
+          git --git-dir="${XDG_CONFIG_HOME:-$HOME/.config}/hunk/extensions/installed/hunk-viewed/.git" \
+            rev-parse -q --verify HEAD 2>/dev/null
+        }
+        if ! command -v hunk >/dev/null 2>&1; then
+          echo "hunk is not installed, so hunk-viewed is skipped: brew install hunk"
+        elif [ "$(installed_commit)" != "$pin" ]; then
+          hunk extension remove hunk-viewed >/dev/null 2>&1
+          if ! hunk extension install "jacegodk/hunk-viewed@$pin" --yes; then
+            echo "hunk-viewed needs hunk 0.21 or newer: brew upgrade hunk"
+          elif [ "$(installed_commit)" != "$pin" ]; then
+            hunk extension remove hunk-viewed
+            echo "hunk-viewed: the clone is not commit $pin, so it was removed"
+          fi
+        fi
+      description: Install the hunk-viewed extension (V marks a file viewed in hunk reviews)
     - command: |
         python3 - <<'EOF'
         import json, pathlib
