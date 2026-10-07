@@ -52,7 +52,7 @@
       {
         "hooks": [
           {
-            "command": "bash \"$HOME/.claude/hooks/glow-preview.sh\"",
+            "command": "bash \"$HOME/.claude/hooks/markdown-review.sh\"",
             "timeout": 5,
             "type": "command"
           }
