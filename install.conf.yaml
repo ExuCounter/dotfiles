@@ -21,7 +21,7 @@
     ~/.claude/rules/frontend-preview.md: claude/rules/frontend-preview.md
     ~/.claude/rules/browser-automation.md: claude/rules/browser-automation.md
     ~/.claude/statusline-command.sh: claude/statusline-command.sh
-    ~/.claude/hooks/glow-preview.sh: claude/hooks/glow-preview.sh
+    ~/.claude/hooks/markdown-review.sh: claude/hooks/markdown-review.sh
     ~/.claude/hooks/hunk-review.sh: claude/hooks/hunk-review.sh
     ~/.claude/hooks/main-session-notify.sh: claude/hooks/main-session-notify.sh
     ~/.claude/skills/open-workspace/SKILL.md: claude/skills/open-workspace/SKILL.md
@@ -139,6 +139,29 @@
           fi
         fi
       description: Install the hunk-viewed extension (V marks a file viewed in hunk reviews)
+    - command: |
+        # A plugin runs with full user permissions; move the pin only to a commit
+        # whose code has been read. Its build step downloads two release binaries,
+        # and a release's files can be replaced, so their digests are pinned too.
+        pin=cbba4732229191347ff5128e3da71f64474a6a49
+        sums="a9da49dd6a44d3494fed0e8366ca32996ecdf40e0271fced410cec3c8839175d  bin/plannotator-tui.exe
+        5a9c53d377cd87e64de01b9e43c8490453f6ab81a11311d340a4bff070ea4308  bin/herdr-annotate.exe"
+        if ! command -v herdr >/dev/null 2>&1 || ! command -v jq >/dev/null 2>&1; then
+          echo "herdr or jq is not installed, so the Annotate plugin is skipped"
+        elif ! plugins="$(herdr plugin list 2>/dev/null)"; then
+          echo "herdr is not running, so the Annotate plugin is skipped"
+        else
+          if ! printf '%s\n' "$plugins" | grep -qF "github:plannotator/herdr-annotate@$pin"; then
+            herdr plugin install plannotator/herdr-annotate --ref "$pin" --yes
+          fi
+          root="$(jq -r '.[]? | select(.plugin_id == "annotate") | .plugin_root // empty' \
+            "${XDG_CONFIG_HOME:-$HOME/.config}/herdr/plugins.json" 2>/dev/null)"
+          if [ -n "$root" ] && ! (cd "$root" && printf '%s\n' "$sums" | sed 's/^ *//' | shasum -a 256 -c --status); then
+            herdr plugin uninstall annotate
+            echo "Annotate: its binaries do not match the pinned digests, so it was uninstalled"
+          fi
+        fi
+      description: Install the herdr Annotate plugin (Markdown review in plannotator-tui)
     - command: |
         python3 - <<'EOF'
         import json, pathlib
