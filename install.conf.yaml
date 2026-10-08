@@ -21,7 +21,6 @@
     ~/.claude/rules/frontend-preview.md: claude/rules/frontend-preview.md
     ~/.claude/rules/browser-automation.md: claude/rules/browser-automation.md
     ~/.claude/statusline-command.sh: claude/statusline-command.sh
-    ~/.claude/hooks/markdown-review.sh: claude/hooks/markdown-review.sh
     ~/.claude/hooks/hunk-review.sh: claude/hooks/hunk-review.sh
     ~/.claude/hooks/main-session-notify.sh: claude/hooks/main-session-notify.sh
     ~/.claude/skills/open-workspace/SKILL.md: claude/skills/open-workspace/SKILL.md
