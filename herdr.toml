@@ -156,10 +156,10 @@ rows = [
   [{ token = "$whiska_q2", fg = "#93a1a1" }],
 ]
 
-# Whiska: jump to what is waiting on you; fzf when there is more than one.
+# Whiska: every project's main session in fzf, waiting ones first; enter jumps.
 [[keys.command]]
 key = "prefix+space"
 type = "popup"
-command = "~/Desktop/projects/dotfiles/herdr_whiska_waiting.sh"
+command = "~/.config/fzf_whiska/bin/whiska_picker.sh"
 width = "80%"
 height = "60%"
