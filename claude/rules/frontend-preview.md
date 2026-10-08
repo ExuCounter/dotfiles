@@ -2,10 +2,13 @@
 paths:
   - "**/*.{tsx,jsx,vue,svelte,astro,html,heex,css,scss,less}"
 ---
-# Frontend changes — preview before building
+# Frontend changes — preview before building, after the spec
 
-When a task changes what I'd see in a browser, do not go straight to code. Use the
-`frontend-preview` skill first: it captures the current state, renders 2-3 directions
+Timing: the preview runs only in a build session, after the spec is written and I have
+approved it. Never while grilling, never before the spec, never while investigating.
+
+When a task changes what I'd see in a browser, and that point is reached, do not go
+straight to code. Use the `frontend-preview` skill first: it captures the current state, renders 2-3 directions
 **through the real app**, and publishes one Artifact page with before, after, and the
 options side by side. Then it stops and waits for me to pick.
 
