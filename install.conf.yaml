@@ -94,16 +94,11 @@
       glob: true
       force: true
       path: herdr_layouts/*
-    # fzf herdr workspace switcher (bound to prefix+f)
-    ~/.config/fzf_herdr_workspaces/:
-      glob: true
-      force: true
-      path: fzf_herdr_workspaces/*
+    # fzf herdr workspace switcher (bound to prefix+f). Each picker is one
+    # file, linked by name: dotbot refuses a glob that matches a single path.
+    ~/.config/fzf_herdr_workspaces/bin/fzf_herdr_workspaces.sh: fzf_herdr_workspaces/bin/fzf_herdr_workspaces.sh
     # Whiska project picker (bound to prefix+space)
-    ~/.config/fzf_whiska/:
-      glob: true
-      force: true
-      path: fzf_whiska/*
+    ~/.config/fzf_whiska/bin/whiska_picker.sh: fzf_whiska/bin/whiska_picker.sh
     # nvim
     ~/.config/nvim/:
       glob: true
