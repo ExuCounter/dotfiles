@@ -22,7 +22,6 @@
     ~/.claude/rules/browser-automation.md: claude/rules/browser-automation.md
     ~/.claude/statusline-command.sh: claude/statusline-command.sh
     ~/.claude/hooks/hunk-review.sh: claude/hooks/hunk-review.sh
-    ~/.claude/hooks/main-session-notify.sh: claude/hooks/main-session-notify.sh
     ~/.claude/skills/open-workspace/SKILL.md: claude/skills/open-workspace/SKILL.md
     ~/.claude/skills/grilling/SKILL.md: claude/skills/grilling/SKILL.md
     ~/.claude/skills/grill-me/SKILL.md: claude/skills/grill-me/SKILL.md

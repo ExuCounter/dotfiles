@@ -120,8 +120,7 @@ prompt_new_tab_name = false
 # Herdr's toasts and sounds fire for any background workspace and cannot be
 # filtered per workspace — every worktree session is an agent of kind `claude`
 # just like the main one, so [ui.sound.agents] can't separate them either. Both
-# are off here; the main checkout's ping comes from the main-session-notify.sh
-# Claude hook instead, and a worktree's question arrives through Whiska.
+# are off here; a worktree's question arrives through Whiska.
 status_indicators = "symbols"
 show_agent_labels_on_pane_borders = true
 [ui.toast]
