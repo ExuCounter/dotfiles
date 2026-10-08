@@ -26,9 +26,11 @@ case "$file_path" in
   *) exit 0 ;;
 esac
 
-# Denylist: memory, agent docs, generated files.
+# Denylist: memory, agent docs, generated files, and a Whiska spec, which
+# already reaches the person whole as the mouse's question.
 case "$file_path" in
   */CLAUDE.md|*/AGENTS.md) exit 0 ;;
+  */.whiska-spec.md) exit 0 ;;
   */MEMORY.md) exit 0 ;;
   */.claude/*) exit 0 ;;
   */memory/*) exit 0 ;;
