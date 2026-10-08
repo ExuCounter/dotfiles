@@ -106,12 +106,12 @@ teardown_sandbox
 it "a worktree session's review opens in the main checkout's workspace, named for its branch"
 setup_markdown_sandbox
 setup_worktree
-PANE=w1:p3 PROJECT="$WT" run_hook "$WT/.whiska-spec.md"
+PANE=w1:p3 PROJECT="$WT" run_hook "$WT/plan.md"
 assert_contains "$(herdr_calls)" "plugin pane open --plugin annotate --entrypoint doc --placement tab --workspace wm --no-focus --cwd $WT" "herdr calls" &&
   assert_contains "$(herdr_calls)" "PLANNOTATOR_TUI_DELIVER_TO=w1:p3" "herdr calls" &&
   assert_contains "$(herdr_calls)" "tab list --workspace wm" "herdr calls" &&
   assert_contains "$(herdr_calls)" "pane list --workspace wm" "herdr calls" &&
-  assert_renamed_to review:x/.whiska-spec &&
+  assert_renamed_to review:x/plan &&
   pass
 teardown_sandbox
 
@@ -140,10 +140,10 @@ assert_contains "$(herdr_calls)" "--placement tab --workspace w1 " "herdr calls"
   pass
 teardown_sandbox
 
-it "a Whiska spec opens like any other Markdown file"
+it "a Whiska spec opens nothing"
 setup_markdown_sandbox
 run_hook "$SANDBOX/repo/.whiska-spec.md"
-assert_renamed_to review:.whiska-spec && pass
+assert_nothing_opened && pass
 teardown_sandbox
 
 it "a file that is not Markdown opens nothing"
