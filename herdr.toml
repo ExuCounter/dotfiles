@@ -136,7 +136,7 @@ rows = [
   ["state_icon", { token = "workspace", fg = "#586e75", dim = false }],
   ["branch", "git_status"],
   [{ token = "$whiska", fg = "#657b83", dim = false, rules = [
-    { starts_with = "🐭", fg = "#cb4b16" },
+    { starts_with = "❓", fg = "#2aa198" },
     { starts_with = "⚠", fg = "#dc322f" },
     { starts_with = "✖", fg = "#dc322f" },
     { starts_with = "?", fg = "#dc322f" },
