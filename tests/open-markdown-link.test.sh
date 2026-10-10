@@ -140,3 +140,15 @@ assert_contains "$(calls)" "tab close w1:t5" "herdr calls" \
   && assert_not_contains "$(calls)" "tab close w1:t6" "herdr calls" \
   && pass
 teardown_sandbox
+
+it "reads only each pane's visible screen, so a full-screen agent is not scrolled through its history"
+setup_link_sandbox
+agent_pane w1:p1 w1 true "file://$DOC"
+agent_pane w1:p2 w1 false "nothing"
+run_link "$DOC"
+reads="$(grep '^pane read' "$MOCK_HERDR_LOG")"
+assert_contains "$reads" "--source visible" "pane reads" \
+  && assert_not_contains "$reads" "recent" "pane reads" \
+  && assert_not_contains "$reads" "--lines" "pane reads" \
+  && pass
+teardown_sandbox

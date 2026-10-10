@@ -31,11 +31,13 @@ panes="$(herdr pane list 2>/dev/null)" && [ -n "$panes" ] || fallback
 
 # The agent that printed the link, the focused one first; else the focused agent.
 # The path must stand alone in the pane text: /other/repo/spec.md is not it.
+# Only the visible screen is read: the link was clicked, so it is on screen, and
+# a longer read makes herdr scroll an idle full-screen agent through its history.
 path_re="(^|[^A-Za-z0-9._~%/-]|file://)$(printf '%s' "$file_path" | sed 's/[][\.*^$+?(){}|\/-]/\\&/g')([^A-Za-z0-9._~%/-]|$)"
 target=""
 while IFS= read -r id; do
   [ -n "$id" ] || continue
-  if herdr pane read "$id" --source recent-unwrapped --lines 400 2>/dev/null | grep -qE -- "$path_re"; then
+  if herdr pane read "$id" --source visible 2>/dev/null | grep -qE -- "$path_re"; then
     target="$id"
     break
   fi
