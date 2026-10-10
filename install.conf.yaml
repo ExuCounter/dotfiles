@@ -60,6 +60,7 @@
     ~/.config/kitty/theme.conf: theme.conf
     ~/.config/kitty/open-actions.conf: kitty/open-actions.conf
     ~/.config/kitty/open-markdown-link.sh: kitty/open-markdown-link.sh
+    ~/.config/kitty/open-hunk-review.sh: kitty/open-hunk-review.sh
     ~/.config/herdr/config.toml: herdr.toml
     ~/.config/herdr-automatic-rename/config.sh: herdr_plugins/herdr-automatic-rename/config.sh
     # hunk loads a symlinked file from here, never a symlinked folder.
