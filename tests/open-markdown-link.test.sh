@@ -143,14 +143,11 @@ teardown_sandbox
 
 it "reads only each pane's visible screen, so a full-screen agent is not scrolled through its history"
 setup_link_sandbox
-agent_pane w1:p1 w1 true "file://$DOC"
-agent_pane w1:p2 w1 false "nothing"
+agent_pane w1:p1 w1 true "nothing"
+agent_pane w1:p2 w1 false "nothing either"
 run_link "$DOC"
-reads="$(grep '^pane read' "$MOCK_HERDR_LOG")"
-assert_contains "$reads" "--source visible" "pane reads" \
-  && assert_not_contains "$reads" "recent" "pane reads" \
-  && assert_not_contains "$reads" "--lines" "pane reads" \
-  && pass
+assert_equals "$(grep '^pane read' "$MOCK_HERDR_LOG")" "pane read w1:p1 --source visible
+pane read w1:p2 --source visible" "pane reads" && pass
 teardown_sandbox
 
 it "brings the new review tab to the front, since opening it with --focus leaves the viewer where it was"

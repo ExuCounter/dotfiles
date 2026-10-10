@@ -31,8 +31,6 @@ panes="$(herdr pane list 2>/dev/null)" && [ -n "$panes" ] || fallback
 
 # The agent that printed the link, the focused one first; else the focused agent.
 # The path must stand alone in the pane text: /other/repo/spec.md is not it.
-# Only the visible screen is read: the link was clicked, so it is on screen, and
-# a longer read makes herdr scroll an idle full-screen agent through its history.
 path_re="(^|[^A-Za-z0-9._~%/-]|file://)$(printf '%s' "$file_path" | sed 's/[][\.*^$+?(){}|\/-]/\\&/g')([^A-Za-z0-9._~%/-]|$)"
 target=""
 while IFS= read -r id; do
@@ -85,7 +83,6 @@ new_tab_id="$(herdr plugin pane open --plugin annotate --entrypoint doc --placem
   | jq -r '.result.plugin_pane.pane.tab_id // empty' 2>/dev/null)"
 [ -n "$new_tab_id" ] || fallback
 herdr tab rename "$new_tab_id" "$label" >/dev/null 2>&1
-# --focus above only marks the tab focused; the viewer stays where it was.
 herdr tab focus "$new_tab_id" >/dev/null 2>&1
 
 while IFS= read -r tab_id; do
