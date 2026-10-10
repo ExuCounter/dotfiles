@@ -152,3 +152,10 @@ assert_contains "$reads" "--source visible" "pane reads" \
   && assert_not_contains "$reads" "--lines" "pane reads" \
   && pass
 teardown_sandbox
+
+it "brings the new review tab to the front, since opening it with --focus leaves the viewer where it was"
+setup_link_sandbox
+agent_pane w1:p1 w1 true "file://$DOC"
+run_link "$DOC"
+assert_contains "$(calls)" "tab focus w1:t9" "herdr calls" && pass
+teardown_sandbox

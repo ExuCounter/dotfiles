@@ -85,6 +85,8 @@ new_tab_id="$(herdr plugin pane open --plugin annotate --entrypoint doc --placem
   | jq -r '.result.plugin_pane.pane.tab_id // empty' 2>/dev/null)"
 [ -n "$new_tab_id" ] || fallback
 herdr tab rename "$new_tab_id" "$label" >/dev/null 2>&1
+# --focus above only marks the tab focused; the viewer stays where it was.
+herdr tab focus "$new_tab_id" >/dev/null 2>&1
 
 while IFS= read -r tab_id; do
   [ -n "$tab_id" ] && herdr tab close "$tab_id" >/dev/null 2>&1
