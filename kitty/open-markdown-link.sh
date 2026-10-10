@@ -13,25 +13,29 @@ set -u
 export PATH="$PATH:/opt/homebrew/bin:/usr/local/bin"
 
 file_path="${1:-}"
+case "$file_path" in /*) ;; *) exit 0 ;; esac
 [ -f "$file_path" ] || exit 0
 
-fallback() { command -v open >/dev/null 2>&1 && open "$file_path"; exit 0; }
+fallback() { command -v open >/dev/null 2>&1 && open -- "$file_path"; exit 0; }
 
 command -v herdr >/dev/null 2>&1 && command -v jq >/dev/null 2>&1 || fallback
 
-# Notes quote the document into the agent's prompt, so an escape sequence in it
-# could end herdr's paste early and type the rest as a new prompt. A sidecar
+# Notes quote the document into the agent's prompt, so a control character in
+# it (an escape, or a carriage return that submits the prompt) could end herdr's
+# paste early and type the rest as a new prompt. A sidecar
 # beside the file is imported as the person's own pending notes.
-LC_ALL=C grep -q $'\x1b' "$file_path" 2>/dev/null && fallback
+LC_ALL=C grep -qa $'[\x01-\x08\x0b-\x1f\x7f]' "$file_path" 2>/dev/null && fallback
 [ -e "$file_path.annotations.json" ] && fallback
 
 panes="$(herdr pane list 2>/dev/null)" && [ -n "$panes" ] || fallback
 
 # The agent that printed the link, the focused one first; else the focused agent.
+# The path must stand alone in the pane text: /other/repo/spec.md is not it.
+path_re="(^|[^A-Za-z0-9._~%/-]|file://)$(printf '%s' "$file_path" | sed 's/[][\.*^$+?(){}|\/-]/\\&/g')([^A-Za-z0-9._~%/-]|$)"
 target=""
 while IFS= read -r id; do
   [ -n "$id" ] || continue
-  if herdr pane read "$id" --source recent-unwrapped --lines 400 2>/dev/null | grep -qF -- "$file_path"; then
+  if herdr pane read "$id" --source recent-unwrapped --lines 400 2>/dev/null | grep -qE -- "$path_re"; then
     target="$id"
     break
   fi

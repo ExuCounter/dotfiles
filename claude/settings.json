@@ -2,6 +2,9 @@
   "permissions": {
     "defaultMode": "auto"
   },
+  "env": {
+    "FORCE_HYPERLINK": "1"
+  },
   "model": "opus[1m]",
   "skillOverrides": {
     "anthropic-skills:docs": "user-invocable-only",

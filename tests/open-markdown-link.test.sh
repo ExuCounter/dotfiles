@@ -10,7 +10,8 @@ SCRIPT="$REPO_ROOT/kitty/open-markdown-link.sh"
 # fails when MOCK_PLUGIN_FAIL=1). `open` is mocked too. Every call is logged.
 setup_link_sandbox() {
   setup_sandbox
-  export MOCK_PANES="$SANDBOX/panes.json" MOCK_WORKSPACES="$SANDBOX/workspaces.json" MOCK_SCREENS="$SANDBOX/screens"
+  export MOCK_TABS="$SANDBOX/tabs.json" MOCK_PANES="$SANDBOX/panes.json" MOCK_WORKSPACES="$SANDBOX/workspaces.json" MOCK_SCREENS="$SANDBOX/screens"
+  echo '[]' > "$MOCK_TABS"
   echo '[]' > "$MOCK_PANES"
   echo '[]' > "$MOCK_WORKSPACES"
   mkdir -p "$MOCK_SCREENS"
@@ -22,7 +23,7 @@ case "$1 $2" in
   "pane list") printf '{"result":{"panes":%s}}\n' "$(cat "$MOCK_PANES")" ;;
   "pane read") cat "$MOCK_SCREENS/${3//:/_}" 2>/dev/null ;;
   "workspace list") printf '{"result":{"workspaces":%s}}\n' "$(cat "$MOCK_WORKSPACES")" ;;
-  "tab list") echo '{"result":{"tabs":[]}}' ;;
+  "tab list") printf '{"result":{"tabs":%s}}\n' "$(cat "$MOCK_TABS")" ;;
   "plugin pane")
     [ "${MOCK_PLUGIN_FAIL:-0}" = 1 ] && exit 1
     echo '{"result":{"plugin_pane":{"pane":{"pane_id":"w1:p9","tab_id":"w1:t9"}}}}' ;;
@@ -94,12 +95,48 @@ setup_link_sandbox
 agent_pane w1:p1 w1 true "file://$DOC"
 printf '# hi \033[31mred\n' > "$DOC"
 run_link "$DOC"
-assert_equals "$(opened_call)" "" "plugin open calls" && assert_contains "$(calls)" "open $DOC" "calls" && pass
+assert_equals "$(opened_call)" "" "plugin open calls" && assert_contains "$(calls)" "open -- $DOC" "calls" && pass
 teardown_sandbox
 
 it "opens with the plain opener when the review pane fails to open"
 setup_link_sandbox
 agent_pane w1:p1 w1 true "file://$DOC"
 MOCK_PLUGIN_FAIL=1 run_link "$DOC"
-assert_contains "$(calls)" "open $DOC" "calls" && pass
+assert_contains "$(calls)" "open -- $DOC" "calls" && pass
+teardown_sandbox
+
+it "opens with the plain opener when the file holds a carriage return"
+setup_link_sandbox
+agent_pane w1:p1 w1 true "file://$DOC"
+printf '# hi\rrun it\r\n' > "$DOC"
+run_link "$DOC"
+assert_equals "$(opened_call)" "" "plugin open calls" && assert_contains "$(calls)" "open -- $DOC" "calls" && pass
+teardown_sandbox
+
+it "opens with the plain opener when the file has an annotations sidecar"
+setup_link_sandbox
+agent_pane w1:p1 w1 true "file://$DOC"
+echo '[]' > "$DOC.annotations.json"
+run_link "$DOC"
+assert_equals "$(opened_call)" "" "plugin open calls" && assert_contains "$(calls)" "open -- $DOC" "calls" && pass
+teardown_sandbox
+
+it "ignores a pane that shows only a longer path ending in the same name"
+setup_link_sandbox
+agent_pane w1:p1 w1 true "nothing"
+agent_pane w1:p2 w1 false "see file:///other$DOC"
+run_link "$DOC"
+assert_contains "$(opened_call)" "PLANNOTATOR_TUI_DELIVER_TO=w1:p1" "the open call" && pass
+teardown_sandbox
+
+it "closes the file's earlier review tab and keeps other files' tabs"
+setup_link_sandbox
+agent_pane w1:p1 w1 true "file://$DOC"
+echo "[{\"tab_id\":\"w1:t5\",\"label\":\"review:spec\"},{\"tab_id\":\"w1:t6\",\"label\":\"review:spec\"}]" > "$MOCK_TABS"
+echo "[{\"pane_id\":\"w1:p5\",\"tab_id\":\"w1:t5\",\"label\":\"Annotate\",\"cwd\":\"$(dirname "$DOC")\",\"workspace_id\":\"w1\"},{\"pane_id\":\"w1:p6\",\"tab_id\":\"w1:t6\",\"label\":\"Annotate\",\"cwd\":\"/elsewhere\",\"workspace_id\":\"w1\"}]" > "$MOCK_PANES.tabs"
+jq -s 'add' "$MOCK_PANES" "$MOCK_PANES.tabs" > "$MOCK_PANES.all" && mv "$MOCK_PANES.all" "$MOCK_PANES"
+run_link "$DOC"
+assert_contains "$(calls)" "tab close w1:t5" "herdr calls" \
+  && assert_not_contains "$(calls)" "tab close w1:t6" "herdr calls" \
+  && pass
 teardown_sandbox
