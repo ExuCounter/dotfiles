@@ -84,16 +84,6 @@
       {
         "hooks": [
           {
-            "command": "bash \"$HOME/.claude/hooks/hunk-review.sh\"",
-            "timeout": 10,
-            "type": "command"
-          }
-        ],
-        "matcher": "*"
-      },
-      {
-        "hooks": [
-          {
             "command": "bash \"$HOME/.claude/hooks/whiska.sh\" stop",
             "type": "command"
           }
