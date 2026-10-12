@@ -143,6 +143,7 @@ rows = [
     { starts_with = "✅", fg = "#859900" },
     { starts_with = "⏳", fg = "#b58900" },
     { starts_with = "🎯", fg = "#6c71c4" },
+    { starts_with = "○", fg = "#e0891f" },
     { starts_with = "💤", fg = "#6c71c4" },
     { starts_with = "⏸", fg = "#6c71c4" },
     { starts_with = "↩", fg = "#268bd2" },
