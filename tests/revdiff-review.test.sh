@@ -97,3 +97,16 @@ printf '# hi\033[31m\n' > "$DOC"
 MOCK_REVDIFF=quit review
 assert_equals "$status" 1 "exit status" && assert_no_file "$MOCK_PROMPT" && pass
 teardown_sandbox
+
+it "pads table cells so columns line up, leaving line count and fenced tables alone"
+setup_review_sandbox
+printf '%s\n' '# T' '| a | bb |' '|:-|-:|' '| longer \| x | é |' '```' '| x | y |' '|-|-|' '```' > "$DOC"
+cat > "$MOCK_BIN/revdiff" <<'MOCK'
+#!/usr/bin/env bash
+cat > "$MOCK_SHOWN"
+MOCK
+export MOCK_SHOWN="$SANDBOX/shown.txt"
+review
+want=$(printf '%s\n' '# T' '| a           | bb |' '| :---------- | -: |' '| longer \| x | é  |' '```' '| x | y |' '|-|-|' '```')
+assert_equals "$(cat "$MOCK_SHOWN")" "$want" "what revdiff is shown" && pass
+teardown_sandbox

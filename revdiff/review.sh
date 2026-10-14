@@ -26,6 +26,10 @@ trap 'rm -rf "$session"' EXIT
 cp "$file" "$session/doc" 2>/dev/null || stop "Cannot read $file"
 LC_ALL=C grep -qa $'[\x01-\x08\x0b-\x1f\x7f]' "$session/doc" &&
   stop "$file holds control characters, which could reach the agent's prompt. Not reviewed."
+# Pipe tables are padded so their columns line up in revdiff's raw view; only
+# spaces change inside lines, so line numbers and note anchors stay exact.
+LC_ALL=C awk -f "$here/align-tables.awk" "$session/doc" > "$session/aligned" &&
+  mv "$session/aligned" "$session/doc"
 export REVDIFF_REVIEW_FILE="$file" REVDIFF_REVIEW_COPY="$session/doc" REVDIFF_DELIVER_TO="$pane" \
   REVDIFF_SENT="$session/sent"
 
