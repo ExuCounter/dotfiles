@@ -22,9 +22,14 @@ MOCK
   # flush-then-quit (E, then q with the same note), crash.
   cat > "$MOCK_BIN/revdiff" <<'MOCK'
 #!/usr/bin/env bash
-flush="" output=/dev/stdout
+flush="" output=/dev/stdout annotations="" history=""
 for a in "$@"; do
-  case "$a" in --post-flush-command=*) flush="${a#*=}" ;; --output=*) output="${a#*=}" ;; esac
+  case "$a" in
+    --post-flush-command=*) flush="${a#*=}" ;;
+    --output=*) output="${a#*=}" ;;
+    --annotations=*) annotations="${a#*=}" ;;
+    --history-dir=*) history="${a#*=}" ;;
+  esac
 done
 note=$'## spec.md:2 ( )\nfix this'
 flush() { [ "$output" = /dev/stdout ] || printf '%s\n' "$note" > "$output"; printf '%s\n' "$note" | "$flush" >/dev/null; }
@@ -33,6 +38,22 @@ case "$MOCK_REVDIFF" in
   flush-then-discard) flush ;;
   flush-then-quit) flush; printf '%s\n' "$note" > "$output" ;;
   crash) echo "revdiff: bad theme" >&2; exit 1 ;;
+  reload)
+    # First start: send the note with E, keep it in history, then the file
+    # changes under the review and review.sh stops us with SIGTERM. Second
+    # start: record what we were shown and given, then quit.
+    if [ -z "$annotations" ]; then
+      flush
+      mkdir -p "$history/stdin"
+      printf '# Review: now\npath: stdin\n\n## Annotations\n\n%s\n' "$note" > "$history/stdin/now.md"
+      printf '%b' "$MOCK_NEWDOC" > "$MOCK_DOC"
+      # A person who quits after the change had time to be noticed.
+      [ -z "${MOCK_QUIT_AFTER:-}" ] || { sleep 1; printf '%s\n' "$note" > "$output"; exit 0; }
+      trap 'exit 0' TERM
+      while :; do sleep 0.1; done
+    else
+      cp "$annotations" "$MOCK_ANN"; cat ./*.md > "$MOCK_SHOWN"
+    fi ;;
 esac
 exit 0
 MOCK
@@ -103,10 +124,56 @@ setup_review_sandbox
 printf '%s\n' '# T' '| a | bb |' '|:-|-:|' '| longer \| x | é |' '```' '| x | y |' '|-|-|' '```' > "$DOC"
 cat > "$MOCK_BIN/revdiff" <<'MOCK'
 #!/usr/bin/env bash
-cat > "$MOCK_SHOWN"
+cat ./*.md > "$MOCK_SHOWN"
 MOCK
 export MOCK_SHOWN="$SANDBOX/shown.txt"
 review
 want=$(printf '%s\n' '# T' '| a           | bb |' '| :---------- | -: |' '| longer \| x | é  |' '```' '| x | y |' '|-|-|' '```')
 assert_equals "$(cat "$MOCK_SHOWN")" "$want" "what revdiff is shown" && pass
+teardown_sandbox
+
+it "reloads on a changed file, moving a sent note to its new line without resending it"
+setup_review_sandbox
+export HERDR_PANE_ID=w1:p1 REVDIFF_POLL=0.1 MOCK_DOC="$DOC" MOCK_ANN="$SANDBOX/ann.md" MOCK_SHOWN="$SANDBOX/shown.txt"
+export MOCK_NEWDOC='# A spec\nnew\nfirst line\n'
+MOCK_REVDIFF=reload review
+assert_equals "$status" 0 "exit status" \
+  && assert_contains "$(cat "$MOCK_ANN")" "## spec.md:3 ( )" "the preloaded notes" \
+  && assert_contains "$(cat "$MOCK_SHOWN")" "new" "what revdiff is shown after the reload" \
+  && assert_equals "$(grep -c 'fix this' "$MOCK_PROMPT")" 1 "times the note was sent" \
+  && pass
+unset HERDR_PANE_ID REVDIFF_POLL MOCK_DOC MOCK_ANN MOCK_SHOWN MOCK_NEWDOC
+teardown_sandbox
+
+it "marks a note whose line is gone as moved and keeps its line number"
+setup_review_sandbox
+export HERDR_PANE_ID=w1:p1 REVDIFF_POLL=0.1 MOCK_DOC="$DOC" MOCK_ANN="$SANDBOX/ann.md" MOCK_SHOWN="$SANDBOX/shown.txt"
+export MOCK_NEWDOC='# A spec\nrewritten\n'
+MOCK_REVDIFF=reload review
+assert_contains "$(cat "$MOCK_ANN")" "## spec.md:2 ( )" "the preloaded notes" \
+  && assert_contains "$(cat "$MOCK_ANN")" "[moved, was line 2] fix this" "the preloaded notes" \
+  && assert_equals "$(grep -c 'fix this' "$MOCK_PROMPT")" 1 "times the note was sent" \
+  && pass
+unset HERDR_PANE_ID REVDIFF_POLL MOCK_DOC MOCK_ANN MOCK_SHOWN MOCK_NEWDOC
+teardown_sandbox
+
+it "keeps a moved note on the last line when the file got shorter than its line"
+setup_review_sandbox
+printf '# A spec\nfirst line\nsecond\nthird\n' > "$DOC"
+sed -i.bak 's/spec.md:2 ( )/spec.md:4 ( )/' "$MOCK_BIN/revdiff" && rm -f "$MOCK_BIN/revdiff.bak"
+export HERDR_PANE_ID=w1:p1 REVDIFF_POLL=0.1 MOCK_DOC="$DOC" MOCK_ANN="$SANDBOX/ann.md" MOCK_SHOWN="$SANDBOX/shown.txt"
+export MOCK_NEWDOC='# A spec\nx\n'
+MOCK_REVDIFF=reload review
+assert_contains "$(cat "$MOCK_ANN")" "## spec.md:2 ( )" "the preloaded notes" \
+  && assert_contains "$(cat "$MOCK_ANN")" "[moved, was line 4]" "the preloaded notes" && pass
+unset HERDR_PANE_ID REVDIFF_POLL MOCK_DOC MOCK_ANN MOCK_SHOWN MOCK_NEWDOC
+teardown_sandbox
+
+it "ignores a changed file holding control characters"
+setup_review_sandbox
+export HERDR_PANE_ID=w1:p1 REVDIFF_POLL=0.1 MOCK_DOC="$DOC" MOCK_ANN="$SANDBOX/ann.md" MOCK_SHOWN="$SANDBOX/shown.txt"
+export MOCK_NEWDOC='# A spec\n\033[31mfirst line\n'
+MOCK_QUIT_AFTER=1 MOCK_REVDIFF=reload review
+assert_equals "$status" 0 "exit status" && assert_no_file "$MOCK_ANN" && pass
+unset HERDR_PANE_ID REVDIFF_POLL MOCK_DOC MOCK_ANN MOCK_SHOWN MOCK_NEWDOC
 teardown_sandbox
