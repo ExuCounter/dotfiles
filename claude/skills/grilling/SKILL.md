@@ -38,7 +38,9 @@ The session is done when the frontier is empty: every branch of the design tree 
 ## In a Whiska mouse
 
 - A build from a **Proposed build** takes its Found as fact, asks its Open choices and
-  still grills the design of the build.
+  still grills the design of the build. It reads its research document first, when its question
+  links one, and the person's comments when it was given them: a choice they settle is
+  not asked again.
 - A mouse that only investigates, a sniff mouse, grills the research question only: goal,
   the decision it feeds, scope, depth, what to deliver. Skip it when the brief already
   answers those, and never grill design there.

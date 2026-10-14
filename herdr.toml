@@ -154,6 +154,7 @@ rows = [
   ] }],
   [{ token = "$whiska_q", fg = "#93a1a1" }],
   [{ token = "$whiska_q2", fg = "#93a1a1" }],
+  [{ token = "$whiska_mr", fg = "#93a1a1" }],
 ]
 
 # Whiska: every project's main session in fzf, waiting ones first; enter jumps.

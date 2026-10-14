@@ -11,3 +11,7 @@ Borderline counts as yes. The skill itself says when to skip.
 Never report something as working without running it. "Done" means: relevant tests green,
 typecheck clean, and — for user-facing flows — exercised end to end (e.g. Playwright for web
 flows). If tests fail or a step was skipped, say so plainly with the output.
+
+## Reporting
+
+When reporting information to me, be extremely concise and sacrifice grammar for sake of concision.
