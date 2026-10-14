@@ -1,0 +1,28 @@
+# name: solarized-light
+# description: the solarized-dark theme moved to the light palette, orange notes on base3
+# author: dotfiles
+
+chroma-style = solarized-light
+color-accent = #b58900
+color-border = #93a1a1
+color-normal = #586e75
+color-muted = #93a1a1
+color-selected-fg = #fdf6e3
+color-selected-bg = #b58900
+color-annotation = #cb4b16
+color-cursor-fg = #859900
+color-cursor-bg = #eee8d5
+color-add-fg = #859900
+color-add-bg = #eef0d5
+color-remove-fg = #dc322f
+color-remove-bg = #fbe3dd
+color-modify-fg = #b58900
+color-modify-bg = #f6edd0
+color-tree-bg = #fdf6e3
+color-diff-bg = #fdf6e3
+color-status-fg = #fdf6e3
+color-status-bg = #b58900
+color-search-fg = #fdf6e3
+color-search-bg = #cb4b16
+color-word-add-bg = #dde6b0
+color-word-remove-bg = #f5cdc2

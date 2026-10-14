@@ -61,6 +61,10 @@
     ~/.config/kitty/open-actions.conf: kitty/open-actions.conf
     ~/.config/kitty/open-markdown-link.sh: kitty/open-markdown-link.sh
     ~/.config/kitty/open-hunk-review.sh: kitty/open-hunk-review.sh
+    ~/.config/revdiff/review.sh: revdiff/review.sh
+    ~/.config/revdiff/config: revdiff/config
+    ~/.config/revdiff/keybindings: revdiff/keybindings
+    ~/.config/revdiff/themes/solarized-light: revdiff/themes/solarized-light
     ~/.config/herdr/config.toml: herdr.toml
     ~/.config/herdr-automatic-rename/config.sh: herdr_plugins/herdr-automatic-rename/config.sh
     # hunk loads a symlinked file from here, never a symlinked folder.
@@ -164,7 +168,7 @@
             echo "Annotate: its binaries do not match the pinned digests, so it was uninstalled"
           fi
         fi
-      description: Install the herdr Annotate plugin (Markdown review in plannotator-tui)
+      description: Install the herdr Annotate plugin (comment on terminal text)
     - command: |
         python3 - <<'EOF'
         import json, pathlib
