@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Review one Markdown file in revdiff, in the tab kitty/open-markdown-link.sh
+# Review one Markdown file in revdiff, in the tab kitty/open-review-link.sh
 # opened for it. E sends the notes to the agent pane given here (send.sh is
 # revdiff's post-flush command); quitting with q sends whatever E has not.
 # Nothing sent stays on screen until a key is pressed; revdiff's history file

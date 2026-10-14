@@ -1,9 +1,9 @@
-# open-markdown-link.sh is what kitty runs when a Markdown file link is
+# open-review-link.sh is what kitty runs when a Markdown or .diff file link is
 # Cmd-clicked: it opens the file in a revdiff review tab in the main workspace,
 # with notes going to the agent whose pane printed the link. Each case runs it
 # with a mock herdr and reads back what it asked herdr to do.
 
-SCRIPT="$REPO_ROOT/kitty/open-markdown-link.sh"
+SCRIPT="$REPO_ROOT/kitty/open-review-link.sh"
 
 # Mock herdr: `pane list`, `pane read`, `workspace list` and `tab list` answer
 # from files in the sandbox, `tab create` returns tab w1:t9 with root pane
@@ -178,3 +178,45 @@ run_link "$DOC"
 assert_equals "$(grep '^pane read' "$MOCK_HERDR_LOG")" "pane read w1:p1 --source visible
 pane read w1:p2 --source visible" "pane reads" && pass
 teardown_sandbox
+
+it "reviews a .diff from Whiska's reviews folder as a diff, in a tab labelled by its branch"
+setup_link_sandbox
+PATCH="$SANDBOX/repo/.whiska/reviews/feat-x-0123456789abcdef0123456789abcdef.diff"
+mkdir -p "$(dirname "$PATCH")"
+printf 'diff --git a/a b/a\n' > "$PATCH"
+agent_pane w1:p1 w1 true "diff: $PATCH"
+echo '[{"tab_id":"w1:t5","label":"diff:feat-x"}]' > "$MOCK_TABS"
+run_link "$PATCH"
+assert_contains "$(created_call)" "--workspace w1 --label diff:feat-x " "the tab create call" \
+  && assert_equals "$(run_call)" "pane run w1:p9 '$HOME/.config/revdiff/review-diff.sh' '$PATCH' 'w1:p1'; exit" "the pane run call" \
+  && assert_contains "$(calls)" "tab close w1:t5" "herdr calls" \
+  && pass
+teardown_sandbox
+
+it "reviews a .patch file as a diff, labelled by its name"
+setup_link_sandbox
+PATCH="$SANDBOX/repo/fix.patch"
+printf 'diff --git a/a b/a\n' > "$PATCH"
+agent_pane w1:p1 w1 true "nothing"
+run_link "$PATCH"
+assert_contains "$(created_call)" "--label diff:fix " "the tab create call" \
+  && assert_contains "$(run_call)" "review-diff.sh' '$PATCH'" "the pane run call" \
+  && pass
+teardown_sandbox
+
+it "ignores a file that is neither Markdown nor a diff"
+setup_link_sandbox
+echo hi > "$SANDBOX/repo/notes.txt"
+run_link "$SANDBOX/repo/notes.txt"
+assert_equals "$(calls)" "" "calls" && pass
+teardown_sandbox
+
+it "kitty sends .diff and .patch links to the review opener, and nothing handles hunk-review links"
+actions="$(cat "$REPO_ROOT/kitty/open-actions.conf")"
+assert_contains "$actions" "ext diff,patch
+action launch --type=background ~/.config/kitty/open-review-link.sh \${FILE_PATH}" "open-actions.conf" \
+  && assert_not_contains "$actions" "hunk-review" "open-actions.conf" \
+  && assert_not_contains "$(cat "$REPO_ROOT/kitty.conf")" "hunk-review" "kitty.conf" \
+  && assert_contains "$(cat "$REPO_ROOT/install.conf.yaml")" "~/.config/revdiff/review-diff.sh: revdiff/review-diff.sh" "install.conf.yaml" \
+  && assert_contains "$(cat "$REPO_ROOT/install.conf.yaml")" "~/.config/kitty/open-review-link.sh: kitty/open-review-link.sh" "install.conf.yaml" \
+  && pass

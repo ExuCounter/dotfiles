@@ -1,8 +1,10 @@
 #!/usr/bin/env bash
-# kitty open action (open-actions.conf): open a clicked Markdown file in revdiff
-# (~/.config/revdiff/review.sh), in a tab of its own in the herdr workspace of
-# the file's main checkout: `review:<file>`, or `review:<branch>/<file>` from a
-# worktree. Notes sent from the review (E) arrive as the next message of the
+# kitty open action (open-actions.conf): open a clicked Markdown file or git
+# patch in revdiff, in a tab of its own in the herdr workspace of the file's
+# main checkout. A Markdown file goes to ~/.config/revdiff/review.sh as
+# `review:<file>`, or `review:<branch>/<file>` from a worktree; a .diff or
+# .patch to ~/.config/revdiff/review-diff.sh as `diff:<name>`, the name without
+# the hash Whiska ends a branch's diff file with. Notes sent from the review (E) arrive as the next message of the
 # agent whose pane printed the link; with no such pane, of the focused pane's
 # agent. The tab starts in the main checkout, never in a worktree: a tab inside
 # a worktree stops Whiska removing it.
@@ -17,6 +19,11 @@ export PATH="$PATH:/opt/homebrew/bin:/usr/local/bin"
 file_path="${1:-}"
 case "$file_path" in /*) ;; *) exit 0 ;; esac
 [ -f "$file_path" ] || exit 0
+case "$file_path" in
+  *.md|*.markdown) reviewer=review.sh ;;
+  *.diff|*.patch) reviewer=review-diff.sh ;;
+  *) exit 0 ;;
+esac
 
 fallback() { command -v open >/dev/null 2>&1 && open -- "$file_path"; exit 0; }
 
@@ -47,6 +54,9 @@ target_ws="$(printf '%s' "$panes" | jq -r --arg t "$target" '[.result.panes[]? |
 
 name="$(basename "$file_path")"
 label="review:${name%.*}"
+if [ "$reviewer" = review-diff.sh ]; then
+  label="diff:$(printf '%s' "${name%.*}" | sed -E 's/-[0-9a-f]{32}$//')"
+fi
 dir="$(dirname "$file_path")"
 real_dir="$(cd "$dir" 2>/dev/null && pwd -P)"
 
@@ -57,7 +67,7 @@ git_dir="$(git -C "$dir" rev-parse --absolute-git-dir 2>/dev/null)"
 common_dir="$(git -C "$dir" rev-parse --path-format=absolute --git-common-dir 2>/dev/null)"
 if [ -n "$common_dir" ]; then
   cwd="${common_dir%/.git}"
-  if [ "$git_dir" != "$common_dir" ]; then
+  if [ "$git_dir" != "$common_dir" ] && [ "$reviewer" = review.sh ]; then
     branch="$(git -C "$dir" branch --show-current 2>/dev/null | sed -E 's#^(fix|feat)/##')"
     [ -n "$branch" ] && label="review:$branch/${name%.*}"
   fi
@@ -79,8 +89,8 @@ pane_id="$(printf '%s' "$created" | jq -r '.result.root_pane.pane_id // empty' 2
 
 # Each word is single-quoted, so the tab's shell applies no glob or expansion.
 # The shell exits with the review, which closes the tab.
-quote() { printf "'%s'" "${1//\'/\'\\\'\'}"; }
-command_line="$(quote "$HOME/.config/revdiff/review.sh") $(quote "$file_path") $(quote "$target"); exit"
+quote() { printf "'%s'" "$(printf '%s' "$1" | sed "s/'/'\\\\''/g")"; }
+command_line="$(quote "$HOME/.config/revdiff/$reviewer") $(quote "$file_path") $(quote "$target"); exit"
 if ! herdr pane run "$pane_id" "$command_line" >/dev/null 2>&1; then
   herdr tab close "$new_tab_id" >/dev/null 2>&1
   fallback
