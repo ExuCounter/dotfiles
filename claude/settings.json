@@ -29,7 +29,6 @@
   },
   "effortLevel": "medium",
   "enabledPlugins": {
-    "chrome-devtools-mcp@claude-plugins-official": true,
     "datadog@claude-plugins-official": true,
     "feature-dev@claude-plugins-official": false,
     "mcp-server-dev@claude-plugins-official": false,
@@ -96,16 +95,6 @@
       }
     ],
     "PreToolUse": [
-      {
-        "hooks": [
-          {
-            "command": "bash \"$HOME/.claude/hooks/no-raw-cdp.sh\"",
-            "timeout": 5,
-            "type": "command"
-          }
-        ],
-        "matcher": "Bash"
-      },
       {
         "hooks": [
           {

@@ -537,7 +537,3 @@ The skill **publishes screenshots of this file to a web page**. So:
   Replace real names, addresses and numbers with equally-long fake ones — equally long,
   or you've changed the layout you're trying to preview.
 - The dump lives in `preview__/`, which is gitignored and deleted with everything else.
-
-The Chrome DevTools MCP does this more cleanly when it's connected, and can wait on
-`document.fonts.ready` besides. Treat it as an accelerator, never a dependency — it is
-frequently not up, and this bash path is what always works.

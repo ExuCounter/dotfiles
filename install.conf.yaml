@@ -19,7 +19,6 @@
     ~/.claude/rules/comments-and-docs.md: claude/rules/comments-and-docs.md
     ~/.claude/rules/tdd.md: claude/rules/tdd.md
     ~/.claude/rules/frontend-preview.md: claude/rules/frontend-preview.md
-    ~/.claude/rules/browser-automation.md: claude/rules/browser-automation.md
     ~/.claude/statusline-command.sh: claude/statusline-command.sh
     ~/.claude/skills/open-workspace/SKILL.md: claude/skills/open-workspace/SKILL.md
     ~/.claude/skills/grilling/SKILL.md: claude/skills/grilling/SKILL.md
@@ -169,21 +168,3 @@
           fi
         fi
       description: Install the herdr Annotate plugin (comment on terminal text)
-    - command: |
-        python3 - <<'EOF'
-        import json, pathlib
-        # Plugin updates ship chrome-devtools-mcp without --isolated, so every
-        # agent session reaches for the one shared Chrome profile and the second
-        # one fails. Claude Code reads the commit-sha copy, not the version-named
-        # one, so patch every copy. Takes effect on the next session start.
-        root = pathlib.Path.home() / ".claude/plugins/cache"
-        for f in root.glob("*/chrome-devtools-mcp/*/mcp.json"):
-            c = json.loads(f.read_text())
-            for srv in c.get("mcpServers", {}).values():
-                a = srv.get("args", [])
-                if "--isolated" not in a:
-                    a.append("--isolated")
-                    f.write_text(json.dumps(c, indent=2) + "\n")
-                    print("patched", f)
-        EOF
-      description: Keep --isolated on the chrome-devtools MCP server (plugin updates drop it)
