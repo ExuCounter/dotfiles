@@ -19,6 +19,7 @@
     ~/.claude/rules/comments-and-docs.md: claude/rules/comments-and-docs.md
     ~/.claude/rules/tdd.md: claude/rules/tdd.md
     ~/.claude/rules/frontend-preview.md: claude/rules/frontend-preview.md
+    ~/.claude/rules/reviewing-docs.md: claude/rules/reviewing-docs.md
     ~/.claude/statusline-command.sh: claude/statusline-command.sh
     ~/.claude/skills/open-workspace/SKILL.md: claude/skills/open-workspace/SKILL.md
     ~/.claude/skills/grilling/SKILL.md: claude/skills/grilling/SKILL.md
@@ -57,13 +58,6 @@
     ~/.config/glow/solarized-light.json: glow/solarized-light.json
     ~/Library/Preferences/glow/glow.yml: glow/glow.yml
     ~/.config/kitty/theme.conf: theme.conf
-    ~/.config/kitty/open-actions.conf: kitty/open-actions.conf
-    ~/.config/kitty/open-review-link.sh: kitty/open-review-link.sh
-    ~/.config/revdiff/review.sh: revdiff/review.sh
-    ~/.config/revdiff/review-diff.sh: revdiff/review-diff.sh
-    ~/.config/revdiff/config: revdiff/config
-    ~/.config/revdiff/keybindings: revdiff/keybindings
-    ~/.config/revdiff/themes/solarized-light: revdiff/themes/solarized-light
     ~/.config/herdr/config.toml: herdr.toml
     ~/.config/herdr-automatic-rename/config.sh: herdr_plugins/herdr-automatic-rename/config.sh
     # hunk loads a symlinked file from here, never a symlinked folder.

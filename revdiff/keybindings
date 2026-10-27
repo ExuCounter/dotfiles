@@ -1,3 +1,0 @@
-# revdiff keybindings, added to its defaults. E sends a Markdown review's notes to the agent (review.sh).
-map E flush_output
-unmap O
