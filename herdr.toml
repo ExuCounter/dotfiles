@@ -116,11 +116,18 @@ tab_bar_right = [
 ]
 tab_bar_right_separator = " | "
 prompt_new_tab_name = false
+# Wide enough for Whiska's widest lines: 34 columns under a worktree's
+# workspace (`⎇ !12345 ✓ needs approval 12 open` is 33): herdr takes 1 for the
+# divider, 1 for a scrollbar, 8 for the worktree prefix and 2 at the right.
+sidebar_width = 46
+sidebar_max_width = 48
 
 # Herdr's toasts and sounds fire for any background workspace and cannot be
 # filtered per workspace — every worktree session is an agent of kind `claude`
 # just like the main one, so [ui.sound.agents] can't separate them either. Both
-# are off here; a worktree's question arrives through Whiska.
+# stay off here, and `notification.show` is off with them (it answers
+# `shown: true` and draws nothing): Whiska raises its own hoots on the desktop
+# (terminal-notifier, click to jump), for the main sessions only (ADR-0062).
 status_indicators = "symbols"
 show_agent_labels_on_pane_borders = true
 [ui.toast]
@@ -132,29 +139,46 @@ enabled = false
 
 # Whiska's line under a mouse's workspace: what it needs from you, if anything.
 [ui.sidebar.spaces]
+row_gap = 0
 rows = [
   ["state_icon", { token = "workspace", fg = "#586e75", dim = false }],
   ["branch", "git_status"],
-  [{ token = "$whiska", fg = "#657b83", dim = false, rules = [
+  [{ token = "$whiska_ctx", fg = "#93a1a1" }, { token = "$whiska_ctx_warn", fg = "#b58900" }, { token = "$whiska_ctx_full", fg = "#dc322f" }, { token = "$whiska", fg = "#657b83", dim = false, rules = [
     { starts_with = "❓", fg = "#2aa198" },
     { starts_with = "⚠", fg = "#dc322f" },
     { starts_with = "✖", fg = "#dc322f" },
     { starts_with = "?", fg = "#dc322f" },
-    { starts_with = "✅", fg = "#859900" },
+    { starts_with = "↻", fg = "#b58900" },
+    { starts_with = "🔑", fg = "#dc322f" },
+    { starts_with = "✓", fg = "#3fb950" },
     { starts_with = "⏳", fg = "#b58900" },
     { starts_with = "🎯", fg = "#6c71c4" },
-    { starts_with = "○", fg = "#e0891f" },
     { starts_with = "💤", fg = "#6c71c4" },
     { starts_with = "⏸", fg = "#6c71c4" },
     { starts_with = "↩", fg = "#268bd2" },
     { starts_with = "◐", fg = "#268bd2" },
-    { starts_with = "◓", fg = "#268bd2" },
-    { starts_with = "◑", fg = "#268bd2" },
-    { starts_with = "◒", fg = "#268bd2" },
-  ] }],
+    { starts_with = "○", fg = "#e0891f" },
+  ] }, { token = "$whiska_topic", fg = "#657b83" }],
   [{ token = "$whiska_q", fg = "#93a1a1" }],
   [{ token = "$whiska_q2", fg = "#93a1a1" }],
-  [{ token = "$whiska_mr", fg = "#93a1a1" }],
+  [{ token = "$whiska_mr", fg = "#93a1a1" }, { token = "$whiska_ci", fg = "#93a1a1", rules = [
+    { starts_with = "✓", fg = "#3fb950" },
+    { starts_with = "◐", fg = "#268bd2" },
+    { starts_with = "✗", fg = "#dc322f" },
+  ] }, { token = "$whiska_review", fg = "#b58900", rules = [
+    { starts_with = "ready", fg = "#3fb950" },
+    { starts_with = "auto-merge", fg = "#268bd2" },
+    { starts_with = "merging", fg = "#268bd2" },
+    { starts_with = "conflict", fg = "#dc322f" },
+    { starts_with = "blocked", fg = "#dc322f" },
+    { starts_with = "draft", fg = "#93a1a1" },
+    { starts_with = "merged", fg = "#3fb950" },
+    { starts_with = "closed", fg = "#dc322f" },
+    { starts_with = "deleted", fg = "#dc322f" },
+    { starts_with = "unread", fg = "#93a1a1" },
+  ] }, { token = "$whiska_open", fg = "#b58900", rules = [
+    { starts_with = "waiting", fg = "#93a1a1" },
+  ] }],
 ]
 
 # Whiska: every project's main session in fzf, waiting ones first; enter jumps.
@@ -164,3 +188,10 @@ type = "popup"
 command = "~/.config/fzf_whiska/bin/whiska_picker.sh"
 width = "80%"
 height = "60%"
+
+# Whiska: open the focused mouse's merge request in the browser.
+[[keys.command]]
+key = "prefix+shift+m"
+type = "shell"
+command = "whiska merge-request open"
+description = "open this mouse's merge request"

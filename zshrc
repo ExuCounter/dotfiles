@@ -68,9 +68,9 @@ function zed_tmux() {
   tmux new-session -A -s $SESSION teamocil $SESSION
 }
 
-export HEX_CACERTS_PATH="$HOME/corp-ca.pem"
-export SSL_CERT_FILE="$HOME/corp-ca.pem"
-export NODE_EXTRA_CA_CERTS="$HOME/corp-ca.pem"
+export HEX_CACERTS_PATH="$HOME/.certs/ca-bundle.pem"
+export SSL_CERT_FILE="$HOME/.certs/ca-bundle.pem"
+export NODE_EXTRA_CA_CERTS="$HOME/.certs/ca-bundle.pem"
 alias pro_ops=/Users/volodymyrpotiichuk/Desktop/projects/prosapient/pro-ops/_build/prod/rel/pro_ops/bin/pro_ops
 
 # herdr-automatic-rename: live tab naming hook
