@@ -56,6 +56,12 @@ key = "ctrl+l"
 type = "shell"
 command = "~/.config/herdr_layouts/smart_pane_nav.sh right"
 
+# Whiska: next project with a question waiting on me (oldest first, wraps).
+[[keys.command]]
+key = "ctrl+w"
+type = "shell"
+command = "~/.config/herdr_layouts/next_waiting.sh"
+
 [ui]
 tab_bar_right = [
   { type = "command", command = "/Users/volodymyrpotiichuk/.whiska/herdr-status.sh '⌃a space'", interval_seconds = 5, timeout_seconds = 2 },
