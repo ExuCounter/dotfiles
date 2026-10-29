@@ -91,7 +91,7 @@ enabled = false
 [ui.sidebar.spaces]
 row_gap = 0
 rows = [
-  ["state_icon", { token = "workspace", fg = "#586e75", dim = false }],
+  ["state_icon", { token = "$whiska_bar", fg = "#b58900" }, { token = "workspace", fg = "#586e75", dim = false }],
   ["branch", "git_status"],
   [{ token = "$whiska_ctx", fg = "#93a1a1" }, { token = "$whiska_ctx_warn", fg = "#b58900" }, { token = "$whiska_ctx_full", fg = "#dc322f" }, { token = "$whiska", fg = "#657b83", dim = false, rules = [
     { starts_with = "❓", fg = "#2aa198" },
