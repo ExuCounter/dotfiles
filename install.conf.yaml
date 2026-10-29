@@ -58,6 +58,7 @@
     ~/.config/glow/solarized-light.json: glow/solarized-light.json
     ~/Library/Preferences/glow/glow.yml: glow/glow.yml
     ~/.config/kitty/theme.conf: theme.conf
+    ~/.config/revdiff/config: revdiff/config
     ~/.config/herdr/config.toml: herdr.toml
     ~/.config/herdr-automatic-rename/config.sh: herdr_plugins/herdr-automatic-rename/config.sh
     # hunk loads a symlinked file from here, never a symlinked folder.
