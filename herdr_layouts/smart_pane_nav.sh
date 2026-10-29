@@ -5,7 +5,8 @@
 # 1. Try to focus a neighbor pane in the given direction.
 # 2. If no neighbor:
 #      left/right -> previous/next agent (wraps)
-#      up/down    -> previous/next workspace (wraps)
+#      up/down    -> previous/next main session (wraps); linked worktrees
+#                    (mice) are skipped, and from a mouse go to its own main session
 
 set -uo pipefail
 # Runs under macOS /bin/bash 3.2 (herdr's PATH has no Homebrew bash): no mapfile.
@@ -19,11 +20,25 @@ changed=$(printf '%s' "$focus_json" | jq -r '.result.focus.changed // false')
 case "$dir" in
   up|down)
     current_ws=$(herdr pane current | jq -r '.result.pane.workspace_id')
+    workspaces=$(herdr workspace list)
     ids=()
     while IFS= read -r line; do ids+=("$line"); done < <(
-      herdr workspace list \
-        | jq -r '.result.workspaces | sort_by(.number) | .[].workspace_id'
+      printf '%s' "$workspaces" \
+        | jq -r '.result.workspaces | map(select(.worktree.is_linked_worktree != true)) | sort_by(.number) | .[].workspace_id'
     )
+    # A mouse is not in the list: resolve it to the main session of its repo.
+    current_main=$(
+      printf '%s' "$workspaces" | jq -r --arg ws "$current_ws" '
+        .result.workspaces as $all
+        | ($all[] | select(.workspace_id == $ws)) as $cur
+        | if $cur.worktree.is_linked_worktree == true
+          then ([$all[] | select(.worktree.repo_key == $cur.worktree.repo_key and .worktree.is_linked_worktree != true)] | .[0].workspace_id // empty)
+          else empty end'
+    )
+    if [ -n "$current_main" ]; then
+      herdr workspace focus "$current_main" >/dev/null
+      exit 0
+    fi
     focus_cmd() { herdr workspace focus "$1" >/dev/null; }
     current_id="$current_ws"
     ;;
