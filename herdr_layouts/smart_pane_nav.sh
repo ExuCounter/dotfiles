@@ -8,6 +8,7 @@
 #      up/down    -> previous/next workspace (wraps)
 
 set -uo pipefail
+# Runs under macOS /bin/bash 3.2 (herdr's PATH has no Homebrew bash): no mapfile.
 
 dir="${1:?direction required: left|right|up|down}"
 
@@ -18,7 +19,8 @@ changed=$(printf '%s' "$focus_json" | jq -r '.result.focus.changed // false')
 case "$dir" in
   up|down)
     current_ws=$(herdr pane current | jq -r '.result.pane.workspace_id')
-    mapfile -t ids < <(
+    ids=()
+    while IFS= read -r line; do ids+=("$line"); done < <(
       herdr workspace list \
         | jq -r '.result.workspaces | sort_by(.number) | .[].workspace_id'
     )
@@ -26,7 +28,8 @@ case "$dir" in
     current_id="$current_ws"
     ;;
   left|right)
-    mapfile -t ids < <(
+    ids=()
+    while IFS= read -r line; do ids+=("$line"); done < <(
       herdr agent list \
         | jq -r '.result.agents | sort_by(.workspace_id, .pane_id) | .[].pane_id'
     )
