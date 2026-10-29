@@ -1,0 +1,18 @@
+# A Ctrl+click on a file:// link to a Markdown file opens it in hunk, in a new tab.
+id = "hunk-docs"
+name = "hunk docs"
+version = "1.0.0"
+min_herdr_version = "0.9.0"
+platforms = ["macos", "linux"]
+
+[[actions]]
+id = "open-doc"
+title = "Open in hunk"
+contexts = ["pane"]
+command = ["./open-doc.sh"]
+
+[[link_handlers]]
+id = "markdown"
+title = "Open in hunk"
+pattern = "^file://.*\\.(md|markdown)$"
+action = "open-doc"

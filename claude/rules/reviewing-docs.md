@@ -1,5 +1,5 @@
 # Opening a document for review
 
-I review documents and specs in herdr's annotate plugin, not an editor. To open one for
-review, print a `file:///abs/path.md` link: Ctrl+click opens it in annotate, and its Send
+I review documents and specs in hunk, not an editor. To open one for review, print a
+`file:///abs/path.md` link: Ctrl+click opens it in hunk in a new herdr tab, and its `S`
 key makes my notes the session's next message. Never run `zed` or `$EDITOR` for this.

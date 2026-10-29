@@ -14,6 +14,7 @@ _current_test=""
 # --- assertions -------------------------------------------------------------
 
 fail() {
+  _test_failed=1
   TESTS_FAILED=$((TESTS_FAILED + 1))
   FAILED_NAMES+=("$_current_test")
   printf '  \033[31mFAIL\033[0m %s\n' "$_current_test"
@@ -21,6 +22,7 @@ fail() {
 }
 
 pass() {
+  [ "$_test_failed" = 1 ] && return 0
   printf '  \033[32mok\033[0m   %s\n' "$_current_test"
 }
 
