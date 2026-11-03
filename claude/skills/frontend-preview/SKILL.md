@@ -1,6 +1,6 @@
 ---
 name: frontend-preview
-description: "Show what a frontend change looks like, as a published Artifact of real screenshots. Two modes: before implementation, 2-3 design options with a blocking pick; for a change already built, a before/after of what shipped with no pick. Design-options mode runs only in a build session, after the spec is written and the person has approved it, and before any implementation code — never while grilling, before the spec, or in an investigation session. In that window, invoke it yourself, unprompted, whenever a task changes what a user sees in a browser and the change cannot be judged by reading the diff — a new page, a redesign, a component, a layout, spacing, colour, a chart, a state that renders differently. Also use when the user asks to see or preview a frontend change they already made, or invokes /frontend-preview. Do not wait to be asked and do not ask permission first. Text-only changes are the exception: copy, a label, a typo, a translation string."
+description: "Show what a frontend change looks like, as a published Artifact of real screenshots. Two modes: before implementation, 2-3 design options with a blocking pick; for a change already built, a before/after of what shipped with no pick. Design-options mode runs only in a build session, after the spec is approved, or when there is no spec, after the questions are settled, and before any implementation code — never while grilling, before the spec when there is one, or in an investigation session. In that window, invoke it yourself, unprompted, whenever a task changes what a user sees in a browser and the change cannot be judged by reading the diff — a new page, a redesign, a component, a layout, spacing, colour, a chart, a state that renders differently. Also use when the user asks to see or preview a frontend change they already made, or invokes /frontend-preview. Do not wait to be asked and do not ask permission first. Text-only changes are the exception: copy, a label, a typo, a translation string."
 ---
 
 # frontend-preview
@@ -21,10 +21,11 @@ wrong*. They reject a direction that was fine. Steps 3 and 5 exist to stop that.
 ## When this runs
 
 **Timing comes first.** The design-options preview runs only in a build session, after
-the spec has been written and the person approved it, and before any implementation
-code. Not while grilling, not before the spec exists, not in an investigation
-(sniff) session — there, say nothing about previews and move on. The spec is what the
-options are drawn from; without it the options are guesses. If you are somewhere you may
+the spec is approved, or when there is no spec, after the questions are settled, and
+before any implementation code. Not while grilling, not before the spec when there is one,
+not in an investigation (sniff) session — there, say nothing about previews and move on.
+The spec, or with none the settled answers, is what the options are drawn from; without
+it the options are guesses. If you are somewhere you may
 not run it, do not run it, and do not ask the person for permission to run it early.
 The "already built" variant below has no such limit.
 

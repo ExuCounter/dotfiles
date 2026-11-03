@@ -6,3 +6,4 @@ yarn 1.21.1
 elixir 1.19.0-otp-28
 erlang 28.1.1
 ruby 3.0.5
+postgres 18.3

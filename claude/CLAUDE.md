@@ -1,10 +1,11 @@
 ## Frontend preview
 
 If a screenshot of the app would look different after a change, run the
-`frontend-preview` skill — but only in a build session, after the spec is written and I
-have approved it, and before any implementation code. Never while grilling, never before
-the spec, never while investigating. Invoking it is how you ask; don't ask permission.
-Borderline counts as yes. The skill itself says when to skip.
+`frontend-preview` skill — but only in a build session, after the spec is approved, or
+when there is no spec, after the questions are settled, and before any implementation
+code. Never while grilling, never before the spec when there is one, never while
+investigating. Invoking it is how you ask; don't ask permission. Borderline counts as
+yes. The skill itself says when to skip.
 
 ## Verify before claiming "done"
 

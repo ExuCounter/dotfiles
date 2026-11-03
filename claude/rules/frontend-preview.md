@@ -4,8 +4,9 @@ paths:
 ---
 # Frontend changes — preview before building, after the spec
 
-Timing: the preview runs only in a build session, after the spec is written and I have
-approved it. Never while grilling, never before the spec, never while investigating.
+Timing: the preview runs only in a build session, after the spec is approved, or when
+there is no spec, after the questions are settled and before any implementation code.
+Never while grilling, never before the spec when there is one, never while investigating.
 
 When a task changes what I'd see in a browser, and that point is reached, do not go
 straight to code. Use the `frontend-preview` skill first: it captures the current state, renders 2-3 directions
