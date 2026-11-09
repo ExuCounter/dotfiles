@@ -37,12 +37,3 @@ Finding _facts_ is your job, never the user's. When a frontier question needs a 
 
 The session is done when the frontier is empty: every branch of the design tree visited, nothing left silently assumed. Do not act on it until the user confirms you have reached a shared understanding.
 
-## In a Whiska mouse
-
-- A build started from an investigation's **What to change** (`whiska spawn build --from
-  <id>`) reads its research document and the person's comments on it first, takes its
-  findings as fact, and grills only its open choices and the design of the build: a
-  choice the comments settle is not asked again.
-- A sniff mouse, one that only investigates, grills only the goal, the scope and the
-  decision the research feeds. It leaves design to the build, and skips grilling when the
-  task already answers those.

@@ -56,7 +56,7 @@ key = "ctrl+l"
 type = "shell"
 command = "~/.config/herdr_layouts/smart_pane_nav.sh right"
 
-# Whiska: next project with a question waiting on me (oldest first, wraps).
+# Next agent blocked on me, in workspace order (wraps).
 [[keys.command]]
 key = "ctrl+w"
 type = "shell"
@@ -64,7 +64,6 @@ command = "~/.config/herdr_layouts/next_waiting.sh"
 
 [ui]
 tab_bar_right = [
-  { type = "command", command = "/Users/volodymyrpotiichuk/.whiska/herdr-status.sh '⌃a space'", interval_seconds = 5, timeout_seconds = 2 },
   { type = "command", command = "n=$(herdr agent list | jq -r '[.result.agents[] | select(.agent_status==\"blocked\")] | length'); [ \"$n\" -gt 0 ] && printf '🔴 %s agents waiting' \"$n\"", interval_seconds = 2 },
   { type = "command", command = "top -l 1 -n 0 | awk '/CPU usage/ {printf \"CPU %.0f%%\", $3+$5}'", interval_seconds = 5 },
   { type = "command", command = "pmset -g batt | awk '/InternalBattery/ {for (i=1;i<=NF;i++) if ($i ~ /%/) {gsub(\";\",\"\",$i); print \"Bat \"$i; exit}}'", interval_seconds = 30 },
@@ -93,51 +92,7 @@ delay_seconds = 1
 [ui.sound]
 enabled = false
 
-# Whiska's line under a mouse's workspace: what it needs from you, if anything.
-[ui.sidebar.spaces]
-row_gap = 0
-rows = [
-  ["state_icon", { token = "$whiska_bar", fg = "#b58900" }, { token = "workspace", fg = "#586e75", dim = false }],
-  ["branch", "git_status"],
-  [{ token = "$whiska_ctx", fg = "#93a1a1" }, { token = "$whiska_ctx_warn", fg = "#b58900" }, { token = "$whiska_ctx_full", fg = "#dc322f" }, { token = "$whiska", fg = "#657b83", dim = false, rules = [
-    { starts_with = "❓", fg = "#2aa198" },
-    { starts_with = "⚠", fg = "#dc322f" },
-    { starts_with = "✖", fg = "#dc322f" },
-    { starts_with = "?", fg = "#dc322f" },
-    { starts_with = "↻", fg = "#b58900" },
-    { starts_with = "🔑", fg = "#dc322f" },
-    { starts_with = "✓", fg = "#3fb950" },
-    { starts_with = "⏳", fg = "#b58900" },
-    { starts_with = "🎯", fg = "#6c71c4" },
-    { starts_with = "💤", fg = "#6c71c4" },
-    { starts_with = "⏸", fg = "#6c71c4" },
-    { starts_with = "↩", fg = "#268bd2" },
-    { starts_with = "◐", fg = "#268bd2" },
-    { starts_with = "○", fg = "#e0891f" },
-  ] }, { token = "$whiska_topic", fg = "#657b83" }],
-  [{ token = "$whiska_q", fg = "#93a1a1" }],
-  [{ token = "$whiska_q2", fg = "#93a1a1" }],
-  [{ token = "$whiska_mr", fg = "#93a1a1" }, { token = "$whiska_ci", fg = "#93a1a1", rules = [
-    { starts_with = "✓", fg = "#3fb950" },
-    { starts_with = "◐", fg = "#268bd2" },
-    { starts_with = "✗", fg = "#dc322f" },
-  ] }, { token = "$whiska_review", fg = "#b58900", rules = [
-    { starts_with = "ready", fg = "#3fb950" },
-    { starts_with = "auto-merge", fg = "#268bd2" },
-    { starts_with = "merging", fg = "#268bd2" },
-    { starts_with = "conflict", fg = "#dc322f" },
-    { starts_with = "blocked", fg = "#dc322f" },
-    { starts_with = "draft", fg = "#93a1a1" },
-    { starts_with = "merged", fg = "#3fb950" },
-    { starts_with = "closed", fg = "#dc322f" },
-    { starts_with = "deleted", fg = "#dc322f" },
-    { starts_with = "unread", fg = "#93a1a1" },
-  ] }, { token = "$whiska_open", fg = "#b58900", rules = [
-    { starts_with = "waiting", fg = "#93a1a1" },
-  ] }],
-]
-
-# Whiska: every project's main session in fzf, waiting ones first; enter jumps.
+# Every Claude agent in fzf, blocked ones first; enter focuses it.
 [[keys.command]]
 key = "prefix+space"
 type = "popup"
@@ -145,9 +100,9 @@ command = "~/.config/fzf_whiska/bin/whiska_picker.sh"
 width = "80%"
 height = "60%"
 
-# Whiska: open the focused mouse's merge request in the browser.
+# Open the focused pane's merge request in the browser.
 [[keys.command]]
 key = "prefix+shift+m"
 type = "shell"
-command = "whiska merge-request open"
-description = "open this mouse's merge request"
+command = "cd \"$(herdr pane current | jq -r .result.pane.cwd)\" && glab mr view --web"
+description = "open this branch's merge request"

@@ -15,5 +15,3 @@ email = 49032640+ExuCounter@users.noreply.github.com
 	insteadOf = https://github.com/
 [http]
 	sslcainfo = /path/to/cacert.pem
-[whiska]
-	review = hunk diff --watch

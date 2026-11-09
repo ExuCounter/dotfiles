@@ -2,11 +2,7 @@
 # Send the person's notes from one hunk window, as the next message, to the
 # session the review was opened from. A document tab of the hunk-docs plugin
 # names that pane in $HUNK_SEND_PANE and the document in $HUNK_SEND_DOC.
-# Whiska's review tab names it in $WHISKA_PANE, with $WHISKA_BRANCH,
-# $WHISKA_WORKTREE and $WHISKA_REPO; that tab's shell outlives hunk, so these
-# count only for a review of that worktree, or of the repo once it is removed.
-# Without either, to the Claude session of the main checkout, which forwards
-# them to the session building the branch. Run by the hunk-send extension's S
+# Without it, to the Claude session of the main checkout. Run by the hunk-send extension's S
 # key, with the review's folder as cwd and the window's pid as $1: hunk runs
 # extensions in its own process, and `hunk session list` reports that pid.
 #
@@ -30,17 +26,10 @@ done
 pid="${1:-}"
 [[ "$pid" =~ ^[0-9]+$ ]] || say "hunk-send needs the hunk window's pid."
 
-whiska=""
 root="" branch="" main_root=""
 if [ -z "$doc" ]; then
   root="$(git rev-parse --show-toplevel 2>/dev/null)" || say "Not in a git repo."
-  here="$(cd "$root" && pwd -P)"
-  if [ -n "${WHISKA_PANE:-}" ]; then
-    dir="${WHISKA_WORKTREE:-${WHISKA_REPO:-}}"
-    [ -n "$dir" ] && [ "$(cd -- "$dir" 2>/dev/null && pwd -P)" = "$here" ] && whiska=1
-  fi
   branch="$(git branch --show-current 2>/dev/null)"
-  [ -n "$whiska" ] && [ -n "${WHISKA_BRANCH:-}" ] && branch="$WHISKA_BRANCH"
   [ -n "$branch" ] || branch="detached at $(git rev-parse --short HEAD 2>/dev/null)"
   common_dir="$(git rev-parse --path-format=absolute --git-common-dir 2>/dev/null)"
   main_root="${common_dir%/.git}"
@@ -64,13 +53,11 @@ new="$(jq -c --slurpfile sent "$sent_file" '
   | [.comments[]? | select({noteId, body} as $n | $sent | index([$n]) | not)]' <<< "$notes")"
 [ "$(jq length <<< "$new")" -gt 0 ] || say "No new notes to send."
 
-if [ -n "$doc$whiska" ]; then
-  var=WHISKA_PANE
-  [ -n "$doc" ] && var=HUNK_SEND_PANE
-  target="${!var:-}"
+if [ -n "$doc" ]; then
+  target="${HUNK_SEND_PANE:-}"
   # A pane id, never a flag herdr would take instead.
   [[ "$target" =~ ^[A-Za-z0-9][A-Za-z0-9_:-]*$ ]] ||
-    say "\$$var is not a herdr pane id. Nothing was sent."
+    say "\$HUNK_SEND_PANE is not a herdr pane id. Nothing was sent."
   who="the session the review was opened from"
   blocked="The session the review was opened from is waiting on a prompt."
   gone="No agent is running in pane $target, where the review was opened from."
