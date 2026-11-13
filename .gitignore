@@ -3,3 +3,7 @@
 .zsh_history
 
 # written by spawn-worktree at a worktree root; per-machine pane ids, never shared
+
+# written by the Herdr app into every mod folder on start
+herdr-app/mods/*/jsconfig.json
+herdr-app/mods/*/gpui-kit.d.ts
