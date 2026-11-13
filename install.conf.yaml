@@ -21,19 +21,10 @@
     ~/.claude/rules/reviewing-docs.md: claude/rules/reviewing-docs.md
     ~/.claude/rules/reviewing-code.md: claude/rules/reviewing-code.md
     ~/.claude/statusline-command.sh: claude/statusline-command.sh
-    ~/.claude/skills/grilling/SKILL.md: claude/skills/grilling/SKILL.md
-    ~/.claude/skills/wayfinder: claude/skills/wayfinder
-    ~/.claude/skills/codebase-design: claude/skills/codebase-design
-    ~/.claude/skills/domain-modeling: claude/skills/domain-modeling
-    ~/.claude/skills/writing-for-agents: claude/skills/writing-for-agents
-    ~/.claude/skills/handoff: claude/skills/handoff
-    ~/.claude/skills/lesson-learned: claude/skills/lesson-learned
-    ~/.claude/skills/prove-fix: claude/skills/prove-fix
-    ~/.claude/skills/tdd: claude/skills/tdd
-    ~/.claude/skills/verify: claude/skills/verify
     ~/.config/glow/solarized-light.json: glow/solarized-light.json
     ~/Library/Preferences/glow/glow.yml: glow/glow.yml
     ~/.config/kitty/theme.conf: theme.conf
+    ~/.config/skillshare/config.yaml: skillshare/config.yaml
     ~/.config/revdiff/config: revdiff/config
     ~/.config/revdiff/themes/solarized-light: revdiff/themes/solarized-light
     ~/.config/herdr/config.toml: herdr.toml
@@ -92,11 +83,10 @@
           done
       description: Symlink Raycast-tagged scripts from ~/.config/bin into ~/RaycastScripts (visible folder)
     - command: |
-        if command -v herdr >/dev/null 2>&1; then
-          mkdir -p "$HOME/.claude/skills/use-herdr"
-          herdr --skill > "$HOME/.claude/skills/use-herdr/SKILL.md"
+        if command -v skillshare >/dev/null 2>&1; then
+          skillshare sync
         fi
-      description: Refresh the use-herdr skill from the installed herdr binary
+      description: Link the skills in claude/skills into each agent through skillshare
     - command: |
         # An extension runs with full user permissions; move the pin only to a
         # commit whose code has been read.

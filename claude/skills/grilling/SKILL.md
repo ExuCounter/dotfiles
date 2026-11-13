@@ -26,7 +26,7 @@ Format a round like so:
 
 ➡️ **B**: <why, in one line>
 
-Reply e.g. "1A 2B".
+Your picks, e.g. "1A 2B"?
 ```
 
 Each round the user answers reshapes the tree: settled decisions push the frontier outward and unblock questions that depended on them. Recompute the frontier and ask the next round. A question whose answer depends on another question still open in this round belongs to a _later_ round, not this one.

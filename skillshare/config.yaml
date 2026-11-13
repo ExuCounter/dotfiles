@@ -1,0 +1,42 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/runkids/skillshare/main/schemas/config.schema.json
+
+sources:
+  skills: /Users/volodymyrpotiichuk/Desktop/projects/dotfiles/claude/skills
+  agents: /Users/volodymyrpotiichuk/Desktop/projects/dotfiles/claude/agents
+mode: merge
+targets:
+  claude:
+    skills:
+      path: /Users/volodymyrpotiichuk/.claude/skills
+ignore:
+  - .DS_Store
+  - .git/
+  - __pycache__/
+audit:
+  block_threshold: CRITICAL
+mcp:
+  servers:
+    atlassian:
+      transport: streamable-http
+      url: https://mcp.atlassian.com/v1/mcp
+      targets:
+        - claude
+plugins:
+  version: 2
+  packages:
+    agent-skills:
+      bindings:
+        claude:
+          imported: true
+    datadog:
+      bindings:
+        claude:
+          imported: true
+    revdiff:
+      bindings:
+        claude:
+          imported: true
+    typescript-lsp:
+      bindings:
+        claude:
+          imported: true
