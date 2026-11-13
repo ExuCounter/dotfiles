@@ -30,3 +30,6 @@ for f in "$REPO_ROOT"/claude/hooks/*; do
   grep -qE "^\s+~/\.claude/hooks/$(basename "$f"): $name$" "$REPO_ROOT/install.conf.yaml" || unlinked="$unlinked $name"
 done
 if [ -z "$unlinked" ]; then pass; else fail "not linked:$unlinked"; fi
+
+it "skillshare's global config sits outside a skillshare/ folder, which skillshare reads as a project's"
+if [ ! -e "$REPO_ROOT/skillshare/config.yaml" ] && grep -qE '^\s+~/\.config/skillshare/config\.yaml: skillshare-global/config\.yaml$' "$REPO_ROOT/install.conf.yaml"; then pass; else fail "skillshare/config.yaml would parse as a project config"; fi

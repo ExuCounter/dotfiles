@@ -28,7 +28,7 @@
     ~/.config/glow/solarized-light.json: glow/solarized-light.json
     ~/Library/Preferences/glow/glow.yml: glow/glow.yml
     ~/.config/kitty/theme.conf: theme.conf
-    ~/.config/skillshare/config.yaml: skillshare/config.yaml
+    ~/.config/skillshare/config.yaml: skillshare-global/config.yaml
     ~/.config/revdiff/config: revdiff/config
     ~/.config/revdiff/themes/solarized-light: revdiff/themes/solarized-light
     ~/.config/herdr/config.toml: herdr.toml
