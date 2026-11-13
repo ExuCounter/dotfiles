@@ -22,3 +22,6 @@ fi
 
 it "every dotfiles-managed target under ~/.claude resolves after install (clean covers hooks and skills)"
 if grep -qE '^- clean:.*~/\.claude/hooks' "$REPO_ROOT/install.conf.yaml"; then pass; else fail "install.conf.yaml clean: does not include ~/.claude/hooks"; fi
+
+it "claude/hooks is linked into ~/.claude/hooks file by file"
+if grep -qE '^\s+path: claude/hooks/\*$' "$REPO_ROOT/install.conf.yaml"; then pass; else fail "install.conf.yaml does not link claude/hooks/*"; fi

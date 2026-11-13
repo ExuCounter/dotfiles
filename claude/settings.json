@@ -47,6 +47,43 @@
     }
   },
   "hooks": {
+    "Notification": [
+      {
+        "hooks": [
+          {
+            "async": true,
+            "command": "bash \"$HOME/.claude/hooks/herdr-status.sh\"",
+            "timeout": 10,
+            "type": "command"
+          }
+        ],
+        "matcher": "permission_prompt"
+      }
+    ],
+    "PreToolUse": [
+      {
+        "hooks": [
+          {
+            "async": true,
+            "command": "bash \"$HOME/.claude/hooks/herdr-status.sh\"",
+            "timeout": 10,
+            "type": "command"
+          }
+        ]
+      }
+    ],
+    "SessionEnd": [
+      {
+        "hooks": [
+          {
+            "async": true,
+            "command": "bash \"$HOME/.claude/hooks/herdr-status.sh\"",
+            "timeout": 10,
+            "type": "command"
+          }
+        ]
+      }
+    ],
     "SessionStart": [
       {
         "hooks": [
@@ -57,6 +94,16 @@
           }
         ],
         "matcher": "*"
+      },
+      {
+        "hooks": [
+          {
+            "async": true,
+            "command": "bash \"$HOME/.claude/hooks/herdr-status.sh\"",
+            "timeout": 10,
+            "type": "command"
+          }
+        ]
       }
     ],
     "Stop": [
@@ -64,6 +111,27 @@
         "hooks": [
           {
             "command": "\"/Users/volodymyrpotiichuk/.local/bin/whiska\" hook stop 2>/dev/null || true",
+            "timeout": 10,
+            "type": "command"
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "command": "bash \"$HOME/.claude/hooks/herdr-status.sh\"",
+            "timeout": 10,
+            "type": "command"
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "async": true,
+            "command": "bash \"$HOME/.claude/hooks/herdr-status.sh\"",
             "timeout": 10,
             "type": "command"
           }
