@@ -16,9 +16,25 @@ audit:
   block_threshold: CRITICAL
 mcp:
   servers:
+    GitLab:
+      url: https://gitlab.com/api/v4/mcp
+      targets:
+        - claude
     atlassian:
       transport: streamable-http
       url: https://mcp.atlassian.com/v1/mcp
+      targets:
+        - claude
+    dbhub:
+      url: https://dbhub.example.com/mcp
+      targets:
+        - claude
+    notion:
+      url: https://mcp.notion.com/mcp
+      targets:
+        - claude
+    tidewave:
+      url: http://localhost:4000/tidewave/mcp
       targets:
         - claude
 plugins:
