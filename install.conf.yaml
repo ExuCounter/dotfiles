@@ -21,12 +21,10 @@
     ~/.claude/rules/reviewing-docs.md: claude/rules/reviewing-docs.md
     ~/.claude/rules/reviewing-code.md: claude/rules/reviewing-code.md
     ~/.claude/statusline-command.sh: claude/statusline-command.sh
-    # Claude Code hooks, linked per file: herdr's own integration keeps its
-    # herdr-agent-state.sh in the same folder.
-    ~/.claude/hooks/:
-      glob: true
-      force: true
-      path: claude/hooks/*
+    # Claude Code hooks, each linked by name: herdr's own integration keeps its
+    # herdr-agent-state.sh in the same folder, and dotbot refuses a glob that
+    # matches a single path.
+    ~/.claude/hooks/herdr-status.sh: claude/hooks/herdr-status.sh
     ~/.config/glow/solarized-light.json: glow/solarized-light.json
     ~/Library/Preferences/glow/glow.yml: glow/glow.yml
     ~/.config/kitty/theme.conf: theme.conf

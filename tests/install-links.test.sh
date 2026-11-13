@@ -23,5 +23,10 @@ fi
 it "every dotfiles-managed target under ~/.claude resolves after install (clean covers hooks and skills)"
 if grep -qE '^- clean:.*~/\.claude/hooks' "$REPO_ROOT/install.conf.yaml"; then pass; else fail "install.conf.yaml clean: does not include ~/.claude/hooks"; fi
 
-it "claude/hooks is linked into ~/.claude/hooks file by file"
-if grep -qE '^\s+path: claude/hooks/\*$' "$REPO_ROOT/install.conf.yaml"; then pass; else fail "install.conf.yaml does not link claude/hooks/*"; fi
+it "every file in claude/hooks is linked into ~/.claude/hooks by name"
+unlinked=""
+for f in "$REPO_ROOT"/claude/hooks/*; do
+  name="claude/hooks/$(basename "$f")"
+  grep -qE "^\s+~/\.claude/hooks/$(basename "$f"): $name$" "$REPO_ROOT/install.conf.yaml" || unlinked="$unlinked $name"
+done
+if [ -z "$unlinked" ]; then pass; else fail "not linked:$unlinked"; fi
