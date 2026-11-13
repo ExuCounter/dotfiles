@@ -49,3 +49,44 @@ export function fold(rows, folded) {
   // The last worktree shown closes its group.
   return out.map((r, i) => (r.tree && !out[i + 1]?.tree ? { ...r, tree: "└─" } : r));
 }
+
+// The owl's words and their tones, as Whiska's rows in the TUI's sidebar had
+// them (lib/whiska/herdr_config.ex): the first that matches.
+const TONES = [
+  [(w) => w === "CI passed" || w === "ready" || w === "merged", "green"],
+  [(w) => w.startsWith("merged ·"), "yellow"],
+  [(w) => ["CI running", "auto-merge", "merging", "rebasing", "rebase after CI"].includes(w), "blue"],
+  [(w) => w === "needs approval" || w === "needs rebase" || w.includes("open thread"), "yellow"],
+  [(w) => ["CI failed", "CI stuck", "rebase refused", "conflict", "blocked", "closed"].includes(w), "red"],
+  [(w) => w === "draft" || w === "unread", "dim"],
+];
+const tone = (word) => TONES.find(([match]) => match(word))?.[1] ?? null;
+// The owl labels each round (`whiska.at`, ms): older than this, it has stopped.
+export const STALE = 3 * 60 * 1000;
+
+// The line under a worktree `space` whose terminal is a mouse's (labelled
+// `whiska.branch`): the first line of its agent's last report (OSC 7501's
+// `msg`), a question when it starts with ❓, then the owl's labels; null
+// when there's nothing to show.
+export function line(space, terminals, now) {
+  // A remote space's id has its machine before it; that machine's labels don't.
+  const id = space.machine ? space.id.slice(space.machine.length + 1) : space.id;
+  const mouse = terminals.find((t) => t.labels?.["herdr.space"] === id && t.labels?.["whiska.branch"]);
+  if (!mouse) return null;
+  const msg = (mouse.report?.msg ?? "").split("\n")[0].trim();
+  const labels = ["whiska.mr", "whiska.ci", "whiska.review"]
+    .map((k) => mouse.labels[k])
+    .filter(Boolean)
+    .map((text) => ({ text, tone: tone(text) }));
+  if (!msg && !labels.length) return null;
+  return { msg, ask: msg.startsWith("❓"), labels, stale: now - Number(mouse.labels["whiska.at"] ?? now) > STALE };
+}
+
+// Whether a mouse's labels went stale in the `within` ms before `now`: a
+// timer that looks that often redraws only then, as nothing live changes.
+export function wentStale(terminals, now, within) {
+  return terminals.some((t) => {
+    const age = now - Number(t.labels?.["whiska.at"]) - STALE;
+    return t.labels?.["whiska.branch"] && age > 0 && age <= within;
+  });
+}

@@ -6,9 +6,10 @@
 import { View, div, svg } from "gpui-kit";
 import { v_flex, h_flex } from "gpui-base";
 import { spaces, machines, panes, run, openOverlay, exec, hc, theme, shared, setShared, watchFolder, window, layout } from "herdr";
-// spaces-smart: a group per repo (smart.mjs, smart-ui.mjs).
-import { arrange, fold } from "./smart.mjs";
-import { heading, foldToggle } from "./smart-ui.mjs";
+// spaces-smart: a group per repo, a line under each mouse's worktree (smart.mjs, smart-ui.mjs).
+import { terminals } from "herdr";
+import { arrange, fold, line, wentStale } from "./smart.mjs";
+import { heading, foldToggle, worktreeLine } from "./smart-ui.mjs";
 
 function find(node, id) {
   if (node?.id === id) return node;
@@ -75,6 +76,8 @@ export default class Spaces extends View {
     cx.timer.every(15000, cx => this.refreshMachines(cx));
     // Refresh only when the refs could have changed (see `due`).
     cx.timer.every(250, (cx) => this.checkNew(cx));
+    // spaces-smart: a line dims when the owl goes quiet, which changes nothing live.
+    cx.timer.every(15000, (cx) => wentStale(terminals(), Date.now(), 15000) && cx.notify());
   }
 
   checkNew(cx) {
@@ -292,7 +295,9 @@ export default class Spaces extends View {
     const rows = this.ordered();
     // spaces-smart: repo headings and folds, not on the rail.
     const toggle = (key, cx) => this.foldRepo(key, cx);
-    const draw = (r) => (collapsed ? this.compact(r, t) : r.heading ? heading(r, t, toggle) : this.row(r, t, toggle));
+    const terms = terminals(), now = Date.now();
+    const said = (r) => worktreeLine(r.g?.linked ? line(r.w, terms, now) : null, t);
+    const draw = (r) => (collapsed ? this.compact(r, t) : r.heading ? heading(r, t, toggle) : [this.row(r, t, toggle), ...said(r)]);
     const show = (rows) => (collapsed ? rows : fold(rows, this.repos));
     const remote = [...new Set([...rows.map(r => r.w.machine).filter(Boolean), ...this.machines.map(m => m.name), ...Object.keys(this.reconnecting)])].sort();
     const loading = m => {
@@ -301,7 +306,7 @@ export default class Spaces extends View {
         || spaces().some(s => (s.machine ?? null) === m && !this.shown.has(s.id));
     };
     const loadingRow = m => h_flex().id(`machine-loading-${m ?? "local"}`).h(28).flex_none().px(collapsed ? 0 : 8).items_center().when(collapsed, el => el.justify_center()).text_size(12).text_color(t.dim).child(collapsed ? "…" : "Loading…");
-    if (!remote.length) return loading(null) && !rows.length ? [loadingRow(null)] : show(rows).map(draw);
+    if (!remote.length) return loading(null) && !rows.length ? [loadingRow(null)] : show(rows).flatMap(draw);
     const machineNames = [null, ...remote];
     return machineNames.flatMap((m) => {
       const mine = rows.filter((r) => (r.w.machine ?? null) === m);
@@ -354,7 +359,7 @@ export default class Spaces extends View {
             .text_size(11).text_color(t.foreground).bg(t.raised).cursor_pointer().hover(s => s.bg(t.hover))
             .on_click((_e, cx) => { cx.stop_propagation(); cx.write_to_clipboard(login); this.copiedLogin = login; cx.notify(); })
             .child(this.copiedLogin === login ? "Copied" : "Copy")))] : [];
-      return [cell(head), ...guidance, ...(folded ? [] : mine.length ? show(mine).map(draw) : [loading(m) ? loadingRow(m) : cell(empty)])];
+      return [cell(head), ...guidance, ...(folded ? [] : mine.length ? show(mine).flatMap(draw) : [loading(m) ? loadingRow(m) : cell(empty)])];
     });
   }
 

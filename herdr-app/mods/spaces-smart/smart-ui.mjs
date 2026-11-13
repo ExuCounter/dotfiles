@@ -24,3 +24,15 @@ export function heading({ heading: repo, folded }, t, toggle) {
     .child(div().flex_1().min_w(0).truncate().text_color(t.muted).child(repo.name))
     .child(div().flex_none().p(3).text_color(t.dim).child(chevron(folded)));
 }
+
+// The line under a mouse's worktree (`l`: smart.mjs's line(), or null for
+// none): its agent's last line, a question in the accent colour, then the
+// owl's labels in their tones, dimmed once the owl has gone quiet. Indented
+// to the worktree's name.
+export function worktreeLine(l, t) {
+  if (!l) return [];
+  const tones = { green: t.ansi2, red: t.ansi1, blue: t.ansi4, yellow: t.ansi3, dim: t.dim };
+  return [h_flex().h(18).flex_none().pl(52).pr(8).gap(6).items_center().text_size(11.5)
+    .child(div().flex_1().min_w(0).truncate().text_color(l.ask ? t.accent : t.muted).child(l.msg))
+    .children(l.labels.map(({ text, tone }) => div().flex_none().text_color(l.stale ? t.dim : tones[tone] ?? t.muted).child(text)))];
+}
