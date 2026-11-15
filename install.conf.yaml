@@ -67,7 +67,7 @@
       path: herdr_layouts/*
     # Herdr app mods, linked by folder: a mod's own module (./smart.mjs)
     # linked by file resolves outside the mod's folder and fails to load.
-    ~/.config/herdr-app/mods/spaces-smart: herdr-app/mods/spaces-smart
+    ~/.config/herdr-app/mods/better-sidebar: herdr-app/mods/better-sidebar
     # fzf herdr workspace switcher (bound to prefix+f). Each picker is one
     # file, linked by name: dotbot refuses a glob that matches a single path.
     ~/.config/fzf_herdr_workspaces/bin/fzf_herdr_workspaces.sh: fzf_herdr_workspaces/bin/fzf_herdr_workspaces.sh
