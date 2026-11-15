@@ -15,7 +15,7 @@ export const TEXT = {
   menu: 12.8,
   body: 13,
 };
-const RADIUS = { small: 4, control: 6, row: 7 };
+export const RADIUS = { small: 4, control: 6, row: 7 };
 export const SIZE = { group: 30, menu: 31, row: 28, icon: 26, iconSmall: 20 };
 
 export const Icon = (name, size = 14) =>

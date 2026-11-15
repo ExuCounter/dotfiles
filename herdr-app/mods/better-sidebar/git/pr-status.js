@@ -7,19 +7,46 @@ export const prPlaceKey = (machine, folder) => JSON.stringify([machine ?? null, 
 const PR_FIELDS =
   "id,number,title,url,state,isDraft,headRefName,headRepository,updatedAt,statusCheckRollup,reviewDecision,mergeStateStatus";
 
+// GitHub check runs and status contexts, and GitLab pipeline statuses, upper-cased.
+const FAILED = new Set(["FAILURE", "FAILED", "ERROR", "TIMED_OUT", "ACTION_REQUIRED", "STARTUP_FAILURE"]);
+const RUNNING = new Set([
+  "PENDING", "QUEUED", "IN_PROGRESS", "EXPECTED", "WAITING", "REQUESTED",
+  "RUNNING", "CREATED", "PREPARING", "WAITING_FOR_RESOURCE", "SCHEDULED",
+]);
+const PASSED = new Set(["SUCCESS", "NEUTRAL"]);
+
+/** The PR's checks as one of running, failed, passed or stopped (canceled, skipped, manual); null without any. */
+export function pipelineState(pr) {
+  const checks = (pr.statusCheckRollup ?? []).map((check) =>
+    String(check.conclusion || check.state || check.status || "").toUpperCase(),
+  );
+  if (!checks.length) return null;
+  if (checks.some((c) => FAILED.has(c))) return "failed";
+  if (checks.some((c) => RUNNING.has(c))) return "running";
+  if (checks.some((c) => PASSED.has(c))) return "passed";
+  return "stopped";
+}
+
+export function pipelineAppearance(pr, colors) {
+  const word = pr.pipelineLabel ?? "Checks";
+  switch (pipelineState(pr)) {
+    case "failed": return { icon: "closed", color: colors.ansi1, label: `${word} failed` };
+    case "running": return { icon: "spinner", color: colors.ansi3, label: `${word} running`, spin: true };
+    case "passed": return { icon: "check", color: colors.ansi2, label: `${word} passed` };
+    case "stopped": return { icon: "clock", color: colors.dim, label: `${word} ${pr.pipelineStatus ?? "stopped"}` };
+    default: return null;
+  }
+}
+
 /** Terminal PR states win over draft/CI flags left over from when it was open. */
 export function prAppearance(pr, colors) {
   if (pr.state === "MERGED") return { icon: "merged", color: colors.ansi5, label: "Merged" };
   if (pr.state === "CLOSED") return { icon: "closed", color: colors.ansi1, label: "Closed" };
   if (pr.isDraft) return { icon: "draft", color: colors.dim, label: "Draft" };
-  const failed = (pr.statusCheckRollup ?? []).some((check) =>
-    ["FAILURE", "ERROR", "TIMED_OUT", "ACTION_REQUIRED", "STARTUP_FAILURE"].includes(
-      String(check.conclusion || check.state || check.status).toUpperCase(),
-    ),
-  );
   const open = (color, label, ready = false) => ({ icon: "pull-request", color, label, ready });
   if (pr.mergeStateStatus === "DIRTY") return open(colors.ansi1, "Conflicts");
-  if (failed) return open(colors.ansi1, "Checks failed");
+  if (pipelineState(pr) === "failed") return open(colors.ansi1, `${pr.pipelineLabel ?? "Checks"} failed`);
+  if (pr.needsRebase) return open(colors.ansi3, "Needs rebase");
   if (pr.reviewDecision === "CHANGES_REQUESTED") return open(colors.ansi3, "Changes requested");
   // CLEAN is GitHub's own "mergeable now": an empty decision means no review is required.
   if (pr.mergeStateStatus === "CLEAN" && (pr.reviewDecision === "APPROVED" || !pr.reviewDecision))
@@ -52,7 +79,11 @@ function gitlabPr(mr, detail, repository) {
     state: { opened: "OPEN", merged: "MERGED", closed: "CLOSED" }[mr.state] ?? "OPEN",
     isDraft: !!mr.draft,
     updatedAt: mr.updated_at,
-    statusCheckRollup: pipeline ? [{ status: pipeline === "failed" ? "FAILURE" : pipeline }] : [],
+    statusCheckRollup: pipeline ? [{ status: pipeline }] : [],
+    pipelineLabel: "Pipeline",
+    pipelineStatus: pipeline?.replace(/_/g, " ") ?? null,
+    pipelineUrl: detail.head_pipeline?.web_url ?? null,
+    needsRebase: status === "need_rebase",
     mergeStateStatus: detail.has_conflicts || status === "conflict" ? "DIRTY" : status === "mergeable" ? "CLEAN" : "BLOCKED",
     reviewDecision: status === "not_approved" ? "REVIEW_REQUIRED" : null,
     repository,

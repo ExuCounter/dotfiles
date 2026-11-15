@@ -8,6 +8,7 @@ import {
   panes,
   run,
   openOverlay,
+  closeOverlay,
   hc,
   theme,
   shared,
@@ -16,12 +17,13 @@ import {
   window,
   layout,
 } from "herdr";
-import { PRStatusObserver, prPlaceKey, prAppearance } from "../git/pr-status.js";
+import { PRStatusObserver, prPlaceKey, prAppearance, pipelineAppearance } from "../git/pr-status.js";
 import { MRWatcher } from "../git/mr-watch.js";
 import { spaceFolder, checkoutKey, readCheckout } from "../git/checkouts.js";
 import { loadSettings, duration } from "../settings.js";
 import { findNode } from "./find-node.js";
 import { TEXT, Icon, IconButton, Badge, Rail } from "./ui.js";
+import { HOVER_KEY } from "./card.js";
 
 const USUAL_BRANCHES = new Set(["main", "master"]);
 const rowHeight = ({ tree }) => (tree ? 28 : 30);
@@ -29,6 +31,8 @@ const rowHeight = ({ tree }) => (tree ? 28 : 30);
 // Watches and terminal events handle most changes. Poll visible repositories
 // occasionally to catch edits and commits made outside Herdr.
 const GIT_FALLBACK_MS = 15000;
+const CARD_DELAY_MS = 450;
+const CARD_CLOSE_MS = 250;
 // Preferences a person may change in the installed mod.json under `settings`.
 // `combined` is read by the lists view: tabs, or spaces above agents.
 const DEFAULT_SETTINGS = { git: { retry_after: "15s" }, pull_request_status: true, combined: true };
@@ -78,6 +82,9 @@ export class Spaces {
     this.born = {};
     this.pressed = null;
     this.over = null;
+    this.rowBounds = {}; // Space ID -> its row's window bounds, where its card opens.
+    this.hovering = null;
+    this.card = null;
     this.machines = [];
     this.folded = new Set();
     try {
@@ -487,12 +494,22 @@ export class Spaces {
   // At the right: the checkout's pull request, and ahead/behind on the selected space.
   gitTail(g, active, t, w) {
     const pr = w ? this.prBadge(w, t) : null;
+    const ports = w ? this.ports(w) : [];
     return h_flex()
       .flex_none()
       .gap(5)
       .items_center()
       .text_size(TEXT.label)
       .text_color(t.dim)
+      .when(ports.length > 0, (el) =>
+        el.child(
+          div()
+            .id(`space-ports-${w.id}`)
+            .flex_none()
+            .text_color(t.muted)
+            .child(Icon("plug", 13)),
+        ),
+      )
       .when(Boolean(pr), (el) => el.child(pr))
       .when(active && g?.ahead > 0, (el) => el.child(Badge(`\u2191${g.ahead}`)))
       .when(active && g?.behind > 0, (el) => el.child(Badge(`\u2193${g.behind}`)));
@@ -515,6 +532,11 @@ export class Spaces {
     return this.checkoutStatus(w)?.prs ?? [];
   }
 
+  // Ports listening in this space's checkout, published by the live-ports mod.
+  ports(w) {
+    return shared("live-ports")?.bySpace?.[w.id] ?? [];
+  }
+
   // Keep ordinary clicks available to the enclosing space row. Modified link
   // presses must stop both mouse events: the row selects on mouse-up, not click.
   isPRLinkClick(event) {
@@ -525,14 +547,10 @@ export class Spaces {
 
   prNumber(w, pr, status) {
     const url = pr.url || `https://github.com/${pr.repository}/pull/${pr.number}`;
-    const shortcut = window().platform === "macos" ? "Cmd" : "Ctrl";
     return div()
       .id(`space-pr-link-${w.id}-${pr.repository}-${pr.number}`)
       .text_size(TEXT.caption)
       .cursor_pointer()
-      .tooltip(
-        `${pr.repository}#${pr.number} · ${status.label}\n${pr.title}\n${url}\n${shortcut}-click to open`,
-      )
       .on_mouse_down("left", (event, cx) => {
         if (!this.isPRLinkClick(event)) return;
         cx.stop_propagation();
@@ -557,13 +575,14 @@ export class Spaces {
     // Keep the sidebar width bounded when a branch targets several base repos.
     for (const pr of prs.slice(0, 1)) {
       const status = prAppearance(pr, t);
+      const checks = pr.state === "OPEN" ? pipelineAppearance(pr, t) : null;
       badge.child(
         h_flex()
           .id(`space-pr-${w.id}-${pr.repository}-${pr.number}`)
           .gap(3)
           .items_center()
           .text_color(status.color)
-          .tooltip(`${pr.repository}#${pr.number} · ${status.label}\n${pr.title}`)
+          .when(Boolean(checks), (el) => el.child(this.pipelineIcon(w, pr, checks)))
           .child(Icon(`${status.icon}`).size(13).flex_none())
           .when(!compact, (el) => el.child(this.prNumber(w, pr, status))),
       );
@@ -582,6 +601,14 @@ export class Spaces {
           .child(`+${prs.length - 1}`),
       );
     return badge;
+  }
+
+  pipelineIcon(w, pr, checks) {
+    const icon = Icon(checks.icon, 12).text_color(checks.color);
+    return div()
+      .id(`space-pipeline-${w.id}-${pr.number}`)
+      .flex_none()
+      .child(checks.spin ? icon.spin(900) : icon);
   }
 
   // Under the row only when the PR lookup failed; the PR itself sits at the row's right.
@@ -623,10 +650,81 @@ export class Spaces {
       .when(hasPRLine, (el) => el.child(this.prLine(w, t, Boolean(tree))));
     if (this.pressed !== null && this.over === i && this.pressed !== i)
       row.child(this.dropLine(i, t));
-    const dragged = this.withDragging(row, w, i);
+    const dragged = this.withHoverCard(this.withDragging(row, w, i), w);
     // Nested under the lists view, a worktree hangs from its main space's line.
     if (!(tree && this.under)) return dragged;
     return h_flex().child(Rail(tree.startsWith("└") ? "└" : "├", 14)).child(dragged.flex_1().min_w(0));
+  }
+
+  // ── Hover card: the row's PR or MR, its pipeline and its ports (views/card.js) ──
+
+  withHoverCard(row, w) {
+    return v_flex()
+      .id(`space-wrap-${w.id}`)
+      .flex_none()
+      .on_mouse_move((e, cx) => {
+        if (e.bounds) this.rowBounds[w.id] = e.bounds;
+        // Hovered by a scroll, then the pointer moved: the card can come now.
+        if (this.hovering === w.id && !this.hoverToken && !this.card) this.scheduleCard(w, cx);
+      })
+      .on_hover((hovered, cx) => this.hoverRow(w, hovered, cx))
+      .child(row);
+  }
+
+  // Rows slide under a still pointer while the list scrolls: those hovers open no card.
+  hoverRow(w, hovered, cx) {
+    if (hovered) this.hovering = w.id;
+    else if (this.hovering === w.id) this.hovering = null;
+    const h = shared(HOVER_KEY) ?? {};
+    if (hovered) {
+      if (this.card && h.row !== w.id) setShared(HOVER_KEY, { ...h, row: w.id });
+      if (this.pointerMoving()) this.scheduleCard(w, cx);
+      return;
+    }
+    this.hoverToken = null;
+    if (!this.card) return;
+    if (h.row === w.id) setShared(HOVER_KEY, { ...h, row: null });
+    cx.timer.after(CARD_CLOSE_MS, () => {
+      const now = shared(HOVER_KEY) ?? {};
+      if (this.card && !now.card && now.row !== this.card.space) this.closeCard();
+    });
+  }
+
+  pointerMoving() {
+    return Date.now() - (this.pointerAt ?? 0) < 150;
+  }
+
+  scheduleCard(w, cx) {
+    const token = (this.hoverToken = {});
+    cx.timer.after(CARD_DELAY_MS, () => {
+      if (this.hoverToken !== token || this.pressed !== null || this.hovering !== w.id) return;
+      this.openCard(w);
+    });
+  }
+
+  openCard(w) {
+    const status = this.checkoutStatus(w);
+    const prs = status?.prs ?? [];
+    const b = this.rowBounds[w.id];
+    if ((!prs.length && !this.ports(w).length) || !b) return;
+    if (this.card?.space === w.id) return;
+    this.closeCard();
+    const h = shared(HOVER_KEY) ?? {};
+    if (h.row !== w.id) setShared(HOVER_KEY, { ...h, row: w.id });
+    // A window, not a popup: it doesn't take the keyboard from the terminal.
+    const id = openOverlay({
+      mod: "better-sidebar",
+      kind: "window",
+      width: 340,
+      at: { x: b.x + b.width + 8, y: b.y },
+      props: { view: "card", space: w.id, prs, updated: status?.updated ?? null },
+    });
+    this.card = { id, space: w.id };
+  }
+
+  closeCard() {
+    if (this.card) closeOverlay(this.card.id);
+    this.card = null;
   }
 
   // Where the dragged space would land.
@@ -792,6 +890,9 @@ export class Spaces {
       .pb(14)
       .overflow_y_scrollbar()
       .mode("always")
+      .on_mouse_move(() => {
+        this.pointerAt = Date.now();
+      })
       .on_mouse_up("left", (_e, cx) => {
         this.pressed = null;
         cx.notify();

@@ -1,5 +1,6 @@
-// Better Sidebar: spaces, agents, both in one block (lists), a footer and a right
-// panel toggle. A layout puts one copy per block, and `view` in its props picks which part.
+// Better Sidebar: spaces, agents, both in one block (lists), a footer, a right panel
+// toggle and the spaces' hover card. A layout puts one copy per block, and `view` in
+// its props picks which part.
 import { View } from "gpui-kit";
 import { props } from "herdr";
 import { Spaces } from "./views/spaces.js";
@@ -7,8 +8,9 @@ import { Agents } from "./views/agents.js";
 import { Lists } from "./views/lists.js";
 import { Footer } from "./views/footer.js";
 import { PanelToggle } from "./views/panel-toggle.js";
+import { Card } from "./views/card.js";
 
-const PARTS = { lists: Lists, agents: Agents, footer: Footer, "panel-toggle": PanelToggle };
+const PARTS = { lists: Lists, agents: Agents, footer: Footer, "panel-toggle": PanelToggle, card: Card };
 
 export default class BetterSidebar extends View {
   init(given, cx) {
