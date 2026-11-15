@@ -4,18 +4,25 @@
 //   git/repository.js   following the repository, the index, history, commit and amend
 //   views/sidebar.js    the tabs, options menu, file groups and commit views
 //   views/diff.js       opening a file in the centre tab, reading it, and drawing it
+//   views/comments.js   review comments on diff lines, sent to an agent in the space
+//   views/review.js     stepping through files with ctrl-j/k and marking them viewed with v
+//   views/vim.js        a line cursor and vim motions in the diff
 //   views/pane-header.js  the header row above a pane
 // git/reads.js reads from Git, git/model.js parses its output, views/ui.js holds every look
 // but the token colours: syntax.js colours a diff's code, and Better Files has the same file.
 import { View } from "gpui-kit";
-import { TextareaState } from "gpui-base";
+import { TextareaState, VirtualListScrollHandle } from "gpui-base";
 import { props, shared, setShared, nextCommand, layout, run, notify, closeOverlay } from "herdr";
 import { loadSettings, duration } from "./settings.js";
+import { setCodeSize } from "./views/ui.js";
 import { followFileIcons } from "./file-icons.js";
 import { panelCommands } from "./panel.js";
 import { gitMethods } from "./git/repository.js";
 import { sidebarMethods } from "./views/sidebar.js";
 import { diffMethods } from "./views/diff.js";
+import { commentMethods } from "./views/comments.js";
+import { reviewMethods } from "./views/review.js";
+import { vimMethods } from "./views/vim.js";
 import { paneHeaderMethods } from "./views/pane-header.js";
 
 const CONTEXT_POLL_MS = 300;
@@ -26,6 +33,7 @@ const DEFAULT_SETTINGS = {
   limits: { files: 1000, diff_lines: 1500, line_length: 4000, commits_per_page: 50 },
   default: { view: "tree", diff: "inline" },
   panel: { toggle: false },
+  font_size: 0,
 };
 
 class BetterChanges extends View {
@@ -53,6 +61,7 @@ class BetterChanges extends View {
       "better-changes": "mods/better-changes/icons/file.svg",
     });
     followFileIcons(this, cx);
+    if (!shared("better-changes.viewed")) this.loadViewed();
 
     this.tab = localStorage.getItem("tab") === "commit" ? "commit" : "changes";
     this.view = localStorage.getItem("view") === "flat" ? "flat" : "tree";
@@ -70,6 +79,17 @@ class BetterChanges extends View {
     this.diffToken = 0;
     this.resetCommits();
     if (this.mode === "sidebar") this.initCommitBox(cx);
+    if (this.mode === "diff") {
+      this.commentInput = TextareaState.new({ placeholder: "What should change here?", rows: 3 });
+      this.diffFocus = cx.focus_handle();
+      this.diffScroll = VirtualListScrollHandle.new();
+      this.commentInput.on("focus", () => {
+        this.typingComment = true;
+      });
+      this.commentInput.on("blur", () => {
+        this.typingComment = false;
+      });
+    }
 
     cx.timer.every(CONTEXT_POLL_MS, (cx) => this.follow(cx));
     this.applySettings(cx);
@@ -131,6 +151,7 @@ class BetterChanges extends View {
       for (const key of Object.keys(settings.limits))
         if (!(settings.limits[key] > 0)) settings.limits[key] = DEFAULT_SETTINGS.limits[key];
       this.settings = settings;
+      setCodeSize(settings.font_size);
       if (localStorage.getItem("view") === null && ["tree", "flat"].includes(settings.default.view))
         this.view = settings.default.view;
       if (
@@ -152,6 +173,8 @@ class BetterChanges extends View {
   // `better-changes.<command>`, for keys.
   command(command, cx) {
     if (command === "refresh") this.refreshAll(cx);
+    if (["next-file", "prev-file"].includes(command) && this.reviewsActiveSpace())
+      this.stepFile(command === "next-file" ? 1 : -1, cx);
     if (command === "changes" || command === "commit") this.setTab(command, cx);
     if (command === "flat" || command === "tree") this.setView(command, cx);
     if (command === "inline" || command === "split") this.setDiffLayout(command, cx);
@@ -190,6 +213,15 @@ class BetterChanges extends View {
   }
 }
 
-Object.assign(BetterChanges.prototype, gitMethods, sidebarMethods, diffMethods, paneHeaderMethods);
+Object.assign(
+  BetterChanges.prototype,
+  gitMethods,
+  sidebarMethods,
+  diffMethods,
+  commentMethods,
+  reviewMethods,
+  vimMethods,
+  paneHeaderMethods,
+);
 
 export default BetterChanges;

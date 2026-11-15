@@ -9,5 +9,8 @@
     "width": 1,
     "height": 1,
     "frame": "none"
+  },
+  "settings": {
+    "font_size": 13
   }
 }

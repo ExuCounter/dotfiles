@@ -167,6 +167,13 @@
               "default": false
             }
           }
+        },
+        "font_size": {
+          "title": "Font size",
+          "description": "The diff's text size in points. 0 uses the terminals' size.",
+          "type": "number",
+          "minimum": 0,
+          "default": 0
         }
       }
     }

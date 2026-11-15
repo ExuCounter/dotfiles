@@ -36,7 +36,12 @@ const ICONS = "mods/better-changes/icons";
 
 export const codeFont = () => settings().font_family ?? "JetBrains Mono";
 // The terminals' size, which a layout can set. Rows and columns of code grow with it.
-export const codeSize = () => settings().font_size ?? 14;
+let fontSize = 0;
+// settings.font_size when set, else the terminals' size.
+export const setCodeSize = (size) => {
+  fontSize = size > 0 ? size : 0;
+};
+export const codeSize = () => fontSize || (settings().font_size ?? 14);
 
 export const Icon = (name, size = 14) => svg(`${ICONS}/${name}.svg`).size(size).flex_none();
 

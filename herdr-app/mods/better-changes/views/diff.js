@@ -12,7 +12,7 @@ const NO_PATCH = "No text diff: GitHub leaves out binary and very large files.";
 // In widths of the code font's size, so a diff looks the same at any terminal size.
 const CHAR_WIDTH = 0.62;
 const GUTTERS = 10;
-const rowHeight = () => Math.round(codeSize() * 1.5);
+const rowHeight = () => Math.round(codeSize() * 1.45);
 const scrollWidth = (lengths) =>
   Math.max(300, ...lengths.map((length) => (length * CHAR_WIDTH + GUTTERS) * codeSize()));
 
@@ -108,6 +108,7 @@ export const diffMethods = {
       });
     localStorage.setItem("diff.selection", JSON.stringify(selected));
     this.selection = id;
+    this.diffFocus?.focus();
     this.freshLines = null;
     this.conflictCount = 0;
     this.path = selected.path;
@@ -117,6 +118,9 @@ export const diffMethods = {
     this.splitOffset = 0;
     this.rows = [];
     this.note = null;
+    this.picked = null;
+    this.visual = false;
+    this.cursor = null;
     this.diffToken++;
     this.diffLoading = false;
     if (this.root) this.loadDiff(cx);
@@ -309,10 +313,15 @@ export const diffMethods = {
       patch: this.commitRef?.short,
     };
     const scope = file?.conflict ? this.conflictLabel() : scopes[this.scope];
+    const comments = this.root && this.path ? this.commentCount(this.path, this.scope) : 0;
+    const marks = [
+      file && this.isViewed(file, this.scope) && "✓ Viewed",
+      comments && `${comments} comment${comments === 1 ? "" : "s"}`,
+    ];
     const picture = this.path && fileIcon(this.fileIcons, `${this.root}/${this.path}`, { light: isLight(theme().background) });
     return {
       title,
-      detail: [parts.join("/"), scope].filter(Boolean).join(" · "),
+      detail: [parts.join("/"), scope, ...marks].filter(Boolean).join(" · "),
       // color: a full-colour picture, which the pane header draws untinted.
       ...(picture ? { icon: picture, color: true } : { icon: "mods/better-changes/icons/file.svg" }),
       add: file?.add ?? 0,
@@ -337,7 +346,9 @@ export const diffMethods = {
   },
 
   renderDiff() {
-    const root = Panel({ id: "better-changes-diff", framed: false });
+    const root = Panel({ id: "better-changes-diff", framed: false })
+      .track_focus(this.diffFocus)
+      .on_key_down((e, cx) => this.reviewKey(e, cx));
     const split = this.diffLayout === "split";
     if (!this.layoutUsesOurHeader()) root.child(this.renderFileRow());
     if (this.error || this.note) root.child(Message(this.error || this.note, true));
@@ -348,6 +359,8 @@ export const diffMethods = {
       const limit = this.settings.limits.diff_lines.toLocaleString();
       root.child(Message(`Showing the first ${limit} lines.`));
     }
+    const comments = this.conflictCount || this.scope === "patch" ? null : this.renderComments();
+    if (comments) root.child(comments);
     return root;
   },
 
@@ -405,13 +418,26 @@ export const diffMethods = {
         rows
           .slice(range.start, range.end)
           .map((row) => (split ? this.splitRow(row) : this.inlineRow(row))),
-    ).size_full();
+    )
+      .size_full()
+      .track_scroll(this.diffScroll)
+      .when(this.commentable(), (el) =>
+        el.on_item_click((key, cx) => {
+          const row = rows[Number(key)];
+          const own = split && row?.kind === "pair" ? (row.right ?? row.left) : row;
+          this.pickLine(this.rows.indexOf(own), this.shiftPick, cx);
+        }),
+      );
     return div()
       .flex_1()
       .min_h(0)
       .relative()
       .font_family(codeFont())
       .text_size(codeSize())
+      .on_mouse_down("left", (e) => {
+        this.shiftPick = Boolean(e.modifiers?.shift);
+        this.diffFocus.focus();
+      })
       .child(split ? this.scrollsTogether(list) : this.scrollsSideways(list))
       .child(Scrollbar.vertical(listId).viewport_from_layout().absolute().inset_0());
   },
@@ -473,6 +499,10 @@ export const diffMethods = {
       .gap(8)
       .items_center()
       .when(Boolean(background), (el) => el.bg(background))
+      .when(this.isPicked(row), (el) => el.bg(`${t.accent}40`))
+      .when(this.isCursor(row), (el) => el.bg(`${t.accent}2a`).border_l(2).border_color(t.accent))
+      .when(this.commentable(), (el) => el.cursor_pointer())
+      .child(this.commentMark(row))
       .when(!this.conflictCount, (el) => el.child(gutter(row.old)))
       .child(gutter(row.next))
       .child(div().w(codeSize()).flex_none().text_color(color).child(sign))
@@ -590,7 +620,24 @@ export const diffMethods = {
     return h_flex()
       .h(rowHeight())
       .w_full()
+      .when(this.isPicked(row.left) || this.isPicked(row.right), (el) => el.bg(`${t.accent}40`))
+      .when(this.isCursor(row.left) || this.isCursor(row.right), (el) =>
+        el.bg(`${t.accent}2a`).border_l(2).border_color(t.accent),
+      )
+      .when(this.commentable(), (el) => el.cursor_pointer())
+      .child(this.commentMark(row.left ?? row.right, row.right))
       .child(side(row.left, row.left?.old, false))
       .child(side(row.right, row.right?.next, true));
+  },
+
+  commentable() {
+    return !this.conflictCount && this.scope !== "patch" && Boolean(this.commentInput);
+  },
+
+  // A strip at the row's start, lit where a comment covers the line.
+  commentMark(row, other) {
+    const t = theme();
+    const marked = this.commentable() && (this.hasComment(row) || this.hasComment(other));
+    return div().w(3).h_full().flex_none().when(marked, (el) => el.bg(t.accent));
   },
 };

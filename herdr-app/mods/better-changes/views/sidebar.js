@@ -402,7 +402,9 @@ export const sidebarMethods = {
       selected: open?.path === file.path && open?.scope === scope,
       onClick: (cx) => this.pick(file, scope, cx),
     }).child(FileIcon({ icons: this.fileIcons, path: `${this.root}/${file.path}`, color: t.muted, t }));
-    if (tree) row.child(div().flex_1().min_w(0).truncate().child(name));
+    const viewed = this.root && this.isViewed(file, scope);
+    const comments = this.root ? this.commentCount(file.path, scope) : 0;
+    if (tree) row.child(div().flex_1().min_w(0).truncate().when(viewed, (el) => el.text_color(t.dim)).child(name));
     else
       row.child(
         h_flex()
@@ -410,7 +412,7 @@ export const sidebarMethods = {
           .min_w(0)
           .gap(6)
           .items_center()
-          .child(div().max_w(190).flex_none().truncate().child(name))
+          .child(div().max_w(190).flex_none().truncate().when(viewed, (el) => el.text_color(t.dim)).child(name))
           .child(
             div()
               .flex_1()
@@ -421,6 +423,9 @@ export const sidebarMethods = {
               .child(parts.join("/")),
           ),
       );
+    if (comments)
+      row.child(div().flex_none().text_size(TEXT.caption).text_color(t.accent).child(`💬${comments}`));
+    if (viewed) row.child(div().flex_none().text_size(TEXT.caption).text_color(t.ansi2).child("✓"));
     if (file.conflict)
       row.child(
         div().flex_none().text_size(TEXT.caption).text_color(t.ansi1).child(file.conflictKind),
