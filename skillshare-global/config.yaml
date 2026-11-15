@@ -48,10 +48,6 @@ plugins:
       bindings:
         claude:
           imported: true
-    revdiff:
-      bindings:
-        claude:
-          imported: true
     typescript-lsp:
       bindings:
         claude:

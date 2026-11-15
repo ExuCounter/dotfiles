@@ -18,8 +18,6 @@
     ~/.claude/CLAUDE.md: claude/CLAUDE.md
     ~/.claude/rules/comments-and-docs.md: claude/rules/comments-and-docs.md
     ~/.claude/rules/tdd.md: claude/rules/tdd.md
-    ~/.claude/rules/reviewing-docs.md: claude/rules/reviewing-docs.md
-    ~/.claude/rules/reviewing-code.md: claude/rules/reviewing-code.md
     ~/.claude/statusline-command.sh: claude/statusline-command.sh
     # Claude Code hooks, each linked by name: herdr's own integration keeps its
     # herdr-agent-state.sh in the same folder, and dotbot refuses a glob that
@@ -29,12 +27,8 @@
     ~/Library/Preferences/glow/glow.yml: glow/glow.yml
     ~/.config/kitty/theme.conf: theme.conf
     ~/.config/skillshare/config.yaml: skillshare-global/config.yaml
-    ~/.config/revdiff/config: revdiff/config
-    ~/.config/revdiff/themes/solarized-light: revdiff/themes/solarized-light
     ~/.config/herdr/config.toml: herdr.toml
     ~/.config/herdr-automatic-rename/config.sh: herdr_plugins/herdr-automatic-rename/config.sh
-    # hunk loads a symlinked file from here, never a symlinked folder.
-    ~/.config/hunk/extensions/hunk-send.ts: hunk/hunk-send.ts
     # zsh
     ~/.config/zsh/:
       glob: true
@@ -94,30 +88,3 @@
           skillshare sync
         fi
       description: Link the skills in claude/skills into each agent through skillshare
-    - command: |
-        # An extension runs with full user permissions; move the pin only to a
-        # commit whose code has been read.
-        pin=6bd96646070a3f6c5ad096611b8af05156a59204
-        installed_commit() {
-          git --git-dir="${XDG_CONFIG_HOME:-$HOME/.config}/hunk/extensions/installed/hunk-viewed/.git" \
-            rev-parse -q --verify HEAD 2>/dev/null
-        }
-        if ! command -v hunk >/dev/null 2>&1; then
-          echo "hunk is not installed, so hunk-viewed is skipped: brew install hunk"
-        elif [ "$(installed_commit)" != "$pin" ]; then
-          hunk extension remove hunk-viewed >/dev/null 2>&1
-          if ! hunk extension install "jacegodk/hunk-viewed@$pin" --yes; then
-            echo "hunk-viewed needs hunk 0.21 or newer: brew upgrade hunk"
-          elif [ "$(installed_commit)" != "$pin" ]; then
-            hunk extension remove hunk-viewed
-            echo "hunk-viewed: the clone is not commit $pin, so it was removed"
-          fi
-        fi
-      description: Install the hunk-viewed extension (V marks a file viewed in hunk reviews)
-    - command: |
-        if ! command -v herdr >/dev/null 2>&1; then
-          echo "herdr is not installed, so the hunk-docs plugin is skipped"
-        elif ! herdr plugin link "$PWD/herdr_plugins/hunk-docs" >/dev/null; then
-          echo "The hunk-docs plugin is not linked (is herdr running?): run ./install again once it is"
-        fi
-      description: Link the hunk-docs herdr plugin (Ctrl+click a .md link to review it in hunk)
