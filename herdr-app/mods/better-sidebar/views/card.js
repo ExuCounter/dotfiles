@@ -3,7 +3,7 @@
 // { view: "card", space, prs, updated }.
 import { div } from "gpui-kit";
 import { v_flex, h_flex } from "gpui-base";
-import { props, theme, shared, setShared, closeOverlay, exec, settings, notify } from "herdr";
+import { props, theme, shared, setShared, closeOverlay, exec, settings, notify, spaces } from "herdr";
 import { rebaseFlow, resolveWithAgent } from "../git/rebase.js";
 import { prAppearance, pipelineAppearance } from "../git/pr-status.js";
 import { TEXT, SIZE, RADIUS, Icon } from "./ui.js";
@@ -22,11 +22,16 @@ export class Card {
     this.rebase = null; // { state: "working" | "done" | "conflicts" | "error", text, files }
   }
 
+  // The space's folder comes from Herdr, not the props: a card opened by an older build has none.
   startRebase(pr, cx) {
-    const p = props();
-    if (!p.folder || this.rebase?.state === "working") return;
+    if (this.rebase?.state === "working") return;
+    const space = spaces().find((s) => s.id === props().space);
+    if (!space?.folder) {
+      this.rebase = { state: "error", text: "This space has no folder to rebase in" };
+      return cx.notify();
+    }
     cx.spawn(async (cx) => {
-      await rebaseFlow(p.folder, p.machine, pr.targetBranch, (next) => {
+      await rebaseFlow(space.folder, space.machine, pr.targetBranch, (next) => {
         this.rebase = next;
         cx.notify();
       });

@@ -732,7 +732,7 @@ export class Spaces {
       kind: "window",
       width: 340,
       at: { x: b.x + b.width + 8, y: b.y },
-      props: { view: "card", space: w.id, folder: w.folder, machine: w.machine, prs, updated: status?.updated ?? null },
+      props: { view: "card", space: w.id, prs, updated: status?.updated ?? null },
     });
     this.card = { id, space: w.id };
   }
