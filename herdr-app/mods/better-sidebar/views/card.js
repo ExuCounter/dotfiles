@@ -3,8 +3,8 @@
 // { view: "card", space, prs, updated }.
 import { div } from "gpui-kit";
 import { v_flex, h_flex } from "gpui-base";
-import { props, theme, shared, setShared, closeOverlay, exec, settings, notify, agents, hc } from "herdr";
-import { tryRebase, rebaseAndPush, resolvePrompt } from "../git/rebase.js";
+import { props, theme, shared, setShared, closeOverlay, exec, settings, notify } from "herdr";
+import { rebaseFlow, resolveWithAgent } from "../git/rebase.js";
 import { prAppearance, pipelineAppearance } from "../git/pr-status.js";
 import { TEXT, SIZE, RADIUS, Icon } from "./ui.js";
 
@@ -22,40 +22,20 @@ export class Card {
     this.rebase = null; // { state: "working" | "done" | "conflicts" | "error", text, files }
   }
 
-  // Tried aside first; only a clean rebase touches the branch and pushes it.
   startRebase(pr, cx) {
     const p = props();
     if (!p.folder || this.rebase?.state === "working") return;
-    this.rebase = { state: "working", text: `Trying a rebase on ${pr.targetBranch}…` };
-    cx.notify();
     cx.spawn(async (cx) => {
-      try {
-        const trial = await tryRebase(p.folder, p.machine, pr.targetBranch);
-        if (trial.kind === "conflicts") {
-          const names = trial.files.map((f) => f.split("/").pop());
-          this.rebase = { state: "conflicts", files: trial.files, text: `Conflicts in ${names.join(", ") || "some files"}` };
-        } else {
-          this.rebase = { state: "working", text: "Rebasing and pushing…" };
-          cx.notify();
-          await rebaseAndPush(p.folder, p.machine, pr.targetBranch);
-          this.rebase = { state: "done", text: `Rebased on ${pr.targetBranch} and pushed` };
-        }
-      } catch (e) {
-        this.rebase = { state: "error", text: String(e?.message ?? e).split("\n")[0] };
-      }
-      cx.notify();
+      await rebaseFlow(p.folder, p.machine, pr.targetBranch, (next) => {
+        this.rebase = next;
+        cx.notify();
+      });
     });
   }
 
-  // The conflicts to the space's agent, which rebases and resolves them but leaves the push to me.
   resolveWithAgent(pr, cx) {
-    const agent = agents().find((a) => a.space === props().space);
-    if (!agent) {
-      this.rebase = { ...this.rebase, text: "No agent in this space to send it to" };
-      return cx.notify();
-    }
-    hc(["send", agent.address, resolvePrompt(pr.targetBranch, this.rebase.files ?? [])]).then((result) => {
-      this.rebase = { ...this.rebase, state: "sent", text: result.code === 0 ? `Sent to ${agent.tab_name || "the agent"}` : "Couldn't send: the agent is busy with a dialog" };
+    resolveWithAgent(props().space, pr.targetBranch, this.rebase?.files ?? []).then((next) => {
+      this.rebase = next;
       cx.notify();
     });
   }

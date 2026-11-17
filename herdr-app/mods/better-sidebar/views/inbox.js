@@ -6,6 +6,7 @@ import { v_flex, h_flex } from "gpui-base";
 import { run, theme, shared, setShared } from "herdr";
 import { inbox, inboxItems } from "../git/mr-inbox.js";
 import { TEXT, RADIUS, SIZE, Icon, GroupHeader, Rail } from "./ui.js";
+import { rebaseFlow, resolveWithAgent } from "../git/rebase.js";
 
 const MINUTE = 60000;
 
@@ -28,6 +29,8 @@ const liveQueue = (mr) => {
 };
 const openCount = (mr) => (mr.queue ? liveQueue(mr).filter((item) => item.waitingOn === "me").length : (mr.open ?? 0));
 const roleOf = (item) => item.role ?? "mine";
+// What's wrong with the MR itself rather than a thread on it.
+const isProblem = (item) => item.status === "pending" && (item.kind === "conflict" || item.kind === "pipeline");
 
 function look(item, t) {
   if (item.kind === "review") return { icon: "pull-request", color: t.ansi4 };
@@ -122,12 +125,15 @@ export class Inbox {
     });
   }
 
-  // Mine counts the open threads waiting on me; Reviews, the inbox's pending items.
+  // Mine counts the open threads waiting on me and the conflicts and failed pipelines on my MRs;
+  // Reviews, the inbox's pending items.
   waitingCount(role, all, state) {
     if (role === "mine")
-      return Object.values(state.mrs ?? {})
-        .filter((mr) => (mr.role ?? "mine") === "mine")
-        .reduce((n, mr) => n + openCount(mr), 0);
+      return (
+        Object.values(state.mrs ?? {})
+          .filter((mr) => (mr.role ?? "mine") === "mine")
+          .reduce((n, mr) => n + openCount(mr), 0) + all.filter((item) => roleOf(item) === "mine" && isProblem(item)).length
+      );
     return all.filter((item) => roleOf(item) === role && item.status === "pending").length;
   }
 
@@ -214,7 +220,8 @@ export class Inbox {
         if (sent) return { icon: "send", color: t.accent, tip: "With the agent" };
         return item.waitingOn === "me" ? { icon: "circle-dot", color: t.ansi5 } : { icon: "clock", color: t.dim };
       };
-      return liveQueue(mr).map((item) => ({
+      const problems = items.filter(isProblem).map((item) => this.problemRow(item, t));
+      return problems.concat(liveQueue(mr).map((item) => ({
         key: `${mr.repo}!${mr.iid}#${item.id}`,
         icon: look(item).icon,
         color: look(item).color,
@@ -224,7 +231,7 @@ export class Inbox {
         dim: item.waitingOn !== "me",
         at: item.at,
         open: { ...mr, kind: "thread", key: `${mr.repo}!${mr.iid}#${item.id}`, thread: item.id, path: item.path },
-      }));
+      })));
     }
     return items
       .filter((item) => item.status === "pending")
@@ -244,6 +251,55 @@ export class Inbox {
           open: item,
         };
       });
+  }
+
+  // A conflict offers a rebase, and with real conflicts a hand-off to the branch's agent; a failed
+  // pipeline opens in the browser.
+  problemRow(item, t) {
+    const rebase = this.rebases?.[item.key];
+    const conflict = item.kind === "conflict";
+    const action = !conflict
+      ? null
+      : !rebase || rebase.state === "error"
+        ? { label: "Rebase", run: (cx) => this.rebase(item, cx) }
+        : rebase.state === "conflicts"
+          ? { label: "Resolve with agent", run: (cx) => this.resolve(item, cx) }
+          : null;
+    const color = rebase?.state === "done" ? t.ansi2 : rebase?.state === "working" || rebase?.state === "sent" ? t.dim : t.ansi1;
+    return {
+      key: item.key,
+      icon: conflict ? (rebase?.state === "done" ? "check" : "x") : "closed",
+      color,
+      label: conflict ? `Conflicts with ${item.target}` : "Pipeline failed",
+      tip: rebase?.text ?? item.summary,
+      detail: rebase?.state === "working" ? rebase.text : rebase?.state === "conflicts" || rebase?.state === "sent" ? rebase.text : "",
+      at: rebase ? null : item.at,
+      action,
+      open: item,
+    };
+  }
+
+  setRebase(key, next, cx) {
+    this.rebases = { ...(this.rebases ?? {}), [key]: next };
+    cx.notify();
+  }
+
+  rebase(item, cx) {
+    if (this.rebases?.[item.key]?.state === "working") return;
+    this.setRebase(item.key, { state: "working", text: "Finding the worktree…" }, cx);
+    cx.spawn(async (cx) => {
+      try {
+        const space = await this.watcher().space(item, cx);
+        await rebaseFlow(space.folder, space.machine, item.target, (next) => this.setRebase(item.key, { ...next, space: space.id }, cx));
+      } catch (e) {
+        this.setRebase(item.key, { state: "error", text: e.message }, cx);
+      }
+    });
+  }
+
+  resolve(item, cx) {
+    const { space, files } = this.rebases?.[item.key] ?? {};
+    resolveWithAgent(space, item.target, files ?? []).then((next) => this.setRebase(item.key, { ...next, space }, cx));
   }
 
   toggleFold(key, cx) {
@@ -334,6 +390,29 @@ export class Inbox {
       .child(Icon(kid.icon, 12).text_color(kid.color))
       .child(div().flex_none().max_w(170).truncate().text_size(TEXT.small).text_color(t.foreground).child(kid.label))
       .child(div().flex_1().min_w(0).truncate().text_size(TEXT.caption).text_color(t.dim).child(kid.detail))
-      .when(Boolean(kid.at), (el) => el.child(div().flex_none().text_size(TEXT.caption).text_color(t.dim).child(ago(kid.at))));
+      .when(Boolean(kid.at), (el) => el.child(div().flex_none().text_size(TEXT.caption).text_color(t.dim).child(ago(kid.at))))
+      .when(Boolean(kid.action), (el) =>
+        el.child(
+          div()
+            .id(`inbox-action-${kid.key}`)
+            .px(7)
+            .h(20)
+            .flex()
+            .flex_none()
+            .items_center()
+            .rounded(RADIUS.control)
+            .border_1()
+            .border_color(t.border)
+            .text_size(TEXT.caption)
+            .text_color(t.foreground)
+            .cursor_pointer()
+            .hover((s) => s.bg(t.hover))
+            .on_click((_e, cx) => {
+              cx.stop_propagation();
+              kid.action.run(cx);
+            })
+            .child(kid.action.label),
+        ),
+      );
   }
 }

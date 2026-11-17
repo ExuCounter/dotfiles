@@ -1,6 +1,6 @@
 // Rebasing a merge request's branch on its target from the card: tried first in a throwaway
 // worktree, so the branch is only touched when the rebase goes through without conflicts.
-import { exec } from "herdr";
+import { exec, agents, hc } from "herdr";
 
 async function git(folder, machine, args) {
   const result = await exec("git", args, { cwd: folder, on: machine ?? null });
@@ -35,6 +35,34 @@ export async function tryRebase(folder, machine, target) {
 export async function rebaseAndPush(folder, machine, target) {
   await must(folder, machine, ["rebase", "--autostash", `origin/${target}`]);
   await must(folder, machine, ["push", "--force-with-lease"]);
+}
+
+// The whole step, reported through `update({ state, text, files })`: "working", then "done",
+// "conflicts" (with the files) or "error".
+export async function rebaseFlow(folder, machine, target, update) {
+  update({ state: "working", text: `Trying a rebase on ${target}…` });
+  try {
+    const trial = await tryRebase(folder, machine, target);
+    if (trial.kind === "conflicts") {
+      const names = trial.files.map((f) => f.split("/").pop());
+      return update({ state: "conflicts", files: trial.files, text: `Conflicts in ${names.join(", ") || "some files"}` });
+    }
+    update({ state: "working", text: "Rebasing and pushing…" });
+    await rebaseAndPush(folder, machine, target);
+    update({ state: "done", text: `Rebased on ${target} and pushed` });
+  } catch (e) {
+    update({ state: "error", text: String(e?.message ?? e).split("\n")[0] });
+  }
+}
+
+// The conflicts to the space's agent, which rebases and resolves them but leaves the push to me.
+export async function resolveWithAgent(spaceId, target, files) {
+  const agent = agents().find((a) => a.space === spaceId && a.address);
+  if (!agent) return { state: "conflicts", files, text: "No agent in this space to send it to" };
+  const result = await hc(["send", agent.address, resolvePrompt(target, files)]);
+  return result.code === 0
+    ? { state: "sent", files, text: `Sent to ${agent.tab_name || "the agent"}` }
+    : { state: "conflicts", files, text: "Couldn't send: the agent is waiting on a dialog" };
 }
 
 export const resolvePrompt = (target, files) =>
