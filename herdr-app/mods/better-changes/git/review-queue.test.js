@@ -56,13 +56,13 @@ test("threads waiting on me come first, each side oldest first", () => {
 });
 
 test("a name GitLab masks falls back to the username", () => {
-  assert.equal(displayName({ name: "****", username: "group_1000000_bot_60d7" }), "@group_1000000_bot_60d7");
+  assert.equal(displayName({ name: "****", username: "group_1000000_bot_0000" }), "@group_1000000_bot_0000");
   assert.equal(displayName({ name: "", username: "vova" }), "@vova");
   assert.equal(displayName({ name: "Vova Potiichuk", username: "vova" }), "Vova Potiichuk");
 });
 
 test("bot accounts are told apart by username", () => {
-  assert.equal(isBot({ username: "group_1000000_bot_00000000000000000000000000000000" }), true);
+  assert.equal(isBot({ username: "group_1000000_bot_0000000000000000000000000000000" }), true);
   assert.equal(isBot({ username: "renovate-bot" }), true);
   assert.equal(isBot({ username: "vova.potiichuk" }), false);
   assert.equal(isBot({ username: "abbott" }), false);
@@ -151,7 +151,7 @@ test("CodeRabbit's notes go by its name, not its masked bot account", () => {
         body: "<!-- coderabbit-ai-generated:v1 -->\nfinding",
         resolvable: true,
         created_at: "2026-11-16T16:38:13.983Z",
-        author: { id: 99, name: "****", username: "group_1000000_bot_00000000000000000000000000000000" },
+        author: { id: 99, name: "****", username: "group_1000000_bot_0000000000000000000000000000000" },
       },
     ],
   };

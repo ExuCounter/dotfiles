@@ -1,8 +1,6 @@
 # This is Git's per-user configuration file.
 [user]
-# Please adapt and uncomment the following lines:
 name = Vova Potiichuk
-email = 49032640+ExuCounter@users.noreply.github.com
 
 [core]
 	excludesFile = ~/.gitignore_global
@@ -13,5 +11,6 @@ email = 49032640+ExuCounter@users.noreply.github.com
 	prompt = false
 [url "git@github.com:"]
 	insteadOf = https://github.com/
-[http]
-	sslcainfo = /path/to/cacert.pem
+# Work email and the machine's TLS settings, kept out of this repository.
+[include]
+	path = ~/.gitconfig.local

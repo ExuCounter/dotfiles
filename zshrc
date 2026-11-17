@@ -56,12 +56,8 @@ setopt share_history
 source <(fzf --zsh)
 
 export PATH="/opt/homebrew/opt/postgresql@15/bin:$PATH"
-alias pro_ops=/Users/volodymyr.potiichuk/Desktop/projects/prosapient/pro-ops/_build/prod/rel/bakeware/pro_ops
 
-export AWS_PROFILE=acme-test
-alias pro_ops=/Users/volodymyr.potiichuk/Desktop/projects/prosapient/pro-ops/burrito_out/pro_ops_macos
 export PATH="/opt/homebrew/opt/postgresql@16/bin:$PATH"
-alias pro_ops=/Users/volodymyr.potiichuk/Desktop/projects/prosapient/pro-ops/burrito_out/pro_ops_macos
 
 function zed_tmux() {
   SESSION=$(basename "$PWD")
@@ -71,9 +67,11 @@ function zed_tmux() {
 export HEX_CACERTS_PATH="$HOME/.certs/ca-bundle.pem"
 export SSL_CERT_FILE="$HOME/.certs/ca-bundle.pem"
 export NODE_EXTRA_CA_CERTS="$HOME/.certs/ca-bundle.pem"
-alias pro_ops=/Users/volodymyrpotiichuk/Desktop/projects/prosapient/pro-ops/_build/prod/rel/pro_ops/bin/pro_ops
 
 # herdr-automatic-rename: live tab naming hook
 for _f in $HOME/.config/herdr/plugins/github/herdr-automatic-rename-*/shell/hook.zsh(N); do
   source $_f; break
 done
+
+# This machine's own setup, kept out of dotfiles.
+[ -f ~/.zshrc.local ] && source ~/.zshrc.local

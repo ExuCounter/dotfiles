@@ -12,3 +12,9 @@ herdr-app/mods/**/gpui-kit.d.ts
 *.bak
 *.bak-*
 herdr-shot.png
+
+# work-only, kept on this machine
+.zsh_history
+claude/skills/duty/
+claude/skills/pt-rpc/
+claude/skills/prove-fix/references/platform-backend.md

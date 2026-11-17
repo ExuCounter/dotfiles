@@ -1,155 +1,11 @@
 {
-  "autoMemoryEnabled": false,
-  "autoMode": {
-    "environment": [
-      "### Org-wide",
-      "(removed)",
-      "(removed)",
-      "(removed)",
-      "(removed)",
-      "(removed)",
-      "(removed)",
-      "(removed)",
-      "(removed)",
-      "(removed)",
-      "(removed)",
-      "(removed)",
-      "(removed)",
-      "(removed)",
-      "(removed)",
-      "(removed)",
-      "(removed)",
-      "(removed)",
-      "(removed)",
-      "### User-specific",
-      "(removed)",
-      "(removed)",
-      "(removed)"
-    ]
-  },
-  "effortLevel": "medium",
-  "enabledPlugins": {
-    "datadog@claude-plugins-official": true,
-    "feature-dev@claude-plugins-official": false,
-    "mcp-server-dev@claude-plugins-official": false,
-    "revdiff@revdiff": true,
-    "typescript-lsp@claude-plugins-official": true
-  },
   "env": {
     "FORCE_HYPERLINK": "1"
   },
-  "extraKnownMarketplaces": {
-    "revdiff": {
-      "source": {
-        "repo": "umputun/revdiff",
-        "source": "github"
-      }
-    }
-  },
-  "hooks": {
-    "Notification": [
-      {
-        "hooks": [
-          {
-            "async": true,
-            "command": "bash \"$HOME/.claude/hooks/herdr-status.sh\"",
-            "timeout": 10,
-            "type": "command"
-          }
-        ],
-        "matcher": "permission_prompt"
-      }
-    ],
-    "PreToolUse": [
-      {
-        "hooks": [
-          {
-            "async": true,
-            "command": "bash \"$HOME/.claude/hooks/herdr-status.sh\"",
-            "timeout": 10,
-            "type": "command"
-          }
-        ]
-      }
-    ],
-    "SessionEnd": [
-      {
-        "hooks": [
-          {
-            "async": true,
-            "command": "bash \"$HOME/.claude/hooks/herdr-status.sh\"",
-            "timeout": 10,
-            "type": "command"
-          }
-        ]
-      }
-    ],
-    "SessionStart": [
-      {
-        "hooks": [
-          {
-            "command": "bash \"$HOME/.claude/hooks/herdr-agent-state.sh\" session",
-            "timeout": 10,
-            "type": "command"
-          }
-        ],
-        "matcher": "*"
-      },
-      {
-        "hooks": [
-          {
-            "async": true,
-            "command": "bash \"$HOME/.claude/hooks/herdr-status.sh\"",
-            "timeout": 10,
-            "type": "command"
-          }
-        ]
-      }
-    ],
-    "Stop": [
-      {
-        "hooks": [
-          {
-            "command": "\"/Users/volodymyrpotiichuk/.local/bin/whiska\" hook stop 2>/dev/null || true",
-            "timeout": 10,
-            "type": "command"
-          }
-        ]
-      },
-      {
-        "hooks": [
-          {
-            "command": "bash \"$HOME/.claude/hooks/herdr-status.sh\"",
-            "timeout": 10,
-            "type": "command"
-          }
-        ]
-      }
-    ],
-    "UserPromptSubmit": [
-      {
-        "hooks": [
-          {
-            "async": true,
-            "command": "bash \"$HOME/.claude/hooks/herdr-status.sh\"",
-            "timeout": 10,
-            "type": "command"
-          }
-        ]
-      }
-    ]
-  },
-  "mcpServers": {
-    "tidewave": {
-      "type": "http",
-      "url": "http://localhost:4000/tidewave/mcp"
-    }
-  },
-  "model": "opus[1m]",
   "permissions": {
     "defaultMode": "auto"
   },
-  "preferredNotifChannel": "notifications_disabled",
+  "model": "opus",
   "skillOverrides": {
     "anthropic-skills:docs": "user-invocable-only",
     "anthropic-skills:docx": "user-invocable-only",
@@ -174,19 +30,159 @@
     "update-config": "user-invocable-only",
     "workflow-authoring": "name-only"
   },
-  "skipAutoPermissionPrompt": true,
-  "skipDangerousModePermissionPrompt": true,
-  "skipWorkflowUsageWarning": true,
-  "statusLine": {
-    "command": "bash \"$HOME/.claude/statusline-command.sh\"",
-    "type": "command"
+  "hooks": {
+    "Notification": [
+      {
+        "matcher": "permission_prompt",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"$HOME/.claude/hooks/herdr-status.sh\"",
+            "timeout": 10,
+            "async": true
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"$HOME/.claude/hooks/herdr-status.sh\"",
+            "timeout": 10,
+            "async": true
+          }
+        ]
+      }
+    ],
+    "SessionEnd": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"$HOME/.claude/hooks/herdr-status.sh\"",
+            "timeout": 10,
+            "async": true
+          }
+        ]
+      }
+    ],
+    "SessionStart": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"$HOME/.claude/hooks/herdr-agent-state.sh\" session",
+            "timeout": 10
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"$HOME/.claude/hooks/herdr-status.sh\"",
+            "timeout": 10,
+            "async": true
+          }
+        ]
+      },
+      {
+        "matcher": "^(startup|resume|clear|compact|fork)$",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash '/Users/volodymyrpotiichuk/.claude/hooks/herdr-agent-state.sh' session",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"$HOME/.claude/hooks/herdr-status.sh\"",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"$HOME/.claude/hooks/herdr-status.sh\"",
+            "timeout": 10,
+            "async": true
+          }
+        ]
+      }
+    ],
+    "WorktreeCreate": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"$HOME/.claude/hooks/worktree-create.sh\"",
+            "timeout": 60
+          }
+        ]
+      }
+    ],
+    "WorktreeRemove": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"$HOME/.claude/hooks/worktree-remove.sh\"",
+            "timeout": 60
+          }
+        ]
+      }
+    ]
   },
-  "switchModelsOnFlag": true,
-  "theme": "auto",
+  "statusLine": {
+    "type": "command",
+    "command": "bash \"$HOME/.claude/statusline-command.sh\""
+  },
+  "enabledPlugins": {
+    "agent-skills@addy-agent-skills": true,
+    "datadog@claude-plugins-official": true,
+    "feature-dev@claude-plugins-official": false,
+    "mcp-server-dev@claude-plugins-official": false,
+    "typescript-lsp@claude-plugins-official": true
+  },
+  "extraKnownMarketplaces": {
+    "addy-agent-skills": {
+      "source": {
+        "source": "github",
+        "repo": "addyosmani/agent-skills"
+      }
+    }
+  },
+  "effortLevel": "medium",
   "tui": "fullscreen",
   "voice": {
     "enabled": false,
     "mode": "hold"
   },
-  "voiceEnabled": false
+  "autoMemoryEnabled": false,
+  "skipDangerousModePermissionPrompt": true,
+  "skipWorkflowUsageWarning": true,
+  "theme": "auto",
+  "preferredNotifChannel": "notifications_disabled",
+  "switchModelsOnFlag": true,
+  "skipAutoPermissionPrompt": true,
+  "voiceEnabled": false,
+  "mcpServers": {
+    "tidewave": {
+      "type": "http",
+      "url": "http://localhost:4000/tidewave/mcp"
+    }
+  }
 }
