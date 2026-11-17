@@ -17,8 +17,8 @@ const scrollWidth = (lengths) =>
   Math.max(300, ...lengths.map((length) => (length * CHAR_WIDTH + GUTTERS) * codeSize()));
 
 export const diffMethods = {
-  // A reopened tab shows the file it last showed. Never replaces a live entry,
-  // which may hold a newer pick.
+  // A reopened tab shows the file it last showed, unless its props hold a newer pick. Never
+  // replaces a live entry, which may hold a newer pick.
   restoreDiffSelection(p) {
     if (this.mode !== "diff" || !this.diffSpace) return;
     const entries = shared("better-changes.diff-tabs") ?? {};
@@ -27,7 +27,8 @@ export const diffMethods = {
     let source = p.source;
     try {
       const saved = JSON.parse(localStorage.getItem("diff.selection"));
-      if (typeof saved?.path === "string" && typeof JSON.parse(saved.context)?.cwd === "string") {
+      const newer = !selection?.at || (saved?.at ?? 0) > selection.at;
+      if (newer && typeof saved?.path === "string" && typeof JSON.parse(saved.context)?.cwd === "string") {
         selection = saved;
         source = JSON.parse(saved.context);
       }
@@ -44,7 +45,7 @@ export const diffMethods = {
     return panes().find((p) => p.mod === "better-changes" && ids.has(p.tab))?.tab;
   },
 
-  pick(file, scope, cx) {
+  pick(file, scope, cx, extra = {}) {
     const space = spaces().find((s) => s.active);
     if (!space) return;
     const selected = {
@@ -54,14 +55,17 @@ export const diffMethods = {
       path: file.path,
       scope,
       at: Date.now(),
+      ...extra,
     };
     if (scope === "commit") {
       const { hash, short, subject } = this.selectedCommit;
       selected.commit = { hash, short, subject };
       selected.file = file;
     }
-    if (scope === "committed") {
-      selected.commit = { base: this.committed.base, name: this.committed.name };
+    if (scope === "committed" || scope === "branch") {
+      const ahead = this.ahead(scope);
+      if (!ahead) return;
+      selected.commit = { base: ahead.base, name: ahead.name };
       selected.file = file;
     }
     const entries = shared("better-changes.diff-tabs") ?? {};
@@ -121,6 +125,12 @@ export const diffMethods = {
     this.picked = null;
     this.visual = false;
     this.cursor = null;
+    this.replyTo = null;
+    this.threadError = null;
+    this.pendingMark = selected.mark ?? null;
+    // The queue already holds a fresh read; a thread from elsewhere waits for one.
+    this.focusThread = selected.thread ? { id: selected.thread, at: selected.queue ? 0 : Date.now(), queue: Boolean(selected.queue) } : null;
+    if (this.focusThread && !selected.queue) this.refreshThreads(cx, true);
     this.diffToken++;
     this.diffLoading = false;
     if (this.root) this.loadDiff(cx);
@@ -128,7 +138,7 @@ export const diffMethods = {
   },
 
   diffFile() {
-    if (["commit", "committed", "patch"].includes(this.scope)) return this.commitFile;
+    if (["commit", "committed", "branch", "patch"].includes(this.scope)) return this.commitFile;
     const file = this.files.find((f) => f.path === this.path);
     if (!file) return null;
     // Git's counts for a conflict are of the markers, so they would mislead.
@@ -168,7 +178,8 @@ export const diffMethods = {
   diffArgs() {
     if (this.scope === "commit")
       return ["show", "--diff-merges=first-parent", "--format=", this.commitRef.hash];
-    if (this.scope === "committed") return ["diff", this.commitRef.base, "HEAD"];
+    if (this.scope === "committed" || this.scope === "branch")
+      return ["diff", this.commitRef.base, "HEAD"];
     return ["diff", ...(this.scope === "staged" ? ["--cached"] : [])];
   },
 
@@ -274,7 +285,8 @@ export const diffMethods = {
   async readDiffLines(file, path, root, on) {
     const args = ["--literal-pathspecs", ...this.diffArgs()];
     // shortcut: a file over 1,000,000 lines still shows in pieces, fine for a diff view.
-    if (this.shownFull) args.push("--unified=1000000");
+    const context = Math.max(0, Math.floor(this.settings.context_lines ?? 3));
+    args.push(`--unified=${this.shownFull ? 1000000 : context}`);
     args.push("--no-ext-diff", "--no-textconv", "--no-color", "--", path);
     const result = await this.git(args, root, on);
     if (result.code !== 0) throw Error(result.stderr || "Cannot read diff");
@@ -309,15 +321,12 @@ export const diffMethods = {
       staged: "Staged",
       unstaged: "Unstaged",
       committed: "Committed",
+      branch: this.commitRef?.name ? `vs ${this.commitRef.name}` : "Branch",
       commit: this.commitRef?.short,
       patch: this.commitRef?.short,
     };
     const scope = file?.conflict ? this.conflictLabel() : scopes[this.scope];
-    const comments = this.root && this.path ? this.commentCount(this.path, this.scope) : 0;
-    const marks = [
-      file && this.isViewed(file, this.scope) && "✓ Viewed",
-      comments && `${comments} comment${comments === 1 ? "" : "s"}`,
-    ];
+    const marks = [file && this.isViewed(file, this.scope) && "✓ Viewed"];
     const picture = this.path && fileIcon(this.fileIcons, `${this.root}/${this.path}`, { light: isLight(theme().background) });
     return {
       title,
@@ -347,6 +356,7 @@ export const diffMethods = {
 
   renderDiff() {
     const root = Panel({ id: "better-changes-diff", framed: false })
+      .relative()
       .track_focus(this.diffFocus)
       .on_key_down((e, cx) => this.reviewKey(e, cx));
     const split = this.diffLayout === "split";
@@ -361,6 +371,7 @@ export const diffMethods = {
     }
     const comments = this.conflictCount || this.scope === "patch" ? null : this.renderComments();
     if (comments) root.child(comments);
+    if (this.helpOpen) root.child(this.renderHelp());
     return root;
   },
 
@@ -634,10 +645,9 @@ export const diffMethods = {
     return !this.conflictCount && this.scope !== "patch" && Boolean(this.commentInput);
   },
 
-  // A strip at the row's start, lit where a comment covers the line.
+  // A strip at the row's start, lit where a review finding or a merge request thread is.
   commentMark(row, other) {
-    const t = theme();
-    const marked = this.commentable() && (this.hasComment(row) || this.hasComment(other));
-    return div().w(3).h_full().flex_none().when(marked, (el) => el.bg(t.accent));
+    const color = this.findingColor(row) ?? this.findingColor(other) ?? this.threadColor(row) ?? this.threadColor(other);
+    return div().w(3).h_full().flex_none().when(Boolean(color), (el) => el.bg(color));
   },
 };

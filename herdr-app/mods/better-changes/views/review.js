@@ -1,7 +1,8 @@
-// Reviewing file by file from the diff tab: next-file and prev-file (keys.json binds them to
-// ctrl-j and ctrl-k under mod:better-changes) step through the changed files in the sidebar's
-// order, and v marks one viewed. A mark holds the file's status and line
-// counts, so a file that changes again after it was viewed shows as not viewed.
+// Reviewing file by file from the diff tab: J and K, or the next-file and prev-file commands
+// for a keys.json binding, step through the changed files in the sidebar's
+// order, committed and merge request files included, and v marks one viewed. A mark holds the
+// file's status and line counts, so a file that changes again after it was viewed shows as not
+// viewed.
 import { shared, setShared, spaces } from "herdr";
 import { fileTree } from "../git/model.js";
 
@@ -15,10 +16,14 @@ const statusOf = (file, scope) =>
 export const reviewMethods = {
   // The files as the sidebar lists them: conflicts, staged, unstaged; each group flat or as a tree.
   reviewOrder() {
+    const branch = this.ahead("branch");
+    const committed = this.ahead("committed");
     const groups = [
       ["conflict", this.files.filter((f) => f.conflict)],
       ["staged", this.files.filter((f) => f.staged)],
       ["unstaged", this.files.filter((f) => f.unstaged && !f.conflict)],
+      ["committed", committed && committed.base !== branch?.base ? committed.files : []],
+      ["branch", branch?.files ?? []],
     ];
     return groups.flatMap(([scope, files]) => {
       const ordered =
@@ -67,8 +72,10 @@ export const reviewMethods = {
   },
 
   toggleViewed(cx) {
-    const file = this.files.find((f) => f.path === this.path);
-    if (!file || !["staged", "unstaged", "conflict"].includes(this.scope)) return;
+    const file = ["committed", "branch"].includes(this.scope)
+      ? this.commitFile
+      : this.files.find((f) => f.path === this.path);
+    if (!file || !["staged", "unstaged", "conflict", "committed", "branch"].includes(this.scope)) return;
     const key = `${this.scope}:${file.path}`;
     const marks = { ...this.viewedMarks() };
     const viewed = !this.isViewed(file, this.scope);
@@ -79,10 +86,6 @@ export const reviewMethods = {
     localStorage.setItem("viewed", JSON.stringify(all));
     if (viewed) this.stepFile(1, cx, { unviewed: true });
     cx.notify();
-  },
-
-  commentCount(path, scope) {
-    return this.comments().filter((c) => c.path === path && c.scope === scope).length;
   },
 
   reviewProgress() {
@@ -96,9 +99,13 @@ export const reviewMethods = {
     return this.mode === "diff" && spaces().find((s) => s.active)?.id === this.diffSpace;
   },
 
+  // A key typed in a text box bubbles up here after the box has seen it; it's text, not a command.
   reviewKey(event, cx) {
+    const fromBox = this.keyFromBox;
+    this.keyFromBox = false;
+    if (fromBox) return;
     if (this.vimKey(event, cx)) return cx.stop_propagation();
-    if (event.keystroke !== "v" || this.picked || this.typingComment) return;
+    if (event.keystroke !== "v" || this.picked || this.typing()) return;
     this.toggleViewed(cx);
     cx.stop_propagation();
   },

@@ -2,7 +2,7 @@
 // tokens and small components. UI only: values in, callbacks out, no Git or
 // Herdr commands. Components return ordinary elements, so callers can chain.
 import { div, image, svg } from "gpui-kit";
-import { h_flex, v_flex, Popover, Textarea } from "gpui-base";
+import { h_flex, v_flex, Popover, Textarea, TextView } from "gpui-base";
 import { theme, settings } from "herdr";
 import { fileIcon, isLight } from "../file-icons.js";
 
@@ -199,6 +199,103 @@ export function TextButton({ id, icon, label, onClick, active = false }) {
     })
     .when(Boolean(icon), (el) => el.child(Icon(icon, 12)))
     .child(label);
+}
+
+// Markdown at the size around it. TextView draws fenced code in its own large font, so fenced
+// blocks are drawn here and only the prose goes to TextView.
+export function Markdown(id, text, size = 13.5) {
+  const t = theme();
+  const parts = text.split(/^```[^\n]*\n([\s\S]*?)^```[ \t]*$/m);
+  return v_flex()
+    .w_full()
+    .gap(6)
+    .text_size(size)
+    .children(
+      parts
+        .map((part, i) => {
+          if (i % 2 === 0)
+            return part.trim() ? div().w_full().child(TextView.markdown(`${id}-${i}`, part.trim())) : null;
+          return div()
+            .w_full()
+            .p(8)
+            .rounded(RADIUS.control)
+            .bg(t.raised)
+            .border_1()
+            .border_color(t.border)
+            .font_family(codeFont())
+            .text_size(size - 1)
+            .whitespace_normal()
+            .child(part.replace(/\n$/, ""));
+        })
+        .filter(Boolean),
+    );
+}
+
+// A card's action: an icon, a label and its key. `tone` is "primary" (filled with the accent),
+// "success" (tinted green) or plain (outlined).
+export function PillButton({ id, icon, label, hint, tone, onClick, tooltip }) {
+  const t = theme();
+  const color = tone === "primary" ? t.background : tone === "success" ? t.ansi2 : t.foreground;
+  return h_flex()
+    .id(id)
+    .h(24)
+    .flex_none()
+    .px(9)
+    .gap(5)
+    .items_center()
+    .rounded(12)
+    .text_size(TEXT.small)
+    .font_medium()
+    .text_color(color)
+    .when(tone === "primary", (el) => el.bg(t.accent))
+    .when(tone === "success", (el) => el.bg(`${t.ansi2}22`).border_1().border_color(`${t.ansi2}66`))
+    .when(tone !== "primary" && tone !== "success", (el) => el.border_1().border_color(t.border).bg(t.background))
+    .cursor_pointer()
+    .hover((s) => (tone === "primary" ? s.opacity(0.85) : s.bg(t.hover)))
+    .when(Boolean(tooltip), (el) => el.tooltip(tooltip))
+    .on_click((_e, cx) => {
+      cx.stop_propagation();
+      onClick(cx);
+    })
+    .child(Icon(icon, 13))
+    .child(label)
+    .when(Boolean(hint), (el) =>
+      el.child(
+        div()
+          .pl(2)
+          .text_size(TEXT.badge)
+          .font_family(codeFont())
+          .opacity(0.7)
+          .child(hint),
+      ),
+    );
+}
+
+// A button of the diff's bottom bar: larger than TextButton, an icon, and any children so a
+// count can take its own colour. `primary` fills it with the accent.
+export function BarButton({ id, icon, children, onClick, active = false, primary = false, tooltip }) {
+  const t = theme();
+  return h_flex()
+    .id(id)
+    .h(26)
+    .flex_none()
+    .px(8)
+    .gap(6)
+    .items_center()
+    .rounded(RADIUS.control)
+    .text_size(TEXT.body)
+    .text_color(primary ? t.background : active ? t.foreground : t.muted)
+    .when(primary, (el) => el.bg(t.accent))
+    .when(active && !primary, (el) => el.bg(t.selected))
+    .cursor_pointer()
+    .hover((s) => (primary ? s.opacity(0.85) : s.bg(t.hover).text_color(t.foreground)))
+    .when(Boolean(tooltip), (el) => el.tooltip(tooltip))
+    .on_click((_e, cx) => {
+      cx.stop_propagation();
+      onClick(cx);
+    })
+    .when(Boolean(icon), (el) => el.child(Icon(icon, 14)))
+    .children(children);
 }
 
 // A section heading in a list, as in Herdr's agents list. With `onClick` it

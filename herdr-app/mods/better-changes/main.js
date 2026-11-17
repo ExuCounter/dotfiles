@@ -11,7 +11,7 @@
 // git/reads.js reads from Git, git/model.js parses its output, views/ui.js holds every look
 // but the token colours: syntax.js colours a diff's code, and Better Files has the same file.
 import { View } from "gpui-kit";
-import { TextareaState, VirtualListScrollHandle } from "gpui-base";
+import { TextareaState, VirtualListScrollHandle, ScrollHandle } from "gpui-base";
 import { props, shared, setShared, nextCommand, layout, run, notify, closeOverlay } from "herdr";
 import { loadSettings, duration } from "./settings.js";
 import { setCodeSize } from "./views/ui.js";
@@ -23,6 +23,9 @@ import { diffMethods } from "./views/diff.js";
 import { commentMethods } from "./views/comments.js";
 import { reviewMethods } from "./views/review.js";
 import { vimMethods } from "./views/vim.js";
+import { threadMethods } from "./views/threads.js";
+import { helpMethods } from "./views/help.js";
+import { reviewerMethods } from "./views/reviewer.js";
 import { paneHeaderMethods } from "./views/pane-header.js";
 
 const CONTEXT_POLL_MS = 300;
@@ -34,6 +37,7 @@ const DEFAULT_SETTINGS = {
   default: { view: "tree", diff: "inline" },
   panel: { toggle: false },
   font_size: 0,
+  context_lines: 3,
 };
 
 class BetterChanges extends View {
@@ -78,7 +82,10 @@ class BetterChanges extends View {
     this.splitOffset = 0;
     this.diffToken = 0;
     this.resetCommits();
-    if (this.mode === "sidebar") this.initCommitBox(cx);
+    if (this.mode === "sidebar") {
+      this.initCommitBox(cx);
+      this.changesScroll = ScrollHandle.new();
+    }
     if (this.mode === "diff") {
       this.commentInput = TextareaState.new({ placeholder: "What should change here?", rows: 3 });
       this.diffFocus = cx.focus_handle();
@@ -87,6 +94,13 @@ class BetterChanges extends View {
         this.typingComment = true;
       });
       this.commentInput.on("blur", () => {
+        this.typingComment = false;
+      });
+      this.replyInput = TextareaState.new({ placeholder: "Reply on GitLab", rows: 2 });
+      this.replyInput.on("focus", () => {
+        this.typingComment = true;
+      });
+      this.replyInput.on("blur", () => {
         this.typingComment = false;
       });
     }
@@ -172,6 +186,24 @@ class BetterChanges extends View {
 
   // `better-changes.<command>`, for keys.
   command(command, cx) {
+    // pane.go (ctrl-h/j/k/l) lands on the diff's pane: the keys go to the diff.
+    if (command === "focus" && this.mode === "diff") {
+      this.diffFocus.focus();
+      this.onTab = true;
+      cx.notify();
+    }
+    // TEMP probe
+    if (command?.startsWith?.("probe-") && this.mode === "diff") {
+      const before = this.cursor;
+      let handled, error;
+      try {
+        handled = this.vimKey({ keystroke: command.slice(6) }, cx);
+      } catch (err) {
+        error = String(err?.stack ?? err);
+      }
+      const all = shared("bc.probe") ?? {};
+      setShared("bc.probe", { ...all, [this.diffSpace ?? "?"]: { key: command.slice(6), before, after: this.cursor, handled, error, rows: this.rows?.length, kinds: this.rows?.slice(Math.max(0, (before ?? 0) - 2), (before ?? 0) + 4).map((r) => r.kind), loading: this.diffLoading, typing: this.typing(), conflicts: this.conflictCount, layout: this.diffLayout, paired: this.pairedRows?.length, scope: this.scope, path: this.path, truncated: this.truncated, error: this.error, note: this.note } });
+    }
     if (command === "refresh") this.refreshAll(cx);
     if (["next-file", "prev-file"].includes(command) && this.reviewsActiveSpace())
       this.stepFile(command === "next-file" ? 1 : -1, cx);
@@ -193,8 +225,17 @@ class BetterChanges extends View {
       cx.notify();
     }
     if (this.contextKey() !== this.context) this.refresh(cx);
+    if (this.mode === "sidebar") {
+      this.openRequestedThread(cx);
+      this.revealShown(cx);
+    }
     if (this.mode === "diff") {
+      this.focusOnArrival();
       this.syncSelection(cx);
+      this.revealThread(cx);
+      this.revealMark(cx);
+      this.pollReview(cx);
+      this.pollThreadNotes(cx);
       if (this.root && this.path && this.shownFull !== this.fullFile()) this.loadDiff(cx);
       this.publishHead();
     }
@@ -221,6 +262,9 @@ Object.assign(
   commentMethods,
   reviewMethods,
   vimMethods,
+  threadMethods,
+  helpMethods,
+  reviewerMethods,
   paneHeaderMethods,
 );
 

@@ -1,7 +1,7 @@
 // The sidebar: its tabs, options menu, file groups and commit views.
 import { div } from "gpui-kit";
 import { v_flex, h_flex } from "gpui-base";
-import { theme, shared, setShared } from "herdr";
+import { theme, shared, setShared, spaces } from "herdr";
 import { fileTree, timeAgo } from "../git/model.js";
 import {
   TEXT,
@@ -38,6 +38,26 @@ const LAYOUTS = [
 ];
 
 export const sidebarMethods = {
+  // The file the space on screen shows in its diff tab; picks in other spaces don't count.
+  shownSelection() {
+    const space = spaces().find((s) => s.active)?.id;
+    const entry = (shared("better-changes.diff-tabs") ?? {})[space];
+    return entry?.selection ?? null;
+  },
+
+  // A new file in the diff opens its group and folders, and the list scrolls to it once.
+  revealShown(cx) {
+    const shown = this.shownSelection();
+    const id = shown && shown.context === this.context ? `${shown.scope}:${shown.path}:${shown.at}` : null;
+    if (!id || id === this.revealed) return;
+    this.revealed = id;
+    if (this.collapsed.delete(shown.scope)) localStorage.setItem("collapsed", JSON.stringify([...this.collapsed]));
+    const parts = shown.path.split("/");
+    for (let i = 1; i < parts.length; i++) this.closed.delete(`${shown.scope}:${parts.slice(0, i).join("/")}`);
+    this.revealPending = true;
+    cx.notify();
+  },
+
   // ── Preferences ───────────────────────────────────────────────────────────
 
   setTab(tab, cx) {
@@ -181,13 +201,32 @@ export const sidebarMethods = {
   },
 
   renderChanges() {
-    const list = v_flex().id("changes-list").flex_1().min_h(0).overflow_y_scrollbar().p(6);
-    if (this.error) return list.child(Message(this.error, true));
+    const drawn = v_flex()
+      .id("changes-list")
+      .flex_1()
+      .min_h(0)
+      .overflow_y_scrollbar()
+      .p(6)
+      .when(Boolean(this.changesScroll), (el) => el.track_scroll(this.changesScroll));
+    // Counts the rows as they go in, so the shown file's place is known for the scroll.
+    this.rowIndex = 0;
+    this.revealAt = null;
+    const list = {
+      child: (el) => {
+        drawn.child(el);
+        this.rowIndex++;
+        return list;
+      },
+    };
+    if (this.error) return drawn.child(Message(this.error, true));
     const conflicts = this.files.filter((f) => f.conflict);
     const unstaged = this.files.filter((f) => f.unstaged && !f.conflict);
     const staged = this.files.filter((f) => f.staged);
-    const committed = this.committed?.total ? this.committed : null;
-    if (!conflicts.length && !unstaged.length && !staged.length && !committed)
+    const branch = this.branchAhead?.total ? this.branchAhead : null;
+    // Before the first push both compare with the same commit, so only Branch shows.
+    const committed =
+      this.committed?.total && this.committed.base !== branch?.base ? this.committed : null;
+    if (!conflicts.length && !unstaged.length && !staged.length && !committed && !branch)
       list.child(Message(this.loading || !this.root ? "Loading changes…" : "No changes"));
     this.groupsDrawn = 0;
     this.addGroup(list, "conflict", "Conflicts", conflicts);
@@ -202,10 +241,23 @@ export const sidebarMethods = {
         `not on ${committed.name}`,
         committed.total,
       );
+    if (branch)
+      this.addGroup(
+        list,
+        "branch",
+        `!${branch.mergeRequest.iid}`,
+        branch.files,
+        `→ ${branch.mergeRequest.target}`,
+        branch.total,
+      );
     const limit = this.settings.limits.files;
     if (this.total > limit)
       list.child(Message(`Showing the first ${limit.toLocaleString()} changed files.`));
-    return v_flex().id("changes").flex_1().min_h(0).child(list).child(this.renderCommitBox());
+    if (this.revealPending && this.revealAt != null) {
+      this.changesScroll?.scroll_to_item(this.revealAt);
+      this.revealPending = false;
+    }
+    return v_flex().id("changes").flex_1().min_h(0).child(drawn).child(this.renderCommitBox());
   },
 
   renderCommitBox() {
@@ -345,8 +397,15 @@ export const sidebarMethods = {
 
   // A group's files, flat or nested as chosen in the options menu.
   addRows(list, scope, files) {
+    const shown = this.shownSelection();
+    const mark = (file) => {
+      if (shown?.path === file.path && shown?.scope === scope) this.revealAt = this.rowIndex;
+    };
     if (this.view === "flat") {
-      for (const file of files) list.child(this.fileRow(file, scope, 0));
+      for (const file of files) {
+        mark(file);
+        list.child(this.fileRow(file, scope, 0));
+      }
       return;
     }
     const closed = new Set(
@@ -354,12 +413,14 @@ export const sidebarMethods = {
         .filter((key) => key.startsWith(`${scope}:`))
         .map((key) => key.slice(scope.length + 1)),
     );
-    for (const row of fileTree(files, closed))
+    for (const row of fileTree(files, closed)) {
+      if (row.kind !== "folder") mark(row.file);
       list.child(
         row.kind === "folder"
           ? this.folderRow(row, scope, closed.has(row.path))
           : this.fileRow(row.file, scope, row.depth),
       );
+    }
   },
 
   folderRow(row, scope, closed) {
@@ -395,7 +456,7 @@ export const sidebarMethods = {
         : scope === "unstaged"
           ? file.unstagedStatus
           : file.status;
-    const open = shared("better-changes.selection");
+    const open = this.shownSelection();
     const row = Row({
       id: `file-${scope}-${file.path}`,
       depth,
@@ -403,7 +464,8 @@ export const sidebarMethods = {
       onClick: (cx) => this.pick(file, scope, cx),
     }).child(FileIcon({ icons: this.fileIcons, path: `${this.root}/${file.path}`, color: t.muted, t }));
     const viewed = this.root && this.isViewed(file, scope);
-    const comments = this.root ? this.commentCount(file.path, scope) : 0;
+    const threads = scope === "branch" ? this.openThreadCount(file.path) : 0;
+    const findings = this.root ? this.fileFindingCount(file.path, scope) : 0;
     if (tree) row.child(div().flex_1().min_w(0).truncate().when(viewed, (el) => el.text_color(t.dim)).child(name));
     else
       row.child(
@@ -423,8 +485,10 @@ export const sidebarMethods = {
               .child(parts.join("/")),
           ),
       );
-    if (comments)
-      row.child(div().flex_none().text_size(TEXT.caption).text_color(t.accent).child(`💬${comments}`));
+    if (threads)
+      row.child(div().flex_none().text_size(TEXT.caption).text_color(t.ansi5).child(`◆${threads}`));
+    if (findings)
+      row.child(div().flex_none().text_size(TEXT.caption).text_color(t.ansi3).child(`⚑${findings}`));
     if (viewed) row.child(div().flex_none().text_size(TEXT.caption).text_color(t.ansi2).child("✓"));
     if (file.conflict)
       row.child(

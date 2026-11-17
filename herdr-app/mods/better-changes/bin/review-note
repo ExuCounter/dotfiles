@@ -1,0 +1,50 @@
+#!/usr/bin/env python3
+"""Puts a reviewer's note on the diff Better Changes shows: one JSON line per note in FILE.
+
+review-note FILE finding --path P --line N [--side new|old] --severity blocker|should-fix|nit|question --title T --body B --checked C [--fix F]
+review-note FILE retract --id ID --reason R
+review-note FILE answer --id ID --answer A
+"""
+import argparse
+import json
+import sys
+import time
+
+parser = argparse.ArgumentParser(prog="review-note")
+parser.add_argument("file")
+kinds = parser.add_subparsers(dest="kind", required=True)
+
+finding = kinds.add_parser("finding")
+finding.add_argument("--path", required=True)
+finding.add_argument("--line", type=int, required=True)
+finding.add_argument("--side", choices=["new", "old"], default="new")
+finding.add_argument("--severity", choices=["blocker", "should-fix", "nit", "question"], required=True)
+finding.add_argument("--title", required=True)
+finding.add_argument("--body", required=True)
+finding.add_argument("--checked", required=True)
+finding.add_argument("--fix", default="")
+
+retract = kinds.add_parser("retract")
+retract.add_argument("--id", required=True)
+retract.add_argument("--reason", required=True)
+
+answer = kinds.add_parser("answer")
+answer.add_argument("--id", required=True)
+answer.add_argument("--answer", required=True)
+
+args = vars(parser.parse_args())
+path = args.pop("file")
+args["at"] = int(time.time() * 1000)
+if args["kind"] == "finding":
+    try:
+        with open(path, encoding="utf-8") as existing:
+            count = sum(1 for line in existing if '"kind": "finding"' in line)
+    except FileNotFoundError:
+        count = 0
+    args["id"] = f"f{count + 1}"
+with open(path, "a", encoding="utf-8") as out:
+    out.write(json.dumps(args, ensure_ascii=False) + "\n")
+if args["kind"] == "finding":
+    print(f"On the diff as {args['id']}: {args['path']}:{args['line']} (retract it with: retract --id {args['id']})")
+else:
+    print(f"On the diff: {args['kind']}")

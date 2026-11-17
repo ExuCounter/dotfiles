@@ -37,6 +37,7 @@ export async function readBranchAndRepo(git) {
   return {
     branch: branch.code === 0 ? branch.stdout.trim() : null,
     repo: origin.code === 0 ? githubRepo(origin.stdout) : null,
+    origin: origin.code === 0 ? origin.stdout.trim() : null,
   };
 }
 
@@ -60,33 +61,45 @@ async function comparisonRef(git) {
 export async function readCommitted(git, previous, fileLimit) {
   try {
     const against = await comparisonRef(git);
-    if (!against) return null;
-
-    const base = await git(["merge-base", "HEAD", against.ref]);
-    const head = await git(["rev-parse", "--verify", "HEAD"]);
-    if (base.code !== 0 || head.code !== 0) return null;
-    const from = base.stdout.trim();
-    const key = `${from}:${head.stdout.trim()}`;
-    if (previous?.key === key) return previous;
-
-    const numstat = await git(["diff", ...NO_HELPERS, "--numstat", "-z", from, "HEAD"]);
-    const names = await git(["diff", ...NO_HELPERS, "--name-status", "-z", from, "HEAD"]);
-    const commits = await git(["rev-list", `${from}..HEAD`]);
-    if (numstat.code !== 0 || names.code !== 0 || commits.code !== 0) return null;
-
-    const files = commitFiles(numstat.stdout, names.stdout);
-    return {
-      key,
-      base: from,
-      ref: against.ref,
-      name: against.name,
-      total: files.length,
-      files: files.slice(0, fileLimit),
-      unpushed: new Set(lines(commits.stdout)),
-    };
+    return against ? await readAhead(git, against, previous, fileLimit) : null;
   } catch {
     return null;
   }
+}
+
+// The same against a merge request's target, from the last fetch of it.
+export async function readBranch(git, target, previous, fileLimit) {
+  try {
+    const against = { ref: `refs/remotes/origin/${target}`, name: `origin/${target}` };
+    return await readAhead(git, against, previous, fileLimit);
+  } catch {
+    return null;
+  }
+}
+
+async function readAhead(git, against, previous, fileLimit) {
+  const base = await git(["merge-base", "HEAD", against.ref]);
+  const head = await git(["rev-parse", "--verify", "HEAD"]);
+  if (base.code !== 0 || head.code !== 0) return null;
+  const from = base.stdout.trim();
+  const key = `${from}:${head.stdout.trim()}`;
+  if (previous?.key === key) return previous;
+
+  const numstat = await git(["diff", ...NO_HELPERS, "--numstat", "-z", from, "HEAD"]);
+  const names = await git(["diff", ...NO_HELPERS, "--name-status", "-z", from, "HEAD"]);
+  const commits = await git(["rev-list", `${from}..HEAD`]);
+  if (numstat.code !== 0 || names.code !== 0 || commits.code !== 0) return null;
+
+  const files = commitFiles(numstat.stdout, names.stdout);
+  return {
+    key,
+    base: from,
+    ref: against.ref,
+    name: against.name,
+    total: files.length,
+    files: files.slice(0, fileLimit),
+    unpushed: new Set(lines(commits.stdout)),
+  };
 }
 
 // The remote's default branch: its name, how far behind it we are, and which

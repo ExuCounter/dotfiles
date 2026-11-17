@@ -5,11 +5,22 @@ import {
   readStatus,
   readBranchAndRepo,
   readCommitted,
+  readBranch,
   readRemoteHead,
   readBehind,
   readLog,
   readCommitFiles,
 } from "./reads.js";
+import { gitlabRemote, findMergeRequest, accessProblem, glabProblem } from "./merge-request.js";
+
+const MERGE_REQUESTS = "better-changes.merge-requests";
+const AHEAD = "better-changes.ahead";
+const MERGE_REQUEST_STALE_MS = 5 * 60000;
+const ACCESS = "better-changes.gitlab-access";
+const ACCESS_STALE_MS = 5 * 60000;
+const ACCESS_RETRY_MS = 30000;
+// A failing SSH login gives up instead of asking for a password nobody will type.
+const SSH_PROBE = ["-c", "core.sshCommand=ssh -o BatchMode=yes -o ConnectTimeout=8"];
 
 // Reads must not take optional index locks or start fsmonitor helpers.
 const READ_ONLY = [
@@ -95,6 +106,7 @@ export const gitMethods = {
     this.root = null;
     this.files = [];
     this.committed = null;
+    this.branchAhead = null;
     this.path = null;
     this.rows = [];
     this.closed = new Set();
@@ -136,6 +148,7 @@ export const gitMethods = {
       await this.readSidebarState(git, context, cx);
     } else {
       this.syncSelection(cx);
+      if (this.scope === "branch") this.refreshThreads(cx);
       if (this.path && !this.diffLoading) this.loadDiff(cx);
     }
   },
@@ -154,13 +167,99 @@ export const gitMethods = {
   },
 
   async readSidebarState(git, context, cx) {
-    const committed = await readCommitted(git, this.committed, this.settings.limits.files);
-    const { branch, repo } = await readBranchAndRepo(git);
+    const limit = this.settings.limits.files;
+    const committed = await readCommitted(git, this.committed, limit);
+    const { branch, repo, origin } = await readBranchAndRepo(git);
+    this.origin = origin;
+    const mergeRequest = this.mergeRequest(origin, branch, cx);
+    const ahead = mergeRequest && (await readBranch(git, mergeRequest.target, this.branchAhead, limit));
     if (!this.isCurrent(context)) return;
     this.committed = committed;
+    this.branchAhead = ahead ? { ...ahead, mergeRequest } : null;
     this.branch = branch;
     this.repo = repo;
+    this.publishAhead();
+    this.refreshThreads(cx);
+    this.checkAccess(origin, cx);
     if (this.tab === "commit") this.loadCommits(cx);
+  },
+
+  // The branch's open merge request as last read; a stale or missing read starts a new one
+  // and the next refresh picks it up.
+  mergeRequest(origin, branch, cx) {
+    const remote = gitlabRemote(origin);
+    if (!remote || !branch || branch === "HEAD") return null;
+    const key = `${remote.host}/${remote.repo}:${branch}`;
+    const cached = (shared(MERGE_REQUESTS) ?? {})[key];
+    const stale = !cached || Date.now() - cached.at > MERGE_REQUEST_STALE_MS;
+    if (stale && !this.mergeRequestLookups?.has(key)) {
+      (this.mergeRequestLookups ??= new Set()).add(key);
+      cx.spawn(async (cx) => {
+        let found = cached?.found ?? null;
+        try {
+          found = await findMergeRequest(remote, branch);
+          this.setAccess(remote.host, "glab", null);
+        } catch (e) {
+          // Offline or signed out: keep the last answer and ask again later.
+          this.setAccess(remote.host, "glab", accessProblem(e.message));
+        }
+        setShared(MERGE_REQUESTS, { ...(shared(MERGE_REQUESTS) ?? {}), [key]: { at: Date.now(), found } });
+        this.mergeRequestLookups.delete(key);
+        if (found?.target !== cached?.found?.target) this.refresh(cx);
+      });
+    }
+    return cached?.found ?? null;
+  },
+
+  // GitLab access per host, for the GitLab button in the tab row: glab's login and a look at
+  // origin over git, every few minutes and every half minute while one fails, so an expired
+  // SSO session shows before a fetch or push meets it. The button sets `at` to 0 to ask again.
+  access(host) {
+    return (shared(ACCESS) ?? {})[host] ?? {};
+  },
+
+  setAccess(host, via, problem) {
+    const all = shared(ACCESS) ?? {};
+    setShared(ACCESS, { ...all, [host]: { ...(all[host] ?? {}), [via]: problem } });
+  },
+
+  checkAccess(origin, cx, force = false) {
+    const remote = gitlabRemote(origin);
+    if (!remote || !this.root) return;
+    const state = this.access(remote.host);
+    const every = state.git || state.glab ? ACCESS_RETRY_MS : ACCESS_STALE_MS;
+    if (this.accessChecking || (!force && state.at && Date.now() - state.at < every)) return;
+    this.accessChecking = true;
+    const root = this.root;
+    cx.spawn(async (cx) => {
+      try {
+        const probe = await this.git([...SSH_PROBE, "ls-remote", "--exit-code", "origin", "HEAD"], root);
+        const git = probe.code === 0 ? null : accessProblem(probe.stderr);
+        const glab = await glabProblem(remote.host);
+        setShared(ACCESS, { ...(shared(ACCESS) ?? {}), [remote.host]: { git, glab, at: Date.now() } });
+      } finally {
+        this.accessChecking = false;
+        cx.notify();
+      }
+    });
+  },
+
+  // The diff tab reads the committed and branch files from here to step through them.
+  publishAhead() {
+    const brief = (ahead) => ahead && { base: ahead.base, name: ahead.name, files: ahead.files };
+    setShared(AHEAD, {
+      ...(shared(AHEAD) ?? {}),
+      [this.root]: {
+        committed: brief(this.committed),
+        branch: this.branchAhead && { ...brief(this.branchAhead), mergeRequest: this.branchAhead.mergeRequest },
+      },
+    });
+  },
+
+  // The committed or branch comparison for this worktree, in whichever copy asks.
+  ahead(scope) {
+    if (this.mode === "sidebar") return scope === "branch" ? this.branchAhead : this.committed;
+    return (shared(AHEAD) ?? {})[this.root]?.[scope] ?? null;
   },
 
   // Remote repositories rely on the poll: watchFolder is local only.

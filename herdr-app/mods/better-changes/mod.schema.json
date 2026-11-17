@@ -174,6 +174,13 @@
           "type": "number",
           "minimum": 0,
           "default": 0
+        },
+        "context_lines": {
+          "title": "Context lines",
+          "description": "Unchanged lines shown above and below each change while Full file is off.",
+          "type": "integer",
+          "minimum": 0,
+          "default": 3
         }
       }
     }

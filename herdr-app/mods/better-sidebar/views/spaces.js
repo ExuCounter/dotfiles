@@ -18,7 +18,7 @@ import {
   layout,
 } from "herdr";
 import { PRStatusObserver, prPlaceKey, prAppearance, pipelineAppearance } from "../git/pr-status.js";
-import { MRWatcher } from "../git/mr-watch.js";
+import { MRInbox, pendingItems } from "../git/mr-inbox.js";
 import { spaceFolder, checkoutKey, readCheckout } from "../git/checkouts.js";
 import { loadSettings, duration } from "../settings.js";
 import { findNode } from "./find-node.js";
@@ -62,7 +62,7 @@ export class Spaces {
 
   init(_props, cx) {
     this.prObserver = new PRStatusObserver();
-    if (!globalThis.mrWatcher) (globalThis.mrWatcher = new MRWatcher()).start(cx);
+    (globalThis.mrInbox = new MRInbox()).start(cx);
     this.settings = DEFAULT_SETTINGS;
     this.applySettings(cx);
     // Repository caches are keyed by [machine, folder], so equal paths on
@@ -495,6 +495,7 @@ export class Spaces {
   gitTail(g, active, t, w) {
     const pr = w ? this.prBadge(w, t) : null;
     const ports = w ? this.ports(w) : [];
+    const waiting = g?.branch ? pendingItems().filter((item) => item.branch === g.branch).length : 0;
     return h_flex()
       .flex_none()
       .gap(5)
@@ -508,6 +509,20 @@ export class Spaces {
             .flex_none()
             .text_color(t.muted)
             .child(Icon("plug", 13)),
+        ),
+      )
+      .when(waiting > 0, (el) =>
+        el.child(
+          h_flex()
+            .id(`space-inbox-${w.id}`)
+            .flex_none()
+            .gap(2)
+            .items_center()
+            .text_size(TEXT.caption)
+            .text_color(t.ansi5)
+            .tooltip(`${waiting} waiting on you in the inbox`)
+            .child(Icon("inbox", 12))
+            .child(String(waiting)),
         ),
       )
       .when(Boolean(pr), (el) => el.child(pr))

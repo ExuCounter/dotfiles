@@ -4,6 +4,7 @@
   "place": "none",
   "size": 368,
   "title": "Better Changes",
+  "focusable": true,
   "overlay": {
     "kind": "popup",
     "width": 1,
@@ -11,6 +12,7 @@
     "frame": "none"
   },
   "settings": {
-    "font_size": 13
+    "font_size": 13,
+    "context_lines": 5
   }
 }

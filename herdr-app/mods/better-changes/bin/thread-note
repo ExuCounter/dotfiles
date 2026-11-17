@@ -1,0 +1,28 @@
+#!/usr/bin/env python3
+"""Tells Better Changes what came of a review thread sent to the agent: one JSON line in FILE.
+
+thread-note FILE THREAD --fixed COMMIT
+thread-note FILE THREAD --already-fixed COMMIT
+thread-note FILE THREAD --not-fixed REASON
+"""
+import argparse
+import json
+import time
+
+parser = argparse.ArgumentParser(prog="thread-note")
+parser.add_argument("file")
+parser.add_argument("thread")
+result = parser.add_mutually_exclusive_group(required=True)
+result.add_argument("--fixed", metavar="COMMIT")
+result.add_argument("--already-fixed", metavar="COMMIT")
+result.add_argument("--not-fixed", metavar="REASON")
+
+args = parser.parse_args()
+if args.fixed or args.already_fixed:
+    note = {"kind": "fixed" if args.fixed else "already-fixed", "commit": args.fixed or args.already_fixed}
+else:
+    note = {"kind": "not-fixed", "reason": args.not_fixed}
+note = {"thread": args.thread, **note, "at": int(time.time() * 1000)}
+with open(args.file, "a", encoding="utf-8") as out:
+    out.write(json.dumps(note, ensure_ascii=False) + "\n")
+print(f"Better Changes has it: {note['kind']}")
