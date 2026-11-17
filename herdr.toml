@@ -106,3 +106,12 @@ key = "prefix+shift+m"
 type = "shell"
 command = "cd \"$(herdr pane current | jq -r .result.pane.cwd)\" && glab mr view --web"
 description = "open this branch's merge request"
+
+# whiska: begin. `whiska init` rewrites this block; keep your own settings outside it.
+[ui.sidebar.spaces]
+rows = [
+  ["state_icon", "workspace"],
+  ["branch", "git_status", { token = "$whiska_mr" }, { token = "$whiska_ci", rules = [{ equals = "CI passed", fg = "#3fb950" }, { equals = "CI failed", fg = "#dc322f" }, { equals = "CI running", fg = "#268bd2" }, { equals = "CI stuck", fg = "#dc322f" }] }, { token = "$whiska_review", rules = [{ equals = "ready", fg = "#3fb950" }, { equals = "merged", fg = "#3fb950" }, { starts_with = "merged ·", fg = "#b58900" }, { equals = "auto-merge", fg = "#268bd2" }, { equals = "merging", fg = "#268bd2" }, { equals = "rebasing", fg = "#268bd2" }, { equals = "rebase after CI", fg = "#268bd2" }, { equals = "needs approval", fg = "#b58900" }, { equals = "needs rebase", fg = "#b58900" }, { contains = "open thread", fg = "#b58900" }, { equals = "rebase refused", fg = "#dc322f" }, { equals = "conflict", fg = "#dc322f" }, { equals = "blocked", fg = "#dc322f" }, { equals = "closed", fg = "#dc322f" }, { equals = "draft", dim = true }, { equals = "unread", dim = true }] }],
+  [{ token = "$whiska", rules = [{ starts_with = "❓", fg = "#2aa198" }] }],
+]
+# whiska: end
