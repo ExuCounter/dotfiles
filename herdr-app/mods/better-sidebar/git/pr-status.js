@@ -84,6 +84,7 @@ function gitlabPr(mr, detail, repository) {
     pipelineStatus: pipeline?.replace(/_/g, " ") ?? null,
     pipelineUrl: detail.head_pipeline?.web_url ?? null,
     needsRebase: status === "need_rebase",
+    targetBranch: detail.target_branch ?? mr.target_branch,
     mergeStateStatus: detail.has_conflicts || status === "conflict" ? "DIRTY" : status === "mergeable" ? "CLEAN" : "BLOCKED",
     reviewDecision: status === "not_approved" ? "REVIEW_REQUIRED" : null,
     repository,

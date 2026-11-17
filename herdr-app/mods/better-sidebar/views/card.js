@@ -3,7 +3,8 @@
 // { view: "card", space, prs, updated }.
 import { div } from "gpui-kit";
 import { v_flex, h_flex } from "gpui-base";
-import { props, theme, shared, setShared, closeOverlay, exec, settings, notify } from "herdr";
+import { props, theme, shared, setShared, closeOverlay, exec, settings, notify, agents, hc } from "herdr";
+import { tryRebase, rebaseAndPush, resolvePrompt } from "../git/rebase.js";
 import { prAppearance, pipelineAppearance } from "../git/pr-status.js";
 import { TEXT, SIZE, RADIUS, Icon } from "./ui.js";
 
@@ -17,7 +18,62 @@ const stop = (_e, cx) => cx.stop_propagation();
 const isGitLab = (pr) => String(pr.id ?? "").startsWith("gitlab:");
 
 export class Card {
-  init() {}
+  init() {
+    this.rebase = null; // { state: "working" | "done" | "conflicts" | "error", text, files }
+  }
+
+  // Tried aside first; only a clean rebase touches the branch and pushes it.
+  startRebase(pr, cx) {
+    const p = props();
+    if (!p.folder || this.rebase?.state === "working") return;
+    this.rebase = { state: "working", text: `Trying a rebase on ${pr.targetBranch}…` };
+    cx.notify();
+    cx.spawn(async (cx) => {
+      try {
+        const trial = await tryRebase(p.folder, p.machine, pr.targetBranch);
+        if (trial.kind === "conflicts") {
+          const names = trial.files.map((f) => f.split("/").pop());
+          this.rebase = { state: "conflicts", files: trial.files, text: `Conflicts in ${names.join(", ") || "some files"}` };
+        } else {
+          this.rebase = { state: "working", text: "Rebasing and pushing…" };
+          cx.notify();
+          await rebaseAndPush(p.folder, p.machine, pr.targetBranch);
+          this.rebase = { state: "done", text: `Rebased on ${pr.targetBranch} and pushed` };
+        }
+      } catch (e) {
+        this.rebase = { state: "error", text: String(e?.message ?? e).split("\n")[0] };
+      }
+      cx.notify();
+    });
+  }
+
+  // The conflicts to the space's agent, which rebases and resolves them but leaves the push to me.
+  resolveWithAgent(pr, cx) {
+    const agent = agents().find((a) => a.space === props().space);
+    if (!agent) {
+      this.rebase = { ...this.rebase, text: "No agent in this space to send it to" };
+      return cx.notify();
+    }
+    hc(["send", agent.address, resolvePrompt(pr.targetBranch, this.rebase.files ?? [])]).then((result) => {
+      this.rebase = { ...this.rebase, state: "sent", text: result.code === 0 ? `Sent to ${agent.tab_name || "the agent"}` : "Couldn't send: the agent is busy with a dialog" };
+      cx.notify();
+    });
+  }
+
+  rebaseRow(t, pr) {
+    if (!isGitLab(pr) || !pr.targetBranch || !(pr.needsRebase || pr.mergeStateStatus === "DIRTY")) return null;
+    const r = this.rebase;
+    const color = !r ? t.dim : r.state === "done" ? t.ansi2 : r.state === "error" || r.state === "conflicts" ? t.ansi1 : t.dim;
+    const action = (id, label, onClick) =>
+      div().id(id).px(7).h(20).flex().flex_none().items_center().rounded(RADIUS.control).border_1().border_color(t.border)
+        .text_size(TEXT.caption).text_color(t.foreground).cursor_pointer().hover((s) => s.bg(t.hover))
+        .on_mouse_down("left", stop).on_click((_e, cx) => { cx.stop_propagation(); onClick(cx); })
+        .child(label);
+    return h_flex().gap(6).items_center().text_size(TEXT.caption).text_color(color)
+      .child(div().flex_1().min_w(0).truncate().child(r ? r.text : `Behind ${pr.targetBranch}`))
+      .when(!r || r.state === "error", (el) => el.child(action(`card-rebase-${pr.number}`, "Rebase", (cx) => this.startRebase(pr, cx))))
+      .when(r?.state === "conflicts", (el) => el.child(action(`card-resolve-${pr.number}`, "Resolve with agent", (cx) => this.resolveWithAgent(pr, cx))));
+  }
 
   // Leaving the card closes it unless the pointer went back to its row.
   hover(hovered, cx) {
@@ -66,7 +122,8 @@ export class Card {
           .child(div().flex_none().child(`${isGitLab(pr) ? "!" : "#"}${pr.number}`))
           .child(div().flex_none().text_color(look.color).child(look.label))
           .child(div().min_w(0).truncate().child(pr.repository)))
-        .when(Boolean(checks), (el) => el.child(this.pipeline(t, pr, checks))))
+        .when(Boolean(checks), (el) => el.child(this.pipeline(t, pr, checks)))
+        .when(Boolean(this.rebaseRow(t, pr)), (el) => el.child(this.rebaseRow(t, pr))))
       .child(h_flex().flex_none().gap(1)
         .child(this.button(`${id}-copy`, "copy", "Copy link", t, () => this.copy(url)))
         .child(this.button(`${id}-open`, "external", `Open on ${host}`, t, (cx) => cx.open_url(url))));
