@@ -1,0 +1,68 @@
+{
+ "id": 2,
+ "result": {
+  "ordinaryUsageAllowed": true,
+  "rateLimits": {
+   "limitId": "codex",
+   "limitName": null,
+   "normalModelSlug": null,
+   "primary": {
+    "usedPercent": 0,
+    "windowDurationMins": 300,
+    "resetsAt": 1793797811
+   },
+   "secondary": {
+    "usedPercent": 11,
+    "windowDurationMins": 10080,
+    "resetsAt": 1793944050
+   },
+   "credits": {
+    "hasCredits": false,
+    "unlimited": false,
+    "balance": "0"
+   },
+   "individualLimit": null,
+   "spendControlReached": false,
+   "planType": "plus",
+   "rateLimitReachedType": null
+  },
+  "rateLimitsByLimitId": {
+   "codex": {
+    "limitId": "codex",
+    "limitName": null,
+    "normalModelSlug": null,
+    "primary": {
+     "usedPercent": 0,
+     "windowDurationMins": 300,
+     "resetsAt": 1793797811
+    },
+    "secondary": {
+     "usedPercent": 11,
+     "windowDurationMins": 10080,
+     "resetsAt": 1793944050
+    },
+    "credits": {
+     "hasCredits": false,
+     "unlimited": false,
+     "balance": "0"
+    },
+    "individualLimit": null,
+    "spendControlReached": false,
+    "planType": "plus",
+    "rateLimitReachedType": null
+   },
+   "spark": {
+    "limitId": "spark",
+    "limitName": "Spark",
+    "primary": {
+     "usedPercent": 40,
+     "windowDurationMins": 300,
+     "resetsAt": 1793796866
+    },
+    "secondary": null
+   }
+  },
+  "accountId": "00000000-0000-0000-0000-000000000000",
+  "rateLimitUpsell": null
+ }
+}

@@ -1,0 +1,10 @@
+#!/bin/sh
+# Test double for the claude CLI: a banner, an unrelated stream event, then
+# the control_response for the request it reads. HANG=1: never answers.
+echo "Welcome to fake claude"
+echo '{"type":"system","subtype":"init"}'
+if [ "$HANG" = "1" ]; then exec sleep 60; fi
+read -r line
+id=$(printf '%s' "$line" | sed -n 's/.*"request_id":"\([^"]*\)".*/\1/p')
+printf '{"type":"control_response","response":{"subtype":"success","request_id":"%s","response":{"subscription_type":"max","rate_limits":{"limits":[]}}}}\n' "$id"
+exec sleep 60

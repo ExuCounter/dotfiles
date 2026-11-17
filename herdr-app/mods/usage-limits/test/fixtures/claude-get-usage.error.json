@@ -1,0 +1,8 @@
+{
+ "type": "control_response",
+ "response": {
+  "subtype": "error",
+  "request_id": "fx",
+  "error": "Not logged in"
+ }
+}

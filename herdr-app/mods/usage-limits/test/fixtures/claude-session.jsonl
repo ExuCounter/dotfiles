@@ -1,0 +1,17 @@
+{"type":"last-prompt","lastPrompt":"secret prompt"}
+{"type":"last-prompt","lastPrompt":"secret prompt"}
+{"parentUuid":"p","isSidechain":false,"type":"user","message":{"role":"user","content":"a real prompt"}}
+{"parentUuid":"p","isSidechain":false,"type":"user","message":{"role":"user","content":[{"type":"text","text":"pasted image"},{"type":"image"}]}}
+{"parentUuid":"p","isSidechain":false,"type":"user","message":{"role":"user","content":[{"type":"tool_result","content":"out"}]}}
+{"parentUuid":"p","isSidechain":false,"isMeta":true,"type":"user","message":{"role":"user","content":"injected"}}
+{"parentUuid":"p","isSidechain":false,"isCompactSummary":true,"type":"user","message":{"role":"user","content":"summary"}}
+{"parentUuid":"p","isSidechain":true,"type":"user","message":{"role":"user","content":"subagent prompt"}}
+{"parentUuid":"p","isSidechain":false,"type":"assistant","message":{"model":"claude-opus-5-5","content":[{"type":"text","text":"ok"}],"usage":{"input_tokens":4,"cache_creation_input_tokens":100,"cache_read_input_tokens":1000,"output_tokens":99}},"sessionId":"S"}
+{"parentUuid":"p","isSidechain":false,"type":"user","message":{"role":"user","content":"{\"type\":\"assistant\",\"isSidechain\":false,\"usage\":{\"input_tokens\":999999}} {\"type\":\"system\",\"subtype\":\"compact_boundary\"} {\"type\":\"last-prompt\"}"}}
+{"type":"last-prompt","lastPrompt":"secret prompt"}
+{"parentUuid":"p","isSidechain":false,"type":"system","subtype":"compact_boundary","compactMetadata":{"trigger":"manual","preTokens":150000,"postTokens":9000}}
+{"parentUuid":"p","isSidechain":false,"type":"system","subtype":"compact_boundary","compactMetadata":{"trigger":"auto","preTokens":259912,"postTokens":10364}}
+{"type":"last-prompt","lastPrompt":"secret prompt"}
+{"parentUuid":"p","isSidechain":false,"type":"assistant","message":{"model":"claude-opus-5-5","content":[{"type":"text","text":"ok"}],"usage":{"input_tokens":10,"cache_creation_input_tokens":2000,"cache_read_input_tokens":180000,"output_tokens":99}},"sessionId":"S"}
+{"parentUuid":"p","isSidechain":false,"type":"assistant","message":{"model":"claude-opus-5-5","content":[{"type":"text","text":"ok"}],"usage":{"input_tokens":0,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":0}},"sessionId":"S"}
+{"parentUuid":"p","isSidechain":true,"type":"assistant","message":{"model":"claude-opus-5-5","content":[{"type":"text","text":"ok"}],"usage":{"input_tokens":1,"cache_creation_input_tokens":1,"cache_read_input_tokens":500000,"output_tokens":99}},"sessionId":"S"}

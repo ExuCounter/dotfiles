@@ -18,11 +18,14 @@
     ~/.claude/CLAUDE.md: claude/CLAUDE.md
     ~/.claude/rules/comments-and-docs.md: claude/rules/comments-and-docs.md
     ~/.claude/rules/tdd.md: claude/rules/tdd.md
+    ~/.claude/rules/worktrees.md: claude/rules/worktrees.md
     ~/.claude/statusline-command.sh: claude/statusline-command.sh
     # Claude Code hooks, each linked by name: herdr's own integration keeps its
     # herdr-agent-state.sh in the same folder, and dotbot refuses a glob that
     # matches a single path.
     ~/.claude/hooks/herdr-status.sh: claude/hooks/herdr-status.sh
+    ~/.claude/hooks/worktree-create.sh: claude/hooks/worktree-create.sh
+    ~/.claude/hooks/worktree-remove.sh: claude/hooks/worktree-remove.sh
     ~/.config/glow/solarized-light.json: glow/solarized-light.json
     ~/Library/Preferences/glow/glow.yml: glow/glow.yml
     ~/.config/kitty/theme.conf: theme.conf
@@ -69,6 +72,18 @@
     ~/.config/herdr-app/mods/better-changes: herdr-app/mods/better-changes
     ~/.config/herdr-app/mods/better-config: herdr-app/mods/better-config
     ~/.config/herdr-app/mods/better-files: herdr-app/mods/better-files
+    ~/.config/herdr-app/mods/gitlab-status: herdr-app/mods/gitlab-status
+    ~/.config/herdr-app/mods/auto-title: herdr-app/mods/auto-title
+    ~/.config/herdr-app/mods/leader: herdr-app/mods/leader
+    ~/.config/herdr-app/mods/nav-down: herdr-app/mods/nav-down
+    ~/.config/herdr-app/mods/nav-left: herdr-app/mods/nav-left
+    ~/.config/herdr-app/mods/nav-right: herdr-app/mods/nav-right
+    ~/.config/herdr-app/mods/nav-up: herdr-app/mods/nav-up
+    ~/.config/herdr-app/mods/next-waiting: herdr-app/mods/next-waiting
+    ~/.config/herdr-app/mods/redline: herdr-app/mods/redline
+    ~/.config/herdr-app/mods/skillshare: herdr-app/mods/skillshare
+    ~/.config/herdr-app/mods/tabs-timer: herdr-app/mods/tabs-timer
+    ~/.config/herdr-app/mods/usage-limits: herdr-app/mods/usage-limits
     # fzf herdr workspace switcher (bound to prefix+f). Each picker is one
     # file, linked by name: dotbot refuses a glob that matches a single path.
     ~/.config/fzf_herdr_workspaces/bin/fzf_herdr_workspaces.sh: fzf_herdr_workspaces/bin/fzf_herdr_workspaces.sh

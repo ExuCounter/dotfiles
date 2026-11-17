@@ -1,0 +1,48 @@
+{
+  "range": {
+    "from": 1793912400000,
+    "to": 1794486757271
+  },
+  "sessions": 4,
+  "subagents": 1,
+  "prompts": 9,
+  "steps": 23,
+  "tokens": {
+    "input": 412300,
+    "output": 5120,
+    "reasoning": 880,
+    "cache": {
+      "read": 96000,
+      "write": 1200
+    }
+  },
+  "cost": 0,
+  "tools": {},
+  "activeDays": 3,
+  "streak": 1,
+  "activity": [
+    {
+      "date": "2026-11-07",
+      "steps": 12
+    },
+    {
+      "date": "2026-11-12",
+      "steps": 11
+    }
+  ],
+  "models": [
+    {
+      "model": "demo-model",
+      "steps": 23,
+      "tokens": {
+        "input": 412300,
+        "output": 5120,
+        "reasoning": 880,
+        "cache": {
+          "read": 96000,
+          "write": 1200
+        }
+      }
+    }
+  ]
+}

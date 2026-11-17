@@ -1,0 +1,19 @@
+#!/bin/sh
+# Test double for `opencode stats --days N --json`: prints the today fixture for
+# --days 0 and the week fixture otherwise, pretty-printed like the real one.
+# FAKE_OPENCODE=hang: never answers. FAKE_OPENCODE=stubborn: never answers and
+# ignores TERM. FAKE_OPENCODE=fail: exits 1. FAKE_OPENCODE=banner: a notice line first.
+here=$(dirname "$0")
+days=
+while [ $# -gt 0 ]; do
+  if [ "$1" = "--days" ]; then days=$2; fi
+  shift
+done
+case "$FAKE_OPENCODE" in
+  hang) while :; do sleep 1; done ;;
+  stubborn) trap "" TERM; while :; do sleep 1; done ;;
+  fail) echo "boom" >&2; exit 1 ;;
+  banner) echo "A new version of opencode is available: 9.9.9" ;;
+esac
+if [ "$days" = "0" ]; then cat "$here/../fixtures/opencode-stats.today.json"
+else cat "$here/../fixtures/opencode-stats.week.json"; fi

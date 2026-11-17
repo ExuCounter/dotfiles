@@ -1,0 +1,12 @@
+#!/bin/sh
+# Test double for `codex app-server`: answers account/rateLimits/read (id 2), then
+# exits at end of input. HANG=1: never answers.
+[ "$1" = "app-server" ] || exit 2
+if [ "$HANG" = "1" ]; then exec sleep 60; fi
+while read -r line; do
+  case "$line" in
+    *'"id":1,'*) echo '{"jsonrpc":"2.0","id":1,"result":{}}' ;;
+    *'"id":2,'*)
+      echo '{"jsonrpc":"2.0","id":2,"result":{"rateLimits":{"primary":{"usedPercent":5}}}}' ;;
+  esac
+done

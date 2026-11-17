@@ -1,0 +1,6 @@
+{"timestamp":"t","type":"event_msg","payload":{"type":"task_started"}}
+{"timestamp":"t","type":"event_msg","payload":{"type":"token_count","info":{"total_token_usage":{"input_tokens":900000,"total_tokens":900500},"last_token_usage":{"input_tokens":1000,"output_tokens":8,"total_tokens":1008},"model_context_window":475000}}}
+{"type":"response_item","payload":{"type":"message","content":"{\"type\":\"task_started\"} {\"type\":\"token_count\"}"}}
+{"timestamp":"t","type":"event_msg","payload":{"type":"token_count","info":null}}
+{"timestamp":"t","type":"event_msg","payload":{"type":"task_started"}}
+{"timestamp":"t","type":"event_msg","payload":{"type":"token_count","info":{"total_token_usage":{"input_tokens":900000,"total_tokens":900500},"last_token_usage":{"input_tokens":115217,"output_tokens":8,"total_tokens":115225},"model_context_window":475000}}}

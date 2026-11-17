@@ -1,0 +1,675 @@
+{
+  "fresh": {
+    "card": {
+      "groups": [
+        {
+          "providerId": "claude",
+          "name": "Claude",
+          "icon": "icons/claude.svg",
+          "plan": "Max",
+          "status": "updated just now",
+          "failed": false,
+          "dim": false,
+          "age": null,
+          "rows": [
+            {
+              "id": "session",
+              "long": "5-hour",
+              "percent": "6%",
+              "level": "ok",
+              "fill": 0.06,
+              "tick": 0.8,
+              "hint": "Tick: 80% of the time has passed.\nYou've used 6%, so you have room to spare.",
+              "left": "1h 0m",
+              "detail": ""
+            },
+            {
+              "id": "weekly_all",
+              "long": "Weekly",
+              "percent": "50%",
+              "level": "ok",
+              "fill": 0.5,
+              "tick": 0.6785714285714286,
+              "hint": "Tick: 68% of the time has passed.\nYou've used 50%, so you have room to spare.",
+              "left": "2d 6h",
+              "detail": ""
+            },
+            {
+              "id": "weekly_scoped:Fable",
+              "long": "Weekly · Fable",
+              "percent": "3%",
+              "level": "ok",
+              "fill": 0.03,
+              "tick": 0.678573082010582,
+              "hint": "Tick: 68% of the time has passed.\nYou've used 3%, so you have room to spare.",
+              "left": "2d 5h",
+              "detail": ""
+            }
+          ]
+        },
+        {
+          "providerId": "codex",
+          "name": "Codex",
+          "icon": "icons/codex.svg",
+          "plan": "Plus",
+          "status": "updated just now",
+          "failed": false,
+          "dim": false,
+          "age": null,
+          "rows": [
+            {
+              "id": "codex:primary",
+              "long": "5-hour",
+              "percent": "0%",
+              "level": "ok",
+              "fill": 0,
+              "tick": 0,
+              "hint": "Tick: 0% of the time has passed.\nYou've used 0%, so you're on pace.",
+              "left": "5h 10m",
+              "detail": ""
+            },
+            {
+              "id": "codex:secondary",
+              "long": "Weekly",
+              "percent": "11%",
+              "level": "ok",
+              "fill": 0.11,
+              "tick": 0.7274305555555556,
+              "hint": "Tick: 73% of the time has passed.\nYou've used 11%, so you have room to spare.",
+              "left": "1d 21h",
+              "detail": ""
+            }
+          ]
+        }
+      ],
+      "empty": false
+    },
+    "bar": {
+      "groups": [
+        {
+          "providerId": "claude",
+          "name": "Claude",
+          "icon": "icons/claude.svg",
+          "mark": null,
+          "dim": false,
+          "segments": [
+            {
+              "id": "session",
+              "short": "5h",
+              "text": "6%",
+              "brief": "6%",
+              "level": "ok",
+              "fill": 0.06,
+              "tick": 0.8,
+              "expired": false
+            },
+            {
+              "id": "weekly_all",
+              "short": "wk",
+              "text": "50%",
+              "brief": "50%",
+              "level": "ok",
+              "fill": 0.5,
+              "tick": 0.6785714285714286,
+              "expired": false
+            },
+            {
+              "id": "weekly_scoped:Fable",
+              "short": "Fable",
+              "text": "3%",
+              "brief": "3%",
+              "level": "ok",
+              "fill": 0.03,
+              "tick": 0.678573082010582,
+              "expired": false
+            }
+          ]
+        },
+        {
+          "providerId": "codex",
+          "name": "Codex",
+          "icon": "icons/codex.svg",
+          "mark": null,
+          "dim": false,
+          "segments": [
+            {
+              "id": "codex:primary",
+              "short": "5h",
+              "text": "0%",
+              "brief": "0%",
+              "level": "ok",
+              "fill": 0,
+              "tick": 0,
+              "expired": false
+            },
+            {
+              "id": "codex:secondary",
+              "short": "wk",
+              "text": "11%",
+              "brief": "11%",
+              "level": "ok",
+              "fill": 0.11,
+              "tick": 0.7274305555555556,
+              "expired": false
+            }
+          ]
+        }
+      ],
+      "empty": false
+    }
+  },
+  "failingWithLastGood": {
+    "card": {
+      "groups": [
+        {
+          "providerId": "claude",
+          "name": "Claude",
+          "icon": "icons/claude.svg",
+          "plan": null,
+          "status": "Not logged in",
+          "failed": true,
+          "dim": true,
+          "age": "Last reading 20 min ago",
+          "rows": [
+            {
+              "id": "session",
+              "long": "5-hour",
+              "percent": "6%",
+              "level": "ok",
+              "fill": 0.06,
+              "tick": 0.8,
+              "hint": "Tick: 80% of the time has passed.\nYou've used 6%, so you have room to spare.",
+              "left": "1h 0m",
+              "detail": ""
+            },
+            {
+              "id": "weekly_all",
+              "long": "Weekly",
+              "percent": "50%",
+              "level": "ok",
+              "fill": 0.5,
+              "tick": 0.6785714285714286,
+              "hint": "Tick: 68% of the time has passed.\nYou've used 50%, so you have room to spare.",
+              "left": "2d 6h",
+              "detail": ""
+            },
+            {
+              "id": "weekly_scoped:Fable",
+              "long": "Weekly · Fable",
+              "percent": "3%",
+              "level": "ok",
+              "fill": 0.03,
+              "tick": 0.678573082010582,
+              "hint": "Tick: 68% of the time has passed.\nYou've used 3%, so you have room to spare.",
+              "left": "2d 5h",
+              "detail": ""
+            }
+          ]
+        },
+        {
+          "providerId": "codex",
+          "name": "Codex",
+          "icon": "icons/codex.svg",
+          "plan": "Plus",
+          "status": "updated just now",
+          "failed": false,
+          "dim": false,
+          "age": null,
+          "rows": [
+            {
+              "id": "codex:primary",
+              "long": "5-hour",
+              "percent": "0%",
+              "level": "ok",
+              "fill": 0,
+              "tick": 0,
+              "hint": "Tick: 0% of the time has passed.\nYou've used 0%, so you're on pace.",
+              "left": "5h 10m",
+              "detail": ""
+            },
+            {
+              "id": "codex:secondary",
+              "long": "Weekly",
+              "percent": "11%",
+              "level": "ok",
+              "fill": 0.11,
+              "tick": 0.7274305555555556,
+              "hint": "Tick: 73% of the time has passed.\nYou've used 11%, so you have room to spare.",
+              "left": "1d 21h",
+              "detail": ""
+            }
+          ]
+        }
+      ],
+      "empty": false
+    },
+    "bar": {
+      "groups": [
+        {
+          "providerId": "claude",
+          "name": "Claude",
+          "icon": "icons/claude.svg",
+          "mark": "!",
+          "dim": true,
+          "segments": [
+            {
+              "id": "session",
+              "short": "5h",
+              "text": "6%",
+              "brief": "6%",
+              "level": "ok",
+              "fill": 0.06,
+              "tick": 0.8,
+              "expired": false
+            },
+            {
+              "id": "weekly_all",
+              "short": "wk",
+              "text": "50%",
+              "brief": "50%",
+              "level": "ok",
+              "fill": 0.5,
+              "tick": 0.6785714285714286,
+              "expired": false
+            },
+            {
+              "id": "weekly_scoped:Fable",
+              "short": "Fable",
+              "text": "3%",
+              "brief": "3%",
+              "level": "ok",
+              "fill": 0.03,
+              "tick": 0.678573082010582,
+              "expired": false
+            }
+          ]
+        },
+        {
+          "providerId": "codex",
+          "name": "Codex",
+          "icon": "icons/codex.svg",
+          "mark": null,
+          "dim": false,
+          "segments": [
+            {
+              "id": "codex:primary",
+              "short": "5h",
+              "text": "0%",
+              "brief": "0%",
+              "level": "ok",
+              "fill": 0,
+              "tick": 0,
+              "expired": false
+            },
+            {
+              "id": "codex:secondary",
+              "short": "wk",
+              "text": "11%",
+              "brief": "11%",
+              "level": "ok",
+              "fill": 0.11,
+              "tick": 0.7274305555555556,
+              "expired": false
+            }
+          ]
+        }
+      ],
+      "empty": false
+    }
+  },
+  "failingNoLastGood": {
+    "card": {
+      "groups": [
+        {
+          "providerId": "claude",
+          "name": "Claude",
+          "icon": "icons/claude.svg",
+          "plan": "Max",
+          "status": "updated just now",
+          "failed": false,
+          "dim": false,
+          "age": null,
+          "rows": [
+            {
+              "id": "session",
+              "long": "5-hour",
+              "percent": "6%",
+              "level": "ok",
+              "fill": 0.06,
+              "tick": 0.8,
+              "hint": "Tick: 80% of the time has passed.\nYou've used 6%, so you have room to spare.",
+              "left": "1h 0m",
+              "detail": ""
+            },
+            {
+              "id": "weekly_all",
+              "long": "Weekly",
+              "percent": "50%",
+              "level": "ok",
+              "fill": 0.5,
+              "tick": 0.6785714285714286,
+              "hint": "Tick: 68% of the time has passed.\nYou've used 50%, so you have room to spare.",
+              "left": "2d 6h",
+              "detail": ""
+            },
+            {
+              "id": "weekly_scoped:Fable",
+              "long": "Weekly · Fable",
+              "percent": "3%",
+              "level": "ok",
+              "fill": 0.03,
+              "tick": 0.678573082010582,
+              "hint": "Tick: 68% of the time has passed.\nYou've used 3%, so you have room to spare.",
+              "left": "2d 5h",
+              "detail": ""
+            }
+          ]
+        },
+        {
+          "providerId": "codex",
+          "name": "Codex",
+          "icon": "icons/codex.svg",
+          "plan": null,
+          "status": "offline",
+          "failed": true,
+          "dim": true,
+          "age": null,
+          "rows": []
+        }
+      ],
+      "empty": false
+    },
+    "bar": {
+      "groups": [
+        {
+          "providerId": "claude",
+          "name": "Claude",
+          "icon": "icons/claude.svg",
+          "mark": null,
+          "dim": false,
+          "segments": [
+            {
+              "id": "session",
+              "short": "5h",
+              "text": "6%",
+              "brief": "6%",
+              "level": "ok",
+              "fill": 0.06,
+              "tick": 0.8,
+              "expired": false
+            },
+            {
+              "id": "weekly_all",
+              "short": "wk",
+              "text": "50%",
+              "brief": "50%",
+              "level": "ok",
+              "fill": 0.5,
+              "tick": 0.6785714285714286,
+              "expired": false
+            },
+            {
+              "id": "weekly_scoped:Fable",
+              "short": "Fable",
+              "text": "3%",
+              "brief": "3%",
+              "level": "ok",
+              "fill": 0.03,
+              "tick": 0.678573082010582,
+              "expired": false
+            }
+          ]
+        },
+        {
+          "providerId": "codex",
+          "name": "Codex",
+          "icon": "icons/codex.svg",
+          "mark": "!",
+          "dim": true,
+          "segments": []
+        }
+      ],
+      "empty": false
+    }
+  },
+  "stale": {
+    "card": {
+      "groups": [
+        {
+          "providerId": "claude",
+          "name": "Claude",
+          "icon": "icons/claude.svg",
+          "plan": "Max",
+          "status": "updated just now",
+          "failed": false,
+          "dim": false,
+          "age": null,
+          "rows": [
+            {
+              "id": "session",
+              "long": "5-hour",
+              "percent": "6%",
+              "level": "ok",
+              "fill": 0.06,
+              "tick": 0.8,
+              "hint": "Tick: 80% of the time has passed.\nYou've used 6%, so you have room to spare.",
+              "left": "1h 0m",
+              "detail": ""
+            },
+            {
+              "id": "weekly_all",
+              "long": "Weekly",
+              "percent": "50%",
+              "level": "ok",
+              "fill": 0.5,
+              "tick": 0.6785714285714286,
+              "hint": "Tick: 68% of the time has passed.\nYou've used 50%, so you have room to spare.",
+              "left": "2d 6h",
+              "detail": ""
+            },
+            {
+              "id": "weekly_scoped:Fable",
+              "long": "Weekly · Fable",
+              "percent": "3%",
+              "level": "ok",
+              "fill": 0.03,
+              "tick": 0.678573082010582,
+              "hint": "Tick: 68% of the time has passed.\nYou've used 3%, so you have room to spare.",
+              "left": "2d 5h",
+              "detail": ""
+            }
+          ]
+        },
+        {
+          "providerId": "codex",
+          "name": "Codex",
+          "icon": "icons/codex.svg",
+          "plan": "Plus",
+          "status": "updated 15 min ago",
+          "failed": false,
+          "dim": true,
+          "age": null,
+          "rows": [
+            {
+              "id": "codex:primary",
+              "long": "5-hour",
+              "percent": "0%",
+              "level": "ok",
+              "fill": 0,
+              "tick": 0,
+              "hint": "Tick: 0% of the time has passed.\nYou've used 0%, so you're on pace.",
+              "left": "5h 10m",
+              "detail": ""
+            },
+            {
+              "id": "codex:secondary",
+              "long": "Weekly",
+              "percent": "11%",
+              "level": "ok",
+              "fill": 0.11,
+              "tick": 0.7274305555555556,
+              "hint": "Tick: 73% of the time has passed.\nYou've used 11%, so you have room to spare.",
+              "left": "1d 21h",
+              "detail": ""
+            }
+          ]
+        }
+      ],
+      "empty": false
+    },
+    "bar": {
+      "groups": [
+        {
+          "providerId": "claude",
+          "name": "Claude",
+          "icon": "icons/claude.svg",
+          "mark": null,
+          "dim": false,
+          "segments": [
+            {
+              "id": "session",
+              "short": "5h",
+              "text": "6%",
+              "brief": "6%",
+              "level": "ok",
+              "fill": 0.06,
+              "tick": 0.8,
+              "expired": false
+            },
+            {
+              "id": "weekly_all",
+              "short": "wk",
+              "text": "50%",
+              "brief": "50%",
+              "level": "ok",
+              "fill": 0.5,
+              "tick": 0.6785714285714286,
+              "expired": false
+            },
+            {
+              "id": "weekly_scoped:Fable",
+              "short": "Fable",
+              "text": "3%",
+              "brief": "3%",
+              "level": "ok",
+              "fill": 0.03,
+              "tick": 0.678573082010582,
+              "expired": false
+            }
+          ]
+        },
+        {
+          "providerId": "codex",
+          "name": "Codex",
+          "icon": "icons/codex.svg",
+          "mark": null,
+          "dim": true,
+          "segments": [
+            {
+              "id": "codex:primary",
+              "short": "5h",
+              "text": "0%",
+              "brief": "0%",
+              "level": "ok",
+              "fill": 0,
+              "tick": 0,
+              "expired": false
+            },
+            {
+              "id": "codex:secondary",
+              "short": "wk",
+              "text": "11%",
+              "brief": "11%",
+              "level": "ok",
+              "fill": 0.11,
+              "tick": 0.7274305555555556,
+              "expired": false
+            }
+          ]
+        }
+      ],
+      "empty": false
+    }
+  },
+  "loadingAndMissing": {
+    "card": {
+      "groups": [
+        {
+          "providerId": "claude",
+          "name": "Claude",
+          "icon": "icons/claude.svg",
+          "plan": null,
+          "status": "loading…",
+          "failed": false,
+          "dim": false,
+          "age": null,
+          "rows": []
+        }
+      ],
+      "empty": false
+    },
+    "bar": {
+      "groups": [
+        {
+          "providerId": "claude",
+          "name": "Claude",
+          "icon": "icons/claude.svg",
+          "mark": "…",
+          "dim": false,
+          "segments": []
+        }
+      ],
+      "empty": false
+    }
+  },
+  "noState": {
+    "card": {
+      "groups": [
+        {
+          "providerId": "claude",
+          "name": "Claude",
+          "icon": "icons/claude.svg",
+          "plan": null,
+          "status": "loading…",
+          "failed": false,
+          "dim": false,
+          "age": null,
+          "rows": []
+        },
+        {
+          "providerId": "codex",
+          "name": "Codex",
+          "icon": "icons/codex.svg",
+          "plan": null,
+          "status": "loading…",
+          "failed": false,
+          "dim": false,
+          "age": null,
+          "rows": []
+        }
+      ],
+      "empty": false
+    },
+    "bar": {
+      "groups": [
+        {
+          "providerId": "claude",
+          "name": "Claude",
+          "icon": "icons/claude.svg",
+          "mark": "…",
+          "dim": false,
+          "segments": []
+        },
+        {
+          "providerId": "codex",
+          "name": "Codex",
+          "icon": "icons/codex.svg",
+          "mark": "…",
+          "dim": false,
+          "segments": []
+        }
+      ],
+      "empty": false
+    }
+  }
+}
