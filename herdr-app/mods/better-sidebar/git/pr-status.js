@@ -2,7 +2,7 @@
 // from space rendering so frequent redraws never launch Git or GitHub commands.
 import { exec } from "herdr";
 
-export const PR_POLL_MS = 60000;
+export const PR_POLL_MS = 20000;
 export const prPlaceKey = (machine, folder) => JSON.stringify([machine ?? null, folder]);
 const PR_FIELDS =
   "id,number,title,url,state,isDraft,headRefName,headRepository,updatedAt,statusCheckRollup,reviewDecision,mergeStateStatus";

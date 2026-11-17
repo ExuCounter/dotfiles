@@ -7,7 +7,7 @@ import { gitlabRepository } from "./pr-status.js";
 import { reviewQueue, toThread, isBot, displayName } from "./review-queue.js";
 
 export const INBOX = "mr-inbox";
-const POLL_MS = 120000;
+const POLL_MS = 30000;
 // An MR untouched this long is left out.
 const STALE_MS = 30 * 24 * 3600000;
 const HOST = "gitlab.com";
