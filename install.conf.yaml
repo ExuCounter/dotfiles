@@ -81,6 +81,7 @@
     ~/.config/herdr-app/mods/nav-up: herdr-app/mods/nav-up
     ~/.config/herdr-app/mods/next-waiting: herdr-app/mods/next-waiting
     ~/.config/herdr-app/mods/redline: herdr-app/mods/redline
+    ~/.config/herdr-app/mods/reload-claude: herdr-app/mods/reload-claude
     ~/.config/herdr-app/mods/skillshare: herdr-app/mods/skillshare
     ~/.config/herdr-app/mods/tabs-timer: herdr-app/mods/tabs-timer
     ~/.config/herdr-app/mods/usage-limits: herdr-app/mods/usage-limits
