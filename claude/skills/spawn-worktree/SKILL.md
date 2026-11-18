@@ -13,8 +13,10 @@ stops says why and leaves everything where it is.
      kind (`fix/`, `feat/`, `chore/`, `docs/`, `research/`, `investigation/`), unless the
      repo's own rules name another;
    - the base: the branch `$main` has checked out, unless the repo's rules name another;
-   - `--model` and `--effort`: sonnet/medium for a fix of known shape, opus/medium for a
-     feature, opus/xhigh for an investigation, haiku/low for a small spelled-out change.
+   - `--model` and `--effort` for the planning agent: fable/high for a hard feature or an
+     investigation, opus/high or opus/medium for a simpler feature, sonnet/medium for a fix
+     of known shape, haiku/low for a small spelled-out change. Implementation moves to
+     sonnet at handoff.
 
    "Spawn `fix/login-500` from `staging` on sonnet, medium?" The person may change any.
 2. **Free.** `git -C "$main" rev-parse --verify --quiet refs/heads/<branch>` finds
@@ -41,13 +43,16 @@ stops says why and leaves everything where it is.
    - Stay in this worktree, commit only on <branch>, and move no other branch. Never
      git stash: its stack is shared with every worktree.
    - Never push, open a merge request or post anywhere unless the person says so.
-   - Before building, run /grilling on the task with the person, and start once you
-     both read it the same way.
+   - Work through the agent-skills plugin (entry using-agent-skills). Before building,
+     run /grilling on the task with the person, and start once you both read it the
+     same way. When the task has no ticket or spec, or is still vague, run
+     agent-skills:interview-me first until the person confirms the statement of intent. When a phase
+     ends, offer the next ones with a recommendation and wait for the person's pick.
    - Before reporting finished work, commit, and rebase onto <base> when it has moved
      and this branch was never pushed.
    - End each turn with a report whose first line says what is true now." \
      '{name:$n, folder:$f, task:$t,
-       argv:["claude","--name",$n,"--model","<model>","--effort","<effort>","--permission-mode","acceptEdits"]}')"
+       argv:["env","DISABLE_AUTO_COMPACT=1","claude","--name",$n,"--model","<model>","--effort","<effort>","--permission-mode","auto"]}')"
    ```
 
    On failure, say the worktree is at its path with no agent, and stop.
